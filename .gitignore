@@ -1,8 +1,6 @@
-CookieTCG/.metadata/
-CookieTCG/.settings/
-CookieTCG/cookierunTCG/.settings/
-CookieTCG/cookierunTCG/bin/
+.metadata
+.settings
+cookierunTCG/.settings
+cookierunTCG/bin
 
 CookieTCG/cookierunTCG/resources/cards/*
-test.txt
- 
