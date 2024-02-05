@@ -86,7 +86,7 @@ public class MainUI implements CardListCallBack{
     private TextField textField;
     private JButton loadBtn, saveBtn, selectBtn;
     private JButton mClearDeckBtn;
-    private JLabel mCardCountTxt, mFlipCountTxt;
+    private JLabel mCardCountTxt, mFlipCountTxt, mDeckCookieSummaryTxt, mDeckOtherSummaryTxt;
     private JLabel label_2;
     private JCheckBox cb_flip;
     private void initialize() {
@@ -97,12 +97,12 @@ public class MainUI implements CardListCallBack{
         mDeck = new Deck();
         frame = new JFrame();
         frame.setTitle("薑餅人組牌系統   V "+Constant.VERSION);
-        frame.setBounds(100, 100, 1000, 540);
+        frame.setBounds(100, 100, 1000, 660);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
         
         Panel SearchPane = new Panel();
-        SearchPane.setBounds(10, 10, 149, 485);
+        SearchPane.setBounds(10, 10, 149, 603);
         frame.getContentPane().add(SearchPane);
         SearchPane.setLayout(null);
 
@@ -178,7 +178,7 @@ public class MainUI implements CardListCallBack{
         mDeckPane.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         
         JScrollPane scrollDeckPane = new JScrollPane(mDeckPane);
-        scrollDeckPane.setBounds(165, 10, 415, 220);
+        scrollDeckPane.setBounds(165, 10, 415, 311);
         scrollDeckPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollDeckPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         
@@ -191,7 +191,7 @@ public class MainUI implements CardListCallBack{
         
         JScrollPane scrollCardsPane = new JScrollPane(mCardsPane);
         scrollCardsPane.setBackground(new Color(255, 255, 255));
-        scrollCardsPane.setBounds(165, 266, 415, 230);
+        scrollCardsPane.setBounds(165, 364, 415, 249);
         scrollCardsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollCardsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         frame.getContentPane().add(scrollCardsPane);
@@ -254,16 +254,24 @@ public class MainUI implements CardListCallBack{
         });
         
         mClearDeckBtn = new JButton("清除卡組");
-        mClearDeckBtn.setBounds(495, 233, 85, 23);
+        mClearDeckBtn.setBounds(495, 331, 85, 23);
         frame.getContentPane().add(mClearDeckBtn);
         
         mCardCountTxt = new JLabel("0/60");
-        mCardCountTxt.setBounds(453, 233, 36, 22);
+        mCardCountTxt.setBounds(453, 331, 36, 22);
         frame.getContentPane().add(mCardCountTxt);
         
         mFlipCountTxt = new JLabel("0/16");
-        mFlipCountTxt.setBounds(411, 233, 36, 22);
+        mFlipCountTxt.setBounds(411, 331, 36, 22);
         frame.getContentPane().add(mFlipCountTxt);
+        
+        mDeckCookieSummaryTxt = new JLabel("餅乾 : 0   ( LV1 : 0   LV2 : 0   LV3 : 0 )");
+        mDeckCookieSummaryTxt.setBounds(165, 320, 236, 22);
+        frame.getContentPane().add(mDeckCookieSummaryTxt);
+        
+        mDeckOtherSummaryTxt = new JLabel("物品 : 0   陷阱 : 0   場地 : 0");
+        mDeckOtherSummaryTxt.setBounds(165, 337, 236, 22);
+        frame.getContentPane().add(mDeckOtherSummaryTxt);
         mClearDeckBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mDeck.clear();
@@ -366,6 +374,10 @@ public class MainUI implements CardListCallBack{
         } else {
         	mFlipCountTxt.setForeground(Color.BLACK);
         }
+        
+
+        mDeckCookieSummaryTxt.setText(mDeck.getCookieSummary());
+        mDeckOtherSummaryTxt.setText(mDeck.getOtherSummary());
     }
 
     @Override

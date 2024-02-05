@@ -13,8 +13,9 @@ public class Card {
 	private boolean _isFlip;
 	private String _rare;
 	private String _mark;
+	private int _lv;
 	public Card(String pack, String id, String name, CardColor color, CardType type,
-			boolean flip, String rare, String mark) {
+			boolean flip, String rare, String mark, int lv) {
 		_serial_number = SERIAL_NUMBER++;
 		_pack = pack;
 		_id = id;
@@ -24,12 +25,13 @@ public class Card {
 		_isFlip = flip;
 		_rare = rare;
 		_mark = mark;
+		_lv = lv;
 		dump();
 	}
 	
 	public String dump() {
         System.out.println(_pack + ", " + _id + ", " + _name + ", " + _color + ", " + _type + ", " + _isFlip + ", " + _rare + ", " + _mark);
-		return _pack + ", " + _id + ", " + _name + ", " + _color + ", " + _type + ", " + _isFlip + ", " + _rare + ", " + _mark;
+		return _pack + ", " + _id + ", " + _name + ", " + _color + ", " + _type + ", " + _isFlip + ", " + _rare + ", " + _mark +", lv = "+_lv;
 	}
 
 	public int compareTo(Card card) {
@@ -64,6 +66,10 @@ public class Card {
 
 	public CardType getType() {
 		return _type;
+	}
+
+	public int getLv() {
+		return _lv;
 	}
 	
 	public boolean isFlip() {

@@ -49,7 +49,7 @@ public class CardLoader {
         System.out.println(packName);
 	    try {
 	        System.out.println("loadPack 1");
-	        File file = new File("resources/BS1.txt");
+	        File file = new File("resources/"+packName+".txt");
 			FileInputStream reader = new FileInputStream(file);
 	        BufferedReader input = new BufferedReader(
 	                new InputStreamReader(new FileInputStream(file), "utf-8")); 
@@ -69,9 +69,13 @@ public class CardLoader {
 	            		color = CardColor.Green;
 	            	}
 
+	            	int level = 0;
 	            	CardType type;
 	            	if (cardData[3].equals("餅乾")) {
 	            		type = CardType.Cookie;
+	            		if (cardData.length >7) {
+	            			level = Integer.parseInt(cardData[7]);
+	            		}
 	            	} else if (cardData[3].equals("物品")) {
 	            		type = CardType.Item;
 	            	} else if (cardData[3].equals("陷阱")) {
@@ -82,7 +86,7 @@ public class CardLoader {
 	            		type = CardType.Cookie;
 	            	}
 	            	
-	            	Card c = new Card(packName, cardData[0], cardData[1], color, type, cardData[4].equals("F") ,cardData[5], cardData[6]);
+	            	Card c = new Card(packName, cardData[0], cardData[1], color, type, cardData[4].equals("F") ,cardData[5], cardData[6], level);
 	            	cardList.add(c);
 	            }
 	        }
