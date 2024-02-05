@@ -147,6 +147,41 @@ public class CardLoader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		saveReadableDeck(deckName, deck);
+	}
+	
+	public static void saveReadableDeck(String deckName, Deck deck) {
+		FileWriter fw;
+		try {
+			fw = new FileWriter("resources/deck_readable/"+deckName+".txt");
+			List<Card> cardList = deck.getAllCards();
+			Card lastCard = null;
+			int lastCardCount = 0;
+			for (Card c : cardList) {
+				if (c != lastCard) {
+					if (lastCardCount == 1) {
+						fw.write("\n");
+					} else if (lastCardCount > 1) {
+						fw.write("  x "+lastCardCount+"\n");
+					}
+					fw.write("["+c.getId()+"] "+c.getName());
+					lastCard = c;
+					lastCardCount = 1;
+				} else {
+					lastCardCount++;
+				}
+			}
+			if (lastCardCount == 1) {
+				fw.write("\n");
+			} else if (lastCardCount > 1) {
+				fw.write("  x "+lastCardCount+"\n");
+			}
+	        fw.flush();
+	        fw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
