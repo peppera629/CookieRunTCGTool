@@ -21,17 +21,20 @@ public class CardLoader {
 		List<Card> cardList = new ArrayList<Card>();
 	    try {
 	        File file = new File("resources/pack.txt");
-			FileInputStream reader = new FileInputStream(file);
-	        BufferedReader input = new BufferedReader(
-	                new InputStreamReader(new FileInputStream(file), "utf-8")); 
-	        String data;
-	        while((data= input.readLine())!=null) {
-	            System.out.println(data);
-
-	            if (!data.equals("") && !data.startsWith("//")) {
-	            	loadPack(data, cardList);
-	            }
-	        } 
+	        if (file.exists()) {
+				FileInputStream reader = new FileInputStream(file);
+		        BufferedReader input = new BufferedReader(
+		                new InputStreamReader(new FileInputStream(file), "utf-8")); 
+		        String data;
+		        while((data= input.readLine())!=null) {
+		            System.out.println(data);
+	
+		            if (!data.equals("") && !data.startsWith("//")) {
+		            	loadPack(data, cardList);
+		            }
+		        } 
+		        input.close();
+	        }
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
@@ -90,6 +93,7 @@ public class CardLoader {
 	            	cardList.add(c);
 	            }
 	        }
+	        input.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
@@ -108,18 +112,21 @@ public class CardLoader {
 		CardList cardList = CardList.getInstance();
 	    try {
 	        File file = new File("resources/deck/"+deckName+".txt");
-			FileInputStream reader = new FileInputStream(file);
-	        BufferedReader input = new BufferedReader(
-	                new InputStreamReader(new FileInputStream(file), "utf-8")); 
-	        String data;
-	        while((data= input.readLine())!=null) {
-	            System.out.println(data);
-
-	            if (!data.equals("") && !data.startsWith("//")) {
-	            	Card card = cardList.getCardById(data);
-	            	deck.addCard(card);
-	            }
-	        } 
+	        if (file.exists()) {
+				FileInputStream reader = new FileInputStream(file);
+		        BufferedReader input = new BufferedReader(
+		                new InputStreamReader(new FileInputStream(file), "utf-8")); 
+		        String data;
+		        while((data= input.readLine())!=null) {
+		            System.out.println(data);
+	
+		            if (!data.equals("") && !data.startsWith("//")) {
+		            	Card card = cardList.getCardById(data);
+		            	deck.addCard(card);
+		            }
+		        } 
+		        input.close();
+	        }
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();

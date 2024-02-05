@@ -26,6 +26,7 @@ import ui.ClickableCardLabel.CardListCallBack;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardType;
 import util.Constant;
+import util.DefaultState;
 
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -71,29 +72,26 @@ public class MainUI implements CardListCallBack{
     /**
      * Initialize the contents of the frame.
      */
+    DefaultState mDefaultState;
     private JPanel mCardsPane, mDeckPane;
-    private JCheckBox cb_color_red;
-    private JCheckBox cb_color_yellow;
-    private JCheckBox cb_color_green;
-    private JCheckBox cb_type_cookie;
-    private JCheckBox cb_type_item;
-    private JCheckBox cb_type_trap;
-    private JCheckBox cb_type_stage;
+    private Panel mSearchPane;
+    private JCheckBox cb_color_red, cb_color_yellow, cb_color_green;
+    private JCheckBox cb_type_cookie, cb_type_item, cb_type_trap, cb_type_stage;
+    private JCheckBox cb_flip;
     private Deck mDeck;
     private ScrollPane scrollPane;
     private Panel mCardDetailPane;
     private Panel panel;
-    private TextField textField;
+    private TextField mDeckText;
     private JButton loadBtn, saveBtn, selectBtn;
     private JButton mClearDeckBtn;
     private JLabel mCardCountTxt, mFlipCountTxt, mDeckCookieSummaryTxt, mDeckOtherSummaryTxt;
     private JLabel label_2;
-    private JCheckBox cb_flip;
     private void initialize() {
         
 /*        JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());*/
-        
+    	mDefaultState = DefaultState.getInstance();
         mDeck = new Deck();
         frame = new JFrame();
         frame.setTitle("薑餅人組牌系統   V "+Constant.VERSION);
@@ -101,76 +99,34 @@ public class MainUI implements CardListCallBack{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
         
-        Panel SearchPane = new Panel();
-        SearchPane.setBounds(10, 10, 149, 603);
-        frame.getContentPane().add(SearchPane);
-        SearchPane.setLayout(null);
+        mSearchPane = new Panel();
+        mSearchPane.setBounds(10, 10, 149, 603);
+        frame.getContentPane().add(mSearchPane);
+        mSearchPane.setLayout(null);
 
-        
-        
-        // ========================= color ==================================
-        JLabel label = new JLabel("顏色");
-        label.setBounds(9, 10, 64, 22);
-        SearchPane.add(label);
-        
-        cb_color_red = new JCheckBox("紅");
-        cb_color_red.setFont(new Font("新細明體", Font.PLAIN, 12));
-        cb_color_red.setBounds(9, 38, 41, 22);
-        SearchPane.add(cb_color_red);
-        
-        cb_color_yellow = new JCheckBox("黃");
-        cb_color_yellow.setBounds(51, 38, 41, 22);
-        SearchPane.add(cb_color_yellow);
-        
-        cb_color_green = new JCheckBox("綠");
-        cb_color_green.setBounds(97, 38, 41, 22);
-        SearchPane.add(cb_color_green);
-
-        
-        
-        // ========================= type ==================================
-        JLabel label_1 = new JLabel("卡片類型");
-        label_1.setBounds(9, 66, 64, 22);
-        SearchPane.add(label_1);
-        
-        cb_type_cookie = new JCheckBox("餅乾");
-        cb_type_cookie.setBounds(9, 94, 52, 22);
-        SearchPane.add(cb_type_cookie);
-        
-        cb_type_item = new JCheckBox("物品");
-        cb_type_item.setBounds(62, 94, 52, 22);
-        SearchPane.add(cb_type_item);
-        
-        cb_type_trap = new JCheckBox("陷阱");
-        cb_type_trap.setBounds(9, 122, 52, 22);
-        SearchPane.add(cb_type_trap);
-        
-        cb_type_stage = new JCheckBox("場景");
-        cb_type_stage.setBounds(62, 122, 52, 22);
-        SearchPane.add(cb_type_stage);
-        
+        initCheckBox();
         
         JButton button_search = new JButton("搜尋");
         button_search.setBounds(1, 241, 60, 25);
+        mSearchPane.add(button_search);
         button_search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 getSelectCards();
+                mDefaultState.saveDefaultState();
             }
         });
         
-        SearchPane.add(button_search);
-        
         JButton button_clean = new JButton("清除");
         button_clean.setBounds(86, 241, 60, 25);
-        SearchPane.add(button_clean);
-        
-        label_2 = new JLabel("特殊");
-        label_2.setBounds(9, 153, 64, 22);
-        SearchPane.add(label_2);
-        
-        cb_flip = new JCheckBox("Flip");
-        cb_flip.setBounds(9, 181, 52, 22);
-        SearchPane.add(cb_flip);
+        mSearchPane.add(button_clean);
+        button_clean.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	cleanCheckBox();
+                getSelectCards();
+                mDefaultState.cleanSearchFlag();
+                mDefaultState.saveDefaultState();
+            }
+        });
         
         
         // ==== 卡組
@@ -209,19 +165,21 @@ public class MainUI implements CardListCallBack{
         frame.getContentPane().add(panel);
         panel.setLayout(null);
         
-        textField = new TextField();
-        textField.setText("Deck1");
-        textField.setBounds(9, 5, 147, 22);
-        panel.add(textField);
+        mDeckText = new TextField();
+        mDeckText.setText(mDefaultState.getDeckDefaultName());
+        mDeckText.setBounds(9, 5, 147, 22);
+        panel.add(mDeckText);
         
         loadBtn = new JButton("讀取");
         loadBtn.setBounds(256, 2, 60, 25);
         panel.add(loadBtn);
         loadBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mDeck = CardLoader.loadDeck(textField.getText());
+                mDeck = CardLoader.loadDeck(mDeckText.getText());
                 mDeck.sort();
                 updateDeck();
+                mDefaultState.setDefaultDeckName(mDeckText.getText());
+                mDefaultState.saveDefaultState();
             }
         });
         
@@ -230,7 +188,9 @@ public class MainUI implements CardListCallBack{
         panel.add(saveBtn);
         saveBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                CardLoader.saveDeck(textField.getText(), mDeck);
+                CardLoader.saveDeck(mDeckText.getText(), mDeck);
+                mDefaultState.setDefaultDeckName(mDeckText.getText());
+                mDefaultState.saveDefaultState();
             }
         });
         
@@ -248,7 +208,7 @@ public class MainUI implements CardListCallBack{
 					File selectedFile = fileChooser.getSelectedFile();
 					String filename = selectedFile.getName();
 					System.out.println(selectedFile.getName());
-					textField.setText(filename.substring(0, filename.length() - 4));
+					mDeckText.setText(filename.substring(0, filename.length() - 4));
 				} 
             }
         });
@@ -278,11 +238,132 @@ public class MainUI implements CardListCallBack{
                 updateDeck();
             }
         });
+
+        getSelectCards();
         
-        prepareCards();
+        mDeck = CardLoader.loadDeck(mDeckText.getText());
+        mDeck.sort();
+        updateDeck();
     }
     
-    private void prepareCards() {
+    private void initCheckBox() {
+        // ========================= color ==================================
+        JLabel label = new JLabel("顏色");
+        label.setBounds(9, 10, 64, 22);
+        mSearchPane.add(label);
+        
+        cb_color_red = new JCheckBox("紅");
+        cb_color_red.setFont(new Font("新細明體", Font.PLAIN, 12));
+        cb_color_red.setBounds(9, 38, 41, 22);
+        cb_color_red.setSelected(mDefaultState.getDefaultColorFlag(0));
+        mSearchPane.add(cb_color_red);
+        cb_color_red.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	mDefaultState.setDefaultColorFlag(0, cb_color_red.isSelected());
+            }
+        });
+        
+        
+        cb_color_yellow = new JCheckBox("黃");
+        cb_color_yellow.setBounds(51, 38, 41, 22);
+        cb_color_yellow.setSelected(mDefaultState.getDefaultColorFlag(1));
+        mSearchPane.add(cb_color_yellow);
+        cb_color_yellow.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	mDefaultState.setDefaultColorFlag(1, cb_color_yellow.isSelected());
+            }
+        });
+        
+        cb_color_green = new JCheckBox("綠");
+        cb_color_green.setBounds(97, 38, 41, 22);
+        cb_color_green.setSelected(mDefaultState.getDefaultColorFlag(2));
+        mSearchPane.add(cb_color_green);
+        cb_color_green.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	mDefaultState.setDefaultColorFlag(2, cb_color_green.isSelected());
+            }
+        });
+
+        
+        
+        // ========================= type ==================================
+        JLabel label_1 = new JLabel("卡片類型");
+        label_1.setBounds(9, 66, 64, 22);
+        mSearchPane.add(label_1);
+        
+        cb_type_cookie = new JCheckBox("餅乾");
+        cb_type_cookie.setBounds(9, 94, 52, 22);
+        cb_type_cookie.setSelected(mDefaultState.getDefaultTypeFlag(0));
+        mSearchPane.add(cb_type_cookie);
+        cb_type_cookie.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	mDefaultState.setDefaultTypeFlag(0, cb_type_cookie.isSelected());
+            }
+        });
+        
+        
+        cb_type_item = new JCheckBox("物品");
+        cb_type_item.setBounds(62, 94, 52, 22);
+        cb_type_item.setSelected(mDefaultState.getDefaultTypeFlag(1));
+        mSearchPane.add(cb_type_item);
+        cb_type_item.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	mDefaultState.setDefaultTypeFlag(1, cb_type_item.isSelected());
+            }
+        });
+        
+        
+        cb_type_trap = new JCheckBox("陷阱");
+        cb_type_trap.setBounds(9, 122, 52, 22);
+        cb_type_trap.setSelected(mDefaultState.getDefaultTypeFlag(2));
+        mSearchPane.add(cb_type_trap);
+        cb_type_trap.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	mDefaultState.setDefaultTypeFlag(2, cb_type_trap.isSelected());
+            }
+        });
+        
+        
+        cb_type_stage = new JCheckBox("場景");
+        cb_type_stage.setBounds(62, 122, 52, 22);
+        cb_type_stage.setSelected(mDefaultState.getDefaultTypeFlag(3));
+        mSearchPane.add(cb_type_stage);
+        cb_type_stage.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	mDefaultState.setDefaultTypeFlag(3, cb_type_stage.isSelected());
+            }
+        });
+        
+        
+        label_2 = new JLabel("特殊");
+        label_2.setBounds(9, 153, 64, 22);
+        mSearchPane.add(label_2);
+        
+        cb_flip = new JCheckBox("Flip");
+        cb_flip.setBounds(9, 181, 52, 22);
+        cb_flip.setSelected(mDefaultState.getDefaultFlipFlag());
+        mSearchPane.add(cb_flip);
+        cb_flip.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	mDefaultState.setDefaultFlipFlag(cb_flip.isSelected());
+            }
+        });
+    }
+
+    private void cleanCheckBox() {
+    	cb_color_red.setSelected(false);
+    	cb_color_yellow.setSelected(false);
+    	cb_color_green.setSelected(false);
+    	
+    	cb_type_cookie.setSelected(false);
+    	cb_type_item.setSelected(false);
+    	cb_type_trap.setSelected(false);
+    	cb_type_stage.setSelected(false);
+    	
+    	cb_flip.setSelected(false);
+    }
+    
+/*    private void prepareCards() {
         CardList list = CardList.getInstance();
         System.out.println("========== start prepareCards =============");
         for (Card card: list.getAllCards()) {
@@ -299,7 +380,7 @@ public class MainUI implements CardListCallBack{
             cardLabel.addClickListener(this);
             mCardsPane.add(cardLabel);
         }
-    }
+    }*/
     
     private void getSelectCards() {
         System.out.println("========== start getSelectCards =============");
