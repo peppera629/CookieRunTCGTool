@@ -201,7 +201,7 @@ public class MainUI implements CardListCallBack{
         selectBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setCurrentDirectory(new File("resources/deck/"));
+				fileChooser.setCurrentDirectory(new File("deck/"));
 				int returnValue = fileChooser.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION)
 				{ 
@@ -363,25 +363,6 @@ public class MainUI implements CardListCallBack{
     	cb_flip.setSelected(false);
     }
     
-/*    private void prepareCards() {
-        CardList list = CardList.getInstance();
-        System.out.println("========== start prepareCards =============");
-        for (Card card: list.getAllCards()) {
-        	String path = "resources/cards/"+card.getPack()+"/"+card.getId()+".png";
-        	if (DEBUG) {
-        		card.dump();
-                System.out.println("read : "+path);
-        	}
-            ImageIcon cardIcon = new ImageIcon(path);
-            
-            Image image = cardIcon.getImage().getScaledInstance(60, 84,  java.awt.Image.SCALE_SMOOTH);
-            cardIcon = new ImageIcon(image);
-            ClickableCardLabel cardLabel = new ClickableCardLabel(cardIcon, card);
-            cardLabel.addClickListener(this);
-            mCardsPane.add(cardLabel);
-        }
-    }*/
-    
     private void getSelectCards() {
         System.out.println("========== start getSelectCards =============");
         CardList list = CardList.getInstance();
@@ -397,16 +378,7 @@ public class MainUI implements CardListCallBack{
         mCardsPane.setLayout(new GridLayout(0, 6, 5, 5));
         List<Card> cardList = list.getSelectCards();
         for (Card card: cardList) {
-            String path = "resources/cards/"+card.getPack()+"/"+card.getId()+".png";
-        	if (DEBUG) {
-        		card.dump();
-                System.out.println("read : "+path);
-        	}
-            ImageIcon cardIcon = new ImageIcon(path);
-            
-            Image image = cardIcon.getImage().getScaledInstance(60, 84,  java.awt.Image.SCALE_SMOOTH);
-            cardIcon = new ImageIcon(image);
-            ClickableCardLabel cardLabel = new ClickableCardLabel(cardIcon, card);
+            ClickableCardLabel cardLabel = new ClickableCardLabel(card.getcardIcon(), card);
             cardLabel.addClickListener(this);
             mCardsPane.add(cardLabel);
         }
@@ -427,19 +399,20 @@ public class MainUI implements CardListCallBack{
         mDeckPane.setLayout(new GridLayout(0, 6, 5, 5));
         System.out.println("========== start updateDeck =============");
         for (Card card: mDeck.getAllCards()) {
-        	String path = "resources/cards/"+card.getPack()+"/"+card.getId()+".png";
-        	if (DEBUG) {
-        		card.dump();
-                System.out.println("read : "+path);
-        	}
-            ImageIcon cardIcon = new ImageIcon(path);
-            
-            Image image = cardIcon.getImage().getScaledInstance(60, 84,  java.awt.Image.SCALE_SMOOTH);
-            cardIcon = new ImageIcon(image);
-            ClickableCardLabel cardLabel = new ClickableCardLabel(cardIcon, card);
+            ClickableCardLabel cardLabel = new ClickableCardLabel(card.getcardIcon(), card);
             cardLabel.addClickListener(this);
             mDeckPane.add(cardLabel);
         }
+        
+        for(int i=mDeck.getCardCount(); i<18; i++) {
+            String path = "resources/cards/empty.png";
+            ImageIcon cardIcon = new ImageIcon(path);
+            Image image = cardIcon.getImage().getScaledInstance(60, 84,  java.awt.Image.SCALE_SMOOTH);
+            cardIcon = new ImageIcon(image);
+            JLabel cardLabel = new JLabel(cardIcon);
+            mDeckPane.add(cardLabel);
+        }
+        
         mDeckPane.revalidate();
         mDeckPane.repaint();
         mCardCountTxt.setText(mDeck.getCardCount()+"/60");

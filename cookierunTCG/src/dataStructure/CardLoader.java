@@ -20,7 +20,7 @@ public class CardLoader {
 	public static List<Card> loadAllCards() {
 		List<Card> cardList = new ArrayList<Card>();
 	    try {
-	        File file = new File("resources/pack.txt");
+	        File file = new File("resources/card_config/pack.txt");
 	        if (file.exists()) {
 				FileInputStream reader = new FileInputStream(file);
 		        BufferedReader input = new BufferedReader(
@@ -52,7 +52,7 @@ public class CardLoader {
         System.out.println(packName);
 	    try {
 	        System.out.println("loadPack 1");
-	        File file = new File("resources/"+packName+".txt");
+	        File file = new File("resources/card_config/pack/"+packName+".txt");
 			FileInputStream reader = new FileInputStream(file);
 	        BufferedReader input = new BufferedReader(
 	                new InputStreamReader(new FileInputStream(file), "utf-8")); 
@@ -111,7 +111,7 @@ public class CardLoader {
 		Deck deck = new Deck();
 		CardList cardList = CardList.getInstance();
 	    try {
-	        File file = new File("resources/deck/"+deckName+".txt");
+	        File file = new File("deck/"+deckName+".txt");
 	        if (file.exists()) {
 				FileInputStream reader = new FileInputStream(file);
 		        BufferedReader input = new BufferedReader(
@@ -143,7 +143,7 @@ public class CardLoader {
 	public static void saveDeck(String deckName, Deck deck) {
 		FileWriter fw;
 		try {
-			fw = new FileWriter("resources/deck/"+deckName+".txt");
+			fw = new FileWriter("deck/"+deckName+".txt");
 			List<Card> cardList = deck.getAllCards();
 			for (Card c : cardList) {
 		        fw.write(c.getId()+"\n");
@@ -160,7 +160,7 @@ public class CardLoader {
 	public static void saveReadableDeck(String deckName, Deck deck) {
 		FileWriter fw;
 		try {
-			fw = new FileWriter("resources/deck_readable/"+deckName+".txt");
+			fw = new FileWriter("deck_readable/"+deckName+".txt");
 			List<Card> cardList = deck.getAllCards();
 			Card lastCard = null;
 			int lastCardCount = 0;
@@ -190,6 +190,5 @@ public class CardLoader {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 }

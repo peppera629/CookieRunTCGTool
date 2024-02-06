@@ -81,6 +81,13 @@ public class Deck {
 	public void clear() {
 		cardList.clear();
 		flipList.clear();
+		CookieList[0].clear();
+		CookieList[1].clear();
+		CookieList[2].clear();
+		CookieList[3].clear();
+		ItemList.clear();
+		TrapList.clear();
+		StageList.clear();
 	}
 	
     public void sort() {

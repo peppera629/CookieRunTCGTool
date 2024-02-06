@@ -1,4 +1,9 @@
 package dataStructure;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
+
+import ui.ClickableCardLabel;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardType;
 
@@ -14,6 +19,7 @@ public class Card {
 	private String _rare;
 	private String _mark;
 	private int _lv;
+	private ImageIcon _cardIcon;
 	public Card(String pack, String id, String name, CardColor color, CardType type,
 			boolean flip, String rare, String mark, int lv) {
 		_serial_number = SERIAL_NUMBER++;
@@ -27,6 +33,16 @@ public class Card {
 		_mark = mark;
 		_lv = lv;
 		dump();
+		createCardLabel();
+	}
+
+	private void createCardLabel() {
+        String path = "resources/cards/"+getPack()+"/"+getId()+".png";
+        System.out.println("read : "+path);
+        ImageIcon cardIcon = new ImageIcon(path);
+        
+        Image image = cardIcon.getImage().getScaledInstance(60, 84,  java.awt.Image.SCALE_SMOOTH);
+        _cardIcon = new ImageIcon(image);
 	}
 	
 	public String dump() {
@@ -75,4 +91,9 @@ public class Card {
 	public boolean isFlip() {
 		return _isFlip;
 	}
+	
+	public ImageIcon getcardIcon() {
+		return _cardIcon;
+	}
+	
 }

@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 
 import dataStructure.Card;
 
-class ClickableCardLabel extends JLabel {
+public class ClickableCardLabel extends JLabel {
 	interface CardListCallBack{
 		public void addCard(Card card);
 		public void removeCard(Card card);
