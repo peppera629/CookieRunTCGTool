@@ -1,3 +1,14 @@
+=== Version 0.1.2 : 2024-02-06
+- add all cards into database from BS1, ST1, ST2 and ST3
+- refactor to make display faster.
+
+=== Version 0.1.1 : 2024-02-05
+- Cards data contain cookie level now
+- Show deck summary
+- Output a readable text file while saving deck
+- Restore last state and last saved deck
+- Fix some minor problem
+
 === Version 0.1.0 : 2024-02-03
 first check in with following function
 - List card list.
