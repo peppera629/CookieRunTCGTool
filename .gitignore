@@ -4,6 +4,6 @@ cookierunTCG/.settings
 cookierunTCG/bin
 
 
-CookieTCG/cookierunTCG/resources/cards
-CookieTCG/cookierunTCG/deck/*
-CookieTCG/cookierunTCG/deck_readable/*
+cookierunTCG/resources/cards
+cookierunTCG/deck/*
+cookierunTCG/deck_readable/*
