@@ -49,16 +49,16 @@ public class CardLoader {
 	}
 	
 	private static void loadPack(String packName, List<Card> cardList) {
-        System.out.println(packName);
+//        System.out.println(packName);
 	    try {
-	        System.out.println("loadPack 1");
+//	        System.out.println("loadPack 1");
 	        File file = new File("resources/card_config/pack/"+packName+".txt");
 			FileInputStream reader = new FileInputStream(file);
 	        BufferedReader input = new BufferedReader(
 	                new InputStreamReader(new FileInputStream(file), "utf-8")); 
             String data;
 	        while((data= input.readLine())!=null) {
-                System.out.println(data);
+//                System.out.println(data);
 	            if (!data.equals("") && !data.startsWith("//")) {
 	            	String[] cardData = data.split(",");
 	            	CardColor color;
@@ -117,9 +117,7 @@ public class CardLoader {
 		        BufferedReader input = new BufferedReader(
 		                new InputStreamReader(new FileInputStream(file), "utf-8")); 
 		        String data;
-		        while((data= input.readLine())!=null) {
-		            System.out.println(data);
-	
+		        while((data= input.readLine())!=null) {	
 		            if (!data.equals("") && !data.startsWith("//")) {
 		            	Card card = cardList.getCardById(data);
 		            	deck.addCard(card);

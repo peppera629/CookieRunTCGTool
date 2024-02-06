@@ -1,6 +1,7 @@
 package util;
 
 public class CardUtil {
+	public static int LEVEL_MAX = 3;
 	public static int COLOR_MAX = 3;
 	public enum CardColor {
 	    Red(0), Yellow(1), Green(2);

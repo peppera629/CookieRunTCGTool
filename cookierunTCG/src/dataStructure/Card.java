@@ -32,13 +32,13 @@ public class Card {
 		_rare = rare;
 		_mark = mark;
 		_lv = lv;
-		dump();
+//		dump();
 		createCardLabel();
 	}
 
 	private void createCardLabel() {
         String path = "resources/cards/"+getPack()+"/"+getId()+".png";
-        System.out.println("read : "+path);
+//        System.out.println("read : "+path);
         ImageIcon cardIcon = new ImageIcon(path);
         
         Image image = cardIcon.getImage().getScaledInstance(60, 84,  java.awt.Image.SCALE_SMOOTH);
