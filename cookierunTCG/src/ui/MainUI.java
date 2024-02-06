@@ -66,13 +66,16 @@ public class MainUI implements CardListCallBack{
      * Create the application.
      */
     public MainUI() {
+		deckWindow = new DeckWindow();
         initialize();
     }
 
     /**
      * Initialize the contents of the frame.
      */
-    DefaultState mDefaultState;
+
+	private DeckWindow deckWindow;
+    private DefaultState mDefaultState;
     private JPanel mCardsPane, mDeckPane;
     private Panel mSearchPane;
     private JCheckBox cb_color_red, cb_color_yellow, cb_color_green;
@@ -95,6 +98,7 @@ public class MainUI implements CardListCallBack{
     private JCheckBox cb_type_cookie_lv1;
     private JCheckBox cb_type_cookie_lv2;
     private JCheckBox cb_type_cookie_lv3;
+    private JButton showDeckBtn;
     private void initialize() {
         
 /*        JPanel mainPanel = new JPanel();
@@ -245,6 +249,16 @@ public class MainUI implements CardListCallBack{
         mDeckOtherSummaryTxt = new JLabel("物品 : 0   陷阱 : 0   場地 : 0");
         mDeckOtherSummaryTxt.setBounds(245, 339, 236, 22);
         frame.getContentPane().add(mDeckOtherSummaryTxt);
+        
+        showDeckBtn = new JButton("展示完整卡表");
+        showDeckBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		deckWindow.show(mDeck, mDeckText.getText());
+        	}
+        });
+        
+        showDeckBtn.setBounds(676, 499, 120, 25);
+        frame.getContentPane().add(showDeckBtn);
         mClearDeckBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mDeck.clear();
