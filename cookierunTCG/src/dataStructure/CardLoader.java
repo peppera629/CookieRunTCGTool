@@ -144,7 +144,9 @@ public class CardLoader {
 			fw = new FileWriter("deck/"+deckName+".txt");
 			List<Card> cardList = deck.getAllCards();
 			for (Card c : cardList) {
-		        fw.write(c.getId()+"\n");
+				for(int i=0; i<c.getCount(); i++) {
+					fw.write(c.getId()+"\n");
+				}
 			}
 	        fw.flush();
 	        fw.close();
@@ -163,7 +165,13 @@ public class CardLoader {
 			Card lastCard = null;
 			int lastCardCount = 0;
 			for (Card c : cardList) {
-				if (c != lastCard) {
+				fw.write("["+c.getId()+"] "+c.getName());
+				if (c.getCount() > 1) {
+					fw.write("  x "+c.getCount()+"\n");
+				} else {
+					fw.write("\n");
+				}
+/*				if (c != lastCard) {
 					if (lastCardCount == 1) {
 						fw.write("\n");
 					} else if (lastCardCount > 1) {
@@ -174,7 +182,7 @@ public class CardLoader {
 					lastCardCount = 1;
 				} else {
 					lastCardCount++;
-				}
+				}*/
 			}
 			if (lastCardCount == 1) {
 				fw.write("\n");

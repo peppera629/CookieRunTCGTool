@@ -3,6 +3,8 @@ package dataStructure;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.Config;
+
 public class Deck {
 	private List<Card> cardList;
 	private List<Card> flipList;
@@ -10,6 +12,7 @@ public class Deck {
 	private List<Card> ItemList;
 	private List<Card> TrapList;
 	private List<Card> StageList;
+	
 	public Deck() {
 		cardList = new ArrayList<Card>();
 		flipList = new ArrayList<Card>();
@@ -27,37 +30,70 @@ public class Deck {
 	}
 	
 	public boolean addCard(Card card) {
-		int count = 0;
-		for (Card c : cardList) {
-			if (c.getSerialNumber() == card.getSerialNumber()) {
-				count++;
+		if(!Config.SHOW_CARD_COUNT) {
+			int count = 0;
+			for (Card c : cardList) {
+				if (c.getSerialNumber() == card.getSerialNumber()) {
+					count++;
+				}
 			}
-		}
-		if (count < 4) {
-			cardList.add(card);
-			switch(card.getType()) {
-				case Cookie:
-					if(card.isFlip()) {
-						flipList.add(card);
-					}
-					CookieList[card.getLv()].add(card);
-					break;
-				case Item:
-					ItemList.add(card);
-					break;
-				case Trap:
-					TrapList.add(card);
-					break;
-				case Stage:
-					StageList.add(card);
-					break;
+			if (count < 4) {
+				cardList.add(card);
+				addToTargetList(card);
+				return true;
 			}
-			return true;
+		} else {
+			if (!cardList.contains(card)) {
+				card.setCount(1);
+				cardList.add(card);
+				addToTargetList(card);
+				return true;
+			} else {
+				if (card.getCount()<4) {
+					card.add();
+					return true;
+				}
+			}
 		}
 		return false;
 	}
 	
+	private void addToTargetList(Card card) {
+		switch(card.getType()) {
+			case Cookie:
+				if(card.isFlip()) {
+					flipList.add(card);
+				}
+				CookieList[card.getLv()].add(card);
+				break;
+			case Item:
+				ItemList.add(card);
+				break;
+			case Trap:
+				TrapList.add(card);
+				break;
+			case Stage:
+				StageList.add(card);
+				break;
+		}
+	}
+	
 	public boolean removeCard(Card card) {
+		if(!Config.SHOW_CARD_COUNT) {
+			return removeFromTargetList(card);
+		} else {
+			if (card.getCount() > 0) {
+				card.minus();
+				if (card.getCount() <= 0) {
+					removeFromTargetList(card);
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+		
+	private boolean removeFromTargetList(Card card) {
 		switch(card.getType()) {
 			case Cookie:
 				if(card.isFlip()) {
@@ -95,27 +131,50 @@ public class Deck {
                   -> o1.compareTo(o2));
     }
 
-    public int getCardCount() {
+    public int getCardArrayListSize() {
     	return cardList.size();
+    }
+
+    public int getCardCount() {
+    	return getTargetCardCount(cardList);
     }
     
     public int getFlipCount() {
-    	return flipList.size();
+    	return getTargetCardCount(flipList);
     }
     
+    public int getTargetCardCount(List<Card> cards) {
+    	if (!Config.SHOW_CARD_COUNT) {
+    		return cards.size();
+    	} else {
+    		int count = 0;
+			for (Card card : cards) {
+				count += card.getCount();
+			}
+			return count;
+    	}
+    }    
+    
     public String getCookieSummary() {
+    	int L0Count = getTargetCardCount(CookieList[0]);
+    	int L1Count = getTargetCardCount(CookieList[1]);
+    	int L2Count = getTargetCardCount(CookieList[2]);
+    	int L3Count = getTargetCardCount(CookieList[3]);
     	String ret = "";
-    	ret += "餅乾 : "+(CookieList[1].size()+CookieList[2].size()+CookieList[3].size()+CookieList[0].size());
-    	ret += " ( L1 : "+CookieList[1].size();
-    	ret += "   L2 : "+CookieList[2].size();
-    	ret += "   L3 : "+CookieList[3].size()+" )";
+    	ret += "餅乾 : "+(L0Count + L1Count + L1Count + L3Count);
+    	ret += " ( L1 : "+L1Count;
+    	ret += "   L2 : "+L1Count;
+    	ret += "   L3 : "+L3Count+" )";
     	return ret;
     }
     public String getOtherSummary() {
+    	int ItemCount = getTargetCardCount(ItemList);
+    	int TrapCount = getTargetCardCount(TrapList);
+    	int StageCount = getTargetCardCount(StageList);
     	String ret = "";
-    	ret += "物品 : "+ItemList.size();
-    	ret += "   陷阱 : "+TrapList.size();
-    	ret += "   場地 : "+StageList.size();
+    	ret += "物品 : "+ItemCount;
+    	ret += "   陷阱 : "+TrapCount;
+    	ret += "   場地 : "+StageCount;
     	return ret;
     }
 }

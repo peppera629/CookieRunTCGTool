@@ -22,11 +22,13 @@ import java.util.List;
 import java.awt.ScrollPane;
 import java.awt.TextField;
 
-import ui.ClickableCardLabel.CardListCallBack;
+import ui.ClickableCardPanel.CardListCallBack;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardType;
+import util.Config;
 import util.Constant;
 import util.DefaultState;
+import util.UIUtil;
 
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -504,44 +506,15 @@ public class MainUI implements CardListCallBack{
         list.setFlip(cb_flip.isSelected());
         
         mCardsPane.removeAll();
-        mCardsPane.setLayout(new GridLayout(0, 6, 5, 5));
-        List<Card> cardList = list.getSelectCards();
-        for (Card card: cardList) {
-            ClickableCardLabel cardLabel = new ClickableCardLabel(card.getcardIcon(), card);
-            cardLabel.addClickListener(this);
-            mCardsPane.add(cardLabel);
-        }
-        for(int i=cardList.size(); i<13; i++) {
-            String path = "resources/cards/empty.png";
-            ImageIcon cardIcon = new ImageIcon(path);
-            Image image = cardIcon.getImage().getScaledInstance(60, 84,  java.awt.Image.SCALE_SMOOTH);
-            cardIcon = new ImageIcon(image);
-            JLabel cardLabel = new JLabel(cardIcon);
-            mCardsPane.add(cardLabel);
-        }
+        UIUtil.showDeck(this, mCardsPane, list.getSelectCards(), 13, 6, UIUtil.CARD_SIZE_SMALL, false);
         mCardsPane.revalidate();
         mCardsPane.repaint();
     }
     
     private void updateDeck() {
         mDeckPane.removeAll();
-        mDeckPane.setLayout(new GridLayout(0, 6, 5, 5));
-        System.out.println("========== start updateDeck =============");
-        for (Card card: mDeck.getAllCards()) {
-            ClickableCardLabel cardLabel = new ClickableCardLabel(card.getcardIcon(), card);
-            cardLabel.addClickListener(this);
-            mDeckPane.add(cardLabel);
-        }
-        
-        for(int i=mDeck.getCardCount(); i<18; i++) {
-            String path = "resources/cards/empty.png";
-            ImageIcon cardIcon = new ImageIcon(path);
-            Image image = cardIcon.getImage().getScaledInstance(60, 84,  java.awt.Image.SCALE_SMOOTH);
-            cardIcon = new ImageIcon(image);
-            JLabel cardLabel = new JLabel(cardIcon);
-            mDeckPane.add(cardLabel);
-        }
-        
+        UIUtil.showDeck(this, mDeckPane, mDeck.getAllCards(), 18, 6, UIUtil.CARD_SIZE_SMALL, true);
+
         mDeckPane.revalidate();
         mDeckPane.repaint();
         mCardCountTxt.setText(mDeck.getCardCount()+"/60");
@@ -588,7 +561,7 @@ public class MainUI implements CardListCallBack{
             
         Image image = cardIcon.getImage().getScaledInstance(342, 469, java.awt.Image.SCALE_SMOOTH);
         cardIcon = new ImageIcon(image);
-        ClickableCardLabel cardLabel = new ClickableCardLabel(cardIcon, card);
+        JLabel cardLabel = new JLabel(cardIcon);
         mCardDetailPane.add(cardLabel, BorderLayout.CENTER);
         mCardDetailPane.revalidate();
         mCardDetailPane.repaint();

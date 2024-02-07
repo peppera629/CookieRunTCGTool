@@ -3,9 +3,10 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-import ui.ClickableCardLabel;
+import ui.ClickableCardPanel;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardType;
+import util.Config;
 
 public class Card {
 	private static int SERIAL_NUMBER = 0;
@@ -20,6 +21,8 @@ public class Card {
 	private String _mark;
 	private int _lv;
 	private ImageIcon _cardIcon;
+	private String _cardImagePath;
+	private int _cardCount;
 	public Card(String pack, String id, String name, CardColor color, CardType type,
 			boolean flip, String rare, String mark, int lv) {
 		_serial_number = SERIAL_NUMBER++;
@@ -32,19 +35,19 @@ public class Card {
 		_rare = rare;
 		_mark = mark;
 		_lv = lv;
+		_cardCount = 0;
 //		dump();
 		createCardLabel();
 	}
 
 	private void createCardLabel() {
-        String path = "resources/cards/"+getPack()+"/"+getId()+".png";
-//        System.out.println("read : "+path);
-        ImageIcon cardIcon = new ImageIcon(path);
+		_cardImagePath = "resources/cards/"+getPack()+"/"+getId()+".png";
+        ImageIcon cardIcon = new ImageIcon(_cardImagePath);
         
-        Image image = cardIcon.getImage().getScaledInstance(60, 84,  java.awt.Image.SCALE_SMOOTH);
+        Image image = cardIcon.getImage().getScaledInstance(Config.SMALL_CARD_WIDTH, Config.SMALL_CARD_HEIGHT,  java.awt.Image.SCALE_SMOOTH);
         _cardIcon = new ImageIcon(image);
 	}
-	
+
 	public String dump() {
         System.out.println(_pack + ", " + _id + ", " + _name + ", " + _color + ", " + _type + ", " + _isFlip + ", " + _rare + ", " + _mark);
 		return _pack + ", " + _id + ", " + _name + ", " + _color + ", " + _type + ", " + _isFlip + ", " + _rare + ", " + _mark +", lv = "+_lv;
@@ -91,9 +94,36 @@ public class Card {
 	public boolean isFlip() {
 		return _isFlip;
 	}
-	
+
 	public ImageIcon getcardIcon() {
 		return _cardIcon;
+	}
+
+	public ImageIcon getResizedCardImage(int w, int h) {
+        ImageIcon cardIcon = new ImageIcon(_cardImagePath);
+        
+        Image image = cardIcon.getImage().getScaledInstance(w, h,  java.awt.Image.SCALE_SMOOTH);
+		return new ImageIcon(image);
+	}
+	
+	public ImageIcon getOriginalSizeImage() {
+		return new ImageIcon(_cardImagePath);
+	}
+	
+	public int getCount() {
+		return _cardCount;
+	}
+	
+	public void setCount(int count) {
+		_cardCount = count;
+	}
+	
+	public void add() {
+		_cardCount++;
+	}
+	
+	public void minus() {
+		_cardCount--;
 	}
 	
 }
