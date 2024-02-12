@@ -4,6 +4,10 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
 import java.awt.BorderLayout;
 
 import javax.swing.ImageIcon;
@@ -23,6 +27,7 @@ import java.awt.ScrollPane;
 import java.awt.TextField;
 
 import ui.ClickableCardPanel.CardListCallBack;
+import ui.SettingsWindow.ConfigChangedCallback;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardType;
 import util.Config;
@@ -40,7 +45,7 @@ import java.awt.FlowLayout;
 import java.awt.Color;
 import javax.swing.JButton;
 
-public class MainUI implements CardListCallBack{
+public class MainUI implements CardListCallBack, ConfigChangedCallback {
 
 	private static boolean DEBUG = false;
     private JFrame frame;
@@ -69,6 +74,8 @@ public class MainUI implements CardListCallBack{
      */
     public MainUI() {
 		deckWindow = new DeckWindow();
+		settingsWindow = new SettingsWindow();
+		settingsWindow.setConfigChangedCallback(this);
         initialize();
     }
 
@@ -77,6 +84,7 @@ public class MainUI implements CardListCallBack{
      */
 
 	private DeckWindow deckWindow;
+	private SettingsWindow settingsWindow;
     private DefaultState mDefaultState;
     private JPanel mCardsPane, mDeckPane;
     private Panel mSearchPane;
@@ -459,14 +467,31 @@ public class MainUI implements CardListCallBack{
             }
         });
         
+        createMenu();
+    }
+    
+    private void createMenu() {
+
+        // 創建選單列
+        JMenuBar menuBar = new JMenuBar();
         
+        // 創建選單
+//        JMenu settingsMenu = new JMenu("設定");
+        JMenuItem settingsMenuItem = new JMenuItem("設定");
+        menuBar.add(settingsMenuItem);
+//        JMenuItem aboutMenu = new JMenuItem("關於");
+//        menuBar.add(aboutMenu);
         
+        // 創建一個 ActionListener 來處理 Settings 選項的事件
+        settingsMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Settings clicked");
+            	settingsWindow.show();
+            }
+        });
         
-        
-        
-        
-        
-        
+        // 設置選單列
+        frame.setJMenuBar(menuBar);
     }
 
     private void cleanCheckBox() {
@@ -566,4 +591,11 @@ public class MainUI implements CardListCallBack{
         mCardDetailPane.revalidate();
         mCardDetailPane.repaint();
     }
+
+	@Override
+	public void onSortConfigChanged() {
+        mDeck.sort();
+        updateDeck();
+		
+	}
 }

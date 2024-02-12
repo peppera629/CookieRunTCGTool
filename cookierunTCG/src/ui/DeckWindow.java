@@ -28,22 +28,21 @@ import java.awt.event.ActionEvent;
 public class DeckWindow {
 
 	private JFrame frame;
-	private static DeckWindow window = new DeckWindow();
 	private Deck mDeck;
 	private String mDeckName;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void show(Deck deck, String deckname) {
+	public void show(Deck deck, String deckname) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					window.setDeck(deck, deckname);
-					window.initialize();
-					window.frame.setVisible(true);
-					window.updateDeck();
-					window.updateOutputDeck();
+					setDeck(deck, deckname);
+					initialize();
+					frame.setVisible(true);
+					updateDeck();
+					updateOutputDeck();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -106,6 +106,15 @@ public class DefaultState {
 				}
 			}
 
+			// sort
+			if ((data = input.readLine()) != null) {
+				String[] flags = data.split(",");
+				Config.CARD_SORT_ORDER_TYPE = Integer.valueOf(flags[0]);
+				Config.CARD_SORT_ORDER_FLIP = Integer.valueOf(flags[1]);
+				Config.CARD_SORT_ORDER_LEVEL = Integer.valueOf(flags[2]);
+				Config.CARD_SORT_ORDER_COLOR = Integer.valueOf(flags[3]);
+			}
+			
 			input.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("An error occurred.");
@@ -189,6 +198,11 @@ public class DefaultState {
 			}
 			fw.write("\n");
 
+			fw.write(Config.CARD_SORT_ORDER_TYPE+",");
+			fw.write(Config.CARD_SORT_ORDER_FLIP+",");
+			fw.write(Config.CARD_SORT_ORDER_LEVEL+",");
+			fw.write(Config.CARD_SORT_ORDER_COLOR+"\n");
+			
 			fw.flush();
 			fw.close();
 		} catch (IOException e) {

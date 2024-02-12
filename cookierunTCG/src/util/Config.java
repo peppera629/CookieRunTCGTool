@@ -16,4 +16,19 @@ public class Config {
 	
 	public static int DW_OUTPUT_WIDTH = 300;
 	public static int DW_OUTPUT_HEIGHT = (int) (DW_OUTPUT_WIDTH * CARD_RATIO);
+
+	public static final int CARD_SORT_SIZE_TYPE = 3;
+	public static final int CARD_SORT_SIZE_FLIP = 1;
+	public static final int CARD_SORT_SIZE_LEVEL = 2;
+	public static final int CARD_SORT_SIZE_COLOR = 3;
+
+	public static int CARD_SORT_VALUE_TYPE = 2 << 26;
+	public static int CARD_SORT_VALUE_FLIP = 2 << 25;
+	public static int CARD_SORT_VALUE_LEVEL = 2 << 23;
+	public static int CARD_SORT_VALUE_COLOR = 2 << 20;
+	
+	public static int CARD_SORT_ORDER_TYPE = 1;
+	public static int CARD_SORT_ORDER_FLIP = 2;
+	public static int CARD_SORT_ORDER_LEVEL = 3;
+	public static int CARD_SORT_ORDER_COLOR = 4;
 }

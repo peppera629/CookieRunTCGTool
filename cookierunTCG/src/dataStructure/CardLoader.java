@@ -123,6 +123,7 @@ public class CardLoader {
 		            	deck.addCard(card);
 		            }
 		        } 
+		        reader.close();
 		        input.close();
 	        }
         } catch (FileNotFoundException e) {

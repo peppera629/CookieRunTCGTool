@@ -125,7 +125,7 @@ public class Deck {
 		TrapList.clear();
 		StageList.clear();
 	}
-	
+
     public void sort() {
     	cardList.sort((o1, o2)
                   -> o1.compareTo(o2));
@@ -161,9 +161,9 @@ public class Deck {
     	int L2Count = getTargetCardCount(CookieList[2]);
     	int L3Count = getTargetCardCount(CookieList[3]);
     	String ret = "";
-    	ret += "餅乾 : "+(L0Count + L1Count + L1Count + L3Count);
+    	ret += "餅乾 : "+(L0Count + L1Count + L2Count + L3Count);
     	ret += " ( L1 : "+L1Count;
-    	ret += "   L2 : "+L1Count;
+    	ret += "   L2 : "+L2Count;
     	ret += "   L3 : "+L3Count+" )";
     	return ret;
     }

@@ -6,11 +6,13 @@ import javax.swing.ImageIcon;
 import ui.ClickableCardPanel;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardType;
+import util.CardUtil;
 import util.Config;
 
 public class Card {
 	private static int SERIAL_NUMBER = 0;
 	private int _serial_number;
+	private int _position;
 	private String _pack;
 	private String _id;
 	private String _name;
@@ -36,6 +38,12 @@ public class Card {
 		_mark = mark;
 		_lv = lv;
 		_cardCount = 0;
+		_position = _serial_number
+				+ (CardUtil.TYPE_MAX - _type.getValue()) * 100000000
+				+ (_isFlip ? 0 : 10000000)
+				+ (CardUtil.LEVEL_MAX - _lv) * 1000000
+				+ (CardUtil.COLOR_MAX - _color.getValue()) * 100000 
+				;
 //		dump();
 		createCardLabel();
 	}
@@ -49,20 +57,44 @@ public class Card {
 	}
 
 	public String dump() {
-        System.out.println(_pack + ", " + _id + ", " + _name + ", " + _color + ", " + _type + ", " + _isFlip + ", " + _rare + ", " + _mark);
-		return _pack + ", " + _id + ", " + _name + ", " + _color + ", " + _type + ", " + _isFlip + ", " + _rare + ", " + _mark +", lv = "+_lv;
+        System.out.println(_pack + ", " + _id + ", " + _name + ", " + _color + ", " + _type + ", " 
+	+ _isFlip + ", " + _rare + ", " + _mark +", lv = "+_lv+"      : "+_position);
+		return _pack + ", " + _id + ", " + _name + ", " + _color + ", " + _type + ", " 
+	+ _isFlip + ", " + _rare + ", " + _mark +", lv = "+_lv+"      : "+_position;
 	}
 
 	public int compareTo(Card card) {
-		if (getSerialNumber() == card.getSerialNumber()) {
+		if (getCardDefaultPosition() == card.getCardDefaultPosition()) {
+			return 0;
+		} else if (getCardDefaultPosition() < card.getCardDefaultPosition()) {
+			return 1;
+		} else {
+			return -1;
+		}
+		/*if (getSerialNumber() == card.getSerialNumber()) {
 			return 0;
 		} else if (getSerialNumber() > card.getSerialNumber()) {
 			return 1;
 		} else {
 			return -1;
-		}
+		}*/
 	}
 
+	public int getCardDefaultPosition() {
+		int lv_weight = CardUtil.LEVEL_MAX  - _lv + 1;
+		if (_lv == 0) {
+			lv_weight = 0;
+		}
+		_position = _serial_number
+				+ (CardUtil.TYPE_MAX - _type.getValue()) * Config.CARD_SORT_VALUE_TYPE
+				+ (_isFlip ? 0 : Config.CARD_SORT_VALUE_FLIP)
+				+ lv_weight * Config.CARD_SORT_VALUE_LEVEL
+				+ (CardUtil.COLOR_MAX - _color.getValue()) * Config.CARD_SORT_VALUE_COLOR 
+				;
+		// dump();
+		return _position;
+	}
+	
 	public int getSerialNumber() {
 		return _serial_number;
 	}
