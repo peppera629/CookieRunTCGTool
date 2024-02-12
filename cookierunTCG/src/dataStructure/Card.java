@@ -1,7 +1,10 @@
 package dataStructure;
 import java.awt.Image;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.SwingUtilities;
 
 import ui.ClickableCardPanel;
 import util.CardUtil.CardColor;
@@ -25,8 +28,12 @@ public class Card {
 	private ImageIcon _cardIcon;
 	private String _cardImagePath;
 	private int _cardCount;
+	private List<ClickableCardPanel> _PanelList;
+	private boolean _isImageLoaded = false;
+	
 	public Card(String pack, String id, String name, CardColor color, CardType type,
 			boolean flip, String rare, String mark, int lv) {
+		_PanelList = new ArrayList<ClickableCardPanel>();
 		_serial_number = SERIAL_NUMBER++;
 		_pack = pack;
 		_id = id;
@@ -38,22 +45,34 @@ public class Card {
 		_mark = mark;
 		_lv = lv;
 		_cardCount = 0;
+		int lv_weight = CardUtil.LEVEL_MAX  - _lv + 1;
 		_position = _serial_number
-				+ (CardUtil.TYPE_MAX - _type.getValue()) * 100000000
-				+ (_isFlip ? 0 : 10000000)
-				+ (CardUtil.LEVEL_MAX - _lv) * 1000000
-				+ (CardUtil.COLOR_MAX - _color.getValue()) * 100000 
+				+ (CardUtil.TYPE_MAX - _type.getValue()) * Config.CARD_SORT_VALUE_TYPE
+				+ (_isFlip ? 0 : Config.CARD_SORT_VALUE_FLIP)
+				+ lv_weight * Config.CARD_SORT_VALUE_LEVEL
+				+ (CardUtil.COLOR_MAX - _color.getValue()) * Config.CARD_SORT_VALUE_COLOR 
 				;
 //		dump();
-		createCardLabel();
+
+		_cardIcon = CardUtil.CardBack;
 	}
 
-	private void createCardLabel() {
-		_cardImagePath = "resources/cards/"+getPack()+"/"+getId()+".png";
-        ImageIcon cardIcon = new ImageIcon(_cardImagePath);
-        
-        Image image = cardIcon.getImage().getScaledInstance(Config.SMALL_CARD_WIDTH, Config.SMALL_CARD_HEIGHT,  java.awt.Image.SCALE_SMOOTH);
-        _cardIcon = new ImageIcon(image);
+	public synchronized void createCardLabel() {
+		if (!_isImageLoaded) {
+			_cardImagePath = "resources/cards/"+getPack()+"/"+getId()+".png";
+	        ImageIcon cardIcon = new ImageIcon(_cardImagePath);
+	        
+	        Image image = cardIcon.getImage().getScaledInstance(Config.SMALL_CARD_WIDTH, Config.SMALL_CARD_HEIGHT,  java.awt.Image.SCALE_SMOOTH);
+	        _cardIcon = new ImageIcon(image);
+	        _isImageLoaded = true;
+		    for(ClickableCardPanel panel :_PanelList) {
+		        SwingUtilities.invokeLater(new Runnable() {
+		            public void run() {
+		    	    	panel.updateImage();
+		            }
+		        });
+		    }
+		}
 	}
 
 	public String dump() {
@@ -128,6 +147,9 @@ public class Card {
 	}
 
 	public ImageIcon getcardIcon() {
+		if (!_isImageLoaded) {
+			CardLoader.loadCardImage(this);
+		}
 		return _cardIcon;
 	}
 
@@ -158,4 +180,11 @@ public class Card {
 		_cardCount--;
 	}
 	
+	public void addPanel(ClickableCardPanel panel) {
+		_PanelList.add(panel);
+	}
+	
+	public void removePanel(ClickableCardPanel panel) {
+		_PanelList.remove(panel);
+	}
 }

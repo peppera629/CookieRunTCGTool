@@ -19,34 +19,19 @@ public class UIUtil {
 	public static final int CARD_SIZE_DECK = 1;
 	public static final int CARD_SIZE_OUTPUT = 2;
 	public static final int CARD_SIZE_FULL = 3;
-	public static void showDeck(CardListCallBack callback,JPanel panel, List<Card> cardList, int minSize, int rowSize, int cardSize, boolean showCount) {
+	public static void showDeck(CardListCallBack callback, JPanel panel, List<Card> cardList, int minSize, int rowSize, int cardSize, boolean showCount) {
 		panel.removeAll();
 		panel.setLayout(new GridLayout(0, rowSize, 5, 5));
 		System.out.println("========== start updateDeck =============");
 		for (Card card : cardList) {
 			ClickableCardPanel cardPanel;
-			ImageIcon imageIcon;
-			switch (cardSize) {
-				case CARD_SIZE_SMALL:
-					imageIcon = card.getcardIcon();
-					break;
-				case CARD_SIZE_DECK:
-					imageIcon = card.getResizedCardImage(Config.DW_CARD_WIDTH, Config.DW_CARD_HEIGHT);
-					break;
-				case CARD_SIZE_OUTPUT:
-					imageIcon = card.getResizedCardImage(Config.DW_OUTPUT_WIDTH, Config.DW_OUTPUT_HEIGHT);
-					break;
-				default:
-					imageIcon = card.getOriginalSizeImage();
-					break;
-			}
-			cardPanel = new ClickableCardPanel(
-					imageIcon, card, Config.SHOW_CARD_COUNT && showCount);
+			cardPanel = new ClickableCardPanel( card, Config.SHOW_CARD_COUNT && showCount, cardSize);
 			
 			if(callback != null) {
 				cardPanel.addClickListener(callback);
 			}
 			panel.add(cardPanel);
+			card.addPanel(cardPanel);
 		}
 
 		String path = "resources/cards/empty.png";

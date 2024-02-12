@@ -109,13 +109,20 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     private JCheckBox cb_type_cookie_lv2;
     private JCheckBox cb_type_cookie_lv3;
     private JButton showDeckBtn;
+
     private void initialize() {
-        
-/*        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BorderLayout());*/
+    	initialData();
+    	initialUI();
+    }
+
+    private void initialData() {
     	mDefaultState = DefaultState.getInstance();
         mDeck = new Deck();
         frame = new JFrame();
+    }
+    
+    private void initialUI() {
+        
         frame.setTitle("薑餅人組牌系統   V "+Constant.VERSION);
         frame.setBounds(100, 100, 1080, 660);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -133,7 +140,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         mSearchPane.add(button_search);
         button_search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                getSelectCards();
+            	updateCardList();
                 mDefaultState.saveDefaultState();
             }
         });
@@ -149,7 +156,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         button_clean.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	cleanCheckBox();
-                getSelectCards();
+            	updateCardList();
                 mDefaultState.cleanSearchFlag();
                 mDefaultState.saveDefaultState();
             }
@@ -276,7 +283,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             }
         });
 
-        getSelectCards();
+        updateCardList();
         
         mDeck = CardLoader.loadDeck(mDeckText.getText());
         mDeck.sort();
@@ -360,7 +367,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         
         cb_type_cookie = new JCheckBox("餅乾");
         cb_type_cookie.setBounds(9, 83, 52, 22);
-        cb_type_cookie.setSelected(mDefaultState.getDefaultTypeFlag(0));
+		cb_type_cookie.setSelected(mDefaultState.getDefaultTypeFlag(0));
         mSearchPane.add(cb_type_cookie);
         cb_type_cookie.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -511,7 +518,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     	cb_flip.setSelected(false);
     }
     
-    private void getSelectCards() {
+    private void updateCardList() {
         System.out.println("========== start getSelectCards =============");
         CardList list = CardList.getInstance();
         list.setColor(CardColor.Red.getValue(), cb_color_red.isSelected());
@@ -596,6 +603,5 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
 	public void onSortConfigChanged() {
         mDeck.sort();
         updateDeck();
-		
 	}
 }

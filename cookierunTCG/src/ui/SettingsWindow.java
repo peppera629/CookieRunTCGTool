@@ -24,11 +24,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class SettingsWindow {
-
-	public static final String SORT_NAME_TYPE = "卡片類型"; 
-	public static final String SORT_NAME_FLIP = "是否Flip"; 
-	public static final String SORT_NAME_LEVEL = "卡片等級"; 
-	public static final String SORT_NAME_COLOR = "卡片顏色"; 
 	private JFrame frame;
 	private JList<String> mSortList, mNotSortList;
 	DefaultListModel<String> mSortListModel, mNotSortListModel;
@@ -51,28 +46,28 @@ public class SettingsWindow {
 					mSortListModel.clear();
 					mNotSortListModel.clear();
 		        	if (Config.CARD_SORT_ORDER_TYPE == 0) {
-		        		mNotSortListModel.addElement(SORT_NAME_TYPE);
+		        		mNotSortListModel.addElement(Config.SORT_NAME_TYPE);
 		        	} 
 		        	if (Config.CARD_SORT_ORDER_FLIP == 0) {
-		        		mNotSortListModel.addElement(SORT_NAME_FLIP);
+		        		mNotSortListModel.addElement(Config.SORT_NAME_FLIP);
 		        	} 
 		        	if (Config.CARD_SORT_ORDER_LEVEL == 0) {
-		        		mNotSortListModel.addElement(SORT_NAME_LEVEL);
+		        		mNotSortListModel.addElement(Config.SORT_NAME_LEVEL);
 		        	} 
 		        	if (Config.CARD_SORT_ORDER_COLOR == 0) {
-		        		mNotSortListModel.addElement(SORT_NAME_COLOR);
+		        		mNotSortListModel.addElement(Config.SORT_NAME_COLOR);
 		        	}
 		        	
 		        	int id = 0;
 			        for (int i=1; i<5; i++) {
 			        	if (Config.CARD_SORT_ORDER_TYPE == i) {
-			        		mSortListModel.add(id++, SORT_NAME_TYPE);
+			        		mSortListModel.add(id++, Config.SORT_NAME_TYPE);
 			        	} else if (Config.CARD_SORT_ORDER_FLIP == i) {
-			        		mSortListModel.add(id++, SORT_NAME_FLIP);
+			        		mSortListModel.add(id++, Config.SORT_NAME_FLIP);
 			        	} else if (Config.CARD_SORT_ORDER_LEVEL == i) {
-			        		mSortListModel.add(id++, SORT_NAME_LEVEL);
+			        		mSortListModel.add(id++, Config.SORT_NAME_LEVEL);
 			        	} else if (Config.CARD_SORT_ORDER_COLOR == i) {
-			        		mSortListModel.add(id++, SORT_NAME_COLOR);
+			        		mSortListModel.add(id++, Config.SORT_NAME_COLOR);
 			        	}
 			        }
 					frame.setVisible(true);
@@ -103,14 +98,14 @@ public class SettingsWindow {
         mNotSortListModel = new DefaultListModel<>();
 /*        
 		if(Config.CARD_SORT_ORDER_TYPE == 0) {
-			mNotSortListModel.addElement(SORT_NAME_TYPE);
+			mNotSortListModel.addElement(Config.SORT_NAME_TYPE);
 		} else {
-			mSortListModel.addElement(SORT_NAME_TYPE);
+			mSortListModel.addElement(Config.SORT_NAME_TYPE);
 		}
-        mSortListModel.addElement(SORT_NAME_TYPE);
-        mSortListModel.addElement(SORT_NAME_FLIP);
-        mSortListModel.addElement(SORT_NAME_LEVEL);
-        mSortListModel.addElement(SORT_NAME_COLOR);*/
+        mSortListModel.addElement(Config.SORT_NAME_TYPE);
+        mSortListModel.addElement(Config.SORT_NAME_FLIP);
+        mSortListModel.addElement(Config.SORT_NAME_LEVEL);
+        mSortListModel.addElement(Config.SORT_NAME_COLOR);*/
         
         
         
@@ -190,59 +185,46 @@ public class SettingsWindow {
 			public void actionPerformed(ActionEvent e) {
 				updateSort();
 
-		    	DefaultState ds = DefaultState.getInstance();
-		    	ds.saveDefaultState();
+		    	DefaultState.getInstance().updateSortConfig();
+		    	DefaultState.getInstance().saveDefaultState();
 		    	mListener.onSortConfigChanged();
 			}
 		});
 	}
 	
 	public void updateSort() {
-		int currentPosition = 20;
-		for(int i = mSortListModel.getSize()-1; i >= 0; i--) {
+		for(int i = 0; i < mSortListModel.getSize(); i++) {
 			String s = mSortListModel.get(i);
-			if(s.equals(SORT_NAME_TYPE)) {
+			if(s.equals(Config.SORT_NAME_TYPE)) {
 				Config.CARD_SORT_ORDER_TYPE = i + 1;
-				Config.CARD_SORT_VALUE_TYPE = 2 << currentPosition;
-				currentPosition += Config.CARD_SORT_SIZE_TYPE;
-				
-			} else if(s.equals(SORT_NAME_FLIP)) {
+
+			} else if (s.equals(Config.SORT_NAME_FLIP)) {
 				Config.CARD_SORT_ORDER_FLIP = i + 1;
-				Config.CARD_SORT_VALUE_FLIP = 2 << currentPosition;
-				currentPosition += Config.CARD_SORT_SIZE_FLIP;
-				
-			} else if(s.equals(SORT_NAME_LEVEL)) {
+
+			} else if (s.equals(Config.SORT_NAME_LEVEL)) {
 				Config.CARD_SORT_ORDER_LEVEL = i + 1;
-				Config.CARD_SORT_VALUE_LEVEL = 2 << currentPosition;
-				currentPosition += Config.CARD_SORT_SIZE_LEVEL;
-				
-			} else if(s.equals(SORT_NAME_COLOR)) {
+
+			} else if (s.equals(Config.SORT_NAME_COLOR)) {
 				Config.CARD_SORT_ORDER_COLOR = i + 1;
-				Config.CARD_SORT_VALUE_COLOR = 2 << currentPosition;
-				currentPosition += Config.CARD_SORT_SIZE_COLOR;
 			}
 		}
-		
-		for(int i = 0; i < mNotSortListModel.getSize(); i++) {
+
+		for (int i = 0; i < mNotSortListModel.getSize(); i++) {
 			String s = mNotSortListModel.get(i);
 			if (s == null) {
 				continue;
 			}
-			if(s.equals(SORT_NAME_TYPE)) {
+			if (s.equals(Config.SORT_NAME_TYPE)) {
 				Config.CARD_SORT_ORDER_TYPE = 0;
-				Config.CARD_SORT_VALUE_TYPE = 0;
 				
-			} else if(s.equals(SORT_NAME_FLIP)) {
+			} else if(s.equals(Config.SORT_NAME_FLIP)) {
 				Config.CARD_SORT_ORDER_FLIP = 0;
-				Config.CARD_SORT_VALUE_FLIP = 0;
 				
-			} else if(s.equals(SORT_NAME_LEVEL)) {
+			} else if(s.equals(Config.SORT_NAME_LEVEL)) {
 				Config.CARD_SORT_ORDER_LEVEL = 0;
-				Config.CARD_SORT_VALUE_LEVEL = 0;
 				
-			} else if(s.equals(SORT_NAME_COLOR)) {
+			} else if(s.equals(Config.SORT_NAME_COLOR)) {
 				Config.CARD_SORT_ORDER_COLOR = 0;
-				Config.CARD_SORT_VALUE_COLOR = 0;
 			}
 		}
 	} 

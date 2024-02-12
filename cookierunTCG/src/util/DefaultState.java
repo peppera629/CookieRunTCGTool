@@ -1,5 +1,6 @@
 package util;
 
+import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,6 +11,8 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.ImageIcon;
 
 import dataStructure.Card;
 import dataStructure.Deck;
@@ -29,7 +32,9 @@ public class DefaultState {
 	public static DefaultState getInstance() {
 		if (instance == null) {
 			instance = new DefaultState();
+			instance.createCardBackLabel();
 			instance.loadDefaultState();
+			instance.updateSortConfig();
 		}
 		return instance;
 	}
@@ -41,6 +46,13 @@ public class DefaultState {
 		_search_pack_list = new ArrayList<String>();
 	}
 
+	private void createCardBackLabel() {
+        ImageIcon cardIcon = new ImageIcon("resources/cards/cardback.png");
+        
+        Image image = cardIcon.getImage().getScaledInstance(Config.SMALL_CARD_WIDTH, Config.SMALL_CARD_HEIGHT,  java.awt.Image.SCALE_SMOOTH);
+        CardUtil.CardBack = new ImageIcon(image);
+	}
+	
 	private void loadDefaultState() {
 		System.out.println("loadDefaultState");
 		try {
@@ -198,6 +210,7 @@ public class DefaultState {
 			}
 			fw.write("\n");
 
+			//sort order
 			fw.write(Config.CARD_SORT_ORDER_TYPE+",");
 			fw.write(Config.CARD_SORT_ORDER_FLIP+",");
 			fw.write(Config.CARD_SORT_ORDER_LEVEL+",");
@@ -206,7 +219,6 @@ public class DefaultState {
 			fw.flush();
 			fw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -261,6 +273,51 @@ public class DefaultState {
 		}
 		if (!selected && _search_pack_list.contains(pack)) {
 			_search_pack_list.remove(pack);
+		}
+	}
+	
+	public void updateSortConfig() {
+
+		int currentPosition = 29;
+        System.out.println("CARD_SORT_ORDER_TYPE = "+Config.CARD_SORT_ORDER_TYPE);
+        System.out.println("CARD_SORT_ORDER_FLIP = "+Config.CARD_SORT_ORDER_FLIP);
+        System.out.println("CARD_SORT_ORDER_LEVEL = "+Config.CARD_SORT_ORDER_LEVEL);
+        System.out.println("CARD_SORT_ORDER_COLOR = "+Config.CARD_SORT_ORDER_COLOR);
+        System.out.println("");
+		for(int i = 1; i <= 4; i++) {
+			if(Config.CARD_SORT_ORDER_TYPE == i) {
+				currentPosition -= Config.CARD_SORT_SIZE_TYPE;
+				Config.CARD_SORT_VALUE_TYPE = 2 << currentPosition;
+		        System.out.println("CARD_SORT_VALUE_TYPE = "+Config.CARD_SORT_VALUE_TYPE);
+				
+			} else if(Config.CARD_SORT_ORDER_FLIP == i) {
+				currentPosition -= Config.CARD_SORT_SIZE_FLIP;
+				Config.CARD_SORT_VALUE_FLIP = 2 << currentPosition;
+		        System.out.println("CARD_SORT_VALUE_FLIP = "+Config.CARD_SORT_VALUE_FLIP);
+
+			} else if(Config.CARD_SORT_ORDER_LEVEL == i) {
+				currentPosition -= Config.CARD_SORT_SIZE_LEVEL;
+				Config.CARD_SORT_VALUE_LEVEL = 2 << currentPosition;
+		        System.out.println("CARD_SORT_VALUE_LEVEL = "+Config.CARD_SORT_VALUE_LEVEL);
+
+			} else if(Config.CARD_SORT_ORDER_COLOR == i) {
+				currentPosition -= Config.CARD_SORT_SIZE_COLOR;
+				Config.CARD_SORT_VALUE_COLOR = 2 << currentPosition;
+		        System.out.println("CARD_SORT_VALUE_COLOR = "+Config.CARD_SORT_VALUE_COLOR);
+			}
+		}
+
+		if(Config.CARD_SORT_ORDER_TYPE == 0) {
+			Config.CARD_SORT_VALUE_TYPE = 0;
+		}
+		if(Config.CARD_SORT_ORDER_FLIP == 0) {
+			Config.CARD_SORT_VALUE_FLIP = 0;
+		}
+		if(Config.CARD_SORT_ORDER_LEVEL == 0) {
+			Config.CARD_SORT_VALUE_LEVEL = 0;
+		}
+		if(Config.CARD_SORT_ORDER_COLOR == 0) {
+			Config.CARD_SORT_VALUE_COLOR = 0;
 		}
 	}
 }

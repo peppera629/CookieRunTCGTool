@@ -1,5 +1,7 @@
 package util;
 
+import javax.swing.ImageIcon;
+
 public class CardUtil {
 	public static int LEVEL_MAX = 3;
 	public static int COLOR_MAX = 3;
@@ -27,4 +29,6 @@ public class CardUtil {
 	        return value;
 	    }
 	}
+
+	public static ImageIcon CardBack;
 }

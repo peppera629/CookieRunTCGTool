@@ -14,7 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import dataStructure.Card;
+import dataStructure.CardLoader;
 import util.Config;
+import util.UIUtil;
 
 public class ClickableCardPanel extends JPanel {
 	
@@ -27,13 +29,15 @@ public class ClickableCardPanel extends JPanel {
     private Card mCard;
     private CardListCallBack mCardListCallBack;
     private boolean mShouldShowCount;
-    private ImageIcon mCardIcon;
+    private int mCardSize;
+    ImageIcon mCardIcon;
 
-    public ClickableCardPanel(ImageIcon cardIcon, Card card, boolean showCount) {
-        mCardIcon = cardIcon;
+	public ClickableCardPanel(Card card, boolean showCount, int cardSize) {
         mCard = card;
     	mShouldShowCount = showCount;
-        setPreferredSize(new Dimension(cardIcon.getIconWidth(), cardIcon.getIconHeight()));
+		mCardSize = cardSize;
+    	mCardIcon = CardLoader.createCardImage(mCard, mCardSize);
+        setPreferredSize(new Dimension(mCardIcon.getIconWidth(), mCardIcon.getIconHeight()));
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -63,13 +67,7 @@ public class ClickableCardPanel extends JPanel {
         super.paintComponent(g);
         
         // 繪製卡片的 ImageIcon
-        mCardIcon.paintIcon(this, g, 0, 0);
-        /*if (mIsDeckWindow) {
-        	mCard.getResizedCardImage(Config.DW_CARD_WIDTH, Config.DW_CARD_HEIGHT).paintIcon(this, g, 0, 0);
-        } else {
-        	mCard.getcardIcon().paintIcon(this, g, 0, 0);
-        }*/
-        
+		mCardIcon.paintIcon(this, g, 0, 0);
         if(mShouldShowCount) {
 	        // 繪製深灰色半透明方塊
 	        Graphics2D g2d = (Graphics2D) g.create();
@@ -98,5 +96,16 @@ public class ClickableCardPanel extends JPanel {
     
     public void addClickListener(CardListCallBack callback) {
     	mCardListCallBack = callback;
+    }
+    
+    public void updateImage() {
+    	mCardIcon = CardLoader.createCardImage(mCard, mCardSize);
+    	super.paint(getGraphics());
+    	
+    }
+    public void repaintImage() {
+    	updateImage();
+		System.out.println("========== updateImage "+mCard.getName()+" =============");
+    	super.paint(getGraphics());
     }
 }

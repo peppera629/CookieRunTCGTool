@@ -9,14 +9,37 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
+import util.Config;
+import util.UIUtil;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class CardLoader {
+import javax.swing.ImageIcon;
+public class CardLoader {	
+	public static ExecutorService cardImageLoadExecutor = Executors.newFixedThreadPool(10);
 	
+	public static void loadCardImage(Card card) {
+		cardImageLoadExecutor.submit(new cardImageLoadTask(card));
+	}
+
+    static class cardImageLoadTask implements Runnable {
+        private Card _card;
+
+        public cardImageLoadTask(Card card) {
+        	_card = card;
+        }
+
+        @Override
+        public void run() {
+        	_card.createCardLabel();
+        }
+    }
+    
 	public static List<Card> loadAllCards() {
 		List<Card> cardList = new ArrayList<Card>();
 	    try {
@@ -49,16 +72,13 @@ public class CardLoader {
 	}
 	
 	private static void loadPack(String packName, List<Card> cardList) {
-//        System.out.println(packName);
 	    try {
-//	        System.out.println("loadPack 1");
 	        File file = new File("resources/card_config/pack/"+packName+".txt");
 			FileInputStream reader = new FileInputStream(file);
 	        BufferedReader input = new BufferedReader(
 	                new InputStreamReader(new FileInputStream(file), "utf-8")); 
             String data;
 	        while((data= input.readLine())!=null) {
-//                System.out.println(data);
 	            if (!data.equals("") && !data.startsWith("//")) {
 	            	String[] cardData = data.split(",");
 	            	CardColor color;
@@ -98,10 +118,8 @@ public class CardLoader {
             System.out.println("An error occurred.");
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -130,10 +148,8 @@ public class CardLoader {
             System.out.println("An error occurred.");
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    return deck;
@@ -152,7 +168,6 @@ public class CardLoader {
 	        fw.flush();
 	        fw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		saveReadableDeck(deckName, deck);
@@ -172,18 +187,6 @@ public class CardLoader {
 				} else {
 					fw.write("\n");
 				}
-/*				if (c != lastCard) {
-					if (lastCardCount == 1) {
-						fw.write("\n");
-					} else if (lastCardCount > 1) {
-						fw.write("  x "+lastCardCount+"\n");
-					}
-					fw.write("["+c.getId()+"] "+c.getName());
-					lastCard = c;
-					lastCardCount = 1;
-				} else {
-					lastCardCount++;
-				}*/
 			}
 			if (lastCardCount == 1) {
 				fw.write("\n");
@@ -193,9 +196,20 @@ public class CardLoader {
 	        fw.flush();
 	        fw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
+	
+	public static ImageIcon createCardImage(Card card, int cardSize) {
+		switch (cardSize) {
+			case UIUtil.CARD_SIZE_SMALL:
+				return card.getcardIcon();
+			case UIUtil.CARD_SIZE_DECK:
+				return card.getResizedCardImage(Config.DW_CARD_WIDTH, Config.DW_CARD_HEIGHT);
+			case UIUtil.CARD_SIZE_OUTPUT:
+				return card.getResizedCardImage(Config.DW_OUTPUT_WIDTH, Config.DW_OUTPUT_HEIGHT);
+			default:
+				return card.getOriginalSizeImage();
+		}
+	}
 }

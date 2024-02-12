@@ -17,6 +17,12 @@ public class Config {
 	public static int DW_OUTPUT_WIDTH = 300;
 	public static int DW_OUTPUT_HEIGHT = (int) (DW_OUTPUT_WIDTH * CARD_RATIO);
 
+	// ========================= sort config ========================
+	public static final String SORT_NAME_TYPE = "卡片類型"; 
+	public static final String SORT_NAME_FLIP = "是否Flip"; 
+	public static final String SORT_NAME_LEVEL = "卡片等級"; 
+	public static final String SORT_NAME_COLOR = "卡片顏色"; 
+	
 	public static final int CARD_SORT_SIZE_TYPE = 3;
 	public static final int CARD_SORT_SIZE_FLIP = 1;
 	public static final int CARD_SORT_SIZE_LEVEL = 2;
