@@ -1,6 +1,19 @@
+=== Version 0.3.0 : 2024-02-20
+- refactor search panel.
+- add all cards into database from BS2, ST4, ST5 and PR (Korean)
+- Fix some minor problem
+
+=== Version 0.2.5 : 2024-02-12
+- cards in deck can be sort by different priority
+- optimal the card image load strategy, which make display faster.
+- Fix level 2 card count and total cookie card count display error problem
+- Fix some minor problem
+
+=== Version 0.2.2 : 2024-02-07
+- deck detail can be check on another windows and print as image now
+
 === Version 0.1.2 : 2024-02-06
 - add all cards into database from BS1, ST1, ST2 and ST3
-- refactor to make display faster.
 
 === Version 0.1.1 : 2024-02-05
 - Cards data contain cookie level now
