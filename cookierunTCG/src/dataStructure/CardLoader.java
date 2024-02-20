@@ -11,6 +11,7 @@ import java.io.UnsupportedEncodingException;
 
 import util.Config;
 import util.UIUtil;
+import util.CardUtil;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardType;
 
@@ -81,17 +82,15 @@ public class CardLoader {
 	        while((data= input.readLine())!=null) {
 	            if (!data.equals("") && !data.startsWith("//")) {
 	            	String[] cardData = data.split(",");
-	            	CardColor color;
-	            	if (cardData[2].equals("紅")) {
-	            		color = CardColor.Red;
-	            	} else if (cardData[2].equals("黃")) {
-	            		color = CardColor.Yellow;
-	            	} else if (cardData[2].equals("綠")) {
-	            		color = CardColor.Green;
-	            	} else {
-	            		color = CardColor.Green;
+	            	CardColor color = CardColor.Green;
+	            	for (int i=0; i<CardUtil.COLOR_MAX; i++) {
+	            		CardColor c = CardColor.fromValue(i);
+	            		if (cardData[2].equals(c.getName())) {
+	            			color = c;
+	            			break;
+	            		}
 	            	}
-
+	            	
 	            	int level = 0;
 	            	CardType type;
 	            	if (cardData[3].equals("餅乾")) {

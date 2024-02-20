@@ -30,6 +30,7 @@ import ui.ClickableCardPanel.CardListCallBack;
 import ui.SettingsWindow.ConfigChangedCallback;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardType;
+import util.CardUtil;
 import util.Config;
 import util.Constant;
 import util.DefaultState;
@@ -87,10 +88,16 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
 	private SettingsWindow settingsWindow;
     private DefaultState mDefaultState;
     private JPanel mCardsPane, mDeckPane;
+    
+    //search panel
     private Panel mSearchPane;
-    private JCheckBox cb_color_red, cb_color_yellow, cb_color_green;
+    private JCheckBox[] cb_color;
+    private JCheckBox[] cb_level;
     private JCheckBox cb_type_cookie, cb_type_item, cb_type_trap, cb_type_stage;
     private JCheckBox cb_flip;
+    private JCheckBox cb_version_BS1, cb_version_ST1, cb_version_ST2, cb_version_ST3;
+    private JLabel label_special, label_version;
+
     private Deck mDeck;
     private ScrollPane scrollPane;
     private Panel mCardDetailPane;
@@ -99,15 +106,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     private JButton loadBtn, saveBtn, selectBtn;
     private JButton mClearDeckBtn;
     private JLabel mCardCountTxt, mFlipCountTxt, mDeckCookieSummaryTxt, mDeckOtherSummaryTxt;
-    private JLabel label_2;
-    private JLabel label_3;
-    private JCheckBox cb_version_BS1;
-    private JCheckBox cb_version_ST1;
-    private JCheckBox cb_version_ST2;
-    private JCheckBox cb_version_ST3;
-    private JCheckBox cb_type_cookie_lv1;
-    private JCheckBox cb_type_cookie_lv2;
-    private JCheckBox cb_type_cookie_lv3;
     private JButton showDeckBtn;
 
     private void initialize() {
@@ -148,10 +146,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         JButton button_clean = new JButton("清除");
         button_clean.setBounds(159, 360, 60, 25);
         mSearchPane.add(button_clean);
-        
-        label_3 = new JLabel("版本");
-        label_3.setBounds(9, 215, 64, 22);
-        mSearchPane.add(label_3);
         
         button_clean.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -289,101 +283,102 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         mDeck.sort();
         updateDeck();
     }
+
+    
+	int padding = 5;
+	int paddingToWindow = 10;
+	int widthFull = 210;
+	int widthOneWord = 40;
+	int widthTwoWord = 50;
+	int height = 22;
+	int x = paddingToWindow, y = paddingToWindow;
+	
+
+	private void nextLine() {
+		x = paddingToWindow;
+		y += height + padding;
+	}
+	
+	private void nextObject(int width) {
+		x += width + padding;
+	}
     
     private void initCheckBox() {
+    	
         // ========================= color ==================================
         JLabel label = new JLabel("顏色");
-        label.setBounds(9, 10, 64, 22);
+        label.setBounds(x, y, widthFull, height);
         mSearchPane.add(label);
         
-        cb_color_red = new JCheckBox("紅");
-        cb_color_red.setFont(new Font("新細明體", Font.PLAIN, 12));
-        cb_color_red.setBounds(7, 32, 41, 22);
-        cb_color_red.setSelected(mDefaultState.getDefaultColorFlag(0));
-        mSearchPane.add(cb_color_red);
-        cb_color_red.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	mDefaultState.setDefaultColorFlag(0, cb_color_red.isSelected());
-            }
-        });
+        nextLine();
         
-        
-        cb_color_yellow = new JCheckBox("黃");
-        cb_color_yellow.setBounds(49, 32, 41, 22);
-        cb_color_yellow.setSelected(mDefaultState.getDefaultColorFlag(1));
-        mSearchPane.add(cb_color_yellow);
-        cb_color_yellow.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	mDefaultState.setDefaultColorFlag(1, cb_color_yellow.isSelected());
-            }
-        });
-        
-        cb_color_green = new JCheckBox("綠");
-        cb_color_green.setBounds(95, 32, 41, 22);
-        cb_color_green.setSelected(mDefaultState.getDefaultColorFlag(2));
-        mSearchPane.add(cb_color_green);
-        cb_color_green.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	mDefaultState.setDefaultColorFlag(2, cb_color_green.isSelected());
-            }
-        });
 
+        System.out.println("紅 : "+x+", "+ y+", "+ widthOneWord+", "+ height);
+        cb_color = new JCheckBox[CardUtil.COLOR_MAX];
+        for(int i=0; i<CardUtil.COLOR_MAX; i++) {
+        	cb_color[i] = new JCheckBox(CardUtil.CardColor.fromValue(i).getName());
+        	cb_color[i].setFont(new Font("新細明體", Font.PLAIN, 12));
+        	cb_color[i].setBounds(x, y, widthOneWord, height);
+        	cb_color[i].setSelected(mDefaultState.getDefaultColorFlag(i));
+            mSearchPane.add(cb_color[i]);
+            final int id = i;
+            cb_color[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                	mDefaultState.setDefaultColorFlag(id, cb_color[id].isSelected());
+                }
+            });
+            
+            nextObject(widthOneWord);
+        }
         
+        nextLine();
         
         // ========================= type ==================================
         JLabel label_1 = new JLabel("卡片類型");
-        label_1.setBounds(9, 60, 64, 22);
+        label_1.setBounds(x, y, widthFull, height);
         mSearchPane.add(label_1);
-        
-        cb_type_cookie_lv1 = new JCheckBox("Lv1");
-        cb_type_cookie_lv1.setSelected(mDefaultState.getDefaultLvFlag(1));
-        cb_type_cookie_lv1.setBounds(62, 83, 52, 22);
-        mSearchPane.add(cb_type_cookie_lv1);
-        cb_type_cookie_lv1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	mDefaultState.setDefaultLvFlag(1, cb_type_cookie_lv1.isSelected());
-            }
-        });
-        
-        cb_type_cookie_lv2 = new JCheckBox("Lv2");
-        cb_type_cookie_lv2.setSelected(mDefaultState.getDefaultLvFlag(2));
-        cb_type_cookie_lv2.setBounds(115, 83, 52, 22);
-        mSearchPane.add(cb_type_cookie_lv2);
-        cb_type_cookie_lv2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	mDefaultState.setDefaultLvFlag(2, cb_type_cookie_lv2.isSelected());
-            }
-        });
-        
-        cb_type_cookie_lv3 = new JCheckBox("Lv3");
-        cb_type_cookie_lv3.setSelected(mDefaultState.getDefaultLvFlag(3));
-        cb_type_cookie_lv3.setBounds(167, 83, 52, 22);
-        mSearchPane.add(cb_type_cookie_lv3);
-        cb_type_cookie_lv3.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	mDefaultState.setDefaultLvFlag(3, cb_type_cookie_lv3.isSelected());
-            }
-        });
+
+        nextLine();
         
         cb_type_cookie = new JCheckBox("餅乾");
-        cb_type_cookie.setBounds(9, 83, 52, 22);
+        cb_type_cookie.setBounds(x, y, widthTwoWord, height);
 		cb_type_cookie.setSelected(mDefaultState.getDefaultTypeFlag(0));
         mSearchPane.add(cb_type_cookie);
         cb_type_cookie.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(0, cb_type_cookie.isSelected());
-        		cb_type_cookie_lv1.setEnabled(cb_type_cookie.isSelected());
-        		cb_type_cookie_lv2.setEnabled(cb_type_cookie.isSelected());
-        		cb_type_cookie_lv3.setEnabled(cb_type_cookie.isSelected());
+
+            	for (JCheckBox cb : cb_level) {
+            		cb.setEnabled(cb_type_cookie.isSelected());
+            	}
             }
         });
-		cb_type_cookie_lv1.setEnabled(cb_type_cookie.isSelected());
-		cb_type_cookie_lv2.setEnabled(cb_type_cookie.isSelected());
-		cb_type_cookie_lv3.setEnabled(cb_type_cookie.isSelected());
+
         
+        nextObject(widthTwoWord);
+        
+        cb_level = new JCheckBox[CardUtil.LEVEL_MAX];
+        for(int i=0; i<CardUtil.LEVEL_MAX; i++) {
+        	final int lv = i+1;
+            final int id = i;
+        	cb_level[i] = new JCheckBox("Lv" + lv);
+        	cb_level[i].setSelected(mDefaultState.getDefaultLvFlag(lv));
+        	cb_level[i].setBounds(x, y, widthTwoWord, height);
+            mSearchPane.add(cb_level[i]);
+            cb_level[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                	mDefaultState.setDefaultLvFlag(lv, cb_level[id].isSelected());
+                }
+            });
+            cb_level[i].setEnabled(cb_type_cookie.isSelected());
+            
+            nextObject(widthTwoWord);
+        }
+
+        nextLine();
         
         cb_type_item = new JCheckBox("物品");
-        cb_type_item.setBounds(9, 111, 52, 22);
+        cb_type_item.setBounds(x, y, widthTwoWord, height);
         cb_type_item.setSelected(mDefaultState.getDefaultTypeFlag(1));
         mSearchPane.add(cb_type_item);
         cb_type_item.addActionListener(new ActionListener() {
@@ -391,10 +386,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             	mDefaultState.setDefaultTypeFlag(1, cb_type_item.isSelected());
             }
         });
-        
+
+        nextObject(widthTwoWord);
         
         cb_type_trap = new JCheckBox("陷阱");
-        cb_type_trap.setBounds(62, 111, 52, 22);
+        cb_type_trap.setBounds(x, y, widthTwoWord, height);
         cb_type_trap.setSelected(mDefaultState.getDefaultTypeFlag(2));
         mSearchPane.add(cb_type_trap);
         cb_type_trap.addActionListener(new ActionListener() {
@@ -402,10 +398,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             	mDefaultState.setDefaultTypeFlag(2, cb_type_trap.isSelected());
             }
         });
-        
+
+        nextObject(widthTwoWord);
         
         cb_type_stage = new JCheckBox("場景");
-        cb_type_stage.setBounds(115, 111, 52, 22);
+        cb_type_stage.setBounds(x, y, widthTwoWord, height);
         cb_type_stage.setSelected(mDefaultState.getDefaultTypeFlag(3));
         mSearchPane.add(cb_type_stage);
         cb_type_stage.addActionListener(new ActionListener() {
@@ -413,14 +410,20 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             	mDefaultState.setDefaultTypeFlag(3, cb_type_stage.isSelected());
             }
         });
+
+        nextObject(widthTwoWord);
         
+
+        // ========================= flip ==================================
+        nextLine();
+        label_special = new JLabel("特殊");
+        label_special.setBounds(x, y, widthTwoWord, height);
+        mSearchPane.add(label_special);
         
-        label_2 = new JLabel("特殊");
-        label_2.setBounds(9, 153, 64, 22);
-        mSearchPane.add(label_2);
+        nextLine();
         
         cb_flip = new JCheckBox("Flip");
-        cb_flip.setBounds(9, 173, 52, 22);
+        cb_flip.setBounds(x, y, widthTwoWord, height);
         cb_flip.setSelected(mDefaultState.getDefaultFlipFlag());
         mSearchPane.add(cb_flip);
         cb_flip.addActionListener(new ActionListener() {
@@ -428,45 +431,58 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             	mDefaultState.setDefaultFlipFlag(cb_flip.isSelected());
             }
         });
+        
+        nextLine();
+        nextLine();
 
+
+        // ========================= pack ==================================
+        label_version = new JLabel("來源");
+        label_version.setBounds(x, y, widthFull, height);
+        mSearchPane.add(label_version);
+
+        nextLine();
         
         cb_version_BS1 = new JCheckBox("BS1");
         cb_version_BS1.setSelected(mDefaultState.getDefaultPackFlag("BS1"));
         cb_version_BS1.setFont(new Font("新細明體", Font.PLAIN, 12));
-        cb_version_BS1.setBounds(9, 239, 52, 22);
+        cb_version_BS1.setBounds(x, y, widthTwoWord, height);
         mSearchPane.add(cb_version_BS1);
         cb_version_BS1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultPackFlag("BS1", cb_version_BS1.isSelected());
             }
         });
+        nextLine();
         
         cb_version_ST1 = new JCheckBox("ST1");
         cb_version_ST1.setSelected(mDefaultState.getDefaultPackFlag("ST1"));
         cb_version_ST1.setFont(new Font("新細明體", Font.PLAIN, 12));
-        cb_version_ST1.setBounds(9, 263, 52, 22);
+        cb_version_ST1.setBounds(x, y, widthTwoWord, height);
         mSearchPane.add(cb_version_ST1);
         cb_version_ST1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultPackFlag("ST1", cb_version_ST1.isSelected());
             }
         });
+        nextObject(widthTwoWord);
         
         cb_version_ST2 = new JCheckBox("ST2");
         cb_version_ST2.setSelected(mDefaultState.getDefaultPackFlag("ST2"));
         cb_version_ST2.setFont(new Font("新細明體", Font.PLAIN, 12));
-        cb_version_ST2.setBounds(62, 263, 52, 22);
+        cb_version_ST2.setBounds(x, y, widthTwoWord, height);
         mSearchPane.add(cb_version_ST2);
         cb_version_ST2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultPackFlag("ST2", cb_version_ST2.isSelected());
             }
         });
+        nextObject(widthTwoWord);
         
         cb_version_ST3 = new JCheckBox("ST3");
         cb_version_ST3.setSelected(mDefaultState.getDefaultPackFlag("ST3"));
         cb_version_ST3.setFont(new Font("新細明體", Font.PLAIN, 12));
-        cb_version_ST3.setBounds(115, 263, 52, 22);
+        cb_version_ST3.setBounds(x, y, widthTwoWord, height);
         mSearchPane.add(cb_version_ST3);
         cb_version_ST3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -502,18 +518,18 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     }
 
     private void cleanCheckBox() {
-    	cb_color_red.setSelected(false);
-    	cb_color_yellow.setSelected(false);
-    	cb_color_green.setSelected(false);
+    	for (JCheckBox cb : cb_color) {
+    		cb.setSelected(false);
+    	}
     	
     	cb_type_cookie.setSelected(false);
     	cb_type_item.setSelected(false);
     	cb_type_trap.setSelected(false);
     	cb_type_stage.setSelected(false);
 
-    	cb_type_cookie_lv1.setSelected(false);
-    	cb_type_cookie_lv2.setSelected(false);
-    	cb_type_cookie_lv3.setSelected(false);
+    	for (JCheckBox cb : cb_level) {
+    		cb.setSelected(false);
+    	}
 
     	cb_flip.setSelected(false);
     }
@@ -521,16 +537,16 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     private void updateCardList() {
         System.out.println("========== start getSelectCards =============");
         CardList list = CardList.getInstance();
-        list.setColor(CardColor.Red.getValue(), cb_color_red.isSelected());
-        list.setColor(CardColor.Yellow.getValue(), cb_color_yellow.isSelected());
-        list.setColor(CardColor.Green.getValue(), cb_color_green.isSelected());
+    	for (int i=0; i< cb_color.length; i++) {
+            list.setColor(i, cb_color[i].isSelected());
+    	}
         list.setType(CardType.Cookie.getValue(), cb_type_cookie.isSelected());
         list.setType(CardType.Item.getValue(), cb_type_item.isSelected());
         list.setType(CardType.Trap.getValue(), cb_type_trap.isSelected());
         list.setType(CardType.Stage.getValue(), cb_type_stage.isSelected());
-        list.setLv(1, cb_type_cookie_lv1.isSelected());
-        list.setLv(2, cb_type_cookie_lv2.isSelected());
-        list.setLv(3, cb_type_cookie_lv3.isSelected());
+    	for (int i=0; i< cb_level.length; i++) {
+            list.setLv(i+1, cb_level[i].isSelected());
+    	}
         list.setPack("BS1", cb_version_BS1.isSelected());
         list.setPack("ST1", cb_version_ST1.isSelected());
         list.setPack("ST2", cb_version_ST2.isSelected());
