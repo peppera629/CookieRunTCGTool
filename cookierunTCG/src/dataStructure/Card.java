@@ -68,7 +68,9 @@ public class Card {
 		    for(ClickableCardPanel panel :_PanelList) {
 		        SwingUtilities.invokeLater(new Runnable() {
 		            public void run() {
-		    	    	panel.updateImage();
+		            	if (panel != null) {
+		            		panel.updateImage();
+		            	}
 		            }
 		        });
 		    }

@@ -1,6 +1,10 @@
 package util;
 
+import java.util.List;
+
 import javax.swing.ImageIcon;
+
+import dataStructure.Card;
 
 public class CardUtil {
 	public static int LEVEL_MAX = 3;
@@ -19,15 +23,15 @@ public class CardUtil {
 	    public String getName() {
 	        switch(this){
 		        case Red:
-		        	return "¬õ";
+		        	return "ç´…";
 		        case Yellow:
-		        	return "¶À";
+		        	return "é»ƒ";
 		        case Green:
-		        	return "ºñ";
+		        	return "ç¶ ";
 		        case Blue:
-		        	return "ÂÅ";
+		        	return "è—";
 		        case Purple:
-		        	return "µµ";
+		        	return "ç´«";
 	        }
 	        return null;
 	    }
@@ -38,7 +42,7 @@ public class CardUtil {
 	                return color;
 	            }
 	        }
-	        // ¦pªG¨S¦³§ä¨ì¹ïÀ³ªº enum¡A§A¥i¥H¿ï¾Ü©ß¥X¤@­Ó²§±`¡A©ÎªÌªğ¦^Àq»{­È
+	        // å¦‚æœæ²’æœ‰æ‰¾åˆ°å°æ‡‰çš„ enumï¼Œä½ å¯ä»¥é¸æ“‡æ‹‹å‡ºä¸€å€‹ç•°å¸¸ï¼Œæˆ–è€…è¿”å›é»˜èªå€¼
 	        throw new IllegalArgumentException("No enum constant with value " + value);
 	    }
 	}
@@ -57,4 +61,7 @@ public class CardUtil {
 	}
 
 	public static ImageIcon CardBack;
+	
+	
+	public static List<String> CardPack;
 }

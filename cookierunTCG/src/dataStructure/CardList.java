@@ -62,7 +62,7 @@ public class CardList {
 					|| c.getType() != CardType.Cookie || _search_lv[c.getLv()];
 			flipCorrect = !_search_flip || c.isFlip();
 			packCorrect = _search_pack_list.size() == 0 || _search_pack_list.contains(c.getPack());
-			c.dump();
+//			c.dump();
 			if (colorCorrect && lvCorrect && typeCorrect && flipCorrect && packCorrect) {
 				selectList.add(c);
 			}

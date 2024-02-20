@@ -40,9 +40,9 @@ public class CardLoader {
         	_card.createCardLabel();
         }
     }
-    
-	public static List<Card> loadAllCards() {
-		List<Card> cardList = new ArrayList<Card>();
+
+	public static void loadAllPacks() {
+		CardUtil.CardPack = new ArrayList<String>();
 	    try {
 	        File file = new File("resources/card_config/pack.txt");
 	        if (file.exists()) {
@@ -54,7 +54,7 @@ public class CardLoader {
 		            System.out.println(data);
 	
 		            if (!data.equals("") && !data.startsWith("//")) {
-		            	loadPack(data, cardList);
+		            	CardUtil.CardPack.add(data);
 		            }
 		        } 
 		        input.close();
@@ -68,6 +68,13 @@ public class CardLoader {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	public static List<Card> loadAllCards() {
+		List<Card> cardList = new ArrayList<Card>();
+		for (int i=0; i<CardUtil.CardPack.size() ;i++) {
+        	loadPack(CardUtil.CardPack.get(i), cardList);
 		}
 	    return cardList;
 	}
