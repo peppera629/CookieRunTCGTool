@@ -17,6 +17,7 @@ public class CardList {
 	private boolean _search_type[];
 	private boolean _search_lv[];
 	private boolean _search_flip;
+	private boolean _search_extra;
 	private List<String> _search_pack_list;
 	
 	public static CardList getInstance() {
@@ -33,6 +34,7 @@ public class CardList {
 		_search_type = new boolean[CardUtil.TYPE_MAX];
 		_search_lv = new boolean[CardUtil.LEVEL_MAX + 1];
 		_search_flip = false;
+		_search_extra = false;
 		_search_pack_list = new ArrayList<String>();
 	}
 	
@@ -52,6 +54,7 @@ public class CardList {
 		boolean colorCorrect;
 		boolean typeCorrect;
 		boolean flipCorrect;
+		boolean extraCorrect;
 		boolean lvCorrect;
 		boolean packCorrect;
 		dumpPackList();
@@ -61,9 +64,10 @@ public class CardList {
 			lvCorrect = !selectLv || !_search_type[CardType.Cookie.getValue()]
 					|| c.getType() != CardType.Cookie || _search_lv[c.getLv()];
 			flipCorrect = !_search_flip || c.isFlip();
+			extraCorrect = !_search_extra || c.isExtra();
 			packCorrect = _search_pack_list.size() == 0 || _search_pack_list.contains(c.getPack());
 //			c.dump();
-			if (colorCorrect && lvCorrect && typeCorrect && flipCorrect && packCorrect) {
+			if (colorCorrect && lvCorrect && typeCorrect && flipCorrect && extraCorrect && packCorrect) {
 				selectList.add(c);
 			}
 		}
@@ -112,6 +116,10 @@ public class CardList {
 
 	public void setFlip(boolean enabled) {
 		_search_flip = enabled;
+	}
+
+	public void setExtra(boolean enabled) {
+		_search_extra = enabled;
 	}
 
 	public void setPack(String pack, boolean enabled) {

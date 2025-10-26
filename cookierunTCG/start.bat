@@ -1,0 +1,1 @@
+java --module-path bin --module cookierunTCG/ui.MainUI

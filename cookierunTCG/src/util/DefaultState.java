@@ -25,7 +25,7 @@ public class DefaultState {
 	public boolean[] color;
 	public boolean[] type;
 	public boolean[] lv;
-	public boolean flip;
+	public boolean flip, extra;
 	private static DefaultState instance;
 	private List<String> _search_pack_list;
 
@@ -239,6 +239,10 @@ public class DefaultState {
 		return flip;
 	}
 
+	public boolean getDefaultExtraFlag() {
+		return extra;
+	}
+
 	public boolean getDefaultLvFlag(int i) {
 		return lv[i];
 	}
@@ -257,6 +261,10 @@ public class DefaultState {
 
 	public void setDefaultTypeFlag(int i, boolean selected) {
 		type[i] = selected;
+	}
+
+	public void setDefaultExtraFlag(boolean selected) {
+		extra = selected;
 	}
 
 	public void setDefaultFlipFlag(boolean selected) {

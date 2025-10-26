@@ -10,6 +10,9 @@ import javax.swing.JMenuItem;
 
 import java.awt.BorderLayout;
 
+import javax.swing.Box;
+import java.awt.Dimension;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -21,8 +24,11 @@ import dataStructure.CardLoader;
 import dataStructure.Deck;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+
 import java.awt.Panel;
 import java.util.List;
+import java.util.concurrent.Flow;
 import java.awt.ScrollPane;
 import java.awt.TextField;
 
@@ -40,10 +46,14 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.FlowLayout;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JButton;
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback {
@@ -95,7 +105,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     private JCheckBox[] cb_level;
     private JCheckBox[] cb_pack;
     private JCheckBox cb_type_cookie, cb_type_item, cb_type_trap, cb_type_stage;
-    private JCheckBox cb_flip;
+    private JCheckBox cb_flip, cb_extra;
 //    private JCheckBox cb_version_BS1, cb_version_ST1, cb_version_ST2, cb_version_ST3;
     private JLabel label_special, label_version;
 
@@ -108,6 +118,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     private JButton mClearDeckBtn;
     private JLabel mCardCountTxt, mFlipCountTxt, mDeckCookieSummaryTxt, mDeckOtherSummaryTxt;
     private JButton showDeckBtn;
+
+    private Font defaultFont = new Font("CookieRun", Font.PLAIN, 14);
 
     private void initialize() {
     	initialData();
@@ -124,21 +136,24 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     private void initialUI() {
         
         frame.setTitle("薑餅人組牌系統   V "+Constant.VERSION);
-        frame.setBounds(100, 100, 1080, 660);
+        frame.setBounds(100, 100, 1080, 720);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setLayout(null);
+        frame.getContentPane().setLayout(new BorderLayout());
         
         mSearchPane = new Panel();
-        mSearchPane.setBounds(10, 10, 229, 603);
-        frame.getContentPane().add(mSearchPane);
-        mSearchPane.setLayout(null);
+        frame.getContentPane().add(mSearchPane, BorderLayout.WEST);
+        mSearchPane.setLayout(new BoxLayout(mSearchPane, BoxLayout.Y_AXIS));
 
         initCheckBox();
         createMenu();
+
+        JPanel searchPanelButtons = new JPanel();
+        searchPanelButtons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        mSearchPane.add(searchPanelButtons);
         
         JButton button_search = new JButton("搜尋");
-        button_search.setBounds(1, 360, 60, 25);
-        mSearchPane.add(button_search);
+        button_search.setFont(defaultFont);
+        searchPanelButtons.add(button_search);
         button_search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	updateCardList();
@@ -147,8 +162,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         });
         
         JButton button_clean = new JButton("清除");
-        button_clean.setBounds(159, 360, 60, 25);
-        mSearchPane.add(button_clean);
+        button_clean.setFont(defaultFont);
+        searchPanelButtons.add(button_clean);
         
         button_clean.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -159,50 +174,88 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             }
         });
         
-        
+        // ===== 中間區域 =====
+
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0; // Single column
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+
         // ==== 卡組
+        gbc.gridy = 0; // First row
+        gbc.weighty = 0.45; // Take 45% of the remaining vertical space
         mDeckPane = new JPanel();
         mDeckPane.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-        
         JScrollPane scrollDeckPane = new JScrollPane(mDeckPane);
-        scrollDeckPane.setBounds(245, 10, 415, 311);
         scrollDeckPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollDeckPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        
-        frame.getContentPane().add(scrollDeckPane);
-        
-        
+        JScrollBar deckScrollBar = scrollDeckPane.getVerticalScrollBar();
+        deckScrollBar.setUnitIncrement(16);
+        centerPanel.add(scrollDeckPane, gbc);
+
+        // ==== 卡組資訊
+        gbc.gridy = 1; // Second row
+        gbc.weighty = 0.1; // Fixed proportion of vertical space (10%)
+        JPanel deckDetailPane = new JPanel();
+        deckDetailPane.setLayout(new BoxLayout(deckDetailPane, BoxLayout.Y_AXIS));
+        centerPanel.add(deckDetailPane, gbc);
+
+        mClearDeckBtn = new JButton("清除卡組");
+        mClearDeckBtn.setFont(defaultFont);
+        deckDetailPane.add(mClearDeckBtn);
+
+        mCardCountTxt = new JLabel("0/60");
+        mCardCountTxt.setFont(defaultFont);
+        deckDetailPane.add(mCardCountTxt);
+
+        mFlipCountTxt = new JLabel("0/16");
+        mFlipCountTxt.setFont(defaultFont);
+        deckDetailPane.add(mFlipCountTxt);
+
+        mDeckCookieSummaryTxt = new JLabel("餅乾: 0   ( LV1: 0   LV2: 0   LV3: 0 )");
+        mDeckCookieSummaryTxt.setFont(defaultFont);
+        deckDetailPane.add(mDeckCookieSummaryTxt);
+
+        mDeckOtherSummaryTxt = new JLabel("道具: 0   陷阱: 0   場地: 0");
+        mDeckOtherSummaryTxt.setFont(defaultFont);
+        deckDetailPane.add(mDeckOtherSummaryTxt);
+
         // ==== 卡片列表
+        gbc.gridy = 2; // Third row
+        gbc.weighty = 0.45; // Take the remaining 45% of the vertical space
         mCardsPane = new JPanel();
-        mCardsPane.setLayout(new GridLayout(0, 6, 5, 5));
+        mCardsPane.setLayout(new GridLayout(0, 4, 5, 5));
         
         JScrollPane scrollCardsPane = new JScrollPane(mCardsPane);
         scrollCardsPane.setBackground(new Color(255, 255, 255));
-        scrollCardsPane.setBounds(245, 364, 415, 249);
         scrollCardsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollCardsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        frame.getContentPane().add(scrollCardsPane);
+        JScrollBar cardListScrollBar = scrollCardsPane.getVerticalScrollBar();
+        cardListScrollBar.setUnitIncrement(16);
+        centerPanel.add(scrollCardsPane, gbc);
+        frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
         
+        JPanel sidebarPanel = new JPanel();
+        sidebarPanel.setLayout(new BoxLayout(sidebarPanel, BoxLayout.Y_AXIS));
+
+        // ==== 卡片預覽
         mCardDetailPane = new Panel();
         mCardDetailPane.setLayout(new BorderLayout());
-        mCardDetailPane.setBounds(666, 10, 390, 438);
-        frame.getContentPane().add(mCardDetailPane);
-        
-        
+        sidebarPanel.add(mCardDetailPane);
+
         // ===== 檔案
         panel = new Panel();
+        panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
         panel.setBackground(new Color(255, 255, 255));
-        panel.setBounds(666, 455, 390, 38);
-        frame.getContentPane().add(panel);
-        panel.setLayout(null);
+        sidebarPanel.add(panel);
         
         mDeckText = new TextField();
         mDeckText.setText(mDefaultState.getDeckDefaultName());
-        mDeckText.setBounds(9, 5, 147, 22);
         panel.add(mDeckText);
         
         loadBtn = new JButton("讀取");
-        loadBtn.setBounds(256, 2, 60, 25);
         panel.add(loadBtn);
         loadBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -215,7 +268,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         });
         
         saveBtn = new JButton("儲存");
-        saveBtn.setBounds(320, 2, 60, 25);
         panel.add(saveBtn);
         saveBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -227,7 +279,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         
         selectBtn = new JButton("選擇檔案");
         selectBtn.setActionCommand("選擇檔案");
-        selectBtn.setBounds(162, 2, 90, 25);
         panel.add(selectBtn);
         selectBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -244,26 +295,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             }
         });
         
-        mClearDeckBtn = new JButton("清除卡組");
-        mClearDeckBtn.setBounds(575, 333, 85, 23);
-        frame.getContentPane().add(mClearDeckBtn);
-        
-        mCardCountTxt = new JLabel("0/60");
-        mCardCountTxt.setBounds(533, 333, 36, 22);
-        frame.getContentPane().add(mCardCountTxt);
-        
-        mFlipCountTxt = new JLabel("0/16");
-        mFlipCountTxt.setBounds(491, 333, 36, 22);
-        frame.getContentPane().add(mFlipCountTxt);
-        
-        mDeckCookieSummaryTxt = new JLabel("餅乾 : 0   ( LV1 : 0   LV2 : 0   LV3 : 0 )");
-        mDeckCookieSummaryTxt.setBounds(245, 322, 236, 22);
-        frame.getContentPane().add(mDeckCookieSummaryTxt);
-        
-        mDeckOtherSummaryTxt = new JLabel("物品 : 0   陷阱 : 0   場地 : 0");
-        mDeckOtherSummaryTxt.setBounds(245, 339, 236, 22);
-        frame.getContentPane().add(mDeckOtherSummaryTxt);
-        
         showDeckBtn = new JButton("展示完整卡表");
         showDeckBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -271,14 +302,15 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         	}
         });
         
-        showDeckBtn.setBounds(676, 499, 120, 25);
-        frame.getContentPane().add(showDeckBtn);
+        panel.add(showDeckBtn);
         mClearDeckBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mDeck.clear();
                 updateDeck();
             }
         });
+
+        frame.getContentPane().add(sidebarPanel, BorderLayout.EAST);
 
         updateCardList();
         
@@ -297,57 +329,51 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
 	int x = paddingToWindow, y = paddingToWindow;
 	int maxObjectForALine = 4;
 	
-
-	private void nextLine() {
-		x = paddingToWindow;
-		y += height + padding;
-	}
-	
-	private void nextObject(int width) {
-		x += width + padding;
-	}
-    
     private void initCheckBox() {
     	
         // ========================= color ==================================
-        JLabel label = new JLabel("顏色");
-        label.setBounds(x, y, widthFull, height);
-        mSearchPane.add(label);
-        
-        nextLine();
-        
+        JLabel labelColor = new JLabel("顏色", JLabel.LEFT);
+        labelColor.setFont(defaultFont);
+        labelColor.setAlignmentX(Component.LEFT_ALIGNMENT);
+        mSearchPane.add(labelColor);
 
-        System.out.println("紅 : "+x+", "+ y+", "+ widthOneWord+", "+ height);
+        JPanel colorOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
+        JPanel colorCheckboxGroup = new JPanel();
+        colorCheckboxGroup.setLayout(new GridLayout(0, 3));
+        colorOuterPanel.add(colorCheckboxGroup);
+        mSearchPane.add(colorOuterPanel);
+
         cb_color = new JCheckBox[CardUtil.COLOR_MAX];
         for(int i=0; i<CardUtil.COLOR_MAX; i++) {
         	cb_color[i] = new JCheckBox(CardUtil.CardColor.fromValue(i).getName());
-        	cb_color[i].setFont(new Font("新細明體", Font.PLAIN, 12));
-        	cb_color[i].setBounds(x, y, widthOneWord, height);
+        	cb_color[i].setFont(defaultFont);
         	cb_color[i].setSelected(mDefaultState.getDefaultColorFlag(i));
-            mSearchPane.add(cb_color[i]);
+            colorCheckboxGroup.add(cb_color[i]);
             final int id = i;
             cb_color[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                 	mDefaultState.setDefaultColorFlag(id, cb_color[id].isSelected());
                 }
             });
-            
-            nextObject(widthOneWord);
         }
-        
-        nextLine();
+
+        mSearchPane.add(Box.createRigidArea(new Dimension(0, 10))); // 10px vertical space
         
         // ========================= type ==================================
-        JLabel label_1 = new JLabel("卡片類型");
-        label_1.setBounds(x, y, widthFull, height);
+        JLabel label_1 = new JLabel("卡片類型", JLabel.CENTER);
+        label_1.setFont(defaultFont);
         mSearchPane.add(label_1);
 
-        nextLine();
-        
+        JPanel typeOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
+        JPanel typeCheckboxGroup = new JPanel();
+        typeCheckboxGroup.setLayout(new GridLayout(0, 4));
+        typeOuterPanel.add(typeCheckboxGroup);
+        mSearchPane.add(typeOuterPanel);
+
         cb_type_cookie = new JCheckBox("餅乾");
-        cb_type_cookie.setBounds(x, y, widthTwoWord, height);
+        cb_type_cookie.setFont(defaultFont);
 		cb_type_cookie.setSelected(mDefaultState.getDefaultTypeFlag(0));
-        mSearchPane.add(cb_type_cookie);
+        typeCheckboxGroup.add(cb_type_cookie);
         cb_type_cookie.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(0, cb_type_cookie.isSelected());
@@ -357,9 +383,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             	}
             }
         });
-
-        
-        nextObject(widthTwoWord);
         
         cb_level = new JCheckBox[CardUtil.LEVEL_MAX];
         for(int i=0; i<CardUtil.LEVEL_MAX; i++) {
@@ -367,8 +390,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             final int id = i;
         	cb_level[i] = new JCheckBox("Lv" + lv);
         	cb_level[i].setSelected(mDefaultState.getDefaultLvFlag(lv));
-        	cb_level[i].setBounds(x, y, widthTwoWord, height);
-            mSearchPane.add(cb_level[i]);
+            typeCheckboxGroup.add(cb_level[i]);
+            cb_level[i].setFont(defaultFont);
             cb_level[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                 	mDefaultState.setDefaultLvFlag(lv, cb_level[id].isSelected());
@@ -376,95 +399,87 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             });
             cb_level[i].setEnabled(cb_type_cookie.isSelected());
             
-            nextObject(widthTwoWord);
         }
 
-        nextLine();
-        
-        cb_type_item = new JCheckBox("物品");
-        cb_type_item.setBounds(x, y, widthTwoWord, height);
+        cb_flip = new JCheckBox("FLIP");
+        cb_flip.setSelected(mDefaultState.getDefaultFlipFlag());
+        typeCheckboxGroup.add(cb_flip);
+        cb_flip.setFont(defaultFont);
+        cb_flip.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	mDefaultState.setDefaultFlipFlag(cb_flip.isSelected());
+            }
+        });
+
+        cb_extra = new JCheckBox("EXTRA");
+        cb_extra.setSelected(mDefaultState.getDefaultExtraFlag());
+        typeCheckboxGroup.add(cb_extra);
+        cb_extra.setFont(defaultFont);
+        cb_extra.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	mDefaultState.setDefaultExtraFlag(cb_extra.isSelected());
+            }
+        });
+
+        cb_type_item = new JCheckBox("道具");
         cb_type_item.setSelected(mDefaultState.getDefaultTypeFlag(1));
-        mSearchPane.add(cb_type_item);
+        typeCheckboxGroup.add(cb_type_item);
+        cb_type_item.setFont(defaultFont);
         cb_type_item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(1, cb_type_item.isSelected());
             }
         });
 
-        nextObject(widthTwoWord);
         
         cb_type_trap = new JCheckBox("陷阱");
-        cb_type_trap.setBounds(x, y, widthTwoWord, height);
         cb_type_trap.setSelected(mDefaultState.getDefaultTypeFlag(2));
-        mSearchPane.add(cb_type_trap);
+        typeCheckboxGroup.add(cb_type_trap);
+        cb_type_trap.setFont(defaultFont);
         cb_type_trap.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(2, cb_type_trap.isSelected());
             }
         });
 
-        nextObject(widthTwoWord);
         
         cb_type_stage = new JCheckBox("場景");
-        cb_type_stage.setBounds(x, y, widthTwoWord, height);
         cb_type_stage.setSelected(mDefaultState.getDefaultTypeFlag(3));
-        mSearchPane.add(cb_type_stage);
+        typeCheckboxGroup.add(cb_type_stage);
+        cb_type_stage.setFont(defaultFont);
         cb_type_stage.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(3, cb_type_stage.isSelected());
             }
         });
 
-        nextObject(widthTwoWord);
-        
-
-        // ========================= flip ==================================
-        nextLine();
-        label_special = new JLabel("特殊");
-        label_special.setBounds(x, y, widthTwoWord, height);
-        mSearchPane.add(label_special);
-        
-        nextLine();
-        
-        cb_flip = new JCheckBox("Flip");
-        cb_flip.setBounds(x, y, widthTwoWord, height);
-        cb_flip.setSelected(mDefaultState.getDefaultFlipFlag());
-        mSearchPane.add(cb_flip);
-        cb_flip.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	mDefaultState.setDefaultFlipFlag(cb_flip.isSelected());
-            }
-        });
-        
-        nextLine();
-        nextLine();
-
+        mSearchPane.add(Box.createRigidArea(new Dimension(0, 10))); // 10px vertical space
 
         // ========================= pack ==================================
-        label_version = new JLabel("來源");
-        label_version.setBounds(x, y, widthFull, height);
+
+
+        label_version = new JLabel("系列", JLabel.CENTER);
+        label_version.setFont(defaultFont);
         mSearchPane.add(label_version);
 
-        nextLine();
+        JPanel packOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
+        JPanel packCheckboxGroup = new JPanel();
+        packCheckboxGroup.setLayout(new GridLayout(0, 4));
+        packOuterPanel.add(packCheckboxGroup);
+        mSearchPane.add(packOuterPanel);
+
         cb_pack = new JCheckBox[CardUtil.CardPack.size()];
         for(int i=0; i<CardUtil.CardPack.size(); i++) {
         	final int id = i;
         	cb_pack[i] = new JCheckBox(CardUtil.CardPack.get(i));
         	cb_pack[i].setSelected(mDefaultState.getDefaultPackFlag(CardUtil.CardPack.get(i)));
-        	cb_pack[i].setFont(new Font("新細明體", Font.PLAIN, 12));
-        	cb_pack[i].setBounds(x, y, widthTwoWord, height);
-            mSearchPane.add(cb_pack[i]);
+        	cb_pack[i].setFont(defaultFont);
+            packCheckboxGroup.add(cb_pack[i]);
             cb_pack[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                 	mDefaultState.setDefaultPackFlag(CardUtil.CardPack.get(id), cb_pack[id].isSelected());
                 }
             });
-            
-            if ((i+1)%maxObjectForALine == 0) {
-                nextLine();
-            } else {
-                nextObject(widthTwoWord);
-            }
         }
     }
     
@@ -507,6 +522,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     	}
 
     	cb_flip.setSelected(false);
+
+        for (JCheckBox cb : cb_pack) {
+        	cb.setSelected(false);
+        }
+
     }
     
     private void updateCardList() {
@@ -579,9 +599,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     @Override
     public void showCard(Card card) {
         mCardDetailPane.removeAll();
-        ImageIcon cardIcon = new ImageIcon("resources/cards/"+card.getPack()+"/"+card.getId()+".png");
+        ImageIcon cardIcon = new ImageIcon("resources/cards/"+Config.LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
+        System.out.println("resources/cards/"+Config.LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
             
-        Image image = cardIcon.getImage().getScaledInstance(342, 469, java.awt.Image.SCALE_SMOOTH);
+        Image image = cardIcon.getImage().getScaledInstance(342, 474, java.awt.Image.SCALE_SMOOTH);
         cardIcon = new ImageIcon(image);
         JLabel cardLabel = new JLabel(cardIcon);
         mCardDetailPane.add(cardLabel, BorderLayout.CENTER);

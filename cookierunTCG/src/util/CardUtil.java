@@ -8,9 +8,9 @@ import dataStructure.Card;
 
 public class CardUtil {
 	public static int LEVEL_MAX = 3;
-	public static int COLOR_MAX = 5;
+	public static int COLOR_MAX = 6;
 	public enum CardColor {
-	    Red(0), Yellow(1), Green(2), Blue(3), Purple(4);
+	    Red(0), Yellow(1), Green(2), Blue(3), Purple(4), Colorless(5);
 	    public final int value;
 	    private CardColor(int value) {
 	        this.value = value;
@@ -23,15 +23,17 @@ public class CardUtil {
 	    public String getName() {
 	        switch(this){
 		        case Red:
-		        	return "紅";
+		        	return "Red";
 		        case Yellow:
-		        	return "黃";
+		        	return "Yellow";
 		        case Green:
-		        	return "綠";
+		        	return "Green";
 		        case Blue:
-		        	return "藍";
+		        	return "Blue";
 		        case Purple:
-		        	return "紫";
+		        	return "Purple";
+				case Colorless:
+		        	return "Colorless";
 	        }
 	        return null;
 	    }

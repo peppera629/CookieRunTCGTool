@@ -22,6 +22,7 @@ public class Card {
 	private CardColor _color;
 	private CardType _type;
 	private boolean _isFlip;
+	private boolean _isExtra;
 	private String _rare;
 	private String _mark;
 	private int _lv;
@@ -32,7 +33,7 @@ public class Card {
 	private boolean _isImageLoaded = false;
 	
 	public Card(String pack, String id, String name, CardColor color, CardType type,
-			boolean flip, String rare, String mark, int lv) {
+			boolean flip, boolean extra, String rare, String mark, int lv) {
 		_PanelList = new ArrayList<ClickableCardPanel>();
 		_serial_number = SERIAL_NUMBER++;
 		_pack = pack;
@@ -41,6 +42,7 @@ public class Card {
 		_color = color;
 		_type = type;
 		_isFlip = flip;
+		_isExtra = extra;
 		_rare = rare;
 		_mark = mark;
 		_lv = lv;
@@ -59,7 +61,7 @@ public class Card {
 
 	public synchronized void createCardLabel() {
 		if (!_isImageLoaded) {
-			_cardImagePath = "resources/cards/"+getPack()+"/"+getId()+".png";
+			_cardImagePath = "resources/cards/"+Config.LANGUAGE+"/"+getPack()+"/"+getId()+".png";
 	        ImageIcon cardIcon = new ImageIcon(_cardImagePath);
 	        
 	        Image image = cardIcon.getImage().getScaledInstance(Config.SMALL_CARD_WIDTH, Config.SMALL_CARD_HEIGHT,  java.awt.Image.SCALE_SMOOTH);
@@ -146,6 +148,10 @@ public class Card {
 	
 	public boolean isFlip() {
 		return _isFlip;
+	}
+
+	public boolean isExtra() {
+		return _isExtra;
 	}
 
 	public ImageIcon getcardIcon() {

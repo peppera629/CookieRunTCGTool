@@ -89,6 +89,7 @@ public class CardLoader {
 	        while((data= input.readLine())!=null) {
 	            if (!data.equals("") && !data.startsWith("//")) {
 	            	String[] cardData = data.split(",");
+					//System.out.println(cardData[0]+" , "+cardData[1]+" , "+cardData[4]+" , "+cardData[4].equals("EX"));
 	            	CardColor color = CardColor.Green;
 	            	for (int i=0; i<CardUtil.COLOR_MAX; i++) {
 	            		CardColor c = CardColor.fromValue(i);
@@ -100,22 +101,22 @@ public class CardLoader {
 	            	
 	            	int level = 0;
 	            	CardType type;
-	            	if (cardData[3].equals("餅乾")) {
+	            	if (cardData[3].equals("Cookie")) {
 	            		type = CardType.Cookie;
 	            		if (cardData.length >7) {
 	            			level = Integer.parseInt(cardData[7]);
 	            		}
-	            	} else if (cardData[3].equals("物品")) {
+	            	} else if (cardData[3].equals("Item")) {
 	            		type = CardType.Item;
-	            	} else if (cardData[3].equals("陷阱")) {
+	            	} else if (cardData[3].equals("Trap")) {
 	            		type = CardType.Trap;
-	            	} else if (cardData[3].equals("場地")) {
+	            	} else if (cardData[3].equals("Stage")) {
 	            		type = CardType.Stage;
 	            	} else {
 	            		type = CardType.Cookie;
 	            	}
 	            	
-	            	Card c = new Card(packName, cardData[0], cardData[1], color, type, cardData[4].equals("F") ,cardData[5], cardData[6], level);
+	            	Card c = new Card(packName, cardData[0], cardData[1], color, type, cardData[4].equals("F"), cardData[4].equals("EX") ,cardData[5], cardData[6], level);
 	            	cardList.add(c);
 	            }
 	        }

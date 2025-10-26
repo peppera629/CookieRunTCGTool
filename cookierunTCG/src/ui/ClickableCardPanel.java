@@ -65,6 +65,10 @@ public class ClickableCardPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+		if (g == null) {
+        	return; // Skip painting if Graphics is null
+    	}
         
         // 繪製卡片的 ImageIcon
 		mCardIcon.paintIcon(this, g, 0, 0);

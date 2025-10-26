@@ -161,10 +161,10 @@ public class Deck {
     	int L2Count = getTargetCardCount(CookieList[2]);
     	int L3Count = getTargetCardCount(CookieList[3]);
     	String ret = "";
-    	ret += "餅乾 : "+(L0Count + L1Count + L2Count + L3Count);
-    	ret += " ( L1 : "+L1Count;
-    	ret += "   L2 : "+L2Count;
-    	ret += "   L3 : "+L3Count+" )";
+    	ret += "餅乾: "+(L0Count + L1Count + L2Count + L3Count);
+    	ret += " (Lv. 1: "+L1Count;
+    	ret += "  Lv. 2: "+L2Count;
+    	ret += "  Lv. 3: "+L3Count+")";
     	return ret;
     }
     public String getOtherSummary() {
@@ -172,9 +172,9 @@ public class Deck {
     	int TrapCount = getTargetCardCount(TrapList);
     	int StageCount = getTargetCardCount(StageList);
     	String ret = "";
-    	ret += "物品 : "+ItemCount;
-    	ret += "   陷阱 : "+TrapCount;
-    	ret += "   場地 : "+StageCount;
+    	ret += "道具: "+ItemCount;
+    	ret += "  陷阱: "+TrapCount;
+    	ret += "  場地: "+StageCount;
     	return ret;
     }
 }
