@@ -46,7 +46,7 @@ public class CardList {
 		boolean selectColor = isSelectedColor();
 		boolean selectType = isSelectedType();
 		boolean selectLv = isSelectedLv();
-		if (!selectColor && !selectType && !_search_flip && _search_pack_list.size() == 0) {
+		if (!selectColor && !selectType && !_search_flip && !_search_extra && _search_pack_list.size() == 0) {
 			return getAllCards();
 		}
 		

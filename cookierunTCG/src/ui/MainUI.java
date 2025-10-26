@@ -46,6 +46,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.io.InputStream;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -97,7 +99,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
 	private DeckWindow deckWindow;
 	private SettingsWindow settingsWindow;
     private DefaultState mDefaultState;
-    private JPanel mCardsPane, mDeckPane;
+    private JPanel mCardsPane, mDeckPane, mTextsPane;
     
     //search panel
     private Panel mSearchPane;
@@ -116,10 +118,12 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     private TextField mDeckText;
     private JButton loadBtn, saveBtn, selectBtn;
     private JButton mClearDeckBtn;
-    private JLabel mCardCountTxt, mFlipCountTxt, mDeckCookieSummaryTxt, mDeckOtherSummaryTxt;
+    private JLabel mCardCountHintTxt, mFlipCountHintTxt, mDeckCookieSummaryHintTxt, mDeckCookieLv1HintTxt, mDeckCookieLv2HintTxt, mDeckCookieLv3HintTxt;
+    private JLabel mDeckItemHintTxt, mDeckTrapHintTxt, mDeckStageHintTxt;
+    private JLabel mCardCountTxt, mFlipCountTxt, mDeckCookieSummaryTxt, mDeckCookieLv1Txt, mDeckCookieLv2Txt, mDeckCookieLv3Txt;
+    private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt;
     private JButton showDeckBtn;
-
-    private Font defaultFont = new Font("CookieRun", Font.PLAIN, 14);
+    private Font CRnormal, CRbold;
 
     private void initialize() {
     	initialData();
@@ -152,7 +156,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         mSearchPane.add(searchPanelButtons);
         
         JButton button_search = new JButton("搜尋");
-        button_search.setFont(defaultFont);
         searchPanelButtons.add(button_search);
         button_search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -162,7 +165,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         });
         
         JButton button_clean = new JButton("清除");
-        button_clean.setFont(defaultFont);
         searchPanelButtons.add(button_clean);
         
         button_clean.addActionListener(new ActionListener() {
@@ -199,28 +201,69 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         gbc.gridy = 1; // Second row
         gbc.weighty = 0.1; // Fixed proportion of vertical space (10%)
         JPanel deckDetailPane = new JPanel();
-        deckDetailPane.setLayout(new BoxLayout(deckDetailPane, BoxLayout.Y_AXIS));
+        deckDetailPane.setLayout(new BorderLayout());
         centerPanel.add(deckDetailPane, gbc);
 
         mClearDeckBtn = new JButton("清除卡組");
-        mClearDeckBtn.setFont(defaultFont);
-        deckDetailPane.add(mClearDeckBtn);
+        deckDetailPane.add(mClearDeckBtn, BorderLayout.SOUTH);
+
+        mTextsPane = new JPanel();
+        mTextsPane.setLayout(new GridLayout(2, 9));
+        deckDetailPane.add(mTextsPane, BorderLayout.CENTER);
+
+        mCardCountHintTxt = new JLabel("牌組:");
+        mTextsPane.add(mCardCountHintTxt);
+
+        mFlipCountHintTxt = new JLabel("FLIP卡:");
+        mTextsPane.add(mFlipCountHintTxt);
+
+        mDeckCookieSummaryHintTxt = new JLabel("餅乾:");
+        mTextsPane.add(mDeckCookieSummaryHintTxt);
+
+        mDeckCookieLv1HintTxt = new JLabel("Lv.1:");
+        mTextsPane.add(mDeckCookieLv1HintTxt);
+
+        mDeckCookieLv2HintTxt = new JLabel("Lv.2:");
+        mTextsPane.add(mDeckCookieLv2HintTxt);
+
+        mDeckCookieLv3HintTxt = new JLabel("Lv.3:");
+        mTextsPane.add(mDeckCookieLv3HintTxt);
+
+        mDeckItemHintTxt = new JLabel("道具:");
+        mTextsPane.add(mDeckItemHintTxt);
+
+        mDeckTrapHintTxt = new JLabel("陷阱:");
+        mTextsPane.add(mDeckTrapHintTxt);
+
+        mDeckStageHintTxt = new JLabel("場地:");
+        mTextsPane.add(mDeckStageHintTxt);
 
         mCardCountTxt = new JLabel("0/60");
-        mCardCountTxt.setFont(defaultFont);
-        deckDetailPane.add(mCardCountTxt);
+        mTextsPane.add(mCardCountTxt);
 
         mFlipCountTxt = new JLabel("0/16");
-        mFlipCountTxt.setFont(defaultFont);
-        deckDetailPane.add(mFlipCountTxt);
+        mTextsPane.add(mFlipCountTxt);
 
-        mDeckCookieSummaryTxt = new JLabel("餅乾: 0   ( LV1: 0   LV2: 0   LV3: 0 )");
-        mDeckCookieSummaryTxt.setFont(defaultFont);
-        deckDetailPane.add(mDeckCookieSummaryTxt);
+        mDeckCookieSummaryTxt = new JLabel("0");
+        mTextsPane.add(mDeckCookieSummaryTxt);
 
-        mDeckOtherSummaryTxt = new JLabel("道具: 0   陷阱: 0   場地: 0");
-        mDeckOtherSummaryTxt.setFont(defaultFont);
-        deckDetailPane.add(mDeckOtherSummaryTxt);
+        mDeckCookieLv1Txt = new JLabel("0");
+        mTextsPane.add(mDeckCookieLv1Txt);
+
+        mDeckCookieLv2Txt = new JLabel("0");
+        mTextsPane.add(mDeckCookieLv2Txt);
+
+        mDeckCookieLv3Txt = new JLabel("0");
+        mTextsPane.add(mDeckCookieLv3Txt);
+
+        mDeckItemTxt = new JLabel("0");
+        mTextsPane.add(mDeckItemTxt);
+
+        mDeckTrapTxt = new JLabel("0");
+        mTextsPane.add(mDeckTrapTxt);
+
+        mDeckStageTxt = new JLabel("0");
+        mTextsPane.add(mDeckStageTxt);
 
         // ==== 卡片列表
         gbc.gridy = 2; // Third row
@@ -333,7 +376,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     	
         // ========================= color ==================================
         JLabel labelColor = new JLabel("顏色", JLabel.LEFT);
-        labelColor.setFont(defaultFont);
         labelColor.setAlignmentX(Component.LEFT_ALIGNMENT);
         mSearchPane.add(labelColor);
 
@@ -345,8 +387,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
 
         cb_color = new JCheckBox[CardUtil.COLOR_MAX];
         for(int i=0; i<CardUtil.COLOR_MAX; i++) {
-        	cb_color[i] = new JCheckBox(CardUtil.CardColor.fromValue(i).getName());
-        	cb_color[i].setFont(defaultFont);
+        	cb_color[i] = new JCheckBox(CardUtil.CardColor.fromValue(i).getDisplayName());
         	cb_color[i].setSelected(mDefaultState.getDefaultColorFlag(i));
             colorCheckboxGroup.add(cb_color[i]);
             final int id = i;
@@ -361,7 +402,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         
         // ========================= type ==================================
         JLabel label_1 = new JLabel("卡片類型", JLabel.CENTER);
-        label_1.setFont(defaultFont);
         mSearchPane.add(label_1);
 
         JPanel typeOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
@@ -371,7 +411,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         mSearchPane.add(typeOuterPanel);
 
         cb_type_cookie = new JCheckBox("餅乾");
-        cb_type_cookie.setFont(defaultFont);
 		cb_type_cookie.setSelected(mDefaultState.getDefaultTypeFlag(0));
         typeCheckboxGroup.add(cb_type_cookie);
         cb_type_cookie.addActionListener(new ActionListener() {
@@ -391,7 +430,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         	cb_level[i] = new JCheckBox("Lv" + lv);
         	cb_level[i].setSelected(mDefaultState.getDefaultLvFlag(lv));
             typeCheckboxGroup.add(cb_level[i]);
-            cb_level[i].setFont(defaultFont);
             cb_level[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                 	mDefaultState.setDefaultLvFlag(lv, cb_level[id].isSelected());
@@ -404,7 +442,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         cb_flip = new JCheckBox("FLIP");
         cb_flip.setSelected(mDefaultState.getDefaultFlipFlag());
         typeCheckboxGroup.add(cb_flip);
-        cb_flip.setFont(defaultFont);
         cb_flip.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultFlipFlag(cb_flip.isSelected());
@@ -414,7 +451,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         cb_extra = new JCheckBox("EXTRA");
         cb_extra.setSelected(mDefaultState.getDefaultExtraFlag());
         typeCheckboxGroup.add(cb_extra);
-        cb_extra.setFont(defaultFont);
         cb_extra.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultExtraFlag(cb_extra.isSelected());
@@ -424,7 +460,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         cb_type_item = new JCheckBox("道具");
         cb_type_item.setSelected(mDefaultState.getDefaultTypeFlag(1));
         typeCheckboxGroup.add(cb_type_item);
-        cb_type_item.setFont(defaultFont);
         cb_type_item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(1, cb_type_item.isSelected());
@@ -435,7 +470,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         cb_type_trap = new JCheckBox("陷阱");
         cb_type_trap.setSelected(mDefaultState.getDefaultTypeFlag(2));
         typeCheckboxGroup.add(cb_type_trap);
-        cb_type_trap.setFont(defaultFont);
         cb_type_trap.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(2, cb_type_trap.isSelected());
@@ -446,7 +480,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         cb_type_stage = new JCheckBox("場景");
         cb_type_stage.setSelected(mDefaultState.getDefaultTypeFlag(3));
         typeCheckboxGroup.add(cb_type_stage);
-        cb_type_stage.setFont(defaultFont);
         cb_type_stage.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(3, cb_type_stage.isSelected());
@@ -459,7 +492,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
 
 
         label_version = new JLabel("系列", JLabel.CENTER);
-        label_version.setFont(defaultFont);
         mSearchPane.add(label_version);
 
         JPanel packOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
@@ -473,7 +505,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         	final int id = i;
         	cb_pack[i] = new JCheckBox(CardUtil.CardPack.get(i));
         	cb_pack[i].setSelected(mDefaultState.getDefaultPackFlag(CardUtil.CardPack.get(i)));
-        	cb_pack[i].setFont(defaultFont);
             packCheckboxGroup.add(cb_pack[i]);
             cb_pack[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -546,6 +577,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             list.setPack(CardUtil.CardPack.get(i), cb_pack[i].isSelected());
     	}
         list.setFlip(cb_flip.isSelected());
+        list.setExtra(cb_extra.isSelected());
         
         mCardsPane.removeAll();
         UIUtil.showDeck(this, mCardsPane, list.getSelectCards(), 13, 6, UIUtil.CARD_SIZE_SMALL, false);
@@ -565,7 +597,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         } else {
         	mCardCountTxt.setForeground(Color.BLACK);
         }
-        
+
         mFlipCountTxt.setText(mDeck.getFlipCount()+"/16");
         if (mDeck.getFlipCount() > 16) {
         	mFlipCountTxt.setForeground(Color.RED);
@@ -573,9 +605,16 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         	mFlipCountTxt.setForeground(Color.BLACK);
         }
         
+        int[] cookieSummary = mDeck.getCookieSummary();
+        int[] otherSummary = mDeck.getOtherSummary();
 
-        mDeckCookieSummaryTxt.setText(mDeck.getCookieSummary());
-        mDeckOtherSummaryTxt.setText(mDeck.getOtherSummary());
+        mDeckCookieSummaryTxt.setText(String.valueOf(cookieSummary[0]));
+        mDeckCookieLv1Txt.setText(String.valueOf(cookieSummary[1]));
+        mDeckCookieLv2Txt.setText(String.valueOf(cookieSummary[2]));
+        mDeckCookieLv3Txt.setText(String.valueOf(cookieSummary[3]));
+        mDeckItemTxt.setText(String.valueOf(otherSummary[0]));
+        mDeckTrapTxt.setText(String.valueOf(otherSummary[1]));
+        mDeckStageTxt.setText(String.valueOf(otherSummary[2]));
     }
 
     @Override

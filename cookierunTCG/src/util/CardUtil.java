@@ -38,6 +38,24 @@ public class CardUtil {
 	        return null;
 	    }
 
+		public String getDisplayName() {
+	        switch(this){
+		        case Red:
+		        	return "紅";
+		        case Yellow:
+		        	return "黃";
+		        case Green:
+		        	return "綠";
+		        case Blue:
+		        	return "藍";
+		        case Purple:
+		        	return "紫";
+				case Colorless:
+		        	return "無色";
+	        }
+	        return null;
+	    }
+
 	    public static CardColor fromValue(int value) {
 	        for (CardColor color : CardColor.values()) {
 	            if (color.getValue() == value) {

@@ -20,7 +20,7 @@ public class Config {
 
 	// ========================= sort config ========================
 	public static final String SORT_NAME_TYPE = "卡片類型"; 
-	public static final String SORT_NAME_FLIP = "是否Flip"; 
+	public static final String SORT_NAME_FLIP = "是否FLIP"; 
 	public static final String SORT_NAME_LEVEL = "卡片等級"; 
 	public static final String SORT_NAME_COLOR = "卡片顏色"; 
 	
