@@ -17,17 +17,23 @@ import dataStructure.Card;
 import util.Config;
 import util.DefaultState;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.ListModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import util.CardUtil;
+
 public class SettingsWindow {
 	private JFrame frame;
 	private JList<String> mSortList, mNotSortList;
 	DefaultListModel<String> mSortListModel, mNotSortListModel;
 	private ConfigChangedCallback mListener;
+	
 	public interface ConfigChangedCallback{
 		public void onSortConfigChanged();
 	}
@@ -46,28 +52,28 @@ public class SettingsWindow {
 					mSortListModel.clear();
 					mNotSortListModel.clear();
 		        	if (Config.CARD_SORT_ORDER_TYPE == 0) {
-		        		mNotSortListModel.addElement(Config.SORT_NAME_TYPE);
+		        		mNotSortListModel.addElement(CardUtil.getTranslation("sort.name.type"));
 		        	} 
 		        	if (Config.CARD_SORT_ORDER_FLIP == 0) {
-		        		mNotSortListModel.addElement(Config.SORT_NAME_FLIP);
+		        		mNotSortListModel.addElement(CardUtil.getTranslation("sort.name.flip"));
 		        	} 
 		        	if (Config.CARD_SORT_ORDER_LEVEL == 0) {
-		        		mNotSortListModel.addElement(Config.SORT_NAME_LEVEL);
+		        		mNotSortListModel.addElement(CardUtil.getTranslation("sort.name.level"));
 		        	} 
 		        	if (Config.CARD_SORT_ORDER_COLOR == 0) {
-		        		mNotSortListModel.addElement(Config.SORT_NAME_COLOR);
+		        		mNotSortListModel.addElement(CardUtil.getTranslation("sort.name.color"));
 		        	}
 		        	
 		        	int id = 0;
 			        for (int i=1; i<5; i++) {
 			        	if (Config.CARD_SORT_ORDER_TYPE == i) {
-			        		mSortListModel.add(id++, Config.SORT_NAME_TYPE);
+			        		mSortListModel.add(id++, CardUtil.getTranslation("sort.name.type"));
 			        	} else if (Config.CARD_SORT_ORDER_FLIP == i) {
-			        		mSortListModel.add(id++, Config.SORT_NAME_FLIP);
+			        		mSortListModel.add(id++, CardUtil.getTranslation("sort.name.flip"));
 			        	} else if (Config.CARD_SORT_ORDER_LEVEL == i) {
-			        		mSortListModel.add(id++, Config.SORT_NAME_LEVEL);
+			        		mSortListModel.add(id++, CardUtil.getTranslation("sort.name.level"));
 			        	} else if (Config.CARD_SORT_ORDER_COLOR == i) {
-			        		mSortListModel.add(id++, Config.SORT_NAME_COLOR);
+			        		mSortListModel.add(id++, CardUtil.getTranslation("sort.name.color"));
 			        	}
 			        }
 					frame.setVisible(true);
@@ -120,11 +126,11 @@ public class SettingsWindow {
 		frame.getContentPane().add(mNotSortList);
 		
 		
-		JLabel lblNewLabel = new JLabel("排序規則:");
+		JLabel lblNewLabel = new JLabel(CardUtil.getTranslation("sort.rules"));
 		lblNewLabel.setBounds(10, 30, 161, 15);
 		frame.getContentPane().add(lblNewLabel);
 		
-		JButton btnMoveUp = new JButton("^");
+		JButton btnMoveUp = new JButton("↑");
 		btnMoveUp.setBounds(181, 52, 51, 23);
 		btnMoveUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -139,7 +145,7 @@ public class SettingsWindow {
 		});
 		frame.getContentPane().add(btnMoveUp);
 		
-		JButton btnMoveDown = new JButton("v");
+		JButton btnMoveDown = new JButton("↓");
 		btnMoveDown.setBounds(181, 143, 51, 23);
 		btnMoveDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -154,7 +160,7 @@ public class SettingsWindow {
 		});
 		frame.getContentPane().add(btnMoveDown);
 		
-		JButton btnRemove = new JButton(">>");
+		JButton btnRemove = new JButton("→");
 		btnRemove.setBounds(181, 85, 51, 23);
 		btnRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -164,7 +170,7 @@ public class SettingsWindow {
 		});
 		frame.getContentPane().add(btnRemove);
 		
-		JButton btnAdd = new JButton("<<");
+		JButton btnAdd = new JButton("←");
 		btnAdd.setBounds(181, 113, 51, 23);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -174,11 +180,11 @@ public class SettingsWindow {
 		});
 		frame.getContentPane().add(btnAdd);
 		
-		JLabel lblNewLabel_1 = new JLabel("不排序");
+		JLabel lblNewLabel_1 = new JLabel(CardUtil.getTranslation("sort.none"));
 		lblNewLabel_1.setBounds(242, 30, 161, 15);
 		frame.getContentPane().add(lblNewLabel_1);
 		
-		JButton btnConfirm = new JButton("確認");
+		JButton btnConfirm = new JButton(CardUtil.getTranslation("sort.confirm"));
 		btnConfirm.setBounds(341, 230, 85, 23);
 		frame.getContentPane().add(btnConfirm);
 		btnConfirm.addActionListener(new ActionListener() {
@@ -195,16 +201,16 @@ public class SettingsWindow {
 	public void updateSort() {
 		for(int i = 0; i < mSortListModel.getSize(); i++) {
 			String s = mSortListModel.get(i);
-			if(s.equals(Config.SORT_NAME_TYPE)) {
+			if(s.equals(CardUtil.getTranslation("sort.name.type"))) {
 				Config.CARD_SORT_ORDER_TYPE = i + 1;
 
-			} else if (s.equals(Config.SORT_NAME_FLIP)) {
+			} else if (s.equals(CardUtil.getTranslation("sort.name.flip"))) {
 				Config.CARD_SORT_ORDER_FLIP = i + 1;
 
-			} else if (s.equals(Config.SORT_NAME_LEVEL)) {
+			} else if (s.equals(CardUtil.getTranslation("sort.name.level"))) {
 				Config.CARD_SORT_ORDER_LEVEL = i + 1;
 
-			} else if (s.equals(Config.SORT_NAME_COLOR)) {
+			} else if (s.equals(CardUtil.getTranslation("sort.name.color"))) {
 				Config.CARD_SORT_ORDER_COLOR = i + 1;
 			}
 		}
@@ -214,16 +220,16 @@ public class SettingsWindow {
 			if (s == null) {
 				continue;
 			}
-			if (s.equals(Config.SORT_NAME_TYPE)) {
+			if (s.equals(CardUtil.getTranslation("sort.name.type"))) {
 				Config.CARD_SORT_ORDER_TYPE = 0;
-				
-			} else if(s.equals(Config.SORT_NAME_FLIP)) {
+
+			} else if(s.equals(CardUtil.getTranslation("sort.name.flip"))) {
 				Config.CARD_SORT_ORDER_FLIP = 0;
-				
-			} else if(s.equals(Config.SORT_NAME_LEVEL)) {
+
+			} else if(s.equals(CardUtil.getTranslation("sort.name.level"))) {
 				Config.CARD_SORT_ORDER_LEVEL = 0;
-				
-			} else if(s.equals(Config.SORT_NAME_COLOR)) {
+
+			} else if(s.equals(CardUtil.getTranslation("sort.name.color"))) {
 				Config.CARD_SORT_ORDER_COLOR = 0;
 			}
 		}

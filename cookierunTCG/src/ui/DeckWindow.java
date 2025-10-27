@@ -20,6 +20,7 @@ import dataStructure.Card;
 import dataStructure.Deck;
 import util.Config;
 import util.UIUtil;
+import util.CardUtil;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -101,7 +102,7 @@ public class DeckWindow {
 
 		frame.getContentPane().add(scrollDeckPane);
 
-		btnNewButton = new JButton("輸出圖檔");
+		btnNewButton = new JButton(CardUtil.getTranslation("deck.export"));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				outputImage();

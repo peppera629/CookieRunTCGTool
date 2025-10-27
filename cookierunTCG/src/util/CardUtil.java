@@ -6,9 +6,40 @@ import javax.swing.ImageIcon;
 
 import dataStructure.Card;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 public class CardUtil {
 	public static int LEVEL_MAX = 3;
 	public static int COLOR_MAX = 6;
+	
+	// For language translation
+	private static ResourceBundle messages;
+
+	private static void loadLanguage() {
+        Locale locale;
+        switch (Config.LANGUAGE) {
+            case "en":
+                locale = new Locale("en", "US");
+                break;
+            case "zh_TW":
+                locale = new Locale("zh", "TW");
+                break;
+            default:
+                locale = Locale.getDefault();
+                break;
+        }
+        messages = ResourceBundle.getBundle("lang", locale);
+    }
+
+	// Static method to get translated text
+    public static String getTranslation(String key) {
+        if (messages == null) {
+            loadLanguage(); // Ensure messages is loaded
+        }
+        return messages.getString(key);
+    }
+
 	public enum CardColor {
 	    Red(0), Yellow(1), Green(2), Blue(3), Purple(4), Colorless(5);
 	    public final int value;
@@ -39,22 +70,8 @@ public class CardUtil {
 	    }
 
 		public String getDisplayName() {
-	        switch(this){
-		        case Red:
-		        	return "紅";
-		        case Yellow:
-		        	return "黃";
-		        case Green:
-		        	return "綠";
-		        case Blue:
-		        	return "藍";
-		        case Purple:
-		        	return "紫";
-				case Colorless:
-		        	return "無色";
-	        }
-	        return null;
-	    }
+            return CardUtil.getTranslation("color." + this.name().toLowerCase());
+        }
 
 	    public static CardColor fromValue(int value) {
 	        for (CardColor color : CardColor.values()) {

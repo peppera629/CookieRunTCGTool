@@ -57,6 +57,9 @@ import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Component;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.swing.JButton;
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback {
@@ -124,7 +127,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     private JLabel mCardCountTxt, mFlipCountTxt, mDeckCookieSummaryTxt, mDeckCookieLv1Txt, mDeckCookieLv2Txt, mDeckCookieLv3Txt;
     private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt;
     private JButton showDeckBtn;
-    private Font CRnormal, CRbold, CRnormalLarge;
+    public static Font CRnormal, CRbold, CRnormalLarge;
+    private InputStream fontStream, fontStreamBold;
 
     private void initialize() {
     	initialData();
@@ -141,21 +145,33 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     private void initialUI() {
         
         try {
-            // Load the custom font
-            InputStream fontStream = getClass().getClassLoader().getResourceAsStream("fonts/CookieRunNormal.ttf");
+            // Use ClassLoader to load the font as a resource
+            switch (Config.LANGUAGE) {
+                case "en":
+                    fontStream = getClass().getClassLoader().getResourceAsStream("fonts/CookieRunRegular.ttf");
+                    fontStreamBold = getClass().getClassLoader().getResourceAsStream("fonts/CookieRunBold.ttf");
+                    break;
+                case "zh_TW":
+                    fontStream = getClass().getClassLoader().getResourceAsStream("fonts/NotoSansTC-SemiBold.ttf");
+                    fontStreamBold = getClass().getClassLoader().getResourceAsStream("fonts/NotoSansTC-Bold.ttf");
+                    break;
+            }
             if (fontStream == null) {
                 throw new IOException("Font file not found");
             }
             CRnormal = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(14f);
             CRnormalLarge = CRnormal.deriveFont(18f);
+            CRbold = Font.createFont(Font.TRUETYPE_FONT, fontStreamBold).deriveFont(14f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(CRnormal);
+            ge.registerFont(CRbold);
         } catch (Exception e) {
             e.printStackTrace();
             CRnormal = new Font("Arial", Font.PLAIN, 14); // Fallback font
+            CRnormalLarge = CRnormal.deriveFont(18f);
         }
 
-        frame.setTitle("薑餅人組牌系統   V "+Constant.VERSION);
+        frame.setTitle(CardUtil.getTranslation("app.title") + " v." + Constant.VERSION);
         frame.setBounds(100, 100, 1080, 720);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new BorderLayout());
@@ -171,7 +187,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         searchPanelButtons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         mSearchPane.add(searchPanelButtons);
         
-        JButton button_search = new JButton("搜尋");
+        JButton button_search = new JButton(CardUtil.getTranslation("search"));
         button_search.setFont(CRnormalLarge);
         searchPanelButtons.add(button_search);
         button_search.addActionListener(new ActionListener() {
@@ -181,7 +197,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             }
         });
         
-        JButton button_clean = new JButton("清除");
+        JButton button_clean = new JButton(CardUtil.getTranslation("clear"));
         button_clean.setFont(CRnormalLarge);
         searchPanelButtons.add(button_clean);
         
@@ -222,7 +238,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         deckDetailPane.setLayout(new BorderLayout());
         centerPanel.add(deckDetailPane, gbc);
 
-        mClearDeckBtn = new JButton("清除卡組");
+        mClearDeckBtn = new JButton(CardUtil.getTranslation("deck.clear"));
         mClearDeckBtn.setFont(CRnormalLarge);
         deckDetailPane.add(mClearDeckBtn, BorderLayout.SOUTH);
 
@@ -230,39 +246,39 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         mTextsPane.setLayout(new GridLayout(2, 9));
         deckDetailPane.add(mTextsPane, BorderLayout.CENTER);
 
-        mCardCountHintTxt = new JLabel("牌組:");
+        mCardCountHintTxt = new JLabel(CardUtil.getTranslation("deck.cards"));
         mCardCountHintTxt.setFont(CRnormal);
         mTextsPane.add(mCardCountHintTxt);
 
-        mFlipCountHintTxt = new JLabel("FLIP卡:");
+        mFlipCountHintTxt = new JLabel(CardUtil.getTranslation("deck.flip"));
         mFlipCountHintTxt.setFont(CRnormal);
         mTextsPane.add(mFlipCountHintTxt);
 
-        mDeckCookieSummaryHintTxt = new JLabel("餅乾:");
+        mDeckCookieSummaryHintTxt = new JLabel(CardUtil.getTranslation("deck.cookies"));
         mDeckCookieSummaryHintTxt.setFont(CRnormal);
         mTextsPane.add(mDeckCookieSummaryHintTxt);
 
-        mDeckCookieLv1HintTxt = new JLabel("Lv.1:");
+        mDeckCookieLv1HintTxt = new JLabel(CardUtil.getTranslation("deck.lv1"));
         mDeckCookieLv1HintTxt.setFont(CRnormal);
         mTextsPane.add(mDeckCookieLv1HintTxt);
 
-        mDeckCookieLv2HintTxt = new JLabel("Lv.2:");
+        mDeckCookieLv2HintTxt = new JLabel(CardUtil.getTranslation("deck.lv2"));
         mDeckCookieLv2HintTxt.setFont(CRnormal);
         mTextsPane.add(mDeckCookieLv2HintTxt);
 
-        mDeckCookieLv3HintTxt = new JLabel("Lv.3:");
+        mDeckCookieLv3HintTxt = new JLabel(CardUtil.getTranslation("deck.lv3"));
         mDeckCookieLv3HintTxt.setFont(CRnormal);
         mTextsPane.add(mDeckCookieLv3HintTxt);
 
-        mDeckItemHintTxt = new JLabel("道具:");
+        mDeckItemHintTxt = new JLabel(CardUtil.getTranslation("deck.items"));
         mDeckItemHintTxt.setFont(CRnormal);
         mTextsPane.add(mDeckItemHintTxt);
 
-        mDeckTrapHintTxt = new JLabel("陷阱:");
+        mDeckTrapHintTxt = new JLabel(CardUtil.getTranslation("deck.traps"));
         mDeckTrapHintTxt.setFont(CRnormal);
         mTextsPane.add(mDeckTrapHintTxt);
 
-        mDeckStageHintTxt = new JLabel("場地:");
+        mDeckStageHintTxt = new JLabel(CardUtil.getTranslation("deck.stages"));
         mDeckStageHintTxt.setFont(CRnormal);
         mTextsPane.add(mDeckStageHintTxt);
 
@@ -335,7 +351,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         mDeckText.setText(mDefaultState.getDeckDefaultName());
         panel.add(mDeckText);
         
-        loadBtn = new JButton("讀取");
+        loadBtn = new JButton(CardUtil.getTranslation("load"));
         loadBtn.setFont(CRnormalLarge);
         panel.add(loadBtn);
         loadBtn.addActionListener(new ActionListener() {
@@ -348,7 +364,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             }
         });
         
-        saveBtn = new JButton("儲存");
+        saveBtn = new JButton(CardUtil.getTranslation("save"));
         saveBtn.setFont(CRnormalLarge);
         panel.add(saveBtn);
         saveBtn.addActionListener(new ActionListener() {
@@ -358,8 +374,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
                 mDefaultState.saveDefaultState();
             }
         });
-        
-        selectBtn = new JButton("選擇檔案");
+
+        selectBtn = new JButton(CardUtil.getTranslation("select.file"));
         selectBtn.setFont(CRnormalLarge);
         selectBtn.setActionCommand("選擇檔案");
         panel.add(selectBtn);
@@ -378,8 +394,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             }
         });
         
-        showDeckBtn = new JButton("展示完整卡表");
+        showDeckBtn = new JButton(CardUtil.getTranslation("deck.show"));
         showDeckBtn.setFont(CRnormalLarge);
+        panel.add(showDeckBtn);
         showDeckBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		deckWindow.show(mDeck, mDeckText.getText());
@@ -416,7 +433,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     private void initCheckBox() {
     	
         // ========================= color ==================================
-        JLabel labelColor = new JLabel("顏色", JLabel.LEFT);
+        JLabel labelColor = new JLabel(CardUtil.getTranslation("color"), JLabel.LEFT);
         labelColor.setFont(CRnormalLarge);
         labelColor.setAlignmentX(Component.LEFT_ALIGNMENT);
         mSearchPane.add(labelColor);
@@ -431,6 +448,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         for(int i=0; i<CardUtil.COLOR_MAX; i++) {
         	cb_color[i] = new JCheckBox(CardUtil.CardColor.fromValue(i).getDisplayName());
         	cb_color[i].setSelected(mDefaultState.getDefaultColorFlag(i));
+            cb_color[i].setFont(CRnormal);
             colorCheckboxGroup.add(cb_color[i]);
             final int id = i;
             cb_color[i].addActionListener(new ActionListener() {
@@ -443,7 +461,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         mSearchPane.add(Box.createRigidArea(new Dimension(0, 10))); // 10px vertical space
         
         // ========================= type ==================================
-        JLabel label_1 = new JLabel("卡片類型", JLabel.CENTER);
+        JLabel label_1 = new JLabel(CardUtil.getTranslation("type"), JLabel.LEFT);
         label_1.setFont(CRnormalLarge);
         mSearchPane.add(label_1);
 
@@ -453,8 +471,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         typeOuterPanel.add(typeCheckboxGroup);
         mSearchPane.add(typeOuterPanel);
 
-        cb_type_cookie = new JCheckBox("餅乾");
+        cb_type_cookie = new JCheckBox(CardUtil.getTranslation("filter.cookie"));
 		cb_type_cookie.setSelected(mDefaultState.getDefaultTypeFlag(0));
+        cb_type_cookie.setFont(CRnormal);
         typeCheckboxGroup.add(cb_type_cookie);
         cb_type_cookie.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -470,8 +489,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         for(int i=0; i<CardUtil.LEVEL_MAX; i++) {
         	final int lv = i+1;
             final int id = i;
-        	cb_level[i] = new JCheckBox("Lv" + lv);
+        	cb_level[i] = new JCheckBox("Lv." + lv);
         	cb_level[i].setSelected(mDefaultState.getDefaultLvFlag(lv));
+            cb_level[i].setFont(CRnormal);
             typeCheckboxGroup.add(cb_level[i]);
             cb_level[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -482,8 +502,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             
         }
 
-        cb_flip = new JCheckBox("FLIP");
+        cb_flip = new JCheckBox(CardUtil.getTranslation("filter.flip"));
         cb_flip.setSelected(mDefaultState.getDefaultFlipFlag());
+        cb_flip.setFont(CRnormal);
         typeCheckboxGroup.add(cb_flip);
         cb_flip.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -491,8 +512,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             }
         });
 
-        cb_extra = new JCheckBox("EXTRA");
+        cb_extra = new JCheckBox(CardUtil.getTranslation("filter.extra"));
         cb_extra.setSelected(mDefaultState.getDefaultExtraFlag());
+        cb_extra.setFont(CRnormal);
         typeCheckboxGroup.add(cb_extra);
         cb_extra.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -500,8 +522,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             }
         });
 
-        cb_type_item = new JCheckBox("道具");
+        cb_type_item = new JCheckBox(CardUtil.getTranslation("filter.item"));
         cb_type_item.setSelected(mDefaultState.getDefaultTypeFlag(1));
+        cb_type_item.setFont(CRnormal);
         typeCheckboxGroup.add(cb_type_item);
         cb_type_item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -509,9 +532,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             }
         });
 
-        
-        cb_type_trap = new JCheckBox("陷阱");
+
+        cb_type_trap = new JCheckBox(CardUtil.getTranslation("filter.trap"));
         cb_type_trap.setSelected(mDefaultState.getDefaultTypeFlag(2));
+        cb_type_trap.setFont(CRnormal);
         typeCheckboxGroup.add(cb_type_trap);
         cb_type_trap.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -519,9 +543,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             }
         });
 
-        
-        cb_type_stage = new JCheckBox("場景");
+
+        cb_type_stage = new JCheckBox(CardUtil.getTranslation("filter.stage"));
         cb_type_stage.setSelected(mDefaultState.getDefaultTypeFlag(3));
+        cb_type_stage.setFont(CRnormal);
         typeCheckboxGroup.add(cb_type_stage);
         cb_type_stage.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -534,7 +559,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         // ========================= pack ==================================
 
 
-        label_version = new JLabel("系列", JLabel.CENTER);
+        label_version = new JLabel(CardUtil.getTranslation("series"), JLabel.LEFT);
         label_version.setFont(CRnormalLarge);
         mSearchPane.add(label_version);
 
@@ -549,6 +574,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         	final int id = i;
         	cb_pack[i] = new JCheckBox(CardUtil.CardPack.get(i));
         	cb_pack[i].setSelected(mDefaultState.getDefaultPackFlag(CardUtil.CardPack.get(i)));
+            cb_pack[i].setFont(CRnormal);
             packCheckboxGroup.add(cb_pack[i]);
             cb_pack[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -565,15 +591,16 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         
         // 創建選單
 //        JMenu settingsMenu = new JMenu("設定");
-        JMenuItem settingsMenuItem = new JMenuItem("設定");
-        menuBar.add(settingsMenuItem);
+        JMenuItem sortSettingsMenuItem = new JMenuItem(CardUtil.getTranslation("sort.settings"));
+        sortSettingsMenuItem.setFont(CRnormal);
+        menuBar.add(sortSettingsMenuItem);
 //        JMenuItem aboutMenu = new JMenuItem("關於");
 //        menuBar.add(aboutMenu);
         
         // 創建一個 ActionListener 來處理 Settings 選項的事件
-        settingsMenuItem.addActionListener(new ActionListener() {
+        sortSettingsMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Settings clicked");
+                System.out.println("Sort settings clicked");
             	settingsWindow.show();
             }
         });

@@ -75,6 +75,8 @@ public class ClickableCardPanel extends JPanel {
         if(mShouldShowCount) {
 	        // 繪製深灰色半透明方塊
 	        Graphics2D g2d = (Graphics2D) g.create();
+			g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+			g2d.setRenderingHint(java.awt.RenderingHints.KEY_TEXT_ANTIALIASING, java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 	        int boxWidth = mCardIcon.getIconWidth()/3;
 	        int boxHeight = mCardIcon.getIconWidth()/3;
 	        int boxX = getWidth() - boxWidth;
@@ -85,10 +87,10 @@ public class ClickableCardPanel extends JPanel {
 	        
 	        // 在方塊上顯示白色數字
 	        g2d.setColor(Color.WHITE);
-	        Font font = new Font("SansSerif", Font.BOLD, mCardIcon.getIconWidth()/5);
-	        g2d.setFont(font);
+			Font cardPanelFont = MainUI.CRbold.deriveFont(mCardIcon.getIconWidth()/5f);
+	        g2d.setFont(cardPanelFont);
 	        String text = Integer.toString(mCard.getCount());
-	        FontMetrics metrics = g2d.getFontMetrics(font);
+	        FontMetrics metrics = g2d.getFontMetrics(cardPanelFont);
 	        int textWidth = metrics.stringWidth(text);
 	        int textHeight = metrics.getHeight();
 	        int textX = boxX + (boxWidth - textWidth) / 2;
