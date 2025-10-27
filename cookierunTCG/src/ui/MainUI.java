@@ -44,6 +44,7 @@ import util.UIUtil;
 
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
@@ -123,7 +124,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     private JLabel mCardCountTxt, mFlipCountTxt, mDeckCookieSummaryTxt, mDeckCookieLv1Txt, mDeckCookieLv2Txt, mDeckCookieLv3Txt;
     private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt;
     private JButton showDeckBtn;
-    private Font CRnormal, CRbold;
+    private Font CRnormal, CRbold, CRnormalLarge;
 
     private void initialize() {
     	initialData();
@@ -139,6 +140,21 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     
     private void initialUI() {
         
+        try {
+            // Load the custom font
+            InputStream fontStream = getClass().getClassLoader().getResourceAsStream("fonts/CookieRunNormal.ttf");
+            if (fontStream == null) {
+                throw new IOException("Font file not found");
+            }
+            CRnormal = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(14f);
+            CRnormalLarge = CRnormal.deriveFont(18f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(CRnormal);
+        } catch (Exception e) {
+            e.printStackTrace();
+            CRnormal = new Font("Arial", Font.PLAIN, 14); // Fallback font
+        }
+
         frame.setTitle("薑餅人組牌系統   V "+Constant.VERSION);
         frame.setBounds(100, 100, 1080, 720);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -156,6 +172,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         mSearchPane.add(searchPanelButtons);
         
         JButton button_search = new JButton("搜尋");
+        button_search.setFont(CRnormalLarge);
         searchPanelButtons.add(button_search);
         button_search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -165,6 +182,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         });
         
         JButton button_clean = new JButton("清除");
+        button_clean.setFont(CRnormalLarge);
         searchPanelButtons.add(button_clean);
         
         button_clean.addActionListener(new ActionListener() {
@@ -205,6 +223,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         centerPanel.add(deckDetailPane, gbc);
 
         mClearDeckBtn = new JButton("清除卡組");
+        mClearDeckBtn.setFont(CRnormalLarge);
         deckDetailPane.add(mClearDeckBtn, BorderLayout.SOUTH);
 
         mTextsPane = new JPanel();
@@ -212,57 +231,75 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         deckDetailPane.add(mTextsPane, BorderLayout.CENTER);
 
         mCardCountHintTxt = new JLabel("牌組:");
+        mCardCountHintTxt.setFont(CRnormal);
         mTextsPane.add(mCardCountHintTxt);
 
         mFlipCountHintTxt = new JLabel("FLIP卡:");
+        mFlipCountHintTxt.setFont(CRnormal);
         mTextsPane.add(mFlipCountHintTxt);
 
         mDeckCookieSummaryHintTxt = new JLabel("餅乾:");
+        mDeckCookieSummaryHintTxt.setFont(CRnormal);
         mTextsPane.add(mDeckCookieSummaryHintTxt);
 
         mDeckCookieLv1HintTxt = new JLabel("Lv.1:");
+        mDeckCookieLv1HintTxt.setFont(CRnormal);
         mTextsPane.add(mDeckCookieLv1HintTxt);
 
         mDeckCookieLv2HintTxt = new JLabel("Lv.2:");
+        mDeckCookieLv2HintTxt.setFont(CRnormal);
         mTextsPane.add(mDeckCookieLv2HintTxt);
 
         mDeckCookieLv3HintTxt = new JLabel("Lv.3:");
+        mDeckCookieLv3HintTxt.setFont(CRnormal);
         mTextsPane.add(mDeckCookieLv3HintTxt);
 
         mDeckItemHintTxt = new JLabel("道具:");
+        mDeckItemHintTxt.setFont(CRnormal);
         mTextsPane.add(mDeckItemHintTxt);
 
         mDeckTrapHintTxt = new JLabel("陷阱:");
+        mDeckTrapHintTxt.setFont(CRnormal);
         mTextsPane.add(mDeckTrapHintTxt);
 
         mDeckStageHintTxt = new JLabel("場地:");
+        mDeckStageHintTxt.setFont(CRnormal);
         mTextsPane.add(mDeckStageHintTxt);
 
         mCardCountTxt = new JLabel("0/60");
+        mCardCountTxt.setFont(CRnormalLarge);
         mTextsPane.add(mCardCountTxt);
 
         mFlipCountTxt = new JLabel("0/16");
+        mFlipCountTxt.setFont(CRnormalLarge);
         mTextsPane.add(mFlipCountTxt);
 
         mDeckCookieSummaryTxt = new JLabel("0");
+        mDeckCookieSummaryTxt.setFont(CRnormalLarge);
         mTextsPane.add(mDeckCookieSummaryTxt);
 
         mDeckCookieLv1Txt = new JLabel("0");
+        mDeckCookieLv1Txt.setFont(CRnormalLarge);
         mTextsPane.add(mDeckCookieLv1Txt);
 
         mDeckCookieLv2Txt = new JLabel("0");
+        mDeckCookieLv2Txt.setFont(CRnormalLarge);
         mTextsPane.add(mDeckCookieLv2Txt);
 
         mDeckCookieLv3Txt = new JLabel("0");
+        mDeckCookieLv3Txt.setFont(CRnormalLarge);
         mTextsPane.add(mDeckCookieLv3Txt);
 
         mDeckItemTxt = new JLabel("0");
+        mDeckItemTxt.setFont(CRnormalLarge);
         mTextsPane.add(mDeckItemTxt);
 
         mDeckTrapTxt = new JLabel("0");
+        mDeckTrapTxt.setFont(CRnormalLarge);
         mTextsPane.add(mDeckTrapTxt);
 
         mDeckStageTxt = new JLabel("0");
+        mDeckStageTxt.setFont(CRnormalLarge);
         mTextsPane.add(mDeckStageTxt);
 
         // ==== 卡片列表
@@ -299,6 +336,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         panel.add(mDeckText);
         
         loadBtn = new JButton("讀取");
+        loadBtn.setFont(CRnormalLarge);
         panel.add(loadBtn);
         loadBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -311,6 +349,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         });
         
         saveBtn = new JButton("儲存");
+        saveBtn.setFont(CRnormalLarge);
         panel.add(saveBtn);
         saveBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -321,6 +360,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         });
         
         selectBtn = new JButton("選擇檔案");
+        selectBtn.setFont(CRnormalLarge);
         selectBtn.setActionCommand("選擇檔案");
         panel.add(selectBtn);
         selectBtn.addActionListener(new ActionListener() {
@@ -339,6 +379,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         });
         
         showDeckBtn = new JButton("展示完整卡表");
+        showDeckBtn.setFont(CRnormalLarge);
         showDeckBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		deckWindow.show(mDeck, mDeckText.getText());
@@ -376,6 +417,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     	
         // ========================= color ==================================
         JLabel labelColor = new JLabel("顏色", JLabel.LEFT);
+        labelColor.setFont(CRnormalLarge);
         labelColor.setAlignmentX(Component.LEFT_ALIGNMENT);
         mSearchPane.add(labelColor);
 
@@ -402,6 +444,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         
         // ========================= type ==================================
         JLabel label_1 = new JLabel("卡片類型", JLabel.CENTER);
+        label_1.setFont(CRnormalLarge);
         mSearchPane.add(label_1);
 
         JPanel typeOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
@@ -492,6 +535,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
 
 
         label_version = new JLabel("系列", JLabel.CENTER);
+        label_version.setFont(CRnormalLarge);
         mSearchPane.add(label_version);
 
         JPanel packOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
