@@ -7,3 +7,6 @@ cookierunTCG/bin
 cookierunTCG/resources/cards
 cookierunTCG/deck/*
 cookierunTCG/deck_readable/*
+compile.bat
+compile&start.bat
+start.bat
