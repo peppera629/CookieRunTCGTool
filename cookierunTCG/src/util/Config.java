@@ -1,9 +1,43 @@
 package util;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Properties;
+
 public class Config {
+
+	private static final String CONFIG_FILE = "config/config.txt";
+
+	// Load the language setting from the config file
+    public static void loadConfig() {
+        Properties properties = new Properties();
+        try (InputStream input = new FileInputStream(CONFIG_FILE)) {
+            properties.load(input);
+            LANGUAGE = properties.getProperty("language", "en"); // Default to "en" if not found
+			System.out.println(LANGUAGE);
+        } catch (IOException e) {
+            System.err.println("Could not load config file. Using default settings.");
+        }
+    }
+
+    // Save the language setting to the config file
+    public static void saveConfig() {
+        Properties properties = new Properties();
+        properties.setProperty("language", LANGUAGE);
+        System.out.println("Saving language setting: " + LANGUAGE);
+        try (OutputStream output = new FileOutputStream(CONFIG_FILE)) {
+            properties.store(output, "Application Configuration");
+        } catch (IOException e) {
+            System.err.println("Could not save config file.");
+        }
+    }
+
 	public static boolean SHOW_CARD_COUNT = true;
 
-	public static String LANGUAGE = "zh_TW"; // en or zh_TW
+	public static String LANGUAGE; // en or zh_TW
 
 	public static float CARD_RATIO = 1.4F;
 	

@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
+import javax.swing.border.EmptyBorder;
 
 import dataStructure.Card;
 import dataStructure.CardList;
@@ -81,7 +82,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     public static void main(String[] args) {
         System.setProperty("file.encoding", "UTF-8");
 
-    	
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -98,6 +98,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
      * Create the application.
      */
     public MainUI() {
+        Config.loadConfig();
         loadFont();
 		deckWindow = new DeckWindow();
         settingsWindow = new SettingsWindow();
@@ -132,7 +133,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private Panel panel;
     private TextField mDeckText;
     private JButton loadBtn, saveBtn, selectBtn;
-    private JButton mClearDeckBtn, button_search, button_clean;
+    private JButton mClearDeckBtn, button_search, button_clean, button_sort, button_settings;
     private JLabel mCardCountHintTxt, mFlipCountHintTxt, mDeckCookieSummaryHintTxt, mDeckCookieLv1HintTxt, mDeckCookieLv2HintTxt, mDeckCookieLv3HintTxt;
     private JLabel mDeckItemHintTxt, mDeckTrapHintTxt, mDeckStageHintTxt;
     private JLabel mCardCountTxt, mFlipCountTxt, mDeckCookieSummaryTxt, mDeckCookieLv1Txt, mDeckCookieLv2Txt, mDeckCookieLv3Txt;
@@ -200,10 +201,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mSearchPane.setLayout(new BoxLayout(mSearchPane, BoxLayout.Y_AXIS));
 
         initCheckBox();
-        createMenu();
 
         JPanel searchPanelButtons = new JPanel();
-        searchPanelButtons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        searchPanelButtons.setLayout(new GridLayout(2, 2, 5, 5));
+        searchPanelButtons.setBorder(new EmptyBorder(10, 10, 10, 10));
         mSearchPane.add(searchPanelButtons);
         
         button_search = new JButton(CardUtil.getTranslation("search"));
@@ -230,7 +231,27 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 mDefaultState.saveDefaultState();
             }
         });
-        
+
+        button_sort = new JButton(CardUtil.getTranslation("sort.settings"));
+        button_sort.setFont(CRnormal);
+        componentFontMap.put(button_sort, "CRnormal"); // Store the font type as a String
+        searchPanelButtons.add(button_sort);
+        button_sort.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	sortSettingsWindow.show();
+            }
+        });
+
+        button_settings = new JButton(CardUtil.getTranslation("settings"));
+        button_settings.setFont(CRnormal);
+        componentFontMap.put(button_settings, "CRnormal"); // Store the font type as a String
+        searchPanelButtons.add(button_settings);
+        button_settings.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                settingsWindow.show();
+            }
+        });
+
         // ===== 中間區域 =====
 
         JPanel centerPanel = new JPanel();
@@ -256,6 +277,13 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mClearDeckBtn.setFont(CRnormalLarge);
         componentFontMap.put(mClearDeckBtn, "CRnormalLarge"); // Store the font type as a String
         deckDetailPane.add(mClearDeckBtn, BorderLayout.SOUTH);
+
+        mClearDeckBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mDeck.clear();
+                updateDeck();
+            }
+        });
 
         mTextsPane = new JPanel();
         mTextsPane.setLayout(new GridBagLayout());
@@ -439,27 +467,35 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
         
         JPanel sidebarPanel = new JPanel();
-        sidebarPanel.setLayout(new BoxLayout(sidebarPanel, BoxLayout.Y_AXIS));
+        sidebarPanel.setLayout(new BorderLayout());
 
         // ==== 卡片預覽
         mCardDetailPane = new Panel();
         mCardDetailPane.setLayout(new BorderLayout());
-        sidebarPanel.add(mCardDetailPane);
+        sidebarPanel.add(mCardDetailPane, BorderLayout.CENTER);
 
         // ===== 檔案
         panel = new Panel();
-        panel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-        panel.setBackground(new Color(255, 255, 255));
-        sidebarPanel.add(panel);
+        panel.setLayout(new GridBagLayout());
+        sidebarPanel.add(panel, BorderLayout.SOUTH);
         
+        GridBagConstraints gbc_panel = new GridBagConstraints();
+        gbc_panel.fill = GridBagConstraints.BOTH;
+        gbc_panel.gridx = 0;
+        gbc_panel.gridwidth = 4;
+        gbc_panel.gridy = 0;
         mDeckText = new TextField();
         mDeckText.setText(mDefaultState.getDeckDefaultName());
-        panel.add(mDeckText);
+        mDeckText.setFont(CRnormal);
+        componentFontMap.put(mDeckText, "CRnormal");
+        panel.add(mDeckText, gbc_panel);
         
+        gbc_panel.gridwidth = 1;
+        gbc_panel.gridy = 1;
         loadBtn = new JButton(CardUtil.getTranslation("load"));
         loadBtn.setFont(CRnormal);
         componentFontMap.put(loadBtn, "CRnormal"); // Store the font type as a String
-        panel.add(loadBtn);
+        panel.add(loadBtn, gbc_panel);
         loadBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mDeck = CardLoader.loadDeck(mDeckText.getText());
@@ -469,11 +505,12 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 mDefaultState.saveDefaultState();
             }
         });
-        
+
+        gbc_panel.gridx = 1;
         saveBtn = new JButton(CardUtil.getTranslation("save"));
         saveBtn.setFont(CRnormal);
         componentFontMap.put(saveBtn, "CRnormal"); // Store the font type as a String
-        panel.add(saveBtn);
+        panel.add(saveBtn, gbc_panel);
         saveBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CardLoader.saveDeck(mDeckText.getText(), mDeck);
@@ -482,11 +519,12 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
         });
 
+        gbc_panel.gridx = 2;
         selectBtn = new JButton(CardUtil.getTranslation("select.file"));
         selectBtn.setFont(CRnormal);
         componentFontMap.put(selectBtn, "CRnormal"); // Store the font type as a String
         selectBtn.setActionCommand("Select File");
-        panel.add(selectBtn);
+        panel.add(selectBtn, gbc_panel);
         selectBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
@@ -502,22 +540,15 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
         });
         
+        gbc_panel.gridx = 3;
         showDeckBtn = new JButton(CardUtil.getTranslation("deck.show"));
         showDeckBtn.setFont(CRnormal);
         componentFontMap.put(showDeckBtn, "CRnormal"); // Store the font type as a String
-        panel.add(showDeckBtn);
+        panel.add(showDeckBtn, gbc_panel);
         showDeckBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		deckWindow.show(mDeck, mDeckText.getText());
         	}
-        });
-        
-        panel.add(showDeckBtn);
-        mClearDeckBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                mDeck.clear();
-                updateDeck();
-            }
         });
 
         frame.getContentPane().add(sidebarPanel, BorderLayout.EAST);
@@ -545,7 +576,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         labelColor = new JLabel(CardUtil.getTranslation("color"), JLabel.LEFT);
         labelColor.setFont(CRnormalLarge);
         componentFontMap.put(labelColor, "CRnormalLarge"); // Store the font type as a String
-        labelColor.setAlignmentX(Component.LEFT_ALIGNMENT);
         mSearchPane.add(labelColor);
 
         JPanel colorOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
@@ -704,47 +734,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             });
         }
     }
-    
-    private void createMenu() {
-
-        // 創建選單列
-        JMenuBar menuBar = new JMenuBar();
-        
-        // 創建選單
-//        JMenu settingsMenu = new JMenu("設定");
-        sortSettingsMenuItem = new JMenuItem(CardUtil.getTranslation("sort.settings"));
-        sortSettingsMenuItem.setFont(CRnormal);
-        componentFontMap.put(sortSettingsMenuItem, "CRnormal"); // Store the font type as a String
-        menuBar.add(sortSettingsMenuItem);
-//        JMenuItem aboutMenu = new JMenuItem("關於");
-//        menuBar.add(aboutMenu);
-        
-        // 創建一個 ActionListener 來處理 Settings 選項的事件
-        sortSettingsMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Sort settings clicked");
-            	sortSettingsWindow.show();
-            }
-        });
-
-        settingsMenuItem = new JMenuItem(CardUtil.getTranslation("settings"));
-        settingsMenuItem.setFont(CRnormal);
-        componentFontMap.put(settingsMenuItem, "CRnormal"); // Store the font type as a String
-        menuBar.add(settingsMenuItem);
-//        JMenuItem aboutMenu = new JMenuItem("關於");
-//        menuBar.add(aboutMenu);
-        
-        // 創建一個 ActionListener 來處理 Settings 選項的事件
-        settingsMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Settings clicked");
-            	settingsWindow.show();
-            }
-        });
-        
-        // 設置選單列
-        frame.setJMenuBar(menuBar);
-    }
 
     private void cleanCheckBox() {
     	for (JCheckBox cb : cb_color) {
@@ -754,6 +743,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     	cb_type_cookie.setSelected(false);
     	cb_type_item.setSelected(false);
     	cb_type_trap.setSelected(false);
+        cb_extra.setSelected(false);
+        cb_flip.setSelected(false);
     	cb_type_stage.setSelected(false);
 
     	for (JCheckBox cb : cb_level) {
@@ -865,6 +856,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
     @Override
     public void onLanguageChange() {
+        
+        Config.saveConfig();
+        
         // Reload fonts and translations
         loadFont();
 
@@ -901,8 +895,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_type_trap.setText(CardUtil.getTranslation("filter.trap"));
         cb_type_stage.setText(CardUtil.getTranslation("filter.stage"));
         labelSeries.setText(CardUtil.getTranslation("series"));
-        sortSettingsMenuItem.setText(CardUtil.getTranslation("sort.settings"));
-        settingsMenuItem.setText(CardUtil.getTranslation("settings"));
+        button_sort.setText(CardUtil.getTranslation("sort.settings"));
+        button_settings.setText(CardUtil.getTranslation("settings"));
 
         updateComponents(frame.getContentPane());
 
