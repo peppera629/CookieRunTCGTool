@@ -5,7 +5,7 @@
  * 
  */
 module cookierunTCG {
-    requires java.desktop;
+    requires transitive java.desktop;
     exports ui;
     exports dataStructure;
     exports util;

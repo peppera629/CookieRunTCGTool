@@ -16,7 +16,7 @@ public class CardUtil {
 	// For language translation
 	private static ResourceBundle messages;
 
-	private static void loadLanguage() {
+	public static void loadLanguage() {
         Locale locale;
         switch (Config.LANGUAGE) {
             case "en":

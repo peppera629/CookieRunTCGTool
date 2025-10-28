@@ -10,3 +10,4 @@ cookierunTCG/deck_readable/*
 compile.bat
 compile&start.bat
 start.bat
+cookierunTCG/config/default_state.txt

@@ -3,7 +3,7 @@ package util;
 public class Config {
 	public static boolean SHOW_CARD_COUNT = true;
 
-	public static String LANGUAGE = "en";
+	public static String LANGUAGE = "zh_TW"; // en or zh_TW
 
 	public static float CARD_RATIO = 1.4F;
 	

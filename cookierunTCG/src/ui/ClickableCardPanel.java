@@ -30,6 +30,7 @@ public class ClickableCardPanel extends JPanel {
     private CardListCallBack mCardListCallBack;
     private boolean mShouldShowCount;
     private int mCardSize;
+	private Dimension cardListSize;
     ImageIcon mCardIcon;
 
 	public ClickableCardPanel(Card card, boolean showCount, int cardSize) {
@@ -37,7 +38,8 @@ public class ClickableCardPanel extends JPanel {
     	mShouldShowCount = showCount;
 		mCardSize = cardSize;
     	mCardIcon = CardLoader.createCardImage(mCard, mCardSize);
-        setPreferredSize(new Dimension(mCardIcon.getIconWidth(), mCardIcon.getIconHeight()));
+		cardListSize = new Dimension(mCardIcon.getIconWidth(), mCardIcon.getIconHeight());
+        setPreferredSize(cardListSize);
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -72,31 +74,35 @@ public class ClickableCardPanel extends JPanel {
         
         // 繪製卡片的 ImageIcon
 		mCardIcon.paintIcon(this, g, 0, 0);
+
         if(mShouldShowCount) {
 	        // 繪製深灰色半透明方塊
 	        Graphics2D g2d = (Graphics2D) g.create();
-			g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
-			g2d.setRenderingHint(java.awt.RenderingHints.KEY_TEXT_ANTIALIASING, java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-	        int boxWidth = mCardIcon.getIconWidth()/3;
-	        int boxHeight = mCardIcon.getIconWidth()/3;
-	        int boxX = getWidth() - boxWidth;
-	        int boxY = getHeight() - boxHeight;
-	        Color boxColor = new Color(64, 64, 64, 192); // 深灰色半透明
-	        g2d.setColor(boxColor);
-	        g2d.fillRect(boxX, boxY, boxWidth, boxHeight);
-	        
-	        // 在方塊上顯示白色數字
-	        g2d.setColor(Color.WHITE);
-			Font cardPanelFont = MainUI.CRbold.deriveFont(mCardIcon.getIconWidth()/5f);
-	        g2d.setFont(cardPanelFont);
-	        String text = Integer.toString(mCard.getCount());
-	        FontMetrics metrics = g2d.getFontMetrics(cardPanelFont);
-	        int textWidth = metrics.stringWidth(text);
-	        int textHeight = metrics.getHeight();
-	        int textX = boxX + (boxWidth - textWidth) / 2;
-	        int textY = boxY + (boxHeight - textHeight) / 2 + metrics.getAscent();
-	        g2d.drawString(text, textX, textY);
-	        g2d.dispose();
+			try {
+				g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+				g2d.setRenderingHint(java.awt.RenderingHints.KEY_TEXT_ANTIALIASING, java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+				int boxWidth = mCardIcon.getIconWidth()/3;
+				int boxHeight = mCardIcon.getIconWidth()/3;
+				int boxX = getWidth() - boxWidth;
+				int boxY = getHeight() - boxHeight;
+				Color boxColor = new Color(64, 64, 64, 192); // 深灰色半透明
+				g2d.setColor(boxColor);
+				g2d.fillRect(boxX, boxY, boxWidth, boxHeight);
+				
+				// 在方塊上顯示白色數字
+				g2d.setColor(Color.WHITE);
+				Font cardPanelFont = MainUI.CRbold.deriveFont(mCardIcon.getIconWidth()/5f);
+				g2d.setFont(cardPanelFont);
+				String text = Integer.toString(mCard.getCount());
+				FontMetrics metrics = g2d.getFontMetrics(cardPanelFont);
+				int textWidth = metrics.stringWidth(text);
+				int textHeight = metrics.getHeight();
+				int textX = boxX + (boxWidth - textWidth) / 2;
+				int textY = boxY + (boxHeight - textHeight) / 2 + metrics.getAscent();
+				g2d.drawString(text, textX, textY);
+			} finally {
+				g2d.dispose();
+			}
         }
     }
     
@@ -106,12 +112,10 @@ public class ClickableCardPanel extends JPanel {
     
     public void updateImage() {
     	mCardIcon = CardLoader.createCardImage(mCard, mCardSize);
-    	super.paint(getGraphics());
-    	
+		repaint();
     }
     public void repaintImage() {
     	updateImage();
 		System.out.println("========== updateImage "+mCard.getName()+" =============");
-    	super.paint(getGraphics());
     }
 }

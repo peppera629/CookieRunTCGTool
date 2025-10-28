@@ -57,16 +57,17 @@ public class CardLoader {
 		            	CardUtil.CardPack.add(data);
 		            }
 		        } 
+				reader.close();
 		        input.close();
 	        }
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("An error occurred (Unsupported Encoding).");
+            e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("An error occurred (IO Exception).");
 			e.printStackTrace();
 		}
 	}
@@ -120,6 +121,7 @@ public class CardLoader {
 	            	cardList.add(c);
 	            }
 	        }
+			reader.close();
 	        input.close();
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");

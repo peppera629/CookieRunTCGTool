@@ -33,13 +33,14 @@ import java.awt.ScrollPane;
 import java.awt.TextField;
 
 import ui.ClickableCardPanel.CardListCallBack;
-import ui.SettingsWindow.ConfigChangedCallback;
+import ui.SortSettingsWindow.ConfigChangedCallback;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardType;
 import util.CardUtil;
 import util.Config;
 import util.Constant;
 import util.DefaultState;
+import util.LanguageChangeListener;
 import util.UIUtil;
 
 import java.awt.event.ActionListener;
@@ -56,13 +57,20 @@ import java.awt.Image;
 import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Component;
-
+import java.awt.Insets;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 
-public class MainUI implements CardListCallBack, ConfigChangedCallback {
+// TODO: Add EN card images for BS1~BS7, ST1~ST5, P
+// TODO: Fix filtering sidebar alignment
+// TODO: Add EXTRA card counter
+// TODO: Add EXTRA card count constraint
+
+public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
 
 	private static boolean DEBUG = false;
     private JFrame frame;
@@ -90,9 +98,12 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
      * Create the application.
      */
     public MainUI() {
+        loadFont();
 		deckWindow = new DeckWindow();
-		settingsWindow = new SettingsWindow();
-		settingsWindow.setConfigChangedCallback(this);
+        settingsWindow = new SettingsWindow();
+		sortSettingsWindow = new SortSettingsWindow();
+		sortSettingsWindow.setConfigChangedCallback(this);
+        SettingsWindow.addLanguageChangeListener(this);
         initialize();
     }
 
@@ -101,7 +112,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
      */
 
 	private DeckWindow deckWindow;
-	private SettingsWindow settingsWindow;
+    private SettingsWindow settingsWindow;
+	private SortSettingsWindow sortSettingsWindow;
     private DefaultState mDefaultState;
     private JPanel mCardsPane, mDeckPane, mTextsPane;
     
@@ -112,8 +124,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     private JCheckBox[] cb_pack;
     private JCheckBox cb_type_cookie, cb_type_item, cb_type_trap, cb_type_stage;
     private JCheckBox cb_flip, cb_extra;
-//    private JCheckBox cb_version_BS1, cb_version_ST1, cb_version_ST2, cb_version_ST3;
-    private JLabel label_special, label_version;
+    private JLabel labelColor, labelType, labelSeries;
 
     private Deck mDeck;
     private ScrollPane scrollPane;
@@ -121,14 +132,17 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     private Panel panel;
     private TextField mDeckText;
     private JButton loadBtn, saveBtn, selectBtn;
-    private JButton mClearDeckBtn;
+    private JButton mClearDeckBtn, button_search, button_clean;
     private JLabel mCardCountHintTxt, mFlipCountHintTxt, mDeckCookieSummaryHintTxt, mDeckCookieLv1HintTxt, mDeckCookieLv2HintTxt, mDeckCookieLv3HintTxt;
     private JLabel mDeckItemHintTxt, mDeckTrapHintTxt, mDeckStageHintTxt;
     private JLabel mCardCountTxt, mFlipCountTxt, mDeckCookieSummaryTxt, mDeckCookieLv1Txt, mDeckCookieLv2Txt, mDeckCookieLv3Txt;
     private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt;
     private JButton showDeckBtn;
-    public static Font CRnormal, CRbold, CRnormalLarge;
-    private InputStream fontStream, fontStreamBold;
+    private JMenuItem settingsMenuItem, sortSettingsMenuItem;
+    public static Font CRnormal, CRbold, CRnormalLarge, CRnormalSmall, CRnormalEXLarge;
+    public static InputStream fontStream, fontStreamBold;
+    public static Map<java.awt.Component, String> componentFontMap = new HashMap<>();
+    private int columns = 6;
 
     private void initialize() {
     	initialData();
@@ -142,37 +156,42 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         frame = new JFrame();
     }
     
-    private void initialUI() {
-        
+    public static void loadFont() {
         try {
             // Use ClassLoader to load the font as a resource
             switch (Config.LANGUAGE) {
-                case "en":
-                    fontStream = getClass().getClassLoader().getResourceAsStream("fonts/CookieRunRegular.ttf");
-                    fontStreamBold = getClass().getClassLoader().getResourceAsStream("fonts/CookieRunBold.ttf");
-                    break;
                 case "zh_TW":
-                    fontStream = getClass().getClassLoader().getResourceAsStream("fonts/NotoSansTC-SemiBold.ttf");
-                    fontStreamBold = getClass().getClassLoader().getResourceAsStream("fonts/NotoSansTC-Bold.ttf");
+                    fontStream = MainUI.class.getClassLoader().getResourceAsStream("fonts/NotoSansTC-SemiBold.ttf");
+                    fontStreamBold = MainUI.class.getClassLoader().getResourceAsStream("fonts/NotoSansTC-Bold.ttf");
                     break;
+                default:
+                    fontStream = MainUI.class.getClassLoader().getResourceAsStream("fonts/CookieRunRegular.ttf");
+                    fontStreamBold = MainUI.class.getClassLoader().getResourceAsStream("fonts/CookieRunBold.ttf");
             }
             if (fontStream == null) {
                 throw new IOException("Font file not found");
             }
             CRnormal = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(14f);
+            CRnormalSmall = CRnormal.deriveFont(10f);
             CRnormalLarge = CRnormal.deriveFont(18f);
+            CRnormalEXLarge = CRnormal.deriveFont(24f);
             CRbold = Font.createFont(Font.TRUETYPE_FONT, fontStreamBold).deriveFont(14f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(CRnormal);
+            ge.registerFont(CRnormalSmall);
+            ge.registerFont(CRnormalLarge);
             ge.registerFont(CRbold);
         } catch (Exception e) {
             e.printStackTrace();
             CRnormal = new Font("Arial", Font.PLAIN, 14); // Fallback font
             CRnormalLarge = CRnormal.deriveFont(18f);
         }
+    }
+
+    private void initialUI() {
 
         frame.setTitle(CardUtil.getTranslation("app.title") + " v." + Constant.VERSION);
-        frame.setBounds(100, 100, 1080, 720);
+        frame.setBounds(100, 100, 1440, 720);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new BorderLayout());
         
@@ -187,8 +206,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         searchPanelButtons.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
         mSearchPane.add(searchPanelButtons);
         
-        JButton button_search = new JButton(CardUtil.getTranslation("search"));
+        button_search = new JButton(CardUtil.getTranslation("search"));
         button_search.setFont(CRnormalLarge);
+        componentFontMap.put(button_search, "CRnormalLarge"); // Store the font type as a String
         searchPanelButtons.add(button_search);
         button_search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -197,8 +217,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
             }
         });
         
-        JButton button_clean = new JButton(CardUtil.getTranslation("clear"));
+        button_clean = new JButton(CardUtil.getTranslation("clear"));
         button_clean.setFont(CRnormalLarge);
+        componentFontMap.put(button_clean, "CRnormalLarge"); // Store the font type as a String
         searchPanelButtons.add(button_clean);
         
         button_clean.addActionListener(new ActionListener() {
@@ -213,33 +234,27 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         // ===== 中間區域 =====
 
         JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0; // Single column
-        gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
+        centerPanel.setLayout(null);
+        frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
 
         // ==== 卡組
-        gbc.gridy = 0; // First row
-        gbc.weighty = 0.45; // Take 45% of the remaining vertical space
         mDeckPane = new JPanel();
-        mDeckPane.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        mDeckPane.setLayout(new GridLayout(0, 6, 5, 5));
         JScrollPane scrollDeckPane = new JScrollPane(mDeckPane);
         scrollDeckPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollDeckPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         JScrollBar deckScrollBar = scrollDeckPane.getVerticalScrollBar();
         deckScrollBar.setUnitIncrement(16);
-        centerPanel.add(scrollDeckPane, gbc);
+        centerPanel.add(scrollDeckPane);
 
         // ==== 卡組資訊
-        gbc.gridy = 1; // Second row
-        gbc.weighty = 0.1; // Fixed proportion of vertical space (10%)
         JPanel deckDetailPane = new JPanel();
         deckDetailPane.setLayout(new BorderLayout());
-        centerPanel.add(deckDetailPane, gbc);
+        centerPanel.add(deckDetailPane);
 
         mClearDeckBtn = new JButton(CardUtil.getTranslation("deck.clear"));
         mClearDeckBtn.setFont(CRnormalLarge);
+        componentFontMap.put(mClearDeckBtn, "CRnormalLarge"); // Store the font type as a String
         deckDetailPane.add(mClearDeckBtn, BorderLayout.SOUTH);
 
         mTextsPane = new JPanel();
@@ -247,80 +262,96 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         deckDetailPane.add(mTextsPane, BorderLayout.CENTER);
 
         mCardCountHintTxt = new JLabel(CardUtil.getTranslation("deck.cards"));
-        mCardCountHintTxt.setFont(CRnormal);
+        mCardCountHintTxt.setFont(CRnormalSmall);
+        componentFontMap.put(mCardCountHintTxt, "CRnormalSmall"); // Store the font type as a String
         mTextsPane.add(mCardCountHintTxt);
 
         mFlipCountHintTxt = new JLabel(CardUtil.getTranslation("deck.flip"));
-        mFlipCountHintTxt.setFont(CRnormal);
+        mFlipCountHintTxt.setFont(CRnormalSmall);
+        componentFontMap.put(mFlipCountHintTxt, "CRnormalSmall"); // Store the font type as a String
         mTextsPane.add(mFlipCountHintTxt);
 
         mDeckCookieSummaryHintTxt = new JLabel(CardUtil.getTranslation("deck.cookies"));
-        mDeckCookieSummaryHintTxt.setFont(CRnormal);
+        mDeckCookieSummaryHintTxt.setFont(CRnormalSmall);
+        componentFontMap.put(mDeckCookieSummaryHintTxt, "CRnormalSmall"); // Store the font type as a String
         mTextsPane.add(mDeckCookieSummaryHintTxt);
 
         mDeckCookieLv1HintTxt = new JLabel(CardUtil.getTranslation("deck.lv1"));
-        mDeckCookieLv1HintTxt.setFont(CRnormal);
+        mDeckCookieLv1HintTxt.setFont(CRnormalSmall);
+        componentFontMap.put(mDeckCookieLv1HintTxt, "CRnormalSmall"); // Store the font type as a String
         mTextsPane.add(mDeckCookieLv1HintTxt);
 
         mDeckCookieLv2HintTxt = new JLabel(CardUtil.getTranslation("deck.lv2"));
-        mDeckCookieLv2HintTxt.setFont(CRnormal);
+        mDeckCookieLv2HintTxt.setFont(CRnormalSmall);
+        componentFontMap.put(mDeckCookieLv2HintTxt, "CRnormalSmall"); // Store the font type as a String
         mTextsPane.add(mDeckCookieLv2HintTxt);
 
         mDeckCookieLv3HintTxt = new JLabel(CardUtil.getTranslation("deck.lv3"));
-        mDeckCookieLv3HintTxt.setFont(CRnormal);
+        mDeckCookieLv3HintTxt.setFont(CRnormalSmall);
+        componentFontMap.put(mDeckCookieLv3HintTxt, "CRnormalSmall"); // Store the font type as a String
         mTextsPane.add(mDeckCookieLv3HintTxt);
 
         mDeckItemHintTxt = new JLabel(CardUtil.getTranslation("deck.items"));
-        mDeckItemHintTxt.setFont(CRnormal);
+        mDeckItemHintTxt.setFont(CRnormalSmall);
+        componentFontMap.put(mDeckItemHintTxt, "CRnormalSmall"); // Store the font type as a String
         mTextsPane.add(mDeckItemHintTxt);
 
         mDeckTrapHintTxt = new JLabel(CardUtil.getTranslation("deck.traps"));
-        mDeckTrapHintTxt.setFont(CRnormal);
+        mDeckTrapHintTxt.setFont(CRnormalSmall);
+        componentFontMap.put(mDeckTrapHintTxt, "CRnormalSmall"); // Store the font type as a String
         mTextsPane.add(mDeckTrapHintTxt);
 
         mDeckStageHintTxt = new JLabel(CardUtil.getTranslation("deck.stages"));
-        mDeckStageHintTxt.setFont(CRnormal);
+        mDeckStageHintTxt.setFont(CRnormalSmall);
+        componentFontMap.put(mDeckStageHintTxt, "CRnormalSmall"); // Store the font type as a String
         mTextsPane.add(mDeckStageHintTxt);
 
         mCardCountTxt = new JLabel("0/60");
         mCardCountTxt.setFont(CRnormalLarge);
+        componentFontMap.put(mCardCountTxt, "CRnormalEXLarge"); // Store the font type as a String
         mTextsPane.add(mCardCountTxt);
 
         mFlipCountTxt = new JLabel("0/16");
         mFlipCountTxt.setFont(CRnormalLarge);
+        componentFontMap.put(mFlipCountTxt, "CRnormalEXLarge"); // Store the font type as a String
         mTextsPane.add(mFlipCountTxt);
 
         mDeckCookieSummaryTxt = new JLabel("0");
         mDeckCookieSummaryTxt.setFont(CRnormalLarge);
+        componentFontMap.put(mDeckCookieSummaryTxt, "CRnormalEXLarge"); // Store the font type as a String
         mTextsPane.add(mDeckCookieSummaryTxt);
 
         mDeckCookieLv1Txt = new JLabel("0");
         mDeckCookieLv1Txt.setFont(CRnormalLarge);
+        componentFontMap.put(mDeckCookieLv1Txt, "CRnormalEXLarge"); // Store the font type as a String
         mTextsPane.add(mDeckCookieLv1Txt);
 
         mDeckCookieLv2Txt = new JLabel("0");
         mDeckCookieLv2Txt.setFont(CRnormalLarge);
+        componentFontMap.put(mDeckCookieLv2Txt, "CRnormalEXLarge"); // Store the font type as a String
         mTextsPane.add(mDeckCookieLv2Txt);
 
         mDeckCookieLv3Txt = new JLabel("0");
         mDeckCookieLv3Txt.setFont(CRnormalLarge);
+        componentFontMap.put(mDeckCookieLv3Txt, "CRnormalEXLarge"); // Store the font type as a String
         mTextsPane.add(mDeckCookieLv3Txt);
 
         mDeckItemTxt = new JLabel("0");
         mDeckItemTxt.setFont(CRnormalLarge);
+        componentFontMap.put(mDeckItemTxt, "CRnormalEXLarge"); // Store the font type as a String
         mTextsPane.add(mDeckItemTxt);
 
         mDeckTrapTxt = new JLabel("0");
         mDeckTrapTxt.setFont(CRnormalLarge);
+        componentFontMap.put(mDeckTrapTxt, "CRnormalEXLarge"); // Store the font type as a String
         mTextsPane.add(mDeckTrapTxt);
 
         mDeckStageTxt = new JLabel("0");
         mDeckStageTxt.setFont(CRnormalLarge);
+        componentFontMap.put(mDeckStageTxt, "CRnormalEXLarge"); // Store the font type as a String
         mTextsPane.add(mDeckStageTxt);
 
         // ==== 卡片列表
-        gbc.gridy = 2; // Third row
-        gbc.weighty = 0.45; // Take the remaining 45% of the vertical space
         mCardsPane = new JPanel();
         mCardsPane.setLayout(new GridLayout(0, 4, 5, 5));
         
@@ -330,7 +361,52 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         scrollCardsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         JScrollBar cardListScrollBar = scrollCardsPane.getVerticalScrollBar();
         cardListScrollBar.setUnitIncrement(16);
-        centerPanel.add(scrollCardsPane, gbc);
+        centerPanel.add(scrollCardsPane);
+
+        // Add a ComponentListener to dynamically resize panes
+        frame.addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                int width = centerPanel.getWidth();
+                int height = centerPanel.getHeight();
+                System.out.println(width + "x" + height);
+
+                // Calculate heights for each pane
+                int deckDetailPaneHeight = 120; // Fixed height
+                columns = Math.max(1, (int) Math.floor(width / (Config.SMALL_CARD_WIDTH + 10))); // At least 1 column
+                int deckPaneHeight = (int) (height - deckDetailPaneHeight) / 2; // 50% of the height
+                int cardsPaneHeight = height - deckPaneHeight - deckDetailPaneHeight; // Remaining height
+
+                // Set bounds for each pane
+                scrollDeckPane.setBounds(0, 0, width, deckPaneHeight);
+                deckDetailPane.setBounds(0, deckPaneHeight, width, deckDetailPaneHeight);
+                scrollCardsPane.setBounds(0, deckPaneHeight + deckDetailPaneHeight, width, cardsPaneHeight);
+
+                // Update the layouts with the new column count
+                GridLayout deckLayout = (GridLayout) mDeckPane.getLayout();
+                GridLayout cardsLayout = (GridLayout) mCardsPane.getLayout();
+                
+                if (deckLayout.getColumns() != columns) {
+                    deckLayout.setColumns(columns);
+                    mDeckPane.revalidate();
+                    mDeckPane.repaint();
+                }
+
+                if (cardsLayout.getColumns() != columns) {
+                    cardsLayout.setColumns(columns);
+                    mCardsPane.revalidate();
+                    mCardsPane.repaint();
+                }
+                
+                // Revalidate and repaint to apply changes
+                centerPanel.revalidate();
+                centerPanel.repaint();
+            }
+        });
+
+        // Trigger an initial resize to set the correct sizes
+        frame.getComponentListeners()[0].componentResized(null);
+
         frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
         
         JPanel sidebarPanel = new JPanel();
@@ -352,7 +428,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         panel.add(mDeckText);
         
         loadBtn = new JButton(CardUtil.getTranslation("load"));
-        loadBtn.setFont(CRnormalLarge);
+        loadBtn.setFont(CRnormal);
+        componentFontMap.put(loadBtn, "CRnormal"); // Store the font type as a String
         panel.add(loadBtn);
         loadBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -365,7 +442,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         });
         
         saveBtn = new JButton(CardUtil.getTranslation("save"));
-        saveBtn.setFont(CRnormalLarge);
+        saveBtn.setFont(CRnormal);
+        componentFontMap.put(saveBtn, "CRnormal"); // Store the font type as a String
         panel.add(saveBtn);
         saveBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -376,7 +454,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         });
 
         selectBtn = new JButton(CardUtil.getTranslation("select.file"));
-        selectBtn.setFont(CRnormalLarge);
+        selectBtn.setFont(CRnormal);
+        componentFontMap.put(selectBtn, "CRnormal"); // Store the font type as a String
         selectBtn.setActionCommand("選擇檔案");
         panel.add(selectBtn);
         selectBtn.addActionListener(new ActionListener() {
@@ -395,7 +474,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         });
         
         showDeckBtn = new JButton(CardUtil.getTranslation("deck.show"));
-        showDeckBtn.setFont(CRnormalLarge);
+        showDeckBtn.setFont(CRnormal);
+        componentFontMap.put(showDeckBtn, "CRnormal"); // Store the font type as a String
         panel.add(showDeckBtn);
         showDeckBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -433,8 +513,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
     private void initCheckBox() {
     	
         // ========================= color ==================================
-        JLabel labelColor = new JLabel(CardUtil.getTranslation("color"), JLabel.LEFT);
+        labelColor = new JLabel(CardUtil.getTranslation("color"), JLabel.LEFT);
         labelColor.setFont(CRnormalLarge);
+        componentFontMap.put(labelColor, "CRnormalLarge"); // Store the font type as a String
         labelColor.setAlignmentX(Component.LEFT_ALIGNMENT);
         mSearchPane.add(labelColor);
 
@@ -449,6 +530,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         	cb_color[i] = new JCheckBox(CardUtil.CardColor.fromValue(i).getDisplayName());
         	cb_color[i].setSelected(mDefaultState.getDefaultColorFlag(i));
             cb_color[i].setFont(CRnormal);
+            componentFontMap.put(cb_color[i], "CRnormal"); // Store the font type as a String
             colorCheckboxGroup.add(cb_color[i]);
             final int id = i;
             cb_color[i].addActionListener(new ActionListener() {
@@ -461,9 +543,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         mSearchPane.add(Box.createRigidArea(new Dimension(0, 10))); // 10px vertical space
         
         // ========================= type ==================================
-        JLabel label_1 = new JLabel(CardUtil.getTranslation("type"), JLabel.LEFT);
-        label_1.setFont(CRnormalLarge);
-        mSearchPane.add(label_1);
+        labelType = new JLabel(CardUtil.getTranslation("type"), JLabel.LEFT);
+        labelType.setFont(CRnormalLarge);
+        componentFontMap.put(labelType, "CRnormalLarge"); // Store the font type as a String
+        mSearchPane.add(labelType);
 
         JPanel typeOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
         JPanel typeCheckboxGroup = new JPanel();
@@ -474,6 +557,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         cb_type_cookie = new JCheckBox(CardUtil.getTranslation("filter.cookie"));
 		cb_type_cookie.setSelected(mDefaultState.getDefaultTypeFlag(0));
         cb_type_cookie.setFont(CRnormal);
+        componentFontMap.put(cb_type_cookie, "CRnormal"); // Store the font type as a String
         typeCheckboxGroup.add(cb_type_cookie);
         cb_type_cookie.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -492,6 +576,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         	cb_level[i] = new JCheckBox("Lv." + lv);
         	cb_level[i].setSelected(mDefaultState.getDefaultLvFlag(lv));
             cb_level[i].setFont(CRnormal);
+            componentFontMap.put(cb_level[i], "CRnormal"); // Store the font type as a String
             typeCheckboxGroup.add(cb_level[i]);
             cb_level[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -505,6 +590,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         cb_flip = new JCheckBox(CardUtil.getTranslation("filter.flip"));
         cb_flip.setSelected(mDefaultState.getDefaultFlipFlag());
         cb_flip.setFont(CRnormal);
+        componentFontMap.put(cb_flip, "CRnormal"); // Store the font type as a String
         typeCheckboxGroup.add(cb_flip);
         cb_flip.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -515,6 +601,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         cb_extra = new JCheckBox(CardUtil.getTranslation("filter.extra"));
         cb_extra.setSelected(mDefaultState.getDefaultExtraFlag());
         cb_extra.setFont(CRnormal);
+        componentFontMap.put(cb_extra, "CRnormal"); // Store the font type as a String
         typeCheckboxGroup.add(cb_extra);
         cb_extra.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -525,6 +612,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         cb_type_item = new JCheckBox(CardUtil.getTranslation("filter.item"));
         cb_type_item.setSelected(mDefaultState.getDefaultTypeFlag(1));
         cb_type_item.setFont(CRnormal);
+        componentFontMap.put(cb_type_item, "CRnormal"); // Store the font type as a String
         typeCheckboxGroup.add(cb_type_item);
         cb_type_item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -536,6 +624,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         cb_type_trap = new JCheckBox(CardUtil.getTranslation("filter.trap"));
         cb_type_trap.setSelected(mDefaultState.getDefaultTypeFlag(2));
         cb_type_trap.setFont(CRnormal);
+        componentFontMap.put(cb_type_trap, "CRnormal"); // Store the font type as a String
         typeCheckboxGroup.add(cb_type_trap);
         cb_type_trap.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -547,6 +636,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         cb_type_stage = new JCheckBox(CardUtil.getTranslation("filter.stage"));
         cb_type_stage.setSelected(mDefaultState.getDefaultTypeFlag(3));
         cb_type_stage.setFont(CRnormal);
+        componentFontMap.put(cb_type_stage, "CRnormal"); // Store the font type as a String
         typeCheckboxGroup.add(cb_type_stage);
         cb_type_stage.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -559,9 +649,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         // ========================= pack ==================================
 
 
-        label_version = new JLabel(CardUtil.getTranslation("series"), JLabel.LEFT);
-        label_version.setFont(CRnormalLarge);
-        mSearchPane.add(label_version);
+        labelSeries = new JLabel(CardUtil.getTranslation("series"), JLabel.LEFT);
+        labelSeries.setFont(CRnormalLarge);
+        componentFontMap.put(labelSeries, "CRnormalLarge"); // Store the font type as a String
+        mSearchPane.add(labelSeries);
 
         JPanel packOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
         JPanel packCheckboxGroup = new JPanel();
@@ -575,6 +666,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         	cb_pack[i] = new JCheckBox(CardUtil.CardPack.get(i));
         	cb_pack[i].setSelected(mDefaultState.getDefaultPackFlag(CardUtil.CardPack.get(i)));
             cb_pack[i].setFont(CRnormal);
+            componentFontMap.put(cb_pack[i], "CRnormal"); // Store the font type as a String
             packCheckboxGroup.add(cb_pack[i]);
             cb_pack[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -591,8 +683,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         
         // 創建選單
 //        JMenu settingsMenu = new JMenu("設定");
-        JMenuItem sortSettingsMenuItem = new JMenuItem(CardUtil.getTranslation("sort.settings"));
+        sortSettingsMenuItem = new JMenuItem(CardUtil.getTranslation("sort.settings"));
         sortSettingsMenuItem.setFont(CRnormal);
+        componentFontMap.put(sortSettingsMenuItem, "CRnormal"); // Store the font type as a String
         menuBar.add(sortSettingsMenuItem);
 //        JMenuItem aboutMenu = new JMenuItem("關於");
 //        menuBar.add(aboutMenu);
@@ -601,6 +694,21 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         sortSettingsMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Sort settings clicked");
+            	sortSettingsWindow.show();
+            }
+        });
+
+        settingsMenuItem = new JMenuItem(CardUtil.getTranslation("settings"));
+        settingsMenuItem.setFont(CRnormal);
+        componentFontMap.put(settingsMenuItem, "CRnormal"); // Store the font type as a String
+        menuBar.add(settingsMenuItem);
+//        JMenuItem aboutMenu = new JMenuItem("關於");
+//        menuBar.add(aboutMenu);
+        
+        // 創建一個 ActionListener 來處理 Settings 選項的事件
+        settingsMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Settings clicked");
             	settingsWindow.show();
             }
         });
@@ -651,14 +759,14 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         list.setExtra(cb_extra.isSelected());
         
         mCardsPane.removeAll();
-        UIUtil.showDeck(this, mCardsPane, list.getSelectCards(), 13, 6, UIUtil.CARD_SIZE_SMALL, false);
+        UIUtil.showDeck(this, mCardsPane, list.getSelectCards(), 13, columns, UIUtil.CARD_SIZE_SMALL, false);
         mCardsPane.revalidate();
         mCardsPane.repaint();
     }
     
     private void updateDeck() {
         mDeckPane.removeAll();
-        UIUtil.showDeck(this, mDeckPane, mDeck.getAllCards(), 18, 6, UIUtil.CARD_SIZE_SMALL, true);
+        UIUtil.showDeck(this, mDeckPane, mDeck.getAllCards(), 18, columns, UIUtil.CARD_SIZE_SMALL, true);
 
         mDeckPane.revalidate();
         mDeckPane.repaint();
@@ -725,4 +833,100 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback {
         mDeck.sort();
         updateDeck();
 	}
+
+    @Override
+    public void onLanguageChange() {
+        // Reload fonts and translations
+        loadFont();
+
+        // Update all components with the new translations
+        frame.setTitle(CardUtil.getTranslation("app.title") + " v." + Constant.VERSION);
+        button_search.setText(CardUtil.getTranslation("search"));
+        button_clean.setText(CardUtil.getTranslation("clear"));
+        mClearDeckBtn.setText(CardUtil.getTranslation("deck.clear"));
+        mCardCountHintTxt.setText(CardUtil.getTranslation("deck.cards"));
+        mFlipCountHintTxt.setText(CardUtil.getTranslation("deck.flip"));
+        mDeckCookieSummaryHintTxt.setText(CardUtil.getTranslation("deck.cookies"));
+        mDeckCookieLv1HintTxt.setText(CardUtil.getTranslation("deck.lv1"));
+        mDeckCookieLv2HintTxt.setText(CardUtil.getTranslation("deck.lv2"));
+        mDeckCookieLv3HintTxt.setText(CardUtil.getTranslation("deck.lv3"));
+        mDeckItemHintTxt.setText(CardUtil.getTranslation("deck.items"));
+        mDeckTrapHintTxt.setText(CardUtil.getTranslation("deck.traps"));
+        mDeckStageHintTxt.setText(CardUtil.getTranslation("deck.stages"));
+        loadBtn.setText(CardUtil.getTranslation("load"));
+        saveBtn.setText(CardUtil.getTranslation("save"));
+        selectBtn.setText(CardUtil.getTranslation("select.file"));
+        showDeckBtn.setText(CardUtil.getTranslation("deck.show"));
+        labelColor.setText(CardUtil.getTranslation("color"));
+        cb_color[0].setText(CardUtil.CardColor.Red.getDisplayName());
+        cb_color[1].setText(CardUtil.CardColor.Yellow.getDisplayName());
+        cb_color[2].setText(CardUtil.CardColor.Green.getDisplayName());
+        cb_color[3].setText(CardUtil.CardColor.Blue.getDisplayName());
+        cb_color[4].setText(CardUtil.CardColor.Purple.getDisplayName());
+        cb_color[5].setText(CardUtil.CardColor.Colorless.getDisplayName());
+        labelType.setText(CardUtil.getTranslation("type"));
+        cb_type_cookie.setText(CardUtil.getTranslation("filter.cookie"));
+        cb_flip.setText(CardUtil.getTranslation("filter.flip"));
+        cb_extra.setText(CardUtil.getTranslation("filter.extra"));
+        cb_type_item.setText(CardUtil.getTranslation("filter.item"));
+        cb_type_trap.setText(CardUtil.getTranslation("filter.trap"));
+        cb_type_stage.setText(CardUtil.getTranslation("filter.stage"));
+        labelSeries.setText(CardUtil.getTranslation("series"));
+        sortSettingsMenuItem.setText(CardUtil.getTranslation("sort.settings"));
+        settingsMenuItem.setText(CardUtil.getTranslation("settings"));
+
+        updateComponents(frame.getContentPane());
+
+        // Revalidate and repaint the frame
+        frame.revalidate();
+        frame.repaint();
+    }
+
+    private void updateComponents(java.awt.Container container) {
+        for (java.awt.Component component : container.getComponents()) {
+            if (componentFontMap.containsKey(component)) {
+                String fontKey = componentFontMap.get(component);
+
+                // Map the fontKey to the appropriate Font object
+                Font newFont = null;
+                switch (fontKey) {
+                    case "CRnormal":
+                        newFont = CRnormal;
+                        break;
+                    case "CRnormalLarge":
+                        newFont = CRnormalLarge;
+                        break;
+                    case "CRnormalSmall":
+                        newFont = CRnormalSmall;
+                        break;
+                    case "CRbold":
+                        newFont = CRbold;
+                        break;
+                }
+
+                // Update the font for the component
+                if (newFont != null) {
+                    component.setFont(newFont);
+                }
+            }
+
+            // Recursively update child components
+            if (component instanceof java.awt.Container) {
+                updateComponents((java.awt.Container) component);
+            }
+        }
+    }
+    
+    public static Font getFontByKey(String key) {
+        switch (key) {
+            case "CRnormal":
+                return CRnormal;
+            case "CRnormalLarge":
+                return CRnormalLarge;
+            case "CRbold":
+                return CRbold;
+            default:
+                return null;
+        }
+    }
 }

@@ -1,46 +1,44 @@
 package ui;
 
+import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
-
 import javax.swing.DefaultListModel;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JList;
-import javax.swing.ListSelectionModel;
-import javax.swing.TransferHandler;
-import javax.swing.TransferHandler.TransferSupport;
-
-import dataStructure.Card;
 import util.Config;
-import util.DefaultState;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.ListModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import java.util.ArrayList;
+import java.util.List;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import javax.swing.DefaultComboBoxModel;
 
 import util.CardUtil;
+import util.Config;
+import util.LanguageChangeListener;
 
-public class SettingsWindow {
-	private JFrame frame;
-	private JList<String> mSortList, mNotSortList;
+public class SettingsWindow implements LanguageChangeListener{
+	private static JFrame frame;
 	DefaultListModel<String> mSortListModel, mNotSortListModel;
-	private ConfigChangedCallback mListener;
-	
-	public interface ConfigChangedCallback{
-		public void onSortConfigChanged();
-	}
-	
-	public void setConfigChangedCallback(ConfigChangedCallback callback) {
-		mListener = callback;
-	}
+	private static List<LanguageChangeListener> listeners = new ArrayList<>();
+    private JLabel settingsLabel;
+    private JLabel languageLabel;
+    private JComboBox<String> languageDropdown;
+    private JButton btnConfirm;
+
+	public static void addLanguageChangeListener(LanguageChangeListener listener) {
+        listeners.add(listener);
+    }
+
+	private void notifyLanguageChange() {
+        for (LanguageChangeListener listener : listeners) {
+            listener.onLanguageChange();
+        }
+        onLanguageChange();
+    }
 
 	/**
 	 * Launch the application.
@@ -49,33 +47,7 @@ public class SettingsWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					mSortListModel.clear();
-					mNotSortListModel.clear();
-		        	if (Config.CARD_SORT_ORDER_TYPE == 0) {
-		        		mNotSortListModel.addElement(CardUtil.getTranslation("sort.name.type"));
-		        	} 
-		        	if (Config.CARD_SORT_ORDER_FLIP == 0) {
-		        		mNotSortListModel.addElement(CardUtil.getTranslation("sort.name.flip"));
-		        	} 
-		        	if (Config.CARD_SORT_ORDER_LEVEL == 0) {
-		        		mNotSortListModel.addElement(CardUtil.getTranslation("sort.name.level"));
-		        	} 
-		        	if (Config.CARD_SORT_ORDER_COLOR == 0) {
-		        		mNotSortListModel.addElement(CardUtil.getTranslation("sort.name.color"));
-		        	}
-		        	
-		        	int id = 0;
-			        for (int i=1; i<5; i++) {
-			        	if (Config.CARD_SORT_ORDER_TYPE == i) {
-			        		mSortListModel.add(id++, CardUtil.getTranslation("sort.name.type"));
-			        	} else if (Config.CARD_SORT_ORDER_FLIP == i) {
-			        		mSortListModel.add(id++, CardUtil.getTranslation("sort.name.flip"));
-			        	} else if (Config.CARD_SORT_ORDER_LEVEL == i) {
-			        		mSortListModel.add(id++, CardUtil.getTranslation("sort.name.level"));
-			        	} else if (Config.CARD_SORT_ORDER_COLOR == i) {
-			        		mSortListModel.add(id++, CardUtil.getTranslation("sort.name.color"));
-			        	}
-			        }
+					initialize();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -98,140 +70,113 @@ public class SettingsWindow {
 		frame = new JFrame();
 		frame.setBounds(150, 150, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+		frame.getContentPane().setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(10, 10, 10, 10);
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.weightx = 1.0;
 
-		mSortListModel = new DefaultListModel<>();
-        mNotSortListModel = new DefaultListModel<>();
-/*        
-		if(Config.CARD_SORT_ORDER_TYPE == 0) {
-			mNotSortListModel.addElement(Config.SORT_NAME_TYPE);
-		} else {
-			mSortListModel.addElement(Config.SORT_NAME_TYPE);
-		}
-        mSortListModel.addElement(Config.SORT_NAME_TYPE);
-        mSortListModel.addElement(Config.SORT_NAME_FLIP);
-        mSortListModel.addElement(Config.SORT_NAME_LEVEL);
-        mSortListModel.addElement(Config.SORT_NAME_COLOR);*/
-        
-        
-        
-		mSortList = new JList<String>(mSortListModel);
-        mSortList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		mSortList.setBounds(10, 55, 161, 111);
-		frame.getContentPane().add(mSortList);
-		
-		mNotSortList = new JList<String>(mNotSortListModel);
-		mNotSortList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		mNotSortList.setBounds(242, 55, 161, 111);
-		frame.getContentPane().add(mNotSortList);
-		
-		
-		JLabel lblNewLabel = new JLabel(CardUtil.getTranslation("sort.rules"));
-		lblNewLabel.setBounds(10, 30, 161, 15);
-		frame.getContentPane().add(lblNewLabel);
-		
-		JButton btnMoveUp = new JButton("↑");
-		btnMoveUp.setBounds(181, 52, 51, 23);
-		btnMoveUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int index = mSortList.getSelectedIndex();
-				if (index > 0) {
-					String value = mSortList.getSelectedValue();
-					mSortListModel.removeElement(mSortList.getSelectedValue());
-					mSortListModel.add(index-1, value);
-					mSortList.setSelectedIndex(index-1);
-				}
-			}
-		});
-		frame.getContentPane().add(btnMoveUp);
-		
-		JButton btnMoveDown = new JButton("↓");
-		btnMoveDown.setBounds(181, 143, 51, 23);
-		btnMoveDown.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int index = mSortList.getSelectedIndex();
-				if (index < mSortListModel.size()-1) {
-					String value = mSortList.getSelectedValue();
-					mSortListModel.removeElement(mSortList.getSelectedValue());
-					mSortListModel.add(index+1, value);
-					mSortList.setSelectedIndex(index+1);
-				}
-			}
-		});
-		frame.getContentPane().add(btnMoveDown);
-		
-		JButton btnRemove = new JButton("→");
-		btnRemove.setBounds(181, 85, 51, 23);
-		btnRemove.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mNotSortListModel.addElement(mSortList.getSelectedValue());
-				mSortListModel.removeElement(mSortList.getSelectedValue());
-			}
-		});
-		frame.getContentPane().add(btnRemove);
-		
-		JButton btnAdd = new JButton("←");
-		btnAdd.setBounds(181, 113, 51, 23);
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mSortListModel.addElement(mNotSortList.getSelectedValue());
-				mNotSortListModel.removeElement(mNotSortList.getSelectedValue());
-			}
-		});
-		frame.getContentPane().add(btnAdd);
-		
-		JLabel lblNewLabel_1 = new JLabel(CardUtil.getTranslation("sort.none"));
-		lblNewLabel_1.setBounds(242, 30, 161, 15);
-		frame.getContentPane().add(lblNewLabel_1);
-		
-		JButton btnConfirm = new JButton(CardUtil.getTranslation("sort.confirm"));
-		btnConfirm.setBounds(341, 230, 85, 23);
-		frame.getContentPane().add(btnConfirm);
-		btnConfirm.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				updateSort();
+		settingsLabel = new JLabel(CardUtil.getTranslation("settings"));
+		settingsLabel.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(settingsLabel, "CRnormal");
+		gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        frame.getContentPane().add(settingsLabel, gbc);
 
-		    	DefaultState.getInstance().updateSortConfig();
-		    	DefaultState.getInstance().saveDefaultState();
-		    	mListener.onSortConfigChanged();
-			}
-		});
+        // ==== Language Label ====
+        languageLabel = new JLabel(CardUtil.getTranslation("settings.language"));
+        languageLabel.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(languageLabel, "CRnormal");
+        gbc.gridx = 0;
+        gbc.gridy = 1; 
+        gbc.gridwidth = 1;
+        frame.getContentPane().add(languageLabel, gbc);
+
+        // ==== Language Dropdown ====
+        String[] languages = { CardUtil.getTranslation("settings.language.en"), CardUtil.getTranslation("settings.language.zh_TW") };
+        languageDropdown = new JComboBox<>(languages);
+        languageDropdown.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(languageDropdown, "CRnormal");
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        frame.getContentPane().add(languageDropdown, gbc);
+
+        // Set the current language as the selected item
+        if (Config.LANGUAGE.equals("en")) {
+            languageDropdown.setSelectedIndex(0);
+        } else if (Config.LANGUAGE.equals("zh_TW")) {
+            languageDropdown.setSelectedIndex(1);
+        }
+
+        // ==== Confirm Button ====
+        btnConfirm = new JButton(CardUtil.getTranslation("settings.confirm"));
+        btnConfirm.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(btnConfirm, "CRnormal");
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        frame.getContentPane().add(btnConfirm, gbc);
+
+        // Action listener for the confirm button
+        btnConfirm.addActionListener(e -> {
+            // Update the language setting
+            int selectedIndex = languageDropdown.getSelectedIndex();
+            if (selectedIndex == 0) {
+                Config.LANGUAGE = "en";
+            } else if (selectedIndex == 1) {
+                Config.LANGUAGE = "zh_TW";
+            }
+
+            CardUtil.loadLanguage();
+            notifyLanguageChange();
+        });
 	}
-	
-	public void updateSort() {
-		for(int i = 0; i < mSortListModel.getSize(); i++) {
-			String s = mSortListModel.get(i);
-			if(s.equals(CardUtil.getTranslation("sort.name.type"))) {
-				Config.CARD_SORT_ORDER_TYPE = i + 1;
 
-			} else if (s.equals(CardUtil.getTranslation("sort.name.flip"))) {
-				Config.CARD_SORT_ORDER_FLIP = i + 1;
+	@Override
+    public void onLanguageChange() {
+        MainUI.loadFont();
 
-			} else if (s.equals(CardUtil.getTranslation("sort.name.level"))) {
-				Config.CARD_SORT_ORDER_LEVEL = i + 1;
+		// Update all components with the new font and translations
+        settingsLabel.setText(CardUtil.getTranslation("settings"));
+        languageLabel.setText(CardUtil.getTranslation("settings.language"));
+        btnConfirm.setText(CardUtil.getTranslation("settings.confirm"));
+        languageDropdown.setModel(new DefaultComboBoxModel<>(new String[]{
+            CardUtil.getTranslation("settings.language.en"),
+            CardUtil.getTranslation("settings.language.zh_TW")
+        }));
+        languageDropdown.setSelectedItem(CardUtil.getTranslation("settings.language." + Config.LANGUAGE));
 
-			} else if (s.equals(CardUtil.getTranslation("sort.name.color"))) {
-				Config.CARD_SORT_ORDER_COLOR = i + 1;
+        for (var entry : MainUI.componentFontMap.entrySet()) {
+			Component component = entry.getKey();
+            String fontKey = entry.getValue();
+
+			// Map the fontKey to the appropriate Font object
+			Font newFont = null;
+			switch (fontKey) {
+				case "CRnormal":
+					newFont = MainUI.CRnormal;
+					break;
+				case "CRnormalLarge":
+					newFont = MainUI.CRnormalLarge;
+					break;
+				case "CRnormalSmall":
+					newFont = MainUI.CRnormalSmall;
+					break;
+				case "CRbold":
+					newFont = MainUI.CRbold;
+					break;
 			}
-		}
 
-		for (int i = 0; i < mNotSortListModel.getSize(); i++) {
-			String s = mNotSortListModel.get(i);
-			if (s == null) {
-				continue;
+			// Update the font for the component
+			if (newFont != null) {
+				component.setFont(newFont);
 			}
-			if (s.equals(CardUtil.getTranslation("sort.name.type"))) {
-				Config.CARD_SORT_ORDER_TYPE = 0;
+        }
 
-			} else if(s.equals(CardUtil.getTranslation("sort.name.flip"))) {
-				Config.CARD_SORT_ORDER_FLIP = 0;
-
-			} else if(s.equals(CardUtil.getTranslation("sort.name.level"))) {
-				Config.CARD_SORT_ORDER_LEVEL = 0;
-
-			} else if(s.equals(CardUtil.getTranslation("sort.name.color"))) {
-				Config.CARD_SORT_ORDER_COLOR = 0;
-			}
-		}
-	} 
+        // Revalidate and repaint the frame to apply changes
+        frame.revalidate();
+        frame.repaint();
+    }
 }
