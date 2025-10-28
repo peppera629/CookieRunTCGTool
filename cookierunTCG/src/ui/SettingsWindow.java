@@ -68,7 +68,7 @@ public class SettingsWindow implements LanguageChangeListener{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(150, 150, 450, 300);
+		frame.setBounds(150, 150, 450, 200);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -76,9 +76,9 @@ public class SettingsWindow implements LanguageChangeListener{
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1.0;
 
-		settingsLabel = new JLabel(CardUtil.getTranslation("settings"));
-		settingsLabel.setFont(MainUI.CRnormal);
-        MainUI.componentFontMap.put(settingsLabel, "CRnormal");
+		settingsLabel = new JLabel(CardUtil.getTranslation("settings"), JLabel.CENTER);
+		settingsLabel.setFont(MainUI.CRnormalLarge);
+        MainUI.componentFontMap.put(settingsLabel, "CRnormalLarge");
 		gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;

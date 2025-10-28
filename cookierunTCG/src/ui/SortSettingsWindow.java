@@ -268,6 +268,9 @@ public class SortSettingsWindow implements util.LanguageChangeListener {
 				case "CRnormalLarge":
 					newFont = MainUI.CRnormalLarge;
 					break;
+				case "CRnormalEXLarge":
+					newFont = MainUI.CRnormalEXLarge;
+					break;
 				case "CRnormalSmall":
 					newFont = MainUI.CRnormalSmall;
 					break;

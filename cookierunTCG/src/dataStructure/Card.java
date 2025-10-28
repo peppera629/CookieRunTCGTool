@@ -26,6 +26,7 @@ public class Card {
 	private String _rare;
 	private String _mark;
 	private int _lv;
+	private String _cardLanguage = "";
 	private ImageIcon _cardIcon;
 	private String _cardImagePath;
 	private int _cardCount;
@@ -60,22 +61,21 @@ public class Card {
 	}
 
 	public synchronized void createCardLabel() {
-		if (!_isImageLoaded) {
+		if (!_isImageLoaded || (_cardLanguage != null && !_cardLanguage.equals(Config.LANGUAGE))) {
 			_cardImagePath = "resources/cards/"+Config.LANGUAGE+"/"+getPack()+"/"+getId()+".png";
 	        ImageIcon cardIcon = new ImageIcon(_cardImagePath);
 	        
 	        Image image = cardIcon.getImage().getScaledInstance(Config.SMALL_CARD_WIDTH, Config.SMALL_CARD_HEIGHT,  java.awt.Image.SCALE_SMOOTH);
 	        _cardIcon = new ImageIcon(image);
 	        _isImageLoaded = true;
-		    for(ClickableCardPanel panel :_PanelList) {
-		        SwingUtilities.invokeLater(new Runnable() {
-		            public void run() {
-		            	if (panel != null) {
-		            		panel.updateImage();
-		            	}
-		            }
-		        });
-		    }
+			_cardLanguage = Config.LANGUAGE;
+		    for (ClickableCardPanel panel : _PanelList) {
+				SwingUtilities.invokeLater(() -> {
+					if (panel != null) {
+						panel.updateImage();
+					}
+				});
+			}
 		}
 	}
 
@@ -155,7 +155,7 @@ public class Card {
 	}
 
 	public ImageIcon getcardIcon() {
-		if (!_isImageLoaded) {
+		if (!_isImageLoaded || (_cardLanguage != null && !_cardLanguage.equals(Config.LANGUAGE))) {
 			CardLoader.loadCardImage(this);
 		}
 		return _cardIcon;
@@ -189,10 +189,16 @@ public class Card {
 	}
 	
 	public void addPanel(ClickableCardPanel panel) {
-		_PanelList.add(panel);
+		if (!_PanelList.contains(panel)){
+			_PanelList.add(panel);
+		}
 	}
 	
 	public void removePanel(ClickableCardPanel panel) {
 		_PanelList.remove(panel);
+	}
+
+	public List<ClickableCardPanel> getPanels() {
+		return _PanelList;
 	}
 }

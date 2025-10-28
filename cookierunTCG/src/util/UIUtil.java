@@ -26,7 +26,6 @@ public class UIUtil {
 		for (Card card : cardList) {
 			ClickableCardPanel cardPanel;
 			cardPanel = new ClickableCardPanel( card, Config.SHOW_CARD_COUNT && showCount, cardSize);
-			
 			if(callback != null) {
 				cardPanel.addClickListener(callback);
 			}

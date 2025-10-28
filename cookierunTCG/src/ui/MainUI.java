@@ -258,98 +258,127 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         deckDetailPane.add(mClearDeckBtn, BorderLayout.SOUTH);
 
         mTextsPane = new JPanel();
-        mTextsPane.setLayout(new GridLayout(2, 9));
+        mTextsPane.setLayout(new GridBagLayout());
         deckDetailPane.add(mTextsPane, BorderLayout.CENTER);
-
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.BOTH;
+        
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 0.15;
+        gbc.weighty = 0.3;
         mCardCountHintTxt = new JLabel(CardUtil.getTranslation("deck.cards"));
         mCardCountHintTxt.setFont(CRnormalSmall);
         componentFontMap.put(mCardCountHintTxt, "CRnormalSmall"); // Store the font type as a String
-        mTextsPane.add(mCardCountHintTxt);
+        mTextsPane.add(mCardCountHintTxt, gbc);
 
+        gbc.gridx = 1;
         mFlipCountHintTxt = new JLabel(CardUtil.getTranslation("deck.flip"));
         mFlipCountHintTxt.setFont(CRnormalSmall);
         componentFontMap.put(mFlipCountHintTxt, "CRnormalSmall"); // Store the font type as a String
-        mTextsPane.add(mFlipCountHintTxt);
+        mTextsPane.add(mFlipCountHintTxt, gbc);
 
+        gbc.gridx = 2;
+        gbc.weightx = 0.1;
         mDeckCookieSummaryHintTxt = new JLabel(CardUtil.getTranslation("deck.cookies"));
         mDeckCookieSummaryHintTxt.setFont(CRnormalSmall);
         componentFontMap.put(mDeckCookieSummaryHintTxt, "CRnormalSmall"); // Store the font type as a String
-        mTextsPane.add(mDeckCookieSummaryHintTxt);
+        mTextsPane.add(mDeckCookieSummaryHintTxt, gbc);
 
+        gbc.gridx = 3;
         mDeckCookieLv1HintTxt = new JLabel(CardUtil.getTranslation("deck.lv1"));
         mDeckCookieLv1HintTxt.setFont(CRnormalSmall);
         componentFontMap.put(mDeckCookieLv1HintTxt, "CRnormalSmall"); // Store the font type as a String
-        mTextsPane.add(mDeckCookieLv1HintTxt);
+        mTextsPane.add(mDeckCookieLv1HintTxt, gbc);
 
+        gbc.gridx = 4;
         mDeckCookieLv2HintTxt = new JLabel(CardUtil.getTranslation("deck.lv2"));
         mDeckCookieLv2HintTxt.setFont(CRnormalSmall);
         componentFontMap.put(mDeckCookieLv2HintTxt, "CRnormalSmall"); // Store the font type as a String
-        mTextsPane.add(mDeckCookieLv2HintTxt);
+        mTextsPane.add(mDeckCookieLv2HintTxt, gbc);
 
+        gbc.gridx = 5;
         mDeckCookieLv3HintTxt = new JLabel(CardUtil.getTranslation("deck.lv3"));
         mDeckCookieLv3HintTxt.setFont(CRnormalSmall);
         componentFontMap.put(mDeckCookieLv3HintTxt, "CRnormalSmall"); // Store the font type as a String
-        mTextsPane.add(mDeckCookieLv3HintTxt);
+        mTextsPane.add(mDeckCookieLv3HintTxt, gbc);
 
+        gbc.gridx = 6;
         mDeckItemHintTxt = new JLabel(CardUtil.getTranslation("deck.items"));
         mDeckItemHintTxt.setFont(CRnormalSmall);
         componentFontMap.put(mDeckItemHintTxt, "CRnormalSmall"); // Store the font type as a String
-        mTextsPane.add(mDeckItemHintTxt);
+        mTextsPane.add(mDeckItemHintTxt, gbc);
 
+        gbc.gridx = 7;
         mDeckTrapHintTxt = new JLabel(CardUtil.getTranslation("deck.traps"));
         mDeckTrapHintTxt.setFont(CRnormalSmall);
         componentFontMap.put(mDeckTrapHintTxt, "CRnormalSmall"); // Store the font type as a String
-        mTextsPane.add(mDeckTrapHintTxt);
+        mTextsPane.add(mDeckTrapHintTxt, gbc);
 
+        gbc.gridx = 8;
         mDeckStageHintTxt = new JLabel(CardUtil.getTranslation("deck.stages"));
         mDeckStageHintTxt.setFont(CRnormalSmall);
         componentFontMap.put(mDeckStageHintTxt, "CRnormalSmall"); // Store the font type as a String
-        mTextsPane.add(mDeckStageHintTxt);
+        mTextsPane.add(mDeckStageHintTxt, gbc);
 
+        gbc.gridy = 1;
+        gbc.gridx = 0;
+        gbc.weightx = 0.15;
+        gbc.weighty = 0.7;
         mCardCountTxt = new JLabel("0/60");
-        mCardCountTxt.setFont(CRnormalLarge);
+        mCardCountTxt.setFont(CRnormalEXLarge);
         componentFontMap.put(mCardCountTxt, "CRnormalEXLarge"); // Store the font type as a String
-        mTextsPane.add(mCardCountTxt);
+        mTextsPane.add(mCardCountTxt, gbc);
 
+        gbc.gridx = 1;
         mFlipCountTxt = new JLabel("0/16");
-        mFlipCountTxt.setFont(CRnormalLarge);
+        mFlipCountTxt.setFont(CRnormalEXLarge);
         componentFontMap.put(mFlipCountTxt, "CRnormalEXLarge"); // Store the font type as a String
-        mTextsPane.add(mFlipCountTxt);
+        mTextsPane.add(mFlipCountTxt, gbc);
 
+        gbc.gridx = 2;
+        gbc.weightx = 0.1;
         mDeckCookieSummaryTxt = new JLabel("0");
-        mDeckCookieSummaryTxt.setFont(CRnormalLarge);
+        mDeckCookieSummaryTxt.setFont(CRnormalEXLarge);
         componentFontMap.put(mDeckCookieSummaryTxt, "CRnormalEXLarge"); // Store the font type as a String
-        mTextsPane.add(mDeckCookieSummaryTxt);
+        mTextsPane.add(mDeckCookieSummaryTxt, gbc);
 
+        gbc.gridx = 3;
         mDeckCookieLv1Txt = new JLabel("0");
-        mDeckCookieLv1Txt.setFont(CRnormalLarge);
+        mDeckCookieLv1Txt.setFont(CRnormalEXLarge);
         componentFontMap.put(mDeckCookieLv1Txt, "CRnormalEXLarge"); // Store the font type as a String
-        mTextsPane.add(mDeckCookieLv1Txt);
+        mTextsPane.add(mDeckCookieLv1Txt, gbc);
 
+        gbc.gridx = 4;
         mDeckCookieLv2Txt = new JLabel("0");
-        mDeckCookieLv2Txt.setFont(CRnormalLarge);
+        mDeckCookieLv2Txt.setFont(CRnormalEXLarge);
         componentFontMap.put(mDeckCookieLv2Txt, "CRnormalEXLarge"); // Store the font type as a String
-        mTextsPane.add(mDeckCookieLv2Txt);
+        mTextsPane.add(mDeckCookieLv2Txt, gbc);
 
+        gbc.gridx = 5;
         mDeckCookieLv3Txt = new JLabel("0");
-        mDeckCookieLv3Txt.setFont(CRnormalLarge);
+        mDeckCookieLv3Txt.setFont(CRnormalEXLarge);
         componentFontMap.put(mDeckCookieLv3Txt, "CRnormalEXLarge"); // Store the font type as a String
-        mTextsPane.add(mDeckCookieLv3Txt);
+        mTextsPane.add(mDeckCookieLv3Txt, gbc);
 
+        gbc.gridx = 6;
         mDeckItemTxt = new JLabel("0");
-        mDeckItemTxt.setFont(CRnormalLarge);
+        mDeckItemTxt.setFont(CRnormalEXLarge);
         componentFontMap.put(mDeckItemTxt, "CRnormalEXLarge"); // Store the font type as a String
-        mTextsPane.add(mDeckItemTxt);
+        mTextsPane.add(mDeckItemTxt, gbc);
 
+        gbc.gridx = 7;
         mDeckTrapTxt = new JLabel("0");
-        mDeckTrapTxt.setFont(CRnormalLarge);
+        mDeckTrapTxt.setFont(CRnormalEXLarge);
         componentFontMap.put(mDeckTrapTxt, "CRnormalEXLarge"); // Store the font type as a String
-        mTextsPane.add(mDeckTrapTxt);
+        mTextsPane.add(mDeckTrapTxt, gbc);
 
+        gbc.gridx = 8;
         mDeckStageTxt = new JLabel("0");
-        mDeckStageTxt.setFont(CRnormalLarge);
+        mDeckStageTxt.setFont(CRnormalEXLarge);
         componentFontMap.put(mDeckStageTxt, "CRnormalEXLarge"); // Store the font type as a String
-        mTextsPane.add(mDeckStageTxt);
+        mTextsPane.add(mDeckStageTxt, gbc);
 
         // ==== 卡片列表
         mCardsPane = new JPanel();
@@ -456,7 +485,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         selectBtn = new JButton(CardUtil.getTranslation("select.file"));
         selectBtn.setFont(CRnormal);
         componentFontMap.put(selectBtn, "CRnormal"); // Store the font type as a String
-        selectBtn.setActionCommand("選擇檔案");
+        selectBtn.setActionCommand("Select File");
         panel.add(selectBtn);
         selectBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -877,9 +906,20 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         updateComponents(frame.getContentPane());
 
+        // Refresh all ClickableCardPanel instances (for updating card images)
+        for (Card card : CardList.getInstance().getAllCards()) {
+            for (ClickableCardPanel panel : card.getPanels()) {
+                panel.updateImage();
+            }
+        }
+
+        updateCardList();
+        updateDeck();
+        
         // Revalidate and repaint the frame
         frame.revalidate();
         frame.repaint();
+        frame.getComponentListeners()[0].componentResized(null);
     }
 
     private void updateComponents(java.awt.Container container) {
@@ -895,6 +935,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                         break;
                     case "CRnormalLarge":
                         newFont = CRnormalLarge;
+                        break;
+                    case "CRnormalEXLarge":
+                        newFont = CRnormalEXLarge;
                         break;
                     case "CRnormalSmall":
                         newFont = CRnormalSmall;
