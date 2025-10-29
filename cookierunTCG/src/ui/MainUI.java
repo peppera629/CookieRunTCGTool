@@ -68,10 +68,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 
-// TODO: Add EN card images for BS1~BS7, ST1~ST5, P
 // TODO: Fix filtering sidebar alignment
-// TODO: Add EXTRA card counter
-// TODO: Add EXTRA card count constraint
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
 
@@ -131,9 +128,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JCheckBox[] cb_color;
     private JCheckBox[] cb_level;
     private JCheckBox[] cb_pack;
+    private JCheckBox[] cb_rarity;
     private JCheckBox cb_type_cookie, cb_type_item, cb_type_trap, cb_type_stage;
     private JCheckBox cb_flip, cb_extra;
-    private JLabel labelColor, labelType, labelSeries;
+    private JLabel labelColor, labelType, labelSeries, labelRarity;
 
     private Deck mDeck;
     private ScrollPane scrollPane;
@@ -645,7 +643,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_type_cookie.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(0, cb_type_cookie.isSelected());
-
             	for (JCheckBox cb : cb_level) {
             		cb.setEnabled(cb_type_cookie.isSelected());
             	}
@@ -757,6 +754,33 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 }
             });
         }
+
+        // ========================= rarity ==================================
+        labelRarity = new JLabel(CardUtil.getTranslation("rarity"), JLabel.LEFT);
+        labelRarity.setFont(CRnormalLarge);
+        componentFontMap.put(labelRarity, "CRnormalLarge"); // Store the font type as a String
+        mSearchPane.add(labelRarity);
+
+        JPanel rarityOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
+        JPanel rarityCheckboxGroup = new JPanel();
+        rarityCheckboxGroup.setLayout(new GridLayout(0, 6));
+        rarityOuterPanel.add(rarityCheckboxGroup);
+        mSearchPane.add(rarityOuterPanel);
+
+        cb_rarity = new JCheckBox[CardUtil.RARITY_MAX];
+        for(int i=0; i<CardUtil.RARITY_MAX; i++) {
+        	cb_rarity[i] = new JCheckBox(CardUtil.CardRarity.fromValue(i).getDisplayName());
+        	cb_rarity[i].setSelected(mDefaultState.getDefaultRarityFlag(i));
+            cb_rarity[i].setFont(CRnormal);
+            componentFontMap.put(cb_rarity[i], "CRnormal"); // Store the font type as a String
+            rarityCheckboxGroup.add(cb_rarity[i]);
+            final int id = i;
+            cb_rarity[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                	mDefaultState.setDefaultRarityFlag(id, cb_rarity[id].isSelected());
+                }
+            });
+        }
     }
 
     private void cleanCheckBox() {
@@ -781,6 +805,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         	cb.setSelected(false);
         }
 
+        for (JCheckBox cb : cb_rarity) {
+        	cb.setSelected(false);
+        }
+
     }
     
     private void updateCardList() {
@@ -801,6 +829,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     	}
         list.setFlip(cb_flip.isSelected());
         list.setExtra(cb_extra.isSelected());
+        for (int i=0; i< cb_rarity.length; i++) {
+            list.setRarity(i, cb_rarity[i].isSelected());
+    	}
         
         mCardsPane.removeAll();
         UIUtil.showDeck(this, mCardsPane, list.getSelectCards(), 13, columns, UIUtil.CARD_SIZE_SMALL, false);
@@ -814,8 +845,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         mDeckPane.revalidate();
         mDeckPane.repaint();
-        mCardCountTxt.setText(mDeck.getCardCount()+"/60");
-        if (mDeck.getCardCount() > 60) {
+        mCardCountTxt.setText(mDeck.getCardCount()-mDeck.getExtraCount()+"/60");
+        if (mDeck.getCardCount()-mDeck.getExtraCount() > 60) {
         	mCardCountTxt.setForeground(Color.RED);
         } else {
         	mCardCountTxt.setForeground(Color.BLACK);
@@ -868,9 +899,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     @Override
     public void showCard(Card card) {
         mCardDetailPane.removeAll();
-        ImageIcon cardIcon = new ImageIcon("resources/cards/"+Config.LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
-        System.out.println("resources/cards/"+Config.LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
-            
+        ImageIcon cardIcon = new ImageIcon("resources/cards/"+Config.CARD_LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
+        System.out.println("resources/cards/"+Config.CARD_LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
+
         Image image = cardIcon.getImage().getScaledInstance(342, 474, java.awt.Image.SCALE_SMOOTH);
         cardIcon = new ImageIcon(image);
         JLabel cardLabel = new JLabel(cardIcon);
@@ -926,6 +957,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_type_item.setText(CardUtil.getTranslation("filter.item"));
         cb_type_trap.setText(CardUtil.getTranslation("filter.trap"));
         cb_type_stage.setText(CardUtil.getTranslation("filter.stage"));
+        labelRarity.setText(CardUtil.getTranslation("rarity"));
+         for(int i=0; i< cb_rarity.length; i++) {
+         	cb_rarity[i].setText(CardUtil.CardRarity.fromValue(i).getDisplayName());
+         }
         labelSeries.setText(CardUtil.getTranslation("series"));
         button_sort.setText(CardUtil.getTranslation("sort.settings"));
         button_settings.setText(CardUtil.getTranslation("settings"));

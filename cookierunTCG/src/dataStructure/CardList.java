@@ -136,6 +136,10 @@ public class CardList {
 		_search_extra = enabled;
 	}
 
+	public void setRarity(int id, boolean enabled) {
+		_search_rarity[id] = enabled;
+	}
+
 	public void setPack(String pack, boolean enabled) {
 		if (enabled && !_search_pack_list.contains(pack)) {
 			_search_pack_list.add(pack);

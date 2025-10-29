@@ -17,6 +17,7 @@ public class Config {
         try (InputStream input = new FileInputStream(CONFIG_FILE)) {
             properties.load(input);
             LANGUAGE = properties.getProperty("language", "en"); // Default to "en" if not found
+			CARD_LANGUAGE = properties.getProperty("card_language", "en"); // Default to "en" if not found
 			System.out.println(LANGUAGE);
         } catch (IOException e) {
             System.err.println("Could not load config file. Using default settings.");
@@ -27,7 +28,7 @@ public class Config {
     public static void saveConfig() {
         Properties properties = new Properties();
         properties.setProperty("language", LANGUAGE);
-        System.out.println("Saving language setting: " + LANGUAGE);
+        properties.setProperty("card_language", CARD_LANGUAGE);
         try (OutputStream output = new FileOutputStream(CONFIG_FILE)) {
             properties.store(output, "Application Configuration");
         } catch (IOException e) {
@@ -38,6 +39,7 @@ public class Config {
 	public static boolean SHOW_CARD_COUNT = true;
 
 	public static String LANGUAGE; // en or zh_TW
+	public static String CARD_LANGUAGE; // en or zh_TW
 
 	public static float CARD_RATIO = 1.4F;
 	

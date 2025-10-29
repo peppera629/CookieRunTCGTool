@@ -18,6 +18,7 @@ import dataStructure.Card;
 import dataStructure.Deck;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardType;
+import util.CardUtil.CardRarity;
 
 public class DefaultState {
 	static final String CONFIG_PATH = "config/default_state.txt";
@@ -25,6 +26,7 @@ public class DefaultState {
 	public boolean[] color;
 	public boolean[] type;
 	public boolean[] lv;
+	public boolean[] rarity;
 	public boolean flip, extra;
 	private static DefaultState instance;
 	private List<String> _search_pack_list;
@@ -42,6 +44,7 @@ public class DefaultState {
 	private DefaultState() {
 		color = new boolean[CardUtil.COLOR_MAX];
 		type = new boolean[CardUtil.TYPE_MAX];
+		rarity = new boolean[CardUtil.RARITY_MAX];
 		lv = new boolean[CardUtil.LEVEL_MAX + 1];
 		_search_pack_list = new ArrayList<String>();
 	}
@@ -115,6 +118,19 @@ public class DefaultState {
 				String[] flags = data.split(",");
 				for (int i = 0; i < flags.length; i++) {
 					_search_pack_list.add(flags[i]);
+				}
+			}
+
+			// rarity
+
+			if ((data = input.readLine()) != null) {
+				String[] flags = data.split(",");
+				for (int i = 0; i < flags.length; i++) {
+					if (rarity.length > i) {
+						if (flags[i].equals("v")) {
+							rarity[i] = true;
+						}
+					}
 				}
 			}
 
@@ -210,6 +226,19 @@ public class DefaultState {
 			}
 			fw.write("\n");
 
+			// rarity
+			for (int i = 0; i < rarity.length; i++) {
+				if (i > 0) {
+					fw.write(",");
+				}
+				if (rarity[i]) {
+					fw.write("v");
+				} else {
+					fw.write("_");
+				}
+			}
+			fw.write("\n");
+
 			//sort order
 			fw.write(Config.CARD_SORT_ORDER_TYPE+",");
 			fw.write(Config.CARD_SORT_ORDER_FLIP+",");
@@ -243,6 +272,10 @@ public class DefaultState {
 		return extra;
 	}
 
+	public boolean getDefaultRarityFlag(int i) {
+		return rarity[i];
+	}
+
 	public boolean getDefaultLvFlag(int i) {
 		return lv[i];
 	}
@@ -265,6 +298,10 @@ public class DefaultState {
 
 	public void setDefaultExtraFlag(boolean selected) {
 		extra = selected;
+	}
+
+	public void setDefaultRarityFlag(int i, boolean selected) {
+		rarity[i] = selected;
 	}
 
 	public void setDefaultFlipFlag(boolean selected) {

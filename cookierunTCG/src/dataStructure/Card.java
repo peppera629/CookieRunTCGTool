@@ -62,14 +62,14 @@ public class Card {
 	}
 
 	public synchronized void createCardLabel() {
-		if (!_isImageLoaded || (_cardLanguage != null && !_cardLanguage.equals(Config.LANGUAGE))) {
-			_cardImagePath = "resources/cards/"+Config.LANGUAGE+"/"+getPack()+"/"+getId()+".png";
+		if (!_isImageLoaded || (_cardLanguage != null && !_cardLanguage.equals(Config.CARD_LANGUAGE))) {
+			_cardImagePath = "resources/cards/"+Config.CARD_LANGUAGE+"/"+getPack()+"/"+getId()+".png";
 	        ImageIcon cardIcon = new ImageIcon(_cardImagePath);
 	        
 	        Image image = cardIcon.getImage().getScaledInstance(Config.SMALL_CARD_WIDTH, Config.SMALL_CARD_HEIGHT,  java.awt.Image.SCALE_SMOOTH);
 	        _cardIcon = new ImageIcon(image);
 	        _isImageLoaded = true;
-			_cardLanguage = Config.LANGUAGE;
+			_cardLanguage = Config.CARD_LANGUAGE;
 		    for (ClickableCardPanel panel : _PanelList) {
 				SwingUtilities.invokeLater(() -> {
 					if (panel != null) {
@@ -160,7 +160,7 @@ public class Card {
 	}
 
 	public ImageIcon getcardIcon() {
-		if (!_isImageLoaded || (_cardLanguage != null && !_cardLanguage.equals(Config.LANGUAGE))) {
+		if (!_isImageLoaded || (_cardLanguage != null && !_cardLanguage.equals(Config.CARD_LANGUAGE))) {
 			CardLoader.loadCardImage(this);
 		}
 		return _cardIcon;

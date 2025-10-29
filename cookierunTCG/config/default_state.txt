@@ -1,7 +1,8 @@
-ST1
+ST3
 _,_,_,_,_,_
-v,_,_,_
+_,_,_,_
 _
 _,_,_
-,BS3,ST1,ST5,BS4,BS8,P,BS5,BS6,BS7,BS2,BS1,ST2,ST3,ST4
+,BS3,ST1,ST5,BS4,BS8,BS5,BS6,BS7,BS2,BS1,ST2,ST3,ST4,P
+_,_,_,_,_,_
 3,2,1,4

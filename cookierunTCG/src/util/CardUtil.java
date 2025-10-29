@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 public class CardUtil {
 	public static int LEVEL_MAX = 3;
 	public static int COLOR_MAX = 6;
-	public static int RARITY_MAX = 5;
+	public static int RARITY_MAX = 6;
 	
 	// For language translation
 	private static ResourceBundle messages;
@@ -99,8 +99,9 @@ public class CardUtil {
 	}
 
 	public enum CardRarity {
-		C(0), U(1), R(2), SR(3), UR(4), SEC(5), SSR(6), SUR(7), EXR(8), P(9);
+		C(0), U(1), R(2), SR(3), UR(4), P(5), SEC(6), SSR(7), SUR(8), EXR(9);
 	    private final int value;
+
 	    private CardRarity(int value) {
 	        this.value = value;
 	    }
@@ -118,6 +119,20 @@ public class CardUtil {
 	        }
 	        throw new IllegalArgumentException("No enum constant with name " + rarityStr);
 		}
+
+		public static CardRarity fromValue(int value) {
+	        for (CardRarity rarity : CardRarity.values()) {
+	            if (rarity.getValue() == value) {
+	                return rarity;
+	            }
+	        }
+	        throw new IllegalArgumentException("No enum constant with value " + value);
+	    }
+
+		public String getDisplayName() {
+            return CardUtil.getTranslation("rarity." + this.name().toLowerCase());
+        }
+
 	}
 
 	public static ImageIcon CardBack;
