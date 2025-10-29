@@ -8,6 +8,7 @@ import util.Config;
 public class Deck {
 	private List<Card> cardList;
 	private List<Card> flipList;
+	private List<Card> extraList;
 	private List<Card>[] CookieList;
 	private List<Card> ItemList;
 	private List<Card> TrapList;
@@ -16,6 +17,7 @@ public class Deck {
 	public Deck() {
 		cardList = new ArrayList<Card>();
 		flipList = new ArrayList<Card>();
+		extraList = new ArrayList<Card>();
 		CookieList = new ArrayList[4];
 		for(int i=0;i<=3;i++) {
 			CookieList[i] = new ArrayList<Card>();
@@ -64,6 +66,9 @@ public class Deck {
 				if(card.isFlip()) {
 					flipList.add(card);
 				}
+				if(card.isExtra()) {
+					extraList.add(card);
+				}
 				CookieList[card.getLv()].add(card);
 				break;
 			case Item:
@@ -99,6 +104,9 @@ public class Deck {
 				if(card.isFlip()) {
 					flipList.remove(card);
 				}
+				if(card.isExtra()) {
+					extraList.remove(card);
+				}
 				CookieList[card.getLv()].remove(card);
 				break;
 			case Item:
@@ -117,6 +125,7 @@ public class Deck {
 	public void clear() {
 		cardList.clear();
 		flipList.clear();
+		extraList.clear();
 		CookieList[0].clear();
 		CookieList[1].clear();
 		CookieList[2].clear();
@@ -142,6 +151,10 @@ public class Deck {
     public int getFlipCount() {
     	return getTargetCardCount(flipList);
     }
+
+	public int getExtraCount() {
+		return getTargetCardCount(extraList);
+	}
     
     public int getTargetCardCount(List<Card> cards) {
     	if (!Config.SHOW_CARD_COUNT) {

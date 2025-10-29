@@ -90,7 +90,8 @@ public class CardLoader {
 	        while((data= input.readLine())!=null) {
 	            if (!data.equals("") && !data.startsWith("//")) {
 	            	String[] cardData = data.split(",");
-					//System.out.println(cardData[0]+" , "+cardData[1]+" , "+cardData[4]+" , "+cardData[4].equals("EX"));
+					//                0   1     2      3     4           5       6                7      8
+					// For each row: [ID, Name, Color, Type, FLIP/EXTRA, Rarity, Regulation Mark, Level, HP]
 	            	CardColor color = CardColor.Green;
 	            	for (int i=0; i<CardUtil.COLOR_MAX; i++) {
 	            		CardColor c = CardColor.fromValue(i);
@@ -117,7 +118,10 @@ public class CardLoader {
 	            		type = CardType.Cookie;
 	            	}
 	            	
-	            	Card c = new Card(packName, cardData[0], cardData[1], color, type, cardData[4].equals("F"), cardData[4].equals("EX") ,cardData[5], cardData[6], level);
+					System.out.println(cardData[0]);
+	            	Card c = new Card(packName, cardData[0], cardData[1], color, type, cardData[4].equals("F"),
+					cardData[4].equals("EX"), CardUtil.CardRarity.fromString(cardData[5]), cardData[6], level);
+
 	            	cardList.add(c);
 	            }
 	        }
@@ -147,6 +151,11 @@ public class CardLoader {
 		        while((data= input.readLine())!=null) {	
 		            if (!data.equals("") && !data.startsWith("//")) {
 		            	Card card = cardList.getCardById(data);
+						if (card == null) {
+							System.err.println("Card ID not found: " + data);
+							continue; // Skip this card
+						}
+						System.out.println(card.getId());
 		            	deck.addCard(card);
 		            }
 		        } 

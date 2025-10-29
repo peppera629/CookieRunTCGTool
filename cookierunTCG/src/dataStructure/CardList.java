@@ -18,6 +18,7 @@ public class CardList {
 	private boolean _search_lv[];
 	private boolean _search_flip;
 	private boolean _search_extra;
+	private boolean _search_rarity[];
 	private List<String> _search_pack_list;
 	
 	public static CardList getInstance() {
@@ -35,6 +36,7 @@ public class CardList {
 		_search_lv = new boolean[CardUtil.LEVEL_MAX + 1];
 		_search_flip = false;
 		_search_extra = false;
+		_search_rarity = new boolean[CardUtil.RARITY_MAX];
 		_search_pack_list = new ArrayList<String>();
 	}
 	
@@ -46,7 +48,8 @@ public class CardList {
 		boolean selectColor = isSelectedColor();
 		boolean selectType = isSelectedType();
 		boolean selectLv = isSelectedLv();
-		if (!selectColor && !selectType && !_search_flip && !_search_extra && _search_pack_list.size() == 0) {
+		boolean selectRarity = isSelectedRarity();
+		if (!selectColor && !selectType && !_search_flip && !_search_extra && !selectRarity && _search_pack_list.size() == 0) {
 			return getAllCards();
 		}
 		
@@ -55,6 +58,7 @@ public class CardList {
 		boolean typeCorrect;
 		boolean flipCorrect;
 		boolean extraCorrect;
+		boolean rarityCorrect;
 		boolean lvCorrect;
 		boolean packCorrect;
 		dumpPackList();
@@ -65,9 +69,10 @@ public class CardList {
 					|| c.getType() != CardType.Cookie || _search_lv[c.getLv()];
 			flipCorrect = !_search_flip || c.isFlip();
 			extraCorrect = !_search_extra || c.isExtra();
+			rarityCorrect = !selectRarity || _search_rarity[c.getRarity().getValue()];
 			packCorrect = _search_pack_list.size() == 0 || _search_pack_list.contains(c.getPack());
 //			c.dump();
-			if (colorCorrect && lvCorrect && typeCorrect && flipCorrect && extraCorrect && packCorrect) {
+			if (colorCorrect && lvCorrect && typeCorrect && flipCorrect && extraCorrect && rarityCorrect && packCorrect) {
 				selectList.add(c);
 			}
 		}
@@ -96,6 +101,15 @@ public class CardList {
 	private boolean isSelectedLv() {
 		for (int i=0; i<=CardUtil.LEVEL_MAX; i++) {
 			if(_search_lv[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isSelectedRarity() {
+		for (int i=0; i<CardUtil.RARITY_MAX; i++) {
+			if(_search_rarity[i]) {
 				return true;
 			}
 		}
