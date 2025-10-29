@@ -1,3 +1,19 @@
+=== Version 0.5.1 : 2025-10-29
+- More UI changes and fixes
+- EXTRA card count is now displayed
+
+=== Version 0.5.0 : 2025-10-28
+- Multi-language support added (English & Traditional Chinese)
+- Adaptive card grid layout (column count changes as the window is resized)
+- Deck overview numbers now have anti-aliasing
+- UI text changes and minor layout adjustments
+- EXTRA filtering logic fixed
+
+=== Version 0.4.0 : 2025-10-26
+- UI overhaul
+- BS8 cards and info added
+- Filtering by EXTRA added
+
 === Version 0.3.0 : 2024-02-20
 - refactor search panel.
 - add all cards into database from BS2, ST4, ST5 and PR (Korean)
