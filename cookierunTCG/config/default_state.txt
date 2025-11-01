@@ -1,8 +1,8 @@
-Red
-v,_,_,_,_,_
-_,_,_,_
+Purple
+_,_,_,_,v,_
+_,v,v,v
 _
 _,_,_
-,BS3,ST1,ST5,BS4,BS5,BS6,BS2,BS1,ST2,ST3,ST4,P,BS7,BS8
-_,_,_,_,_,_
+,BS3,ST1,ST5,BS4,BS5,BS6,BS2,BS1,ST2,ST3,ST4,BS7
+v,v,v,v,v,_
 4,3,1,2

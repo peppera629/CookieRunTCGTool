@@ -577,6 +577,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 					String filename = selectedFile.getName();
 					System.out.println(selectedFile.getName());
 					mDeckText.setText(filename.substring(0, filename.length() - 4));
+                    mDeck = CardLoader.loadDeck(mDeckText.getText());
+                    mDeck.sort();
+                    updateDeck();
+                    mDefaultState.setDefaultDeckName(mDeckText.getText());
+                    mDefaultState.saveDefaultState();
 				} 
             }
         });
@@ -978,6 +983,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         button_settings.setText(CardUtil.getTranslation("settings"));
 
         updateComponents(frame.getContentPane());
+        mCardDetailPane.removeAll();
 
         // Refresh all ClickableCardPanel instances (for updating card images)
         for (Card card : CardList.getInstance().getAllCards()) {
