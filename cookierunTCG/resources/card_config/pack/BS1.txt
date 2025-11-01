@@ -1,6 +1,6 @@
 BS1-001,哥布林餅乾,Red,Cookie,_,C,A,1,2
 BS1-002,妖狐餅乾,Red,Cookie,F,R,A,3,3
-BS1-003,黑巧克力餅乾,Red,Cookie,_,C,A,2,4
+BS1-003,黑巧克力餅乾,Red,Cookie,_,SR,A,2,4
 BS1-004,紫丁香餅乾,Red,Cookie,_,U,A,1,2
 BS1-005,蛋糕捲餅乾,Red,Cookie,_,C,A,2,2
 BS1-006,麻辣餅乾,Red,Cookie,_,U,A,2,2

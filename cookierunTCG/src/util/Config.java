@@ -41,14 +41,18 @@ public class Config {
 	public static String LANGUAGE; // en or zh_TW
 	public static String CARD_LANGUAGE; // en or zh_TW
 
-	public static float CARD_RATIO = 1.4F;
+	public static float CARD_RATIO = 1.3859F;
 	
 	public static int DW_ROW_SIZE = 8;
+
+	public static int CARD_PREVIEW_WIDTH = 480;
+	public static int CARD_PREVIEW_HEIGHT = (int) (CARD_PREVIEW_WIDTH * CARD_RATIO);
 	
-	public static int SMALL_CARD_WIDTH = 120;
+	public static double CARD_ICON_SCALE = 1.5f;
+	public static int SMALL_CARD_WIDTH = (int) (120 * CARD_ICON_SCALE);
 	public static int SMALL_CARD_HEIGHT = (int) (SMALL_CARD_WIDTH * CARD_RATIO);
 	
-	public static int DW_CARD_WIDTH = 120;
+	public static int DW_CARD_WIDTH = 200;
 	public static int DW_CARD_HEIGHT = (int) (DW_CARD_WIDTH * CARD_RATIO);
 	
 	public static int DW_OUTPUT_WIDTH = 300;
