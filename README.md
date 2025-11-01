@@ -1,3 +1,9 @@
+Note: Card images are not included in the source code, nor are any preset deck configurations.
+
+=== Version 0.5.2 : 2025-10-29
+- UI language and card language can now be configured separately
+- EXTRA cards are now counted separately from total cards
+
 === Version 0.5.1 : 2025-10-29
 - More UI changes and fixes
 - EXTRA card count is now displayed
@@ -9,7 +15,7 @@
 - UI text changes and minor layout adjustments
 - EXTRA filtering logic fixed
 
-=== Version 0.4.0 : 2025-10-26
+=== Version 0.4.0 : 2025-10-26 [Forked]
 - UI overhaul
 - BS8 cards and info added
 - Filtering by EXTRA added
