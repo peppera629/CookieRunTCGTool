@@ -1,5 +1,7 @@
 package ui;
 
+import util.Config;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -41,7 +43,7 @@ import ui.SortSettingsWindow.ConfigChangedCallback;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardType;
 import util.CardUtil;
-import util.Config;
+
 import util.Constant;
 import util.DefaultState;
 import util.LanguageChangeListener;
@@ -71,6 +73,7 @@ import javax.swing.JButton;
 
 // TODO: Fix filtering sidebar alignment
 // TODO: Card images to change: BS1-008 (SEC instead of R), BS3-024 (Korean version is used)
+// TODO: Fix scale change update behavior
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
 
@@ -84,6 +87,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         System.setProperty("sun.java2d.uiScale", "1.0");
         System.setProperty("sun.java2d.dpiaware", "true");
         System.setProperty("file.encoding", "UTF-8");
+        Config.loadConfig();
 
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -107,7 +111,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
      * Create the application.
      */
     public MainUI() {
-        Config.loadConfig();
+        System.out.println(Config.CARD_ICON_SCALE + " " + Config.CARD_PREVIEW_SCALE);
+        System.out.println(Config.CARD_PREVIEW_WIDTH + " " + Config.CARD_PREVIEW_HEIGHT);
         loadFont();
 		deckWindow = new DeckWindow();
         settingsWindow = new SettingsWindow();
@@ -128,7 +133,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JPanel mCardsPane, mDeckPane, mTextsPane;
     
     //search panel
-    private JPanel mSearchPane;
+    private JPanel mSearchPane, sidebarPanel;
     private JCheckBox[] cb_color;
     private JCheckBox[] cb_level;
     private JCheckBox[] cb_pack;
@@ -156,6 +161,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private int columns = 6;
 
     private void initialize() {
+        Config.loadConfig();
     	initialData();
     	initialUI();
     }
@@ -205,7 +211,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private void initialUI() {
 
         frame.setTitle(CardUtil.getTranslation("app.title") + " v." + Constant.VERSION);
-        frame.setBounds(100, 100, 1600, 900);
+        frame.setBounds(0, 0, 1600, 1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new BorderLayout());
         
@@ -497,7 +503,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
         
-        JPanel sidebarPanel = new JPanel();
+        sidebarPanel = new JPanel();
+        sidebarPanel.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()));
         sidebarPanel.setLayout(new BorderLayout());
 
         // ==== 卡片預覽
@@ -911,6 +918,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         Image image = cardIcon.getImage().getScaledInstance(Config.CARD_PREVIEW_WIDTH, Config.CARD_PREVIEW_HEIGHT, java.awt.Image.SCALE_SMOOTH);
         cardIcon = new ImageIcon(image);
         JLabel cardLabel = new JLabel(cardIcon);
+        
         mCardDetailPane.add(cardLabel, BorderLayout.CENTER);
         mCardDetailPane.revalidate();
         mCardDetailPane.repaint();
@@ -924,8 +932,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
     @Override
     public void onLanguageChange() {
-        
-        Config.saveConfig();
         
         // Reload fonts and translations
         loadFont();
@@ -980,6 +986,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
         }
 
+        sidebarPanel.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()));
+        mCardDetailPane.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()-60));
+        System.out.println(Config.CARD_PREVIEW_WIDTH + "x" + (frame.getBounds().getHeight()-60));
+        System.out.println(mCardDetailPane.getWidth() + "x" + mCardDetailPane.getHeight());
+
         updateCardList();
         updateDeck();
         
@@ -1011,6 +1022,15 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                         break;
                     case "CRbold":
                         newFont = CRbold;
+                        break;
+                    case "CRboldEXLarge":
+                        newFont = CRboldEXLarge;
+                        break;
+                    case "CRboldSmall":
+                        newFont = CRboldSmall;
+                        break;
+                    case "CRboldLarge":
+                        newFont = CRboldLarge;
                         break;
                 }
 

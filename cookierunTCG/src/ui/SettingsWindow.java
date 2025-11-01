@@ -6,6 +6,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import util.Config;
 import javax.swing.JLabel;
+import javax.swing.JSlider;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class SettingsWindow implements LanguageChangeListener{
     private JLabel languageLabel, cardLanguageLabel;
     private JComboBox<String> languageDropdown, cardLanguageDropdown;
     private JButton btnConfirm;
+    private JSlider cardPreviewScaleSlider, cardListScaleSlider;
 
 	public static void addLanguageChangeListener(LanguageChangeListener listener) {
         listeners.add(listener);
@@ -68,7 +70,7 @@ public class SettingsWindow implements LanguageChangeListener{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(150, 150, 450, 250);
+		frame.setBounds(150, 150, 450, 450);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -134,12 +136,55 @@ public class SettingsWindow implements LanguageChangeListener{
             cardLanguageDropdown.setSelectedIndex(1);
         }
 
+        // ==== Card Preview Scale Label ====
+        JLabel cardPreviewScaleLabel = new JLabel(CardUtil.getTranslation("settings.cardpreviewscale"));
+        cardPreviewScaleLabel.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(cardPreviewScaleLabel, "CRnormal");
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        frame.getContentPane().add(cardPreviewScaleLabel, gbc);
+
+        // ==== Card Preview Scale Slider ====
+        cardPreviewScaleSlider = new JSlider(JSlider.HORIZONTAL, 75, 150, (int) (Config.CARD_PREVIEW_SCALE * 100));
+        cardPreviewScaleSlider.setMajorTickSpacing(25);
+        cardPreviewScaleSlider.setMinorTickSpacing(5);
+        cardPreviewScaleSlider.setSnapToTicks(true);
+        cardPreviewScaleSlider.setPaintTicks(true);
+        cardPreviewScaleSlider.setPaintLabels(true);
+        cardPreviewScaleSlider.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(cardPreviewScaleSlider, "CRnormal");
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        frame.getContentPane().add(cardPreviewScaleSlider, gbc);
+
+        /* Can't bother with this for now
+        // ==== Card List Scale Label ====
+        JLabel cardListScaleLabel = new JLabel(CardUtil.getTranslation("settings.cardlistscale"));
+        cardListScaleLabel.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(cardListScaleLabel, "CRnormal");
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        frame.getContentPane().add(cardListScaleLabel, gbc);
+
+        // ==== Card List Scale Slider ====
+        cardListScaleSlider = new JSlider(JSlider.HORIZONTAL, 50, 150, (int) (Config.CARD_ICON_SCALE * 100));
+        cardListScaleSlider.setMajorTickSpacing(50);
+        cardListScaleSlider.setMinorTickSpacing(10);
+        cardListScaleSlider.setSnapToTicks(true);
+        cardListScaleSlider.setPaintTicks(true);
+        cardListScaleSlider.setPaintLabels(true);
+        cardListScaleSlider.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(cardListScaleSlider, "CRnormal");
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        frame.getContentPane().add(cardListScaleSlider, gbc);
+        */
         // ==== Confirm Button ====
         btnConfirm = new JButton(CardUtil.getTranslation("settings.confirm"));
         btnConfirm.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(btnConfirm, "CRnormal");
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 5;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         frame.getContentPane().add(btnConfirm, gbc);
@@ -159,9 +204,11 @@ public class SettingsWindow implements LanguageChangeListener{
             } else if (cardSelectedIndex == 1) {
                 Config.CARD_LANGUAGE = "zh_TW";
             }
-
+            Config.CARD_PREVIEW_SCALE = cardPreviewScaleSlider.getValue() / 100.0;
             CardUtil.loadLanguage();
+            Config.saveConfig();
             notifyLanguageChange();
+            frame.dispose();
         });
 	}
 
@@ -204,6 +251,15 @@ public class SettingsWindow implements LanguageChangeListener{
 				case "CRbold":
 					newFont = MainUI.CRbold;
 					break;
+                case "CRboldLarge":
+                    newFont = MainUI.CRboldLarge;
+                    break;
+                case "CRboldSmall":
+                    newFont = MainUI.CRboldSmall;
+                    break;
+                case "CRboldEXLarge":
+                    newFont = MainUI.CRboldEXLarge;
+                    break;
 			}
 
 			// Update the font for the component
