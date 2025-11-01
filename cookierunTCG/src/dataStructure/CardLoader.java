@@ -176,6 +176,9 @@ public class CardLoader {
 	public static void saveDeck(String deckName, Deck deck) {
 		FileWriter fw;
 		try {
+			if (!new File("deck").exists()) {
+				new File("deck").mkdirs();
+			}
 			fw = new FileWriter("deck/"+deckName+".txt");
 			List<Card> cardList = deck.getAllCards();
 			for (Card c : cardList) {
@@ -194,6 +197,9 @@ public class CardLoader {
 	public static void saveReadableDeck(String deckName, Deck deck) {
 		FileWriter fw;
 		try {
+			if (!new File("deck_readable").exists()) {
+				new File("deck_readable").mkdirs();
+			}
 			fw = new FileWriter("deck_readable/"+deckName+".txt");
 			List<Card> cardList = deck.getAllCards();
 			Card lastCard = null;

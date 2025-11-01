@@ -1,4 +1,4 @@
 #Application Configuration
-#Wed Oct 29 16:39:56 CST 2025
-card_language=en
-language=en
+#Sat Nov 01 12:09:55 CST 2025
+card_language=zh_TW
+language=zh_TW
