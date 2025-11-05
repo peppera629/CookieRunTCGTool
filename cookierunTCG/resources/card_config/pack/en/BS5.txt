@@ -1,0 +1,111 @@
+BS5-001,Dark Choco Cookie,Red,Cookie,_,C,B,1,3
+BS5-002,Strawberry Cookie,Red,Cookie,_,C,B,2,4
+BS5-003,Strawberry Cream Cookie,Red,Cookie,_,U,B,2,3
+BS5-004,Lollipop Cookie,Red,Cookie,F,C,B,2,2
+BS5-005,Mala Sauce Cookie,Red,Cookie,_,SR,B,1,2
+BS5-006,Marshmallow Cookie,Red,Cookie,_,C,B,3,5
+BS5-007,Macaron Cookie,Red,Cookie,_,C,B,1,1
+BS5-008,Chestnut Cookie,Red,Cookie,_,C,B,1,1
+BS5-009,Butterbear Cookie,Red,Cookie,F,C,B,3,3
+BS5-010,Starch Noodle Cookie,Red,Cookie,_,SR,B,3,5
+BS5-011,Stollen Cookie,Red,Cookie,_,R,B,2,3
+BS5-012,Eggnog Cookie,Red,Cookie,_,C,B,1,2
+BS5-013,Pitaya Dragon Cookie,Red,Cookie,_,UR,B,3,5
+BS5-014,Knight Cookie,Red,Cookie,_,U,B,2,5
+BS5-015,Carol Cookie,Red,Cookie,_,U,B,2,4
+BS5-016,Tiramisu Cookie,Red,Cookie,_,C,B,1,3
+BS5-017,Peppernut Cookie,Red,Cookie,_,C,B,1,3
+BS5-018,Flat Tofu Cookie,Red,Cookie,_,R,B,2,4
+BS5-019,Pudding Cookie,Red,Cookie,_,C,B,2,3
+BS5-020,Crimson Dragon Mask,Red,Item,_,U,B,,
+BS5-021,Draconic Aura,Red,Trap,_,U,B,,
+BS5-022,Pitaya Dragon Cookie's Nest,Red,Stage,_,U,B,,
+BS5-023,Dino-Sour Cookie,Yellow,Cookie,_,SR,B,2,5
+BS5-024,Dr. Wasabi Cookie,Yellow,Cookie,_,C,B,1,1
+BS5-025,Leek Cookie,Yellow,Cookie,_,C,B,1,2
+BS5-026,DJ Cookie,Yellow,Cookie,_,U,B,2,2
+BS5-027,Mango Tribe Chieftain,Yellow,Cookie,_,C,B,1,2
+BS5-028,Mango Cookie,Yellow,Cookie,_,SR,B,1,2
+BS5-029,Mustard Cookie,Yellow,Cookie,_,C,B,2,3
+BS5-030,Buttercream Choco Cookie,Yellow,Cookie,_,C,B,1,1
+BS5-031,Peach Cookie,Yellow,Cookie,_,C,B,1,1
+BS5-032,Birthday Cake Cookie,Yellow,Cookie,_,U,B,2,4
+BS5-033,Cotton Candy Cookie,Yellow,Cookie,_,C,B,2,3
+BS5-034,Sparkling Cookie,Yellow,Cookie,_,C,B,1,3
+BS5-035,Artichoke Cookie,Yellow,Cookie,_,U,B,3,4
+BS5-036,Milk Cookie,Yellow,Cookie,_,R,B,1,3
+BS5-037,Plum Cookie,Yellow,Cookie,_,C,B,1,3
+BS5-038,Cherry Cookie,Yellow,Cookie,F,C,B,1,1
+BS5-039,Cheesecake Cookie,Yellow,Cookie,_,R,B,2,3
+BS5-040,Ananas Dragon Cookie,Yellow,Cookie,_,UR,B,3,5
+BS5-041,Firecracker Cookie,Yellow,Cookie,F,C,B,3,3
+BS5-042,Sniffly Cocoa Palm,Yellow,Item,_,U,B,,
+BS5-043,Seasick Canoeing,Yellow,Trap,_,U,B,,
+BS5-044,Ananas Dragon Cookie's Nest,Yellow,Stage,_,U,B,,
+BS5-045,Potato Cookie,Green,Cookie,_,U,B,1,1
+BS5-046,Goblin Cookie,Green,Cookie,F,C,B,3,3
+BS5-047,Carrot Cookie,Green,Cookie,_,C,B,2,4
+BS5-048,Bellflower Cookie,Green,Cookie,_,R,B,1,3
+BS5-049,Melon Bun Cookie,Green,Cookie,F,C,B,2,2
+BS5-050,Fig Cookie,Green,Cookie,_,C,B,2,3
+BS5-051,Beet Cookie,Green,Cookie,_,C,B,1,2
+BS5-052,Sandwich Cookie,Green,Cookie,_,C,B,1,3
+BS5-053,Shine Muscat Cookie,Green,Cookie,_,SR,B,2,4
+BS5-054,Snake Fruit Cookie,Green,Cookie,_,UR,B,2,4
+BS5-055,Spinach Cookie,Green,Cookie,_,C,B,1,2
+BS5-056,Longan Dragon Cookie,Green,Cookie,_,UR,B,3,5
+BS5-057,Werewolf Cookie,Green,Cookie,_,C,B,1,3
+BS5-058,Ginseng Cookie,Green,Cookie,_,R,B,1,2
+BS5-059,Purple Yam Cookie,Green,Cookie,_,SR,B,3,5
+BS5-060,Croissant Cookie,Green,Cookie,_,U,B,2,4
+BS5-061,Pancake Cookie,Green,Cookie,_,C,B,2,2
+BS5-062,Pumpkin Cookie,Green,Cookie,_,C,B,2,2
+BS5-063,Hero Cookie,Green,Cookie,_,U,B,3,5
+BS5-064,Dragon Orb,Green,Item,_,U,B,,
+BS5-065,Petrification,Green,Trap,_,U,B,,
+BS5-066,Longan Palace,Green,Stage,_,U,B,,
+BS5-067,Snow Sugar Cookie,Blue,Cookie,_,C,B,2,3
+BS5-068,GingerBright,Blue,Cookie,_,U,B,1,2
+BS5-069,Pond Dino Cookie,Blue,Cookie,_,SR,B,1,2
+BS5-070,Peppermint Cookie,Blue,Cookie,_,U,B,2,3
+BS5-071,Lotus Dragon Cookie,Blue,Cookie,_,UR,B,3,5
+BS5-072,Gumball Cookie,Blue,Cookie,_,C,B,2,2
+BS5-073,Cyborg Cookie,Blue,Cookie,F,C,B,2,2
+BS5-074,Sorbet Shark Cookie,Blue,Cookie,_,U,B,2,4
+BS5-075,Hydrangea Cookie,Blue,Cookie,_,SR,B,2,4
+BS5-076,Cream Puff Cookie,Blue,Cookie,_,R,B,1,3
+BS5-077,Ice Candy Cookie,Blue,Cookie,_,C,B,2,3
+BS5-078,Aloe Cookie,Blue,Cookie,_,C,B,1,3
+BS5-079,Lotus Root Cookie,Blue,Cookie,_,C,B,1,2
+BS5-080,Alchemist Cookie,Blue,Cookie,_,R,B,1,2
+BS5-081,Squid Ink Cookie,Blue,Cookie,_,C,B,1,3
+BS5-082,Ion Cookie Robot,Blue,Cookie,F,C,B,3,3
+BS5-083,Bell Pepper Cookie,Blue,Cookie,_,C,B,2,4
+BS5-084,Apple Cookie,Blue,Cookie,_,C,B,2,3
+BS5-085,Pirate Cookie,Blue,Cookie,_,C,B,3,4
+BS5-086,Tales of the Lotus,Blue,Item,_,U,B,,
+BS5-087,Dino Greetings,Blue,Trap,_,U,B,,
+BS5-088,Lotus Palace,Blue,Stage,_,U,B,,
+BS5-089,Muscle Cookie,Purple,Cookie,_,R,B,1,2
+BS5-090,Strawberry Stick Cookie,Purple,Cookie,F,C,B,2,2
+BS5-091,Lilac Cookie,Purple,Cookie,_,SR,B,2,4
+BS5-092,Rambutan Cookie,Purple,Cookie,_,UR,B,2,2
+BS5-093,Lychee Dragon Cookie,Purple,Cookie,_,UR,B,3,5
+BS5-094,Mangosteen Cookie,Purple,Cookie,_,C,B,2,2
+BS5-095,Mint Wafer Cookie,Purple,Cookie,F,C,B,3,3
+BS5-096,Mint Choco Cookie,Purple,Cookie,_,C,B,2,2
+BS5-097,Peppercorn Cookie,Purple,Cookie,_,U,B,3,4
+BS5-098,Centipede Cookie,Purple,Cookie,_,U,B,1,3
+BS5-099,Avocado Cookie,Purple,Cookie,_,C,B,2,2
+BS5-100,Yogurt Cream Cookie,Purple,Cookie,_,SR,B,1,2
+BS5-101,GingerBrave,Purple,Cookie,_,U,B,2,4
+BS5-102,Purple Yam Cookie,Purple,Cookie,_,C,B,2,3
+BS5-103,Scorpion Cookie,Purple,Cookie,_,R,B,3,5
+BS5-104,Chili Pepper Cookie,Purple,Cookie,_,C,B,1,2
+BS5-105,Cocoa Cookie,Purple,Cookie,_,C,B,1,3
+BS5-106,Plain Yogurt Cookie,Purple,Cookie,_,C,B,1,2
+BS5-107,Red Pepper Cookie,Purple,Cookie,_,C,B,1,1
+BS5-108,Rambirdtan Handler Glove,Purple,Item,_,U,B,,
+BS5-109,Charmed Miners,Purple,Trap,_,U,B,,
+BS5-110,Lychee Dragon Cookie's Cave,Purple,Stage,_,U,B,,
+BS5-111,Wrath of the Dragons,Colorless,Stage,_,UR,B,,

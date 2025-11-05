@@ -70,7 +70,7 @@ public class SettingsWindow implements LanguageChangeListener{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(150, 150, 450, 450);
+		frame.setBounds(150, 150, 450, 350);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();

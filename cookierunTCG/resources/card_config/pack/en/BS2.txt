@@ -1,0 +1,81 @@
+BS2-001,Muscle Cookie,Red,Cookie,F,C,A,2,2
+BS2-002,Macaron Cookie,Red,Cookie,_,U,A,1,3
+BS2-003,Rebel Cookie,Red,Cookie,_,R,A,2,4
+BS2-004,Cherry Cookie,Red,Cookie,_,C,A,2,3
+BS2-005,Chili Pepper Cookie,Red,Cookie,_,C,A,3,1
+BS2-006,Prickly Cacti Gloves,Red,Item,_,U,A,,
+BS2-007,Prickly Cactus Bat,Red,Trap,_,U,A,,
+BS2-008,Princess Cookie,Yellow,Cookie,_,C,A,1,2
+BS2-009,Carrot Cookie,Yellow,Cookie,F,C,A,2,2
+BS2-010,Vampire Cookie,Yellow,Cookie,_,C,A,2,3
+BS2-011,Blackberry Cookie,Yellow,Cookie,_,R,A,3,3
+BS2-012,Onion Cookie,Yellow,Cookie,_,U,A,1,3
+BS2-013,Wind-Up Pocket Watch,Yellow,Item,_,U,A,,
+BS2-014,Erratic Yakgwa Robot,Yellow,Trap,_,U,A,,
+BS2-015,Lemon Thyme Cookie,Green,Cookie,_,R,A,2,2
+BS2-016,Mustard Cookie,Green,Cookie,_,C,A,3,1
+BS2-017,Mint Choco Cookie,Green,Cookie,_,C,A,2,3
+BS2-018,Candlelight Cookie,Green,Cookie,_,U,A,1,3
+BS2-019,Cheesecake Cookie,Green,Cookie,F,C,A,2,2
+BS2-020,Carrot Jelly Stew,Green,Item,_,U,A,,
+BS2-021,Carrot Farm Scarecrow,Green,Trap,_,U,A,,
+BS2-022,Licorice Cookie,Blue,Item,_,R,A,3,4
+BS2-023,DJ Cookie,Blue,Item,_,C,A,3,4
+BS2-024,Strawberry Cookie,Blue,Trap,_,C,A,3,1
+BS2-025,Mango Cookie,Blue,Trap,_,C,A,1,3
+BS2-026,Mocha Ray Cookie,Blue,Stage,_,R,A,1,3
+BS2-027,Cotton Cookie,Blue,Cookie,_,R,A,2,4
+BS2-028,Pond Dino Cookie,Blue,Cookie,_,SR,A,2,4
+BS2-029,Sea Fairy Cookie,Blue,Cookie,_,UR,A,3,5
+BS2-030,Gumball Cookie,Blue,Cookie,_,C,A,3,4
+BS2-031,Black Raisin Cookie,Blue,Cookie,_,SR,A,3,5
+BS2-032,Blueberry Pie Cookie,Blue,Cookie,_,C,A,1,2
+BS2-033,Sorbet Shark Cookie,Blue,Cookie,_,C,A,2,3
+BS2-034,Frost Queen Cookie,Blue,Cookie,F,R,A,3,3
+BS2-035,Salt Cookie,Blue,Cookie,_,C,A,1,4
+BS2-036,Sherbet Cookie,Blue,Cookie,_,UR,A,2,5
+BS2-037,Chocolate Bonbon Cookie,Blue,Cookie,F,U,A,3,3
+BS2-038,Sparkling Cookie,Blue,Cookie,_,C,A,2,4
+BS2-039,Avocado Cookie,Blue,Cookie,_,C,A,2,2
+BS2-040,Aloe Cookie,Blue,Cookie,_,SR,A,1,2
+BS2-041,Eggnog Cookie,Blue,Cookie,_,C,A,2,2
+BS2-042,Milk Cookie,Blue,Cookie,F,C,A,1,1
+BS2-043,Captain Ice Cookie,Blue,Cookie,_,U,A,2,2
+BS2-044,Tiramisu Cookie,Blue,Cookie,_,C,A,2,3
+BS2-045,Parfait Cookie,Blue,Cookie,_,SR,A,1,2
+BS2-046,Caramel Arrow Cookie,Blue,Cookie,_,U,A,1,3
+BS2-047,Diving Goggles,Blue,Item,_,R,A,,
+BS2-048,Jellied Jellyfish Potion,Blue,Item,_,U,A,,
+BS2-049,Salt Crystal Trident,Blue,Trap,_,U,A,,
+BS2-050,Hermit Crab's Shell,Blue,Trap,_,U,A,,
+BS2-051,Whipped Snowcream Village,Blue,Stage,_,U,A,,
+BS2-052,Kumiho Cookie,Purple,Cookie,_,C,A,2,4
+BS2-053,Ninja Cookie,Purple,Cookie,_,C,A,1,4
+BS2-054,Dino-Sour Cookie,Purple,Cookie,_,C,A,3,1
+BS2-055,Poison Mushroom Cookie,Purple,Cookie,_,UR,A,3,5
+BS2-056,Raspberry Mousse Cookie,Purple,Cookie,F,U,A,1,1
+BS2-057,Wizard Cookie,Purple,Cookie,_,U,A,1,3
+BS2-058,Wind Archer Cookie,Purple,Cookie,_,UR,A,3,5
+BS2-059,Cherry Blossom Cookie,Purple,Cookie,_,C,A,3,4
+BS2-060,Beet Cookie,Purple,Cookie,_,C,A,1,3
+BS2-061,Hydrangea Cookie,Purple,Cookie,_,R,A,1,2
+BS2-062,Starfruit Cookie,Purple,Cookie,_,SR,A,1,3
+BS2-063,Space Doughnut,Purple,Cookie,F,R,A,3,3
+BS2-064,Alchemist Cookie,Purple,Cookie,_,C,A,2,1
+BS2-065,Purple Yam Cookie,Purple,Cookie,_,C,A,3,5
+BS2-066,Rose Cookie,Purple,Cookie,_,C,A,1,2
+BS2-067,Angel Cookie,Purple,Cookie,_,R,A,1,3
+BS2-068,Cream Unicorn Cookie,Purple,Cookie,_,SR,A,2,5
+BS2-069,Clotted Cream Cookie,Purple,Cookie,_,SR,A,2,4
+BS2-070,Kiwi Cookie,Purple,Cookie,_,C,A,2,2
+BS2-071,Twizzly Gummy Cookie,Purple,Cookie,_,R,A,1,3
+BS2-072,Pastry Cookie,Purple,Cookie,F,U,A,3,3
+BS2-073,Peperoncino Cookie,Purple,Cookie,_,SR,A,2,4
+BS2-074,Pink Choco Cookie,Purple,Cookie,_,C,A,2,2
+BS2-075,White Choco Cookie,Purple,Cookie,_,C,A,2,3
+BS2-076,Hero Cookie,Purple,Cookie,_,C,A,3,4
+BS2-077,Forbidden Incantation,Purple,Item,_,U,A,,
+BS2-078,Dragon's Breath,Purple,Item,_,U,A,,
+BS2-079,Yew Village Scroll,Purple,Trap,_,U,A,,
+BS2-080,Abandoned Cloud Nest,Purple,Trap,_,R,A,,
+BS2-081,Blue Dragon's Eye,Purple,Stage,_,U,A,,

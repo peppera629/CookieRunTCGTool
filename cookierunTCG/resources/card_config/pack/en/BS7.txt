@@ -1,0 +1,108 @@
+BS7-001,Nutmeg Tiger Cookie,Red,Cookie,_,C,B,1,2
+BS7-002,Red Osmanthus Cookie,Red,Cookie,F,C,B,2,2
+BS7-003,Raspberry Cookie,Red,Cookie,_,U,B,1,2
+BS7-004,Mala Sauce Cookie,Red,Cookie,_,R,B,2,4
+BS7-005,Marble Danish Cookie,Red,Cookie,_,C,B,2,4
+BS7-006,Basil Pesto Cookie,Red,Cookie,_,U,B,1,2
+BS7-007,Street Urchin Cookie,Red,Cookie,_,C,B,1,3
+BS7-008,Earl Grey Cookie,Red,Cookie,_,C,B,2,3
+BS7-009,Spicy Scovillia Student,Red,Cookie,_,C,B,1,2
+BS7-010,Olive Cookie,Red,Cookie,_,C,B,2,3
+BS7-011,Yoga Cookie,Red,Cookie,F,C,B,3,3
+BS7-012,Sachertorte Cookie,Red,Cookie,_,C,B,2,5
+BS7-013,Chili Pepper Cookie,Red,Cookie,_,SR,B,1,2
+BS7-014,Capsaicin Cookie,Red,Cookie,_,UR,B,3,5
+BS7-015,Crushed Pepper Cookie,Red,Cookie,_,SR,B,2,4
+BS7-016,Cream Unicorn Cookie,Red,Cookie,_,C,B,2,5
+BS7-017,Tarte Tatin Cookie,Red,Cookie,_,U,B,2,4
+BS7-018,Jalapeño Cookie,Red,Cookie,_,UR,B,3,5
+BS7-019,Rye Cookie,Red,Cookie,_,R,B,1,2
+BS7-020,Scovilsky Manuscript,Red,Item,_,U,B,_,_
+BS7-021,Labyrinth Golem Attack,Red,Trap,_,U,B,_,_
+BS7-022,Scovillia Quarters,Red,Stage,_,U,B,_,_
+BS7-023,Honorable Paladin Trainee,Yellow,Cookie,_,C,B,2,3
+BS7-024,Ice Juggler Cookie,Yellow,Cookie,_,C,B,2,2
+BS7-025,Golden Osmanthus Cookie,Yellow,Cookie,F,C,B,1,1
+BS7-026,Twisted Donut Cookie,Yellow,Cookie,_,C,B,1,2
+BS7-027,Lemon Cookie,Yellow,Cookie,_,U,B,1,3
+BS7-028,Lemon Zest Cookie,Yellow,Cookie,_,U,B,2,4
+BS7-029,Madeleine Cookie,Yellow,Cookie,_,SR,B,2,4
+BS7-030,Rainbow Sherbet Cookie,Yellow,Cookie,F,C,B,1,1
+BS7-031,Vanilla Sugar Cookie,Yellow,Cookie,_,C,B,1,3
+BS7-032,Onyx Cream Cookie,Yellow,Cookie,_,C,B,2,4
+BS7-033,Candy Drop Cookie,Yellow,Cookie,_,U,B,3,5
+BS7-034,Serious Paladin Trainee,Yellow,Cookie,_,C,B,1,2
+BS7-035,Kouign-Amann Cookie,Yellow,Cookie,_,UR,B,1,2
+BS7-036,Crème Knights Preceptor,Yellow,Cookie,_,C,B,2,4
+BS7-037,Crème Brûlée Cookie,Yellow,Cookie,_,R,B,1,3
+BS7-038,Clotted Cream Cookie,Yellow,Cookie,_,R,B,1,2
+BS7-039,Financier Cookie,Yellow,Cookie,_,SR,B,3,5
+BS7-040,Whipped Cream Cookie,Yellow,Cookie,_,C,B,1,2
+BS7-041,The Key to Unbreakable Faith,Yellow,Item,_,U,B,_,_
+BS7-042,Valiant Victor's Salvation,Yellow,Trap,_,U,B,_,_
+BS7-043,Crème Knights' Quarters,Yellow,Stage,_,U,B,_,_
+BS7-044,Licorice Cookie,Green,Cookie,_,R,B,2,3
+BS7-045,Kumiho Cookie,Green,Cookie,_,C,B,1,3
+BS7-046,Green Tea Mousse Cookie,Green,Cookie,_,SR,B,2,4
+BS7-047,Moon Rabbit Cookie,Green,Cookie,_,C,B,2,4
+BS7-048,Poison Mushroom Cookie,Green,Cookie,_,SR,B,1,2
+BS7-049,Strawberry Crepe Cookie,Green,Cookie,_,U,B,2,5
+BS7-050,Rockstar Cookie,Green,Cookie,_,C,B,1,2
+BS7-051,Mint Choco Cookie,Green,Cookie,_,C,B,1,3
+BS7-052,Vampire Cookie,Green,Cookie,_,C,B,3,6
+BS7-053,Red Velvet Cookie,Green,Cookie,_,C,B,3,4
+BS7-054,Black Lemonade Cookie,Green,Cookie,_,C,B,2,3
+BS7-055,Shining Glitter Cookie,Green,Cookie,_,C,B,3,5
+BS7-056,Sting Durian Cookie,Green,Cookie,F,C,B,2,2
+BS7-057,Pudding à la Mode Cookie,Green,Cookie,_,UR,B,1,3
+BS7-058,Schwarzwälder,Green,Cookie,_,R,B,2,4
+BS7-059,Choco Drizzle Cookie,Green,Cookie,_,UR,B,3,6
+BS7-060,Custard Cookie III,Green,Cookie,_,U,B,1,2
+BS7-061,Pancake Cookie,Green,Cookie,_,U,B,2,4
+BS7-062,Plantain Cookie,Green,Cookie,F,C,B,1,1
+BS7-063,Grand Cookie Games Trophy,Green,Item,_,U,B,_,_
+BS7-064,Cookie Windmill,Green,Trap,_,U,B,_,_
+BS7-065,Cookie Games Stadium,Green,Stage,_,U,B,_,_
+BS7-066,Princess Cookie,Blue,Cookie,_,C,B,1,2
+BS7-067,Dark Choco Cookie,Blue,Cookie,_,SR,B,3,6
+BS7-068,General Jujube Cookie,Blue,Cookie,_,C,B,3,6
+BS7-069,Leek Cookie,Blue,Cookie,_,U,B,1,2
+BS7-070,Raspberry Mousse Cookie,Blue,Cookie,_,R,B,2,4
+BS7-071,Marbleberry Cookie,Blue,Cookie,_,C,B,3,6
+BS7-072,Ice Mint Cookie,Blue,Cookie,F,C,B,2,2
+BS7-073,Knight Cookie,Blue,Cookie,_,C,B,2,4
+BS7-074,Laurel Cookie,Blue,Cookie,_,U,B,2,3
+BS7-075,Rose Cookie,Blue,Cookie,_,R,B,1,2
+BS7-076,Cherry Cola Cookie,Blue,Cookie,_,SR,B,1,3
+BS7-077,Chili Pepper Cookie,Blue,Cookie,_,U,B,1,3
+BS7-078,Frostrock Cookie,Blue,Cookie,F,C,B,1,1
+BS7-079,Cream Soda Cookie,Blue,Cookie,_,UR,B,2,4
+BS7-080,Peperoncino Cookie,Blue,Cookie,_,C,B,2,4
+BS7-081,Habanero Cookie,Blue,Cookie,_,C,B,2,4
+BS7-082,Red Pepper Cookie,Blue,Cookie,_,C,B,1,2
+BS7-083,White Choco Cookie,Blue,Cookie,_,C,B,1,2
+BS7-084,The Sunblade,Blue,Item,_,U,B,_,_
+BS7-085,A Victory For You,Blue,Trap,_,U,B,_,_
+BS7-086,Temple of the Sun Central Arena,Blue,Stage,_,U,B,_,_
+BS7-087,Berry Parfaedia Student,Purple,Cookie,_,C,B,1,2
+BS7-088,Camellia Cookie,Purple,Cookie,_,R,B,3,5
+BS7-089,Latte Cookie,Purple,Cookie,_,SR,B,2,4
+BS7-090,Black Sapphire Cookie,Purple,Cookie,_,R,B,1,2
+BS7-091,Gelato Trio Cookie,Purple,Cookie,_,C,B,1,1
+BS7-092,Citrus Parfaedia Student,Purple,Cookie,_,C,B,1,3
+BS7-093,Cream Puff Cookie,Purple,Cookie,_,SR,B,1,3
+BS7-094,Tea Knight Cookie,Purple,Cookie,_,U,B,3,4
+BS7-095,Almond Cookie,Purple,Cookie,_,C,B,1,3
+BS7-096,Espresso Cookie,Purple,Cookie,F,C,B,1,1
+BS7-097,Eclair Cookie,Purple,Cookie,_,C,B,2,4
+BS7-098,Milk Cookie,Purple,Cookie,_,C,B,2,3
+BS7-099,Werewolf Cookie,Purple,Cookie,_,C,B,2,4
+BS7-100,Witchberry Cookie,Purple,Cookie,F,C,B,1,1
+BS7-101,Purple Yam Cookie,Purple,Cookie,_,C,B,2,4
+BS7-102,Kohlrabi Cookie,Purple,Cookie,_,U,B,1,1
+BS7-103,Parfaedia Principal,Purple,Cookie,_,C,B,2,2
+BS7-104,Prune Juice Cookie,Purple,Cookie,_,UR,B,2,4
+BS7-105,Golem Core,Purple,Item,_,U,B,_,_
+BS7-106,Securing the First Victory,Purple,Trap,_,U,B,_,_
+BS7-107,Parfaedia Quarters,Purple,Stage,_,U,B,_,_
+BS7-108,Arena of Glory,Colorless,Trap,_,SR,B,_,_

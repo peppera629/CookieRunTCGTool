@@ -33,6 +33,13 @@ public class Card {
 	private int _cardCount;
 	private List<ClickableCardPanel> _PanelList;
 	private boolean _isImageLoaded = false;
+	private String _translationSkillName = "";
+	private String _translationSkill = "";
+	private String _translationAttackName = "";
+	private String _translationAttackCost = "";
+	private String _translationAttack = "";
+	private String _translationAttackThen = "";
+	private String _translationFlip = "";
 	
 	public Card(String pack, String id, String name, CardColor color, CardType type,
 			boolean flip, boolean extra, CardRarity rarity, String mark, int lv) {
@@ -184,6 +191,10 @@ public class Card {
 	public void setCount(int count) {
 		_cardCount = count;
 	}
+
+	public void setName(String name) {
+		_name = name;
+	}
 	
 	public void add() {
 		_cardCount++;
@@ -205,5 +216,27 @@ public class Card {
 
 	public List<ClickableCardPanel> getPanels() {
 		return _PanelList;
+	}
+
+	public void setCardTranslation(String skillName, String skill, String attackName, String attackCost, String attack, String attackThen, String flip) {
+		_translationSkillName = skillName;
+		_translationSkill = skill;
+		_translationAttackName = attackName;
+		_translationAttackCost = attackCost;
+		_translationAttack = attack;
+		_translationAttackThen = attackThen;
+		_translationFlip = flip;
+	}
+
+	public String[] getCardTranslation() {
+		String[] translation = new String[7];
+		translation[0] = _translationSkillName;
+		translation[1] = _translationSkill;
+		translation[2] = _translationAttackName;
+		translation[3] = _translationAttackCost;
+		translation[4] = _translationAttack;
+		translation[5] = _translationAttackThen;
+		translation[6] = _translationFlip;
+		return translation;
 	}
 }

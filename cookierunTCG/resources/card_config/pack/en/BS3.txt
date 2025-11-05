@@ -1,0 +1,121 @@
+BS3-001,Princess Cookie,Red,Cookie,_,C,A,1,3
+BS3-002,Raspberry Cookie,Red,Cookie,_,C,A,2,3
+BS3-003,Royal Margarine Cookie,Red,Cookie,_,U,A,1,2
+BS3-004,Royal Berry Cookie,Red,Cookie,F,C,A,2,2
+BS3-005,Mala Sauce Cookie,Red,Cookie,_,C,A,2,3
+BS3-006,Snapdragon Cookie,Red,Cookie,_,SR,A,1,2
+BS3-007,Tea Knight Cookie,Red,Cookie,_,C,A,2,3
+BS3-008,Devil Cookie,Red,Cookie,_,C,A,1,1
+BS3-009,Wildberry Cookie,Red,Cookie,_,R,A,2,4
+BS3-010,Pitaya Dragon Cookie,Red,Cookie,_,UR,A,3,5
+BS3-011,Knight Cookie,Red,Cookie,_,C,A,1,2
+BS3-012,Jungleberry Cookie,Red,Cookie,F,C,A,3,3
+BS3-013,Tiger Lily Cookie,Red,Cookie,_,SR,A,1,2
+BS3-014,Schwarzwälder,Red,Cookie,_,U,A,2,3
+BS3-015,Capsaicin Cookie,Red,Cookie,_,C,A,2,5
+BS3-016,Tarte Tatin Cookie,Red,Cookie,_,R,A,1,2
+BS3-017,Hollyberry Cookie,Red,Cookie,_,UR,A,3,5
+BS3-018,Mushroom Spore Punch,Red,Item,_,U,A,,
+BS3-019,Soul Jam: Light of Passion,Red,Item,_,SR,A,,
+BS3-020,Miniature Dragon Boat,Red,Item,_,U,A,,
+BS3-021,Oath on the Shield,Red,Trap,_,U,A,,
+BS3-022,Banquet of Victory,Red,Trap,_,U,A,,
+BS3-023,Passionate Hollyberry Kingdom,Red,Stage,_,U,A,,
+BS3-024,Dragon's Valley,Red,Stage,_,U,A,,
+BS3-025,Golden Cheese Cookie,Yellow,Cookie,_,UR,A,3,3
+BS3-026,Linzer Cookie,Yellow,Cookie,_,C,A,1,3
+BS3-027,Marzipan Cookie,Yellow,Cookie,F,C,A,3,3
+BS3-028,Mozzarella Cookie,Yellow,Cookie,_,UR,A,3,4
+BS3-029,Burnt Cheese Cookie,Yellow,Cookie,_,SR,A,1,2
+BS3-030,Black Raisin Cookie,Yellow,Cookie,_,U,A,2,3
+BS3-031,Pancake Cookie,Yellow,Cookie,_,C,A,1,3
+BS3-032,Smoked Cheese Cookie,Yellow,Cookie,_,R,A,3,5
+BS3-033,Stardust Cookie,Yellow,Cookie,_,R,A,2,3
+BS3-034,Sparkling Cookie,Yellow,Cookie,_,C,A,2,5
+BS3-035,High Priest Cheesenbird,Yellow,Cookie,F,C,A,2,2
+BS3-036,Olive Cookie,Yellow,Cookie,_,U,A,1,2
+BS3-037,Angel Cookie,Yellow,Cookie,_,C,A,1,2
+BS3-038,Cocoa Cookie,Yellow,Cookie,_,C,A,2,2
+BS3-039,Crème Brûlée Cookie,Yellow,Cookie,_,C,A,2,3
+BS3-040,Adventurer Cookie,Yellow,Cookie,_,C,A,3,3
+BS3-041,Fettuccine Cookie,Yellow,Cookie,_,SR,A,1,1
+BS3-042,Golden Cheese Guardian Golem,Yellow,Item,_,U,A,,
+BS3-043,Soul Jam: Light of Abundance,Yellow,Item,_,SR,A,,
+BS3-044,Cheesepad Tablet,Yellow,Item,_,U,A,,
+BS3-045,Golden Monarch's Counterattack,Yellow,Trap,_,U,A,,
+BS3-046,Golden Cheese Colosseum,Yellow,Trap,_,U,A,,
+BS3-047,Kingdom of Eternal Abundance,Yellow,Stage,_,U,A,,
+BS3-048,Golden City's Control Chamber,Yellow,Stage,_,U,A,,
+BS3-049,Carrot Cookie,Green,Cookie,_,C,A,2,3
+BS3-050,Matcha Cookie,Green,Cookie,_,SR,A,2,4
+BS3-051,Fig Cookie,Green,Cookie,_,C,A,2,2
+BS3-052,Mint Choco Cookie,Green,Cookie,_,C,A,1,2
+BS3-053,Butter Roll Cookie,Green,Cookie,_,R,A,1,3
+BS3-054,Beet Cookie,Green,Cookie,_,C,A,2,3
+BS3-055,White Lily Cookie,Green,Cookie,_,UR,A,3,5
+BS3-056,Pinecone Cookie,Green,Cookie,F,C,A,1,1
+BS3-057,Mercurial Knight Cookie,Green,Cookie,_,R,A,2,4
+BS3-058,Avocado Cookie,Green,Cookie,F,C,A,3,3
+BS3-059,Onion Cookie,Green,Cookie,_,C,A,3,5
+BS3-060,Elder Faerie Cookie,Green,Cookie,_,UR,A,3,5
+BS3-061,Silverbell Cookie,Green,Cookie,_,SR,A,1,2
+BS3-062,Carol Cookie,Green,Cookie,_,C,A,2,3
+BS3-063,Carameleon Cookie,Green,Cookie,_,U,A,1,3
+BS3-064,Clover Cookie,Green,Cookie,_,C,A,1,2
+BS3-065,Herb Cookie,Green,Cookie,_,U,A,1,2
+BS3-066,Soul Jam: Light of Freedom,Green,Item,_,SR,A,,
+BS3-067,Faerie Kingdom's Music,Green,Item,_,U,A,,
+BS3-068,Elder Faerie's Sword,Green,Item,_,U,A,,
+BS3-069,The New Guardian's Power,Green,Trap,_,U,A,,
+BS3-070,Puppet Theater of Chaos,Green,Trap,_,U,A,,
+BS3-071,Ancient Silver Tree,Green,Stage,_,U,A,,
+BS3-072,Mystical Faerie Kingdom,Green,Stage,_,U,A,,
+BS3-073,Candy Diver Cookie,Blue,Cookie,_,C,A,2,2
+BS3-074,Grand Madeleine Cookie,Blue,Cookie,F,C,A,1,1
+BS3-075,Strawberry Cookie,Blue,Cookie,_,C,A,2,2
+BS3-076,Strawberry Crepe Cookie,Blue,Cookie,_,SR,A,3,5
+BS3-077,Madeleine Cookie,Blue,Cookie,_,UR,A,2,3
+BS3-078,Wizard Cookie,Blue,Cookie,_,C,A,2,3
+BS3-079,Sugar Gnome,Blue,Cookie,_,C,A,2,5
+BS3-080,Espresso Cookie,Blue,Cookie,_,U,A,1,2
+BS3-081,Oyster Cookie,Blue,Cookie,_,R,A,2,1
+BS3-082,GingerBrave,Blue,Cookie,_,C,A,3,3
+BS3-083,Captain Caviar Cookie,Blue,Cookie,_,C,A,2,5
+BS3-084,Custard Cookie III,Blue,Cookie,_,C,A,2,3
+BS3-085,Custard Cookie,Blue,Cookie,F,C,A,2,2
+BS3-086,Kouign-Amann Cookie,Blue,Cookie,_,U,A,2,1
+BS3-087,Clotted Cream Cookie,Blue,Cookie,_,SR,A,2,4
+BS3-088,Pure Vanilla Cookie,Blue,Cookie,_,UR,A,3,4
+BS3-089,Financier Cookie,Blue,Cookie,_,R,A,2,4
+BS3-090,Sword of Radiant Light,Blue,Item,_,U,A,,
+BS3-091,Soul Jam: Light of Truth,Blue,Item,_,SR,A,,
+BS3-092,Old Vanilla Orchid Locket,Blue,Item,_,U,A,,
+BS3-093,Convocation of Elders,Blue,Trap,_,U,A,,
+BS3-094,Radiant Coronation,Blue,Trap,_,U,A,,
+BS3-095,Glorious Crème Republic,Blue,Stage,_,U,A,,
+BS3-096,Peaceful Vanilla Kingdom,Blue,Stage,_,U,A,,
+BS3-097,Licorice Cookie,Purple,Cookie,_,R,A,1,3
+BS3-098,Kumiho Cookie,Purple,Cookie,_,C,A,3,5
+BS3-099,Dark Choco Cookie,Purple,Cookie,_,R,A,1,3
+BS3-100,Dark Cacao Cookie,Purple,Cookie,_,UR,A,3,5
+BS3-101,Moon Rabbit Cookie,Purple,Cookie,_,C,A,2,2
+BS3-102,Poison Mushroom Cookie,Purple,Cookie,_,U,A,2,4
+BS3-103,Red Velvet Cookie,Purple,Cookie,_,C,A,1,2
+BS3-104,Pomegranate Cookie,Purple,Cookie,_,U,A,1,3
+BS3-105,Affogato Cookie,Purple,Cookie,_,SR,A,1,2
+BS3-106,Alchemist Cookie,Purple,Cookie,F,C,A,2,2
+BS3-107,Prophet Cookie,Purple,Cookie,F,C,A,1,1
+BS3-108,Milk Cookie,Purple,Cookie,_,C,A,2,3
+BS3-109,Werewolf Cookie,Purple,Cookie,_,C,A,2,2
+BS3-110,Purple Yam Cookie,Purple,Cookie,_,C,A,3,5
+BS3-111,Crunchy Chip Cookie,Purple,Cookie,_,SR,A,2,4
+BS3-112,Prune Juice Cookie,Purple,Cookie,_,C,A,2,3
+BS3-113,Caramel Arrow Cookie,Purple,Cookie,_,UR,A,3,5
+BS3-114,Bittersweet Incense,Purple,Item,_,U,A,,
+BS3-115,Soul Jam: Light of Resolution,Purple,Item,_,SR,A,,
+BS3-116,First Watcher's Bow,Purple,Item,_,U,A,,
+BS3-117,Chocolate Altar of the Fallen,Purple,Trap,_,U,A,,
+BS3-118,Founding Resolution,Purple,Trap,_,U,A,,
+BS3-119,Roiling Licorice Sea,Purple,Stage,_,U,A,,
+BS3-120,Resolute Dark Cacao Kingdom,Purple,Stage,_,U,A,,
+BS3-121,Age of Heroes and Kingdoms,Colorless,Stage,_,UR,A,,

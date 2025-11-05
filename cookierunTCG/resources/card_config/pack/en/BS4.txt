@@ -1,0 +1,111 @@
+BS4-001,Lilac Cookie,Red,Cookie,_,C,B,1,1
+BS4-002,Lil Pepper Cookie,Red,Cookie,_,C,B,1,2
+BS4-003,Madeleine Cookie,Red,Cookie,_,R,B,2,4
+BS4-004,Mala Sauce Cookie,Red,Cookie,_,U,B,1,2
+BS4-005,Fire Spirit Cookie,Red,Cookie,_,UR,B,3,5
+BS4-006,Flaming Hot Wing,Red,Cookie,F,C,B,1,1
+BS4-007,Black Raisin Cookie,Red,Cookie,_,C,B,1,3
+BS4-008,Scovillia Headmaster,Red,Cookie,F,C,B,2,2
+BS4-009,Espresso Cookie,Red,Cookie,_,C,B,3,4
+BS4-010,Scovillia Student Fan,Red,Cookie,F,C,B,3,3
+BS4-011,Chili Pepper Cookie,Red,Cookie,_,C,B,2,3
+BS4-012,Capsaicin Cookie,Red,Cookie,_,SR,B,2,4
+BS4-013,Crushed Pepper Cookie,Red,Cookie,_,UR,B,2,2
+BS4-014,Peperoncino Cookie,Red,Cookie,_,R,B,2,4
+BS4-015,Habanero Cookie,Red,Cookie,_,SR,B,1,2
+BS4-016,Rye Cookie,Red,Cookie,_,U,B,2,1
+BS4-017,Hot Scovillia Student,Red,Cookie,_,C,B,3,5
+BS4-018,Magma Pendulum,Red,Item,_,U,B,,
+BS4-019,Ring of Eternal Flame,Red,Item,_,U,B,,
+BS4-020,Essence of Conflagration,Red,Item,_,SR,B,,
+BS4-021,Battle on the Edge,Red,Trap,_,U,B,,
+BS4-022,Scovillia Training Grounds,Red,Stage,_,U,B,,
+BS4-023,Cloud Deity Cookie,Yellow,Cookie,_,C,B,2,3
+BS4-024,Kumiho Cookie,Yellow,Cookie,_,SR,B,1,2
+BS4-025,Gim Cookie,Yellow,Cookie,_,C,B,2,2
+BS4-026,Stormbringer Cookie,Yellow,Cookie,_,UR,B,3,5
+BS4-027,Moon Rabbit Cookie,Yellow,Cookie,_,R,B,2,3
+BS4-028,Vagabond Cookie,Yellow,Cookie,_,C,B,1,2
+BS4-029,Wind Deity Cookie,Yellow,Cookie,_,U,B,3,1
+BS4-030,Peach Blossom Cookie,Yellow,Cookie,_,R,B,2,4
+BS4-031,Rain Deity Cookie,Yellow,Cookie,F,C,B,1,1
+BS4-032,Cream Ferret Cookie,Yellow,Cookie,F,C,B,2,2
+BS4-033,Caramel Choux Cookie,Yellow,Cookie,_,C,B,2,4
+BS4-034,Street Urchin Cookie,Yellow,Cookie,_,C,B,3,5
+BS4-035,Okchun Cookie,Yellow,Cookie,_,U,B,2,3
+BS4-036,GingerBrave,Yellow,Cookie,F,C,B,3,3
+BS4-037,Rebel Cookie,Yellow,Cookie,_,C,B,2,4
+BS4-038,Millennial Tree Cookie,Yellow,Cookie,_,UR,B,3,5
+BS4-039,Churro Cookie,Yellow,Cookie,_,SR,B,2,5
+BS4-040,Essence of Rejuvenation,Yellow,Item,_,SR,B,,
+BS4-041,Millennial Twig,Yellow,Item,_,U,B,,
+BS4-042,Millennial Jade Deer,Yellow,Trap,_,U,B,,
+BS4-043,Heaven-Splitting Lightning,Yellow,Trap,_,U,B,,
+BS4-044,Millennial Temple,Yellow,Stage,_,U,B,,
+BS4-045,Tangerine Tanghulu Cookie,Green,Cookie,_,C,B,2,5
+BS4-046,Princess Cookie,Green,Cookie,_,C,B,1,2
+BS4-047,Blue Lily Cookie,Green,Cookie,_,R,B,2,4
+BS4-048,Mint Choco Cookie,Green,Cookie,_,C,B,1,3
+BS4-049,Wind Archer Cookie,Green,Cookie,_,UR,B,3,5
+BS4-050,Biscuit Giraffe,Green,Cookie,F,C,B,1,1
+BS4-051,Beet Cookie,Green,Cookie,_,C,B,2,3
+BS4-052,Shine Muscat Cookie,Green,Cookie,_,U,B,2,2
+BS4-053,Sugar Swan Cookie,Green,Cookie,_,UR,B,3,5
+BS4-054,Avocado Cookie,Green,Cookie,_,C,B,3,5
+BS4-055,Alchemist Cookie,Green,Cookie,_,U,B,2,3
+BS4-056,Tiger Lily Cookie,Green,Cookie,F,C,B,3,3
+BS4-057,Jelly Froggy,Green,Cookie,F,C,B,1,1
+BS4-058,Lilybell Cookie,Green,Cookie,_,R,B,2,3
+BS4-059,Cookiemals,Green,Cookie,_,SR,B,1,1
+BS4-060,Adventurer Cookie,Green,Cookie,_,C,B,1,3
+BS4-061,Herb Cookie,Green,Cookie,_,SR,B,2,4
+BS4-062,Wind Gems,Green,Item,_,SR,B,,
+BS4-063,Swan Feather Dreamcatcher,Green,Item,_,U,B,,
+BS4-064,Night Raven's Arrow,Green,Trap,_,U,B,,
+BS4-065,Spring Festival,Green,Trap,_,U,B,,
+BS4-066,Dessert Paradise,Green,Stage,_,U,B,,
+BS4-067,Gold Citrine Cookie,Blue,Cookie,F,C,B,3,3
+BS4-068,Aquamarine Cookie,Blue,Cookie,F,C,B,2,2
+BS4-069,Lobster Cookie,Blue,Cookie,_,C,B,2,1
+BS4-070,Lord Oyster,Blue,Cookie,_,C,B,1,2
+BS4-071,Mocha Ray Cookie,Blue,Cookie,_,U,B,2,4
+BS4-072,Mystic Opal Cookie,Blue,Cookie,F,C,B,1,1
+BS4-073,Sea Fairy Cookie,Blue,Cookie,_,UR,B,3,5
+BS4-074,Peppermint Cookie,Blue,Cookie,_,R,B,2,3
+BS4-075,Black Pearl Cookie,Blue,Cookie,_,UR,B,3,5
+BS4-076,Star Coral Cookie,Blue,Cookie,_,C,B,1,3
+BS4-077,Sorbet Shark Cookie,Blue,Cookie,_,SR,B,1,1
+BS4-078,Squid Ink Cookie,Blue,Cookie,_,C,B,2,2
+BS4-079,Abalone Cookie,Blue,Cookie,_,C,B,3,5
+BS4-080,Captain Ice Cookie,Blue,Cookie,_,R,B,2,4
+BS4-081,Crimson Coral Cookie,Blue,Cookie,_,SR,B,2,4
+BS4-082,Frilled Jellyfish Cookie,Blue,Cookie,_,U,B,1,2
+BS4-083,Pirate Cookie,Blue,Cookie,_,C,B,3,4
+BS4-084,Heart of the Deep Sea,Blue,Item,_,U,B,,
+BS4-085,Tide Shards,Blue,Item,_,SR,B,,
+BS4-086,Weeping Cries of the Deep,Blue,Trap,_,U,B,,
+BS4-087,Mermaid's Tale,Blue,Trap,_,U,B,,
+BS4-088,Tower of Frozen Waves,Blue,Stage,_,U,B,,
+BS4-089,Moonlight Cookie,Purple,Cookie,_,UR,B,3,6
+BS4-090,Rockstar Cookie,Purple,Cookie,_,C,B,2,3
+BS4-091,Wizard Cookie,Purple,Cookie,_,U,B,2,3
+BS4-092,Milky Way Cookie,Purple,Cookie,_,SR,B,2,4
+BS4-093,Black Lemonade Cookie,Purple,Cookie,_,C,B,2,2
+BS4-094,Blueberry Pie Cookie,Purple,Cookie,_,R,B,2,4
+BS4-095,Shining Glitter Cookie,Purple,Cookie,_,C,B,2,4
+BS4-096,Sugar Glass Cookie,Purple,Cookie,_,SR,B,1,3
+BS4-097,Cream Puff Cookie,Purple,Cookie,_,C,B,2,5
+BS4-098,Stardust Cookie,Purple,Cookie,_,UR,B,3,5
+BS4-099,Amber Sugar Cookie,Purple,Cookie,_,U,B,1,2
+BS4-100,Space Doughnut,Purple,Cookie,_,R,B,2,4
+BS4-101,Eclair Cookie,Purple,Cookie,F,C,B,2,2
+BS4-102,Wildberry Cookie,Purple,Cookie,F,C,B,1,1
+BS4-103,Cream Unicorn Cookie,Purple,Cookie,_,C,B,1,3
+BS4-104,Parfait Cookie,Purple,Cookie,_,C,B,1,2
+BS4-105,Financier Cookie,Purple,Cookie,F,C,B,3,3
+BS4-106,Butterfly Brooch,Purple,Item,_,U,B,,
+BS4-107,Moonlight Shards,Purple,Item,_,SR,B,,
+BS4-108,Plasma Crystal Ball,Purple,Item,_,U,B,,
+BS4-109,Slumbering Moon's Invitation,Purple,Trap,_,U,B,,
+BS4-110,City of Wizards,Purple,Stage,_,U,B,,
+BS4-111,Cookies of Legend,Colorless,Stage,_,UR,B,,

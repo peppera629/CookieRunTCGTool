@@ -52,6 +52,7 @@ public class Config {
 	public static String CARD_LANGUAGE; // en or zh_TW
 
 	public static float CARD_RATIO = 1.3859F;
+	public static float COST_ICON_SCALE = 0.5F; // Original size is 48px high
 	
 	public static int DW_ROW_SIZE = 8;
 

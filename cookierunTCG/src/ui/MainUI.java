@@ -71,9 +71,11 @@ import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 
-// TODO: Fix filtering sidebar alignment
-// TODO: Card images to change: BS1-008 (SEC instead of R), BS3-024 (Korean version is used)
-// TODO: Fix scale change update behavior
+// MAJOR FEATURE: Add "Collection" mode and include secret/promo cards
+// FEATURE: Add FLIP card types and filtering (Heal/Draw/Special)
+// FEATURE: Add slider to change deck list / card list size
+// FEATURE: Add filtering by HP
+// FEATURE: Find better way to present Lv1~3 Cookie distribution and somehow fit FLIP type distribution
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
 
@@ -144,15 +146,16 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
     private Deck mDeck;
     private ScrollPane scrollPane;
-    private JPanel mCardDetailPane;
-    private JPanel panel;
+    private JPanel mCardDetailPane, mCardTranslationPane;
+    private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup;
     private JTextField mDeckText;
-    private JButton loadBtn, saveBtn, selectBtn;
+    private JButton saveBtn, selectBtn;
     private JButton mClearDeckBtn, button_search, button_clean, button_sort, button_settings;
     private JLabel mCardCountHintTxt, mFlipCountHintTxt, mExtraCountHintTxt, mDeckCookieSummaryHintTxt, mDeckCookieLv1HintTxt, mDeckCookieLv2HintTxt, mDeckCookieLv3HintTxt;
     private JLabel mDeckItemHintTxt, mDeckTrapHintTxt, mDeckStageHintTxt;
     private JLabel mCardCountTxt, mFlipCountTxt, mExtraCountTxt, mDeckCookieSummaryTxt, mDeckCookieLv1Txt, mDeckCookieLv2Txt, mDeckCookieLv3Txt;
-    private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt;
+    private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardTranslationSkill, cardTranslationAttackCost;
+    private JLabel cardTranslationAttack, cardTranslationAttackIcon, cardTranslationAttackThen, cardTranslationFlip, cardTranslationSkillFlavorText, cardTranslationSkillIcon, cardTranslationAttackFlavorText;
     private JButton showDeckBtn;
     private JMenuItem settingsMenuItem, sortSettingsMenuItem;
     public static Font CRnormal, CRbold, CRnormalLarge, CRnormalSmall, CRnormalEXLarge, CRboldLarge, CRboldSmall, CRboldEXLarge;
@@ -179,7 +182,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             switch (Config.LANGUAGE) {
                 case "zh_TW":
                     fontStream = MainUI.class.getClassLoader().getResourceAsStream("fonts/NotoSansTC-SemiBold.ttf");
-                    fontStreamBold = MainUI.class.getClassLoader().getResourceAsStream("fonts/NotoSansTC-Bold.ttf");
+                    fontStreamBold = MainUI.class.getClassLoader().getResourceAsStream("fonts/NotoSansTC-ExtraBold.ttf");
                     break;
                 default:
                     fontStream = MainUI.class.getClassLoader().getResourceAsStream("fonts/CookieRunRegular.ttf");
@@ -507,18 +510,116 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         sidebarPanel.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()));
         sidebarPanel.setLayout(new BorderLayout());
 
-        // ==== 卡片預覽
+        // ==== Card ID and Name
+        JPanel cardInfo = new JPanel();
+        cardInfo.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, 200));
+        cardInfo.setLayout(new BoxLayout(cardInfo, BoxLayout.Y_AXIS));
+        cardId = new JLabel("", JLabel.CENTER);
+        cardId.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cardId.setFont(CRnormal);
+        componentFontMap.put(cardId, "CRnormal"); // Store the font type as a String
+        cardName = new JLabel("", JLabel.CENTER);
+        cardName.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cardName.setFont(CRboldLarge);
+        componentFontMap.put(cardName, "CRboldLarge"); // Store the font type as a String
+        cardInfo.add(cardId);
+        cardInfo.add(cardName);
+
+        // ==== Card Preview
         mCardDetailPane = new JPanel();
         mCardDetailPane.setLayout(new BorderLayout());
         mCardDetailPane.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()-60));
-        sidebarPanel.add(mCardDetailPane, BorderLayout.CENTER);
+        cardInfo.add(mCardDetailPane);
 
-        // ===== 檔案
-        panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
-        panel.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, 60));
-        sidebarPanel.add(panel, BorderLayout.SOUTH);
-        
+        // ==== Card Translations (when available)
+        mCardTranslationPane = new JPanel();
+        mCardTranslationPane.setLayout(new GridBagLayout());
+        gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5); // Add some padding
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Ensure components stretch horizontally
+        gbc.weightx = 1.0; // Allow components to take full width
+
+        cardTranslationFlavorTextGroup = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
+        cardTranslationSkillIcon = new JLabel("");
+        cardTranslationFlavorTextGroup.add(cardTranslationSkillIcon);
+        cardTranslationSkillFlavorText = new JLabel("", JLabel.CENTER);
+        cardTranslationSkillFlavorText.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cardTranslationSkillFlavorText.setFont(CRnormal);
+        componentFontMap.put(cardTranslationSkillFlavorText, "CRnormal"); // Store the font type
+        cardTranslationFlavorTextGroup.add(cardTranslationSkillFlavorText);
+
+        cardTranslationSkill = new JLabel("", JLabel.LEFT);
+        cardTranslationSkill.setAlignmentX(Component.LEFT_ALIGNMENT);
+        cardTranslationSkill.setFont(CRnormal);
+        componentFontMap.put(cardTranslationSkill, "CRnormal"); // Store the font type
+
+        cardTranslationAttackGroup = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
+        cardTranslationAttackCost = new JLabel("", JLabel.LEFT);
+        cardTranslationAttackCost.setAlignmentX(Component.LEFT_ALIGNMENT);
+        cardTranslationAttackCost.setFont(CRnormal);
+        componentFontMap.put(cardTranslationAttackCost, "CRnormal"); // Store the font type
+        cardTranslationAttackFlavorText = new JLabel("", JLabel.LEFT);
+        cardTranslationAttackFlavorText.setAlignmentX(Component.LEFT_ALIGNMENT);
+        cardTranslationAttackFlavorText.setFont(CRnormal);
+        componentFontMap.put(cardTranslationAttackFlavorText, "CRnormal"); // Store the font type
+        cardTranslationAttackGroup.add(cardTranslationAttackCost);
+        cardTranslationAttackGroup.add(cardTranslationAttackFlavorText);
+
+        cardTranslationAttackIcon = new JLabel("");
+        cardTranslationAttackGroup.add(cardTranslationAttackIcon);
+
+        cardTranslationAttack = new JLabel("", JLabel.LEFT);
+        cardTranslationAttack.setAlignmentX(Component.LEFT_ALIGNMENT);
+        cardTranslationAttack.setFont(CRboldLarge);
+        componentFontMap.put(cardTranslationAttack, "CRboldLarge"); // Store the font type
+        cardTranslationAttackGroup.add(cardTranslationAttack);
+
+        cardTranslationAttackThen = new JLabel("", JLabel.LEFT);
+        cardTranslationAttackThen.setAlignmentX(Component.LEFT_ALIGNMENT);
+        cardTranslationAttackThen.setFont(CRnormal);
+        componentFontMap.put(cardTranslationAttackThen, "CRnormal"); // Store the font type
+
+        cardTranslationFlip = new JLabel("", JLabel.LEFT);
+        cardTranslationFlip.setAlignmentX(Component.LEFT_ALIGNMENT);
+        cardTranslationFlip.setFont(CRnormal);
+        componentFontMap.put(cardTranslationFlip, "CRnormal"); // Store the font type
+
+        // Add cardTranslationFlavorTextGroup (centered)
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER; // Center the flavor text group
+        mCardTranslationPane.add(cardTranslationFlavorTextGroup, gbc);
+
+        // Add cardTranslationSkill (left-aligned to the sidebar)
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.WEST; // Left-align the text
+        mCardTranslationPane.add(cardTranslationSkill, gbc);
+
+        // Add cardTranslationAttackGroup (centered)
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.CENTER; // Center the attack group
+        mCardTranslationPane.add(cardTranslationAttackGroup, gbc);
+
+        // Add cardTranslationAttackThen (left-aligned to the sidebar)
+        gbc.gridy = 3;
+        gbc.anchor = GridBagConstraints.WEST; // Left-align the text
+        mCardTranslationPane.add(cardTranslationAttackThen, gbc);
+
+        // Add cardTranslationFlip (left-aligned to the sidebar)
+        gbc.gridy = 4;
+        gbc.anchor = GridBagConstraints.WEST; // Left-align the text
+        mCardTranslationPane.add(cardTranslationFlip, gbc);
+
+        cardInfo.add(mCardTranslationPane);
+
+        sidebarPanel.add(cardInfo, BorderLayout.CENTER);
+
+        // ===== File Operations
+        mFileOpPane = new JPanel();
+        mFileOpPane.setLayout(new GridBagLayout());
+        mFileOpPane.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, 60));
+        sidebarPanel.add(mFileOpPane, BorderLayout.SOUTH);
+
         GridBagConstraints gbc_panel = new GridBagConstraints();
         gbc_panel.fill = GridBagConstraints.BOTH;
         gbc_panel.gridx = 0;
@@ -528,8 +629,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mDeckText.setText(mDefaultState.getDeckDefaultName());
         mDeckText.setFont(CRnormal);
         componentFontMap.put(mDeckText, "CRnormal");
-        panel.add(mDeckText, gbc_panel);
-        
+        mFileOpPane.add(mDeckText, gbc_panel);
+
+        /*
         gbc_panel.gridwidth = 1;
         gbc_panel.weightx = 0.25;
         gbc_panel.gridy = 1;
@@ -546,12 +648,16 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 mDefaultState.saveDefaultState();
             }
         });
+        */
 
-        gbc_panel.gridx = 1;
+        gbc_panel.gridwidth = 1;
+        gbc_panel.gridx = 0;
+        gbc_panel.weightx = 0.25;
+        gbc_panel.gridy = 1;
         saveBtn = new JButton(CardUtil.getTranslation("save"));
         saveBtn.setFont(CRnormal);
         componentFontMap.put(saveBtn, "CRnormal"); // Store the font type as a String
-        panel.add(saveBtn, gbc_panel);
+        mFileOpPane.add(saveBtn, gbc_panel);
         saveBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 CardLoader.saveDeck(mDeckText.getText(), mDeck);
@@ -560,12 +666,12 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
         });
 
-        gbc_panel.gridx = 2;
+        gbc_panel.gridx = 1;
         selectBtn = new JButton(CardUtil.getTranslation("select.file"));
         selectBtn.setFont(CRnormal);
         componentFontMap.put(selectBtn, "CRnormal"); // Store the font type as a String
         selectBtn.setActionCommand("Select File");
-        panel.add(selectBtn, gbc_panel);
+        mFileOpPane.add(selectBtn, gbc_panel);
         selectBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
@@ -586,11 +692,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
         });
         
-        gbc_panel.gridx = 3;
+        gbc_panel.gridx = 2;
         showDeckBtn = new JButton(CardUtil.getTranslation("deck.show"));
         showDeckBtn.setFont(CRnormal);
         componentFontMap.put(showDeckBtn, "CRnormal"); // Store the font type as a String
-        panel.add(showDeckBtn, gbc_panel);
+        mFileOpPane.add(showDeckBtn, gbc_panel);
         showDeckBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		deckWindow.show(mDeck, mDeckText.getText());
@@ -923,7 +1029,32 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         Image image = cardIcon.getImage().getScaledInstance(Config.CARD_PREVIEW_WIDTH, Config.CARD_PREVIEW_HEIGHT, java.awt.Image.SCALE_SMOOTH);
         cardIcon = new ImageIcon(image);
         JLabel cardLabel = new JLabel(cardIcon);
-        
+
+        cardId.setText(card.getId());
+        cardName.setText(card.getName());
+        if (Config.LANGUAGE.equals("zh_TW")) {
+            cardTranslationSkill.setText("<html>" + card.getCardTranslation()[1] + "</html>");
+            if (card.getCardTranslation()[0].isEmpty()) {
+                cardTranslationSkillIcon.setIcon(null);
+                cardTranslationSkillFlavorText.setText("");
+            } else {
+                cardTranslationSkillIcon.setIcon(new ImageIcon("resources/icons/SKILL.png"));
+                cardTranslationSkillFlavorText.setText("<html>" + card.getCardTranslation()[0] + "</html>");
+            }
+            if (card.getCardTranslation()[2].isEmpty()) {
+                cardTranslationAttackCost.setText("");
+                cardTranslationAttackFlavorText.setText("");
+                cardTranslationAttackIcon.setIcon(null);
+                cardTranslationAttack.setText("");
+            } else {
+                cardTranslationAttackFlavorText.setText("<html>" + card.getCardTranslation()[3] + "</html>");
+                cardTranslationAttackCost.setText("<html>&lt;" + card.getCardTranslation()[2] + "&gt;</html>");
+                cardTranslationAttackIcon.setIcon(new ImageIcon("resources/icons/ATK.png"));
+                cardTranslationAttack.setText("<html>  " + card.getCardTranslation()[4] + "</html>");
+            }
+            cardTranslationAttackThen.setText("<html>" + card.getCardTranslation()[5] + "</html>");
+            cardTranslationFlip.setText("<html>" + card.getCardTranslation()[6] + "</html>");
+        }
         mCardDetailPane.add(cardLabel, BorderLayout.CENTER);
         mCardDetailPane.revalidate();
         mCardDetailPane.repaint();
@@ -956,7 +1087,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mDeckItemHintTxt.setText(CardUtil.getTranslation("deck.items"));
         mDeckTrapHintTxt.setText(CardUtil.getTranslation("deck.traps"));
         mDeckStageHintTxt.setText(CardUtil.getTranslation("deck.stages"));
-        loadBtn.setText(CardUtil.getTranslation("load"));
+        //loadBtn.setText(CardUtil.getTranslation("load"));
         saveBtn.setText(CardUtil.getTranslation("save"));
         selectBtn.setText(CardUtil.getTranslation("select.file"));
         showDeckBtn.setText(CardUtil.getTranslation("deck.show"));
@@ -975,12 +1106,22 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_type_trap.setText(CardUtil.getTranslation("filter.trap"));
         cb_type_stage.setText(CardUtil.getTranslation("filter.stage"));
         labelRarity.setText(CardUtil.getTranslation("rarity"));
-         for(int i=0; i< cb_rarity.length; i++) {
-         	cb_rarity[i].setText(CardUtil.CardRarity.fromValue(i).getDisplayName());
-         }
+        for(int i=0; i< cb_rarity.length; i++) {
+            cb_rarity[i].setText(CardUtil.CardRarity.fromValue(i).getDisplayName());
+        }
         labelSeries.setText(CardUtil.getTranslation("series"));
         button_sort.setText(CardUtil.getTranslation("sort.settings"));
         button_settings.setText(CardUtil.getTranslation("settings"));
+
+        cardTranslationSkill.setText(null);
+        cardTranslationAttackCost.setText(null);
+        cardTranslationAttackIcon.setIcon(null);
+        cardTranslationAttack.setText(null);
+        cardTranslationAttackThen.setText(null);
+        cardTranslationFlip.setText(null);
+
+        cardId.setText(null);
+        cardName.setText(null);
 
         updateComponents(frame.getContentPane());
         mCardDetailPane.removeAll();
@@ -991,6 +1132,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 panel.updateImage();
             }
         }
+
+        CardLoader.refreshAllCardNames();
 
         sidebarPanel.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()));
         mCardDetailPane.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()-60));

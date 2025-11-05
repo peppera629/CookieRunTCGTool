@@ -1,0 +1,22 @@
+ST4-001,Candy Diver Cookie,Blue,Cookie,_,U,A,2
+ST4-002,Snow Sugar Cookie,Blue,Cookie,_,C,A,1
+ST4-003,Dr. Wasabi Cookie,Blue,Cookie,F,U,A,3
+ST4-004,Lobster Cookie,Blue,Cookie,_,SR,A,3
+ST4-005,GingerBright,Blue,Cookie,_,C,A,2
+ST4-006,Peppermint Cookie,Blue,Cookie,F,C,A,1
+ST4-007,Sour Belt Cookie,Blue,Cookie,_,C,A,1
+ST4-008,Soda Cookie,Blue,Cookie,_,U,A,2
+ST4-009,Ice Candy Cookie,Blue,Cookie,F,C,A,2
+ST4-010,Squid Ink Cookie,Blue,Cookie,_,C,A,1
+ST4-011,GingerBrave,Blue,Cookie,_,C,A,1
+ST4-012,Werewolf Cookie,Blue,Cookie,_,U,A,3
+ST4-013,Captain Caviar Cookie,Blue,Cookie,_,SR,A,2
+ST4-014,Skating Queen Cookie,Blue,Cookie,F,C,A,1
+ST4-015,Pirate Cookie,Blue,Cookie,_,C,A,2
+ST4-016,Bear Jelly Ice Cream,Blue,Item,_,U,A,_
+ST4-017,Emergency Lifebuoy,Blue,Item,_,U,A,_
+ST4-018,Lucky Pearls,Blue,Item,_,U,A,_
+ST4-019,Sugar Crystal Lamp,Blue,Item,_,U,A,_
+ST4-020,Octo-Ink Spray,Blue,Trap,_,U,A,_
+ST4-021,Fallen Ice Statue,Blue,Trap,_,U,A,_
+ST4-022,Sugar Glass Dome,Blue,Stage,_,U,A,_
