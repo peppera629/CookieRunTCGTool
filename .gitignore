@@ -2,6 +2,7 @@
 .settings
 cookierunTCG/.settings
 cookierunTCG/bin/*
+cookierunTCG/bin/ui
 
 
 cookierunTCG/resources/cards

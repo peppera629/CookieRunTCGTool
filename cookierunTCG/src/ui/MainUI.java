@@ -75,6 +75,7 @@ import javax.swing.JButton;
 // FEATURE: Add FLIP card types and filtering (Heal/Draw/Special)
 // FEATURE: Add slider to change deck list / card list size
 // FEATURE: Add filtering by HP
+// FEATURE: Add display for banned/restricted cards
 // FEATURE: Find better way to present Lv1~3 Cookie distribution and somehow fit FLIP type distribution
 // FIX: Add auto-resize to deck overview
 
