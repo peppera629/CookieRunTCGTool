@@ -76,6 +76,7 @@ import javax.swing.JButton;
 // FEATURE: Add slider to change deck list / card list size
 // FEATURE: Add filtering by HP
 // FEATURE: Find better way to present Lv1~3 Cookie distribution and somehow fit FLIP type distribution
+// FIX: Add auto-resize to deck overview
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
 
