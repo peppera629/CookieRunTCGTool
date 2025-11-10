@@ -11,6 +11,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 import util.Config;
+import util.LanguageChangeListener;
 import util.UIUtil;
 import util.CardUtil;
 import util.CardUtil.CardColor;
@@ -24,7 +25,11 @@ import java.util.concurrent.Executors;
 import javax.swing.ImageIcon;
 public class CardLoader {	
 	public static ExecutorService cardImageLoadExecutor = Executors.newFixedThreadPool(10);
-	
+
+	private static String iconPathR, iconPathY, iconPathG, iconPathB, iconPathP, iconPathW;
+	private static String iconPathActivate, iconPathYourTurn, iconPathOncePerTurn, iconPathOnPlay;
+	private static String iconPathBlocker, iconPathEquip, iconPathExtra, iconPathAwaken, iconPathFlip;
+
 	public static void loadCardImage(Card card) {
 		cardImageLoadExecutor.submit(new cardImageLoadTask(card));
 	}
@@ -77,6 +82,14 @@ public class CardLoader {
 		List<Card> cardList = new ArrayList<Card>();
 		for (int i=0; i<CardUtil.CardPack.size() ;i++) {
         	loadPack(CardUtil.CardPack.get(i), cardList);
+			loadPackTranslations(CardUtil.CardPack.get(i), cardList);
+		}
+	    return cardList;
+	}
+
+	public static List<Card> reloadTranslations() {
+		List<Card> cardList = new ArrayList<Card>();
+		for (int i=0; i<CardUtil.CardPack.size() ;i++) {
 			loadPackTranslations(CardUtil.CardPack.get(i), cardList);
 		}
 	    return cardList;
@@ -140,21 +153,21 @@ public class CardLoader {
 	}
 
 	private static void loadPackTranslations(String packName, List<Card> cardList) {
-		String iconPathR = "<img src=\"file:" + new File("resources/icons/R.png").getAbsolutePath() + "\" width='" + (int) (Config.COST_ICON_SCALE * 100) + "%' height='" + (int) (Config.COST_ICON_SCALE * 100) + "%'>";
-		String iconPathY = "<img src=\"file:" + new File("resources/icons/Y.png").getAbsolutePath() + "\" width='" + (int) (Config.COST_ICON_SCALE * 100) + "%' height='" + (int) (Config.COST_ICON_SCALE * 100) + "%'>";
-		String iconPathG = "<img src=\"file:" + new File("resources/icons/G.png").getAbsolutePath() + "\" width='" + (int) (Config.COST_ICON_SCALE * 100) + "%' height='" + (int) (Config.COST_ICON_SCALE * 100) + "%'>";
-		String iconPathB = "<img src=\"file:" + new File("resources/icons/B.png").getAbsolutePath() + "\" width='" + (int) (Config.COST_ICON_SCALE * 100) + "%' height='" + (int) (Config.COST_ICON_SCALE * 100) + "%'>";
-		String iconPathP = "<img src=\"file:" + new File("resources/icons/P.png").getAbsolutePath() + "\" width='" + (int) (Config.COST_ICON_SCALE * 100) + "%' height='" + (int) (Config.COST_ICON_SCALE * 41008) + "%'>";
-		String iconPathW = "<img src=\"file:" + new File("resources/icons/W.png").getAbsolutePath() + "\" width='" + (int) (Config.COST_ICON_SCALE * 100) + "%' height='" + (int) (Config.COST_ICON_SCALE * 100) + "%'>";
-		String iconPathActivate = "<img src=\"file:" + new File("resources/icons/Activate.png").getAbsolutePath() + "\" width='" + (int) (Config.COST_ICON_SCALE * 100) + "%' height='" + (int) (Config.COST_ICON_SCALE * 100) + "%'>";
-		String iconPathYourTurn = "<img src=\"file:" + new File("resources/icons/YourTurn.png").getAbsolutePath() + "\" width='" + (int) (Config.COST_ICON_SCALE * 100) + "%' height='" + (int) (Config.COST_ICON_SCALE * 100) + "%'>";
-		String iconPathOncePerTurn = "<img src=\"file:" + new File("resources/icons/OncePerTurn.png").getAbsolutePath() + "\" width='" + (int) (Config.COST_ICON_SCALE * 100) + "%' height='" + (int) (Config.COST_ICON_SCALE * 100) + "%'>";
-		String iconPathOnPlay = "<img src=\"file:" + new File("resources/icons/OnPlay.png").getAbsolutePath() + "\" width='" + (int) (Config.COST_ICON_SCALE * 100) + "%' height='" + (int) (Config.COST_ICON_SCALE * 100) + "%'>";
-		String iconPathBlocker = "<img src=\"file:" + new File("resources/icons/Blocker.png").getAbsolutePath() + "\" width='" + (int) (Config.COST_ICON_SCALE * 100) + "%' height='" + (int) (Config.COST_ICON_SCALE * 100) + "%'>";
-		String iconPathEquip = "<img src=\"file:" + new File("resources/icons/Equip.png").getAbsolutePath() + "\" width='" + (int) (Config.COST_ICON_SCALE * 100) + "%' height='" + (int) (Config.COST_ICON_SCALE * 100) + "%'>";
-		String iconPathExtra = "<img src=\"file:" + new File("resources/icons/Extra.png").getAbsolutePath() + "\" width='" + (int) (Config.COST_ICON_SCALE * 100) + "%' height='" + (int) (Config.COST_ICON_SCALE * 100) + "%'>";
-		String iconPathAwaken = "<img src=\"file:" + new File("resources/icons/Awaken.png").getAbsolutePath() + "\" width='" + (int) (Config.COST_ICON_SCALE * 100) + "%' height='" + (int) (Config.COST_ICON_SCALE * 100) + "%'>";
-		String iconPathFlip = "<img src=\"file:" + new File("resources/icons/FLIP.png").getAbsolutePath() + "\" width='" + (int) (Config.COST_ICON_SCALE * 100) + "%' height='" + (int) (Config.COST_ICON_SCALE * 100) + "%'>";
+		iconPathR = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "R.png").getAbsolutePath() + "\">";
+		iconPathY = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Y.png").getAbsolutePath() + "\">";
+		iconPathG = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "G.png").getAbsolutePath() + "\">";
+		iconPathB = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "B.png").getAbsolutePath() + "\">";
+		iconPathP = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "P.png").getAbsolutePath() + "\">";
+		iconPathW = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "W.png").getAbsolutePath() + "\">";
+		iconPathActivate = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Activate.png").getAbsolutePath() + "\">";
+		iconPathYourTurn = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "YourTurn.png").getAbsolutePath() + "\">";
+		iconPathOncePerTurn = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "OncePerTurn.png").getAbsolutePath() + "\">";
+		iconPathOnPlay = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "OnPlay.png").getAbsolutePath() + "\">";
+		iconPathBlocker = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Blocker.png").getAbsolutePath() + "\">";
+		iconPathEquip = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Equip.png").getAbsolutePath() + "\">";
+		iconPathExtra = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Extra.png").getAbsolutePath() + "\">";
+		iconPathAwaken = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Awaken.png").getAbsolutePath() + "\">";
+		iconPathFlip = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "FLIP.png").getAbsolutePath() + "\">";
 
 	    try {
 	        File translationFile = new File("resources/card_config/translations/"+Config.LANGUAGE+"/"+packName+".txt");

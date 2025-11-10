@@ -24,6 +24,8 @@ public class Config {
 			CARD_ICON_SCALE = Double.parseDouble(properties.getProperty("card_icon_scale", "1.5")); // Default to 1.5 if not found
 			Config.CARD_PREVIEW_WIDTH = (int) (400 * Config.CARD_PREVIEW_SCALE);
             Config.CARD_PREVIEW_HEIGHT = (int) (Config.CARD_PREVIEW_WIDTH * Config.CARD_RATIO);
+			Config.CARD_TRANSLATION_ENABLED = Boolean.parseBoolean(properties.getProperty("card_translation", "true")); // Default to true if not found
+			Config.LARGE_TRANSLATION_TEXT = Boolean.parseBoolean(properties.getProperty("large_translation_text", "false")); // Default to false if not found
 			System.out.println(LANGUAGE);
         } catch (IOException e) {
             System.err.println("Could not load config file. Using default settings.");
@@ -39,6 +41,8 @@ public class Config {
         properties.setProperty("card_icon_scale", String.valueOf(CARD_ICON_SCALE));
 		Config.CARD_PREVIEW_WIDTH = (int) (400 * Config.CARD_PREVIEW_SCALE);
         Config.CARD_PREVIEW_HEIGHT = (int) (Config.CARD_PREVIEW_WIDTH * Config.CARD_RATIO);
+		properties.setProperty("card_translation", String.valueOf(CARD_TRANSLATION_ENABLED));
+		properties.setProperty("large_translation_text", String.valueOf(LARGE_TRANSLATION_TEXT));
         try (OutputStream output = new FileOutputStream(CONFIG_FILE)) {
             properties.store(output, "Application Configuration");
         } catch (IOException e) {
@@ -67,6 +71,9 @@ public class Config {
 	
 	public static int DW_OUTPUT_WIDTH = 300;
 	public static int DW_OUTPUT_HEIGHT = (int) (DW_OUTPUT_WIDTH * CARD_RATIO);
+
+	public static boolean CARD_TRANSLATION_ENABLED = true;
+	public static boolean LARGE_TRANSLATION_TEXT = false;
 
 	// ========================= sort config ========================
 	public static final String SORT_NAME_TYPE = "卡片類型"; 

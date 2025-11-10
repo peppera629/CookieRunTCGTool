@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import util.Config;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
+import javax.swing.JToggleButton;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class SettingsWindow implements LanguageChangeListener{
     private JComboBox<String> languageDropdown, cardLanguageDropdown;
     private JButton btnConfirm;
     private JSlider cardPreviewScaleSlider, cardListScaleSlider;
+    private JToggleButton cardTranslationToggle, largeTranslationTextToggle;
 
 	public static void addLanguageChangeListener(LanguageChangeListener listener) {
         listeners.add(listener);
@@ -70,7 +72,7 @@ public class SettingsWindow implements LanguageChangeListener{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(150, 150, 450, 350);
+		frame.setBounds(150, 150, 650, 350);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -157,28 +159,53 @@ public class SettingsWindow implements LanguageChangeListener{
         gbc.gridy = 3;
         frame.getContentPane().add(cardPreviewScaleSlider, gbc);
 
-        /* Can't bother with this for now
-        // ==== Card List Scale Label ====
-        JLabel cardListScaleLabel = new JLabel(CardUtil.getTranslation("settings.cardlistscale"));
-        cardListScaleLabel.setFont(MainUI.CRnormal);
-        MainUI.componentFontMap.put(cardListScaleLabel, "CRnormal");
+        // ==== Card Translation Toggle & Large Translation Text Toggle ====
+        cardTranslationToggle = new JToggleButton();
+        if (Config.CARD_TRANSLATION_ENABLED) {
+            cardTranslationToggle.setText(CardUtil.getTranslation("settings.cardtranslation") + ": " + CardUtil.getTranslation("settings.enabled"));
+        } else {
+            cardTranslationToggle.setText(CardUtil.getTranslation("settings.cardtranslation") + ": " + CardUtil.getTranslation("settings.disabled"));
+        }
+        cardTranslationToggle.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(cardTranslationToggle, "CRnormal");
         gbc.gridx = 0;
         gbc.gridy = 4;
-        frame.getContentPane().add(cardListScaleLabel, gbc);
+        frame.getContentPane().add(cardTranslationToggle, gbc);
 
-        // ==== Card List Scale Slider ====
-        cardListScaleSlider = new JSlider(JSlider.HORIZONTAL, 50, 150, (int) (Config.CARD_ICON_SCALE * 100));
-        cardListScaleSlider.setMajorTickSpacing(50);
-        cardListScaleSlider.setMinorTickSpacing(10);
-        cardListScaleSlider.setSnapToTicks(true);
-        cardListScaleSlider.setPaintTicks(true);
-        cardListScaleSlider.setPaintLabels(true);
-        cardListScaleSlider.setFont(MainUI.CRnormal);
-        MainUI.componentFontMap.put(cardListScaleSlider, "CRnormal");
+        cardTranslationToggle.addActionListener(e -> {
+            boolean isSelected = cardTranslationToggle.isSelected();
+            Config.CARD_TRANSLATION_ENABLED = isSelected;
+            if (isSelected) {
+                cardTranslationToggle.setText(CardUtil.getTranslation("settings.cardtranslation") + ": " + CardUtil.getTranslation("settings.enabled"));
+            } else {
+                cardTranslationToggle.setText(CardUtil.getTranslation("settings.cardtranslation") + ": " + CardUtil.getTranslation("settings.disabled"));
+            }
+        });
+
+        largeTranslationTextToggle = new JToggleButton();
+        if (Config.LARGE_TRANSLATION_TEXT) {
+            largeTranslationTextToggle.setText(CardUtil.getTranslation("settings.largetranslationtext") + ": " + CardUtil.getTranslation("settings.enabled"));
+        } else {
+            largeTranslationTextToggle.setText(CardUtil.getTranslation("settings.largetranslationtext") + ": " + CardUtil.getTranslation("settings.disabled"));
+        }
+        largeTranslationTextToggle.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(largeTranslationTextToggle, "CRnormal");
         gbc.gridx = 1;
         gbc.gridy = 4;
-        frame.getContentPane().add(cardListScaleSlider, gbc);
-        */
+        frame.getContentPane().add(largeTranslationTextToggle, gbc);
+        largeTranslationTextToggle.addActionListener(e -> {
+            boolean isSelected = largeTranslationTextToggle.isSelected();
+            Config.LARGE_TRANSLATION_TEXT = isSelected;
+            if (isSelected) {
+                largeTranslationTextToggle.setText(CardUtil.getTranslation("settings.largetranslationtext") + ": " + CardUtil.getTranslation("settings.enabled"));
+            } else {
+                largeTranslationTextToggle.setText(CardUtil.getTranslation("settings.largetranslationtext") + ": " + CardUtil.getTranslation("settings.disabled"));
+            }
+        });
+
+        cardTranslationToggle.setSelected(Config.CARD_TRANSLATION_ENABLED);
+        largeTranslationTextToggle.setSelected(Config.LARGE_TRANSLATION_TEXT);
+
         // ==== Confirm Button ====
         btnConfirm = new JButton(CardUtil.getTranslation("settings.confirm"));
         btnConfirm.setFont(MainUI.CRnormal);

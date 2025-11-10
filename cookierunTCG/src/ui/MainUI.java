@@ -77,6 +77,7 @@ import javax.swing.JButton;
 // FEATURE: Add filtering by HP
 // FEATURE: Add display for banned/restricted cards
 // FEATURE: Find better way to present Lv1~3 Cookie distribution and somehow fit FLIP type distribution
+// FEATURE: Implement "enlarge translation text" option in settings
 // FIX: Add auto-resize to deck overview
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
@@ -160,10 +161,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JLabel cardTranslationAttack, cardTranslationAttackIcon, cardTranslationAttackThen, cardTranslationFlip, cardTranslationSkillFlavorText, cardTranslationSkillIcon, cardTranslationAttackFlavorText;
     private JButton showDeckBtn;
     private JMenuItem settingsMenuItem, sortSettingsMenuItem;
+    private ImageIcon cardIcon;
     public static Font CRnormal, CRbold, CRnormalLarge, CRnormalSmall, CRnormalEXLarge, CRboldLarge, CRboldSmall, CRboldEXLarge;
     public static InputStream fontStream, fontStreamBold;
     public static Map<java.awt.Component, String> componentFontMap = new HashMap<>();
-    private int columns = 6;
+    private int columns = 6, previewHeight;
 
     private void initialize() {
         Config.loadConfig();
@@ -537,7 +539,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mCardTranslationPane = new JPanel();
         mCardTranslationPane.setLayout(new GridBagLayout());
         gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5); // Add some padding
+        gbc.insets = new Insets(0, 5, 0, 5); // Add some padding
         gbc.fill = GridBagConstraints.HORIZONTAL; // Ensure components stretch horizontally
         gbc.weightx = 1.0; // Allow components to take full width
 
@@ -1025,16 +1027,12 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     @Override
     public void showCard(Card card) {
         mCardDetailPane.removeAll();
-        ImageIcon cardIcon = new ImageIcon("resources/cards/"+Config.CARD_LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
+        cardIcon = new ImageIcon("resources/cards/"+Config.CARD_LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
         System.out.println("resources/cards/"+Config.CARD_LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
-
-        Image image = cardIcon.getImage().getScaledInstance(Config.CARD_PREVIEW_WIDTH, Config.CARD_PREVIEW_HEIGHT, java.awt.Image.SCALE_SMOOTH);
-        cardIcon = new ImageIcon(image);
-        JLabel cardLabel = new JLabel(cardIcon);
 
         cardId.setText(card.getId());
         cardName.setText(card.getName());
-        if (Config.LANGUAGE.equals("zh_TW")) {
+        if (card.getCardTranslation() != null && Config.CARD_TRANSLATION_ENABLED) {
             cardTranslationSkill.setText("<html>" + card.getCardTranslation()[1] + "</html>");
             if (card.getCardTranslation()[0].isEmpty()) {
                 cardTranslationSkillIcon.setIcon(null);
@@ -1051,12 +1049,38 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             } else {
                 cardTranslationAttackFlavorText.setText("<html>" + card.getCardTranslation()[3] + "</html>");
                 cardTranslationAttackCost.setText("<html>&lt;" + card.getCardTranslation()[2] + "&gt;</html>");
-                cardTranslationAttackIcon.setIcon(new ImageIcon("resources/icons/ATK.png"));
+                cardTranslationAttackIcon.setIcon(new ImageIcon("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "ATK.png"));
                 cardTranslationAttack.setText("<html>  " + card.getCardTranslation()[4] + "</html>");
             }
             cardTranslationAttackThen.setText("<html>" + card.getCardTranslation()[5] + "</html>");
             cardTranslationFlip.setText("<html>" + card.getCardTranslation()[6] + "</html>");
+        } else {
+            cardTranslationAttackFlavorText.setText(null);
+            cardTranslationAttackIcon.setIcon(null);
+            cardTranslationSkill.setText(null);
+            cardTranslationAttackCost.setText(null);
+            cardTranslationAttackIcon.setIcon(null);
+            cardTranslationAttack.setText(null);
+            cardTranslationAttackThen.setText(null);
+            cardTranslationFlip.setText(null);
         }
+
+        mCardTranslationPane.revalidate();
+        mCardTranslationPane.repaint();
+        sidebarPanel.revalidate();
+        sidebarPanel.repaint();
+
+        int translationHeight = mCardTranslationPane.getPreferredSize().height;
+        int fileOpHeight = mFileOpPane.getHeight();
+        int sidebarHeight = sidebarPanel.getHeight();
+        int cardInfoHeight = cardId.getPreferredSize().height + cardName.getPreferredSize().height;
+        System.out.println(translationHeight + "/" + fileOpHeight + "/" + sidebarHeight + "/" + cardInfoHeight);
+        previewHeight = Math.min(sidebarHeight - cardInfoHeight - (card.getCardTranslation() == null ? 0 : translationHeight) - fileOpHeight - 50, Config.CARD_PREVIEW_HEIGHT);
+        System.out.println(previewHeight + "/" + Config.CARD_PREVIEW_HEIGHT);
+
+        Image image = cardIcon.getImage().getScaledInstance((int) (previewHeight / Config.CARD_RATIO), previewHeight, java.awt.Image.SCALE_SMOOTH);
+        cardIcon = new ImageIcon(image);
+        JLabel cardLabel = new JLabel(cardIcon);
         mCardDetailPane.add(cardLabel, BorderLayout.CENTER);
         mCardDetailPane.revalidate();
         mCardDetailPane.repaint();
@@ -1115,6 +1139,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         button_sort.setText(CardUtil.getTranslation("sort.settings"));
         button_settings.setText(CardUtil.getTranslation("settings"));
 
+        cardTranslationAttackFlavorText.setText(null);
+        cardTranslationSkillFlavorText.setText(null);
         cardTranslationSkill.setText(null);
         cardTranslationAttackCost.setText(null);
         cardTranslationAttackIcon.setIcon(null);
