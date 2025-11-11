@@ -24,7 +24,7 @@ BS8-023,毀滅將至,Red,Trap,_,U,B,_,_
 BS8-024,烈焰與破壞之地,Red,Stage,_,U,B,_,_
 BS8-025,混沌的蛋糕塔,Red,Stage,_,U,B,_,_
 BS8-026,黃金起司餅乾,Yellow,Cookie,_,R,B,3,5
-BS8-027,黃金起司餅乾,Yellow,Cookie,EX,UR,B,3,2+
+BS8-027,黃金起司餅乾,Yellow,Cookie,EX,UR,B,3,+2
 BS8-028,副手起司球鳥,Yellow,Cookie,_,C,B,2,4
 BS8-029,礦工起司球鳥,Yellow,Cookie,_,C,B,1,2
 BS8-030,拉西守護者庫爾菲猴,Yellow,Cookie,_,C,B,3,5
@@ -101,7 +101,7 @@ BS8-100,照亮雪原的燈火聖誕樹,Blue,Stage,_,U,B,_,_
 BS8-101,黑可可軍師餅乾1,Purple,Cookie,F,C,B,2,2
 BS8-102,黑可可軍師餅乾2,Purple,Cookie,F,C,B,3,3
 BS8-103,黑可可餅乾,Purple,Cookie,_,R,B,2,4
-BS8-104,黑可可餅乾,Purple,Cookie,EX,UR,B,3,2+
+BS8-104,黑可可餅乾,Purple,Cookie,EX,UR,B,3,+2
 BS8-105,草莓餅乾,Purple,Cookie,_,C,B,1,2
 BS8-106,紫丁香餅乾,Purple,Cookie,_,U,B,2,3
 BS8-107,魔法師餅乾,Purple,Cookie,_,C,B,2,4

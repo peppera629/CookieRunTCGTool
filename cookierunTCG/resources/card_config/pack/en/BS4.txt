@@ -24,7 +24,7 @@ BS4-023,Cloud Deity Cookie,Yellow,Cookie,_,C,B,2,3
 BS4-024,Kumiho Cookie,Yellow,Cookie,_,SR,B,1,2
 BS4-025,Gim Cookie,Yellow,Cookie,_,C,B,2,2
 BS4-026,Stormbringer Cookie,Yellow,Cookie,_,UR,B,3,5
-BS4-027,Moon Rabbit Cookie,Yellow,Cookie,_,R,B,2,3
+BS4-027,Moon Rabbit Cookie,Yellow,Cookie,_,R,B,2,4
 BS4-028,Vagabond Cookie,Yellow,Cookie,_,C,B,1,2
 BS4-029,Wind Deity Cookie,Yellow,Cookie,_,U,B,3,1
 BS4-030,Peach Blossom Cookie,Yellow,Cookie,_,R,B,2,4

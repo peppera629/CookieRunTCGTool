@@ -19,6 +19,7 @@ public class CardList {
 	private boolean _search_flip;
 	private boolean _search_extra;
 	private boolean _search_rarity[];
+	private boolean _search_hp[];
 	private List<String> _search_pack_list;
 	
 	public static CardList getInstance() {
@@ -37,6 +38,7 @@ public class CardList {
 		_search_flip = false;
 		_search_extra = false;
 		_search_rarity = new boolean[CardUtil.RARITY_MAX];
+		_search_hp = new boolean[CardUtil.HP_MAX + 1];
 		_search_pack_list = new ArrayList<String>();
 	}
 	
@@ -48,8 +50,9 @@ public class CardList {
 		boolean selectColor = isSelectedColor();
 		boolean selectType = isSelectedType();
 		boolean selectLv = isSelectedLv();
+		boolean selectHP = isSelectedHP();
 		boolean selectRarity = isSelectedRarity();
-		if (!selectColor && !selectType && !_search_flip && !_search_extra && !selectRarity && _search_pack_list.size() == 0) {
+		if (!selectColor && !selectType && !_search_flip && !_search_extra && !selectRarity && !selectHP && _search_pack_list.size() == 0) {
 			return getAllCards();
 		}
 		
@@ -60,19 +63,25 @@ public class CardList {
 		boolean extraCorrect;
 		boolean rarityCorrect;
 		boolean lvCorrect;
+		boolean hpCorrect;
 		boolean packCorrect;
 		dumpPackList();
 		for (Card c: cardList) {
 			colorCorrect = !selectColor || _search_color[c.getColor().getValue()];
 			typeCorrect = !selectType || _search_type[c.getType().getValue()];
+			// Lv. and HP conditions: if Cookie type is not selected, ignore Lv. and HP conditions
 			lvCorrect = !selectLv || !_search_type[CardType.Cookie.getValue()]
 					|| c.getType() != CardType.Cookie || _search_lv[c.getLv()];
+			hpCorrect = !selectHP || !_search_type[CardType.Cookie.getValue()]
+					|| c.getType() != CardType.Cookie || _search_hp[c.getHP()];
+			//System.out.println(!selectHP+" "+!_search_type[CardType.Cookie.getValue()]+" "+(c.getType() != CardType.Cookie)+" "+_search_hp[c.getHP()]);
 			flipCorrect = !_search_flip || c.isFlip();
 			extraCorrect = !_search_extra || c.isExtra();
 			rarityCorrect = !selectRarity || _search_rarity[c.getRarity().getValue()];
 			packCorrect = _search_pack_list.size() == 0 || _search_pack_list.contains(c.getPack());
-//			c.dump();
-			if (colorCorrect && lvCorrect && typeCorrect && flipCorrect && extraCorrect && rarityCorrect && packCorrect) {
+			//System.out.println(_search_hp[0]+" "+_search_hp[1]+" "+_search_hp[2]+" "+_search_hp[3]+" "+_search_hp[4]+" "+_search_hp[5]+" "+_search_hp[6]);
+			//c.dump();
+			if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && extraCorrect && rarityCorrect && packCorrect) {
 				selectList.add(c);
 			}
 		}
@@ -101,6 +110,15 @@ public class CardList {
 	private boolean isSelectedLv() {
 		for (int i=0; i<=CardUtil.LEVEL_MAX; i++) {
 			if(_search_lv[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isSelectedHP() {
+		for (int i=1; i<CardUtil.HP_MAX+1; i++) {
+			if(_search_hp[i]) {
 				return true;
 			}
 		}
@@ -138,6 +156,10 @@ public class CardList {
 
 	public void setRarity(int id, boolean enabled) {
 		_search_rarity[id] = enabled;
+	}
+
+	public void setHP(int hp, boolean enabled) {
+		_search_hp[hp] = enabled;
 	}
 
 	public void setPack(String pack, boolean enabled) {

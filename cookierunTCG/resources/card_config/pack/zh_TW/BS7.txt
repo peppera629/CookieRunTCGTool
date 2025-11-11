@@ -42,7 +42,7 @@ BS7-041,堅定不移的信念之鑰,Yellow,Item,_,U,B,_,_
 BS7-042,英勇勝者的救援,Yellow,Trap,_,U,B,_,_
 BS7-043,鮮奶油騎士宿舍,Yellow,Stage,_,U,B,_,_
 BS7-044,甘草餅乾,Green,Cookie,_,R,B,2,3
-BS7-045,妖狐餅乾,Green,Cookie,_,C,B,1,3
+BS7-045,妖狐餅乾,Green,Cookie,_,C,B,1,2
 BS7-046,綠茶慕斯餅乾,Green,Cookie,_,SR,B,2,4
 BS7-047,月兔餅乾,Green,Cookie,_,C,B,2,4
 BS7-048,毒蘑菇餅乾,Green,Cookie,_,SR,B,1,2
@@ -65,7 +65,7 @@ BS7-064,餅乾大風車,Green,Trap,_,U,B,_,_
 BS7-065,餅乾大站競技場,Green,Stage,_,U,B,_,_
 BS7-066,公主餅乾,Blue,Cookie,_,C,B,1,2
 BS7-067,黑巧克力餅乾,Blue,Cookie,_,SR,B,3,6
-BS7-068,紅棗餅乾,Blue,Cookie,_,C,B,3,6
+BS7-068,紅棗餅乾,Blue,Cookie,_,C,B,3,5
 BS7-069,大蔥餅乾,Blue,Cookie,_,U,B,1,2
 BS7-070,覆盆莓慕斯餅乾,Blue,Cookie,_,R,B,2,4
 BS7-071,大理石漿果餅乾,Blue,Cookie,_,C,B,3,6

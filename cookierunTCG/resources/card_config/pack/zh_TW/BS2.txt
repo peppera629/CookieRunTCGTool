@@ -19,11 +19,11 @@ BS2-018,蜜蠟餅乾,Green,Cookie,_,U,A,1,3
 BS2-019,起司蛋糕餅乾,Green,Cookie,F,C,A,2,2
 BS2-020,熱呼呼的紅蘿蔔果凍湯,Green,Item,_,U,A,,
 BS2-021,蘿蔔田稻草人,Green,Trap,_,U,A,,
-BS2-022,甘草餅乾,Blue,Item,_,R,A,3,4
-BS2-023,DJ餅乾,Blue,Item,_,C,A,3,4
-BS2-024,草莓餅乾,Blue,Trap,_,C,A,3,1
-BS2-025,芒果餅乾,Blue,Trap,_,C,A,1,3
-BS2-026,摩卡魟魚餅乾,Blue,Stage,_,R,A,1,3
+BS2-022,甘草餅乾,Blue,Cookie,_,R,A,3,4
+BS2-023,DJ餅乾,Blue,Cookie,_,C,A,3,4
+BS2-024,草莓餅乾,Blue,Cookie,_,C,A,3,1
+BS2-025,芒果餅乾,Blue,Cookie,_,C,A,1,3
+BS2-026,摩卡魟魚餅乾,Blue,Cookie,_,R,A,1,3
 BS2-027,棉花餅乾,Blue,Cookie,_,R,A,2,4
 BS2-028,勿忘草恐龍餅乾,Blue,Cookie,_,SR,A,2,4
 BS2-029,海妖精餅乾,Blue,Cookie,_,UR,A,3,5

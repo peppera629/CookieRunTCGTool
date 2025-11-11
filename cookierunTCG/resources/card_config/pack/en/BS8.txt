@@ -24,7 +24,7 @@ BS8-023,Shadow of the Destroyer,Red,Trap,_,U,B,_,_
 BS8-024,Land of Fire & Ruin,Red,Stage,_,U,B,_,_
 BS8-025,Tower of Sweet Chaos,Red,Stage,_,U,B,_,_
 BS8-026,Golden Cheese Cookie,Yellow,Cookie,_,R,B,3,5
-BS8-027,Golden Cheese Cookie,Yellow,Cookie,EX,UR,B,3,2+
+BS8-027,Golden Cheese Cookie,Yellow,Cookie,EX,UR,B,3,+2
 BS8-028,Manager Cheesebird,Yellow,Cookie,_,C,B,2,4
 BS8-029,Miner Cheesebird,Yellow,Cookie,_,C,B,1,2
 BS8-030,Lassi Guard Kulfi,Yellow,Cookie,_,C,B,3,5
@@ -101,7 +101,7 @@ BS8-100,Snowfall Lantern Tree,Blue,Stage,_,U,B,_,_
 BS8-101,Dark Cacao Adviser 1,Purple,Cookie,F,C,B,2,2
 BS8-102,Dark Cacao Adviser 2,Purple,Cookie,F,C,B,3,3
 BS8-103,Dark Cacao Cookie,Purple,Cookie,_,R,B,2,4
-BS8-104,Dark Cacao Cookie,Purple,Cookie,EX,UR,B,3,2+
+BS8-104,Dark Cacao Cookie,Purple,Cookie,EX,UR,B,3,+2
 BS8-105,Strawberry Cookie,Purple,Cookie,_,C,B,1,2
 BS8-106,Lilac Cookie,Purple,Cookie,_,U,B,2,3
 BS8-107,Wizard Cookie,Purple,Cookie,_,C,B,2,4

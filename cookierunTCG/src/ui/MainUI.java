@@ -74,10 +74,9 @@ import javax.swing.JButton;
 // MAJOR FEATURE: Add "Collection" mode and include secret/promo cards
 // FEATURE: Add FLIP card types and filtering (Heal/Draw/Special)
 // FEATURE: Add slider to change deck list / card list size
-// FEATURE: Add filtering by HP
-// FEATURE: Add display for banned/restricted cards
 // FEATURE: Find better way to present Lv1~3 Cookie distribution and somehow fit FLIP type distribution
 // FEATURE: Implement "enlarge translation text" option in settings
+// FIX: Fix bug where translations will never appear for the entire runtime if the starting language is not zh_TW
 // FIX: Add auto-resize to deck overview
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
@@ -143,9 +142,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JCheckBox[] cb_level;
     private JCheckBox[] cb_pack;
     private JCheckBox[] cb_rarity;
+    private JCheckBox[] cb_HP;
     private JCheckBox cb_type_cookie, cb_type_item, cb_type_trap, cb_type_stage;
     private JCheckBox cb_flip, cb_extra;
-    private JLabel labelColor, labelType, labelSeries, labelRarity;
+    private JLabel labelColor, labelType, labelSeries, labelRarity, labelHP;
 
     private Deck mDeck;
     private ScrollPane scrollPane;
@@ -772,6 +772,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             	for (JCheckBox cb : cb_level) {
             		cb.setEnabled(cb_type_cookie.isSelected());
             	}
+                for (JCheckBox cb : cb_HP) {
+                    cb.setEnabled(cb_type_cookie.isSelected());
+                }
             }
         });
         
@@ -909,6 +912,38 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 }
             });
         }
+
+        // ========================= HP ==================================
+        labelHP = new JLabel("HP", JLabel.LEFT);
+        labelHP.setFont(CRboldEXLarge);
+        componentFontMap.put(labelHP, "CRboldEXLarge"); // Store the font type as a String
+        JPanel HPLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the label
+        HPLabelPanel.add(labelHP);
+        mSearchPane.add(HPLabelPanel);
+
+        JPanel HPOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
+        JPanel HPCheckboxGroup = new JPanel();
+        HPCheckboxGroup.setLayout(new GridLayout(0, 6));
+        HPOuterPanel.add(HPCheckboxGroup);
+        mSearchPane.add(HPOuterPanel);
+
+        cb_HP = new JCheckBox[CardUtil.HP_MAX];
+        for(int i=0; i<CardUtil.HP_MAX; i++) {
+            final int id = i;
+            final int hp = i+1;
+        	cb_HP[i] = new JCheckBox(Integer.toString(hp));
+        	cb_HP[i].setSelected(mDefaultState.getDefaultHPFlag(hp));
+            cb_HP[i].setFont(CRnormal);
+            componentFontMap.put(cb_HP[i], "CRnormal"); // Store the font type as a String
+            HPCheckboxGroup.add(cb_HP[i]);
+            
+            cb_HP[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                	mDefaultState.setDefaultHPFlag(hp, cb_HP[id].isSelected());
+                }
+            });
+            cb_HP[i].setEnabled(cb_type_cookie.isSelected());
+        }
     }
 
     private void cleanCheckBox() {
@@ -927,6 +962,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     		cb.setSelected(false);
     	}
 
+        for (JCheckBox cb : cb_HP) {
+        	cb.setSelected(false);
+        }
+
     	cb_flip.setSelected(false);
 
         for (JCheckBox cb : cb_pack) {
@@ -935,6 +974,13 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         for (JCheckBox cb : cb_rarity) {
         	cb.setSelected(false);
+        }
+
+        for (JCheckBox cb : cb_level) {
+            cb.setEnabled(cb_type_cookie.isSelected());
+        }
+        for (JCheckBox cb : cb_HP) {
+            cb.setEnabled(cb_type_cookie.isSelected());
         }
 
     }
@@ -952,6 +998,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     	for (int i=0; i< cb_level.length; i++) {
             list.setLv(i+1, cb_level[i].isSelected());
     	}
+        for (int i=0; i< cb_HP.length; i++) {
+            list.setHP(i+1, cb_HP[i].isSelected());
+        }
     	for (int i=0; i< CardUtil.CardPack.size(); i++) {
             list.setPack(CardUtil.CardPack.get(i), cb_pack[i].isSelected());
     	}
@@ -974,7 +1023,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mDeckPane.revalidate();
         mDeckPane.repaint();
         mCardCountTxt.setText(mDeck.getCardCount()-mDeck.getExtraCount()+"/60");
-        if (mDeck.getCardCount()-mDeck.getExtraCount() > 60) {
+        if ((mDeck.getCardCount()-mDeck.getExtraCount() > 60) || (!mDeck.getLegality())) {
         	mCardCountTxt.setForeground(Color.RED);
         } else {
         	mCardCountTxt.setForeground(Color.BLACK);
@@ -1028,9 +1077,20 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     public void showCard(Card card) {
         mCardDetailPane.removeAll();
         cardIcon = new ImageIcon("resources/cards/"+Config.CARD_LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
-        System.out.println("resources/cards/"+Config.CARD_LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
+        //System.out.println("resources/cards/"+Config.CARD_LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
+        System.out.println(card.getHP());
 
-        cardId.setText(card.getId());
+        if (card.getMaxCount() == 1) {
+            cardId.setText(card.getId() + " [" + CardUtil.getTranslation("restricted") + "]");
+            cardId.setForeground(new Color(160, 128, 0));
+        } else if (card.getMaxCount() == 0) {
+            cardId.setText(card.getId() + " [" + CardUtil.getTranslation("banned") + "]");
+            cardId.setForeground(new Color(160, 0, 0));
+        } else {
+            cardId.setText(card.getId());
+            cardId.setForeground(Color.BLACK);
+        }
+
         cardName.setText(card.getName());
         if (card.getCardTranslation() != null && Config.CARD_TRANSLATION_ENABLED) {
             cardTranslationSkill.setText("<html>" + card.getCardTranslation()[1] + "</html>");
@@ -1038,7 +1098,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 cardTranslationSkillIcon.setIcon(null);
                 cardTranslationSkillFlavorText.setText("");
             } else {
-                cardTranslationSkillIcon.setIcon(new ImageIcon("resources/icons/SKILL.png"));
+                cardTranslationSkillIcon.setIcon(new ImageIcon("resources/icons/16px/SKILL.png"));
                 cardTranslationSkillFlavorText.setText("<html>" + card.getCardTranslation()[0] + "</html>");
             }
             if (card.getCardTranslation()[2].isEmpty()) {
@@ -1074,9 +1134,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         int fileOpHeight = mFileOpPane.getHeight();
         int sidebarHeight = sidebarPanel.getHeight();
         int cardInfoHeight = cardId.getPreferredSize().height + cardName.getPreferredSize().height;
-        System.out.println(translationHeight + "/" + fileOpHeight + "/" + sidebarHeight + "/" + cardInfoHeight);
+        //System.out.println(translationHeight + "/" + fileOpHeight + "/" + sidebarHeight + "/" + cardInfoHeight);
         previewHeight = Math.min(sidebarHeight - cardInfoHeight - (card.getCardTranslation() == null ? 0 : translationHeight) - fileOpHeight - 50, Config.CARD_PREVIEW_HEIGHT);
-        System.out.println(previewHeight + "/" + Config.CARD_PREVIEW_HEIGHT);
+        //System.out.println(previewHeight + "/" + Config.CARD_PREVIEW_HEIGHT);
 
         Image image = cardIcon.getImage().getScaledInstance((int) (previewHeight / Config.CARD_RATIO), previewHeight, java.awt.Image.SCALE_SMOOTH);
         cardIcon = new ImageIcon(image);

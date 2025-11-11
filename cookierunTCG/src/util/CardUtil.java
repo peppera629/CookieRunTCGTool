@@ -13,6 +13,7 @@ public class CardUtil {
 	public static int LEVEL_MAX = 3;
 	public static int COLOR_MAX = 6;
 	public static int RARITY_MAX = 6;
+	public static int HP_MAX = 6;
 	
 	// For language translation
 	private static ResourceBundle messages;

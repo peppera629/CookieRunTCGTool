@@ -26,6 +26,7 @@ public class DefaultState {
 	public boolean[] color;
 	public boolean[] type;
 	public boolean[] lv;
+	public boolean[] hp;
 	public boolean[] rarity;
 	public boolean flip, extra;
 	private static DefaultState instance;
@@ -46,6 +47,7 @@ public class DefaultState {
 		type = new boolean[CardUtil.TYPE_MAX];
 		rarity = new boolean[CardUtil.RARITY_MAX];
 		lv = new boolean[CardUtil.LEVEL_MAX + 1];
+		hp = new boolean[CardUtil.HP_MAX + 1];
 		_search_pack_list = new ArrayList<String>();
 	}
 
@@ -134,6 +136,19 @@ public class DefaultState {
 				}
 			}
 
+			// HP
+			if ((data = input.readLine()) != null) {
+				System.out.println(data);
+				String[] flags = data.split(",");
+				for (int i = 0; i < flags.length; i++) {
+					if (hp.length > i + 1) {
+						if (flags[i].equals("v")) {
+							hp[i + 1] = true;
+						}
+					}
+				}
+			}
+
 			// sort
 			if ((data = input.readLine()) != null) {
 				String[] flags = data.split(",");
@@ -214,6 +229,19 @@ public class DefaultState {
 				}
 			}
 			fw.write("\n");
+			
+			// HP
+			for (int i = 1; i < hp.length; i++) {
+				if (i > 1) {
+					fw.write(",");
+				}
+				if (hp[i]) {
+					fw.write("v");
+				} else {
+					fw.write("_");
+				}
+			}
+			fw.write("\n");
 
 			// pack
 			int count = 0;
@@ -276,6 +304,10 @@ public class DefaultState {
 		return rarity[i];
 	}
 
+	public boolean getDefaultHPFlag(int i) {
+		return hp[i];
+	}
+
 	public boolean getDefaultLvFlag(int i) {
 		return lv[i];
 	}
@@ -302,6 +334,10 @@ public class DefaultState {
 
 	public void setDefaultRarityFlag(int i, boolean selected) {
 		rarity[i] = selected;
+	}
+
+	public void setDefaultHPFlag(int i, boolean selected) {
+		hp[i] = selected;
 	}
 
 	public void setDefaultFlipFlag(boolean selected) {

@@ -89,7 +89,7 @@ BS5-088,Lotus Palace,Blue,Stage,_,U,B,,
 BS5-089,Muscle Cookie,Purple,Cookie,_,R,B,1,2
 BS5-090,Strawberry Stick Cookie,Purple,Cookie,F,C,B,2,2
 BS5-091,Lilac Cookie,Purple,Cookie,_,SR,B,2,4
-BS5-092,Rambutan Cookie,Purple,Cookie,_,UR,B,2,2
+BS5-092,Rambutan Cookie,Purple,Cookie,_,UR,B,2,4
 BS5-093,Lychee Dragon Cookie,Purple,Cookie,_,UR,B,3,5
 BS5-094,Mangosteen Cookie,Purple,Cookie,_,C,B,2,2
 BS5-095,Mint Wafer Cookie,Purple,Cookie,F,C,B,3,3

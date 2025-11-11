@@ -24,7 +24,7 @@ BS4-023,雲神餅乾,Yellow,Cookie,_,C,B,2,3
 BS4-024,九尾狐餅乾,Yellow,Cookie,_,SR,B,1,2
 BS4-025,海藻餅乾,Yellow,Cookie,_,C,B,2,2
 BS4-026,雷神武將餅乾,Yellow,Cookie,_,UR,B,3,5
-BS4-027,月兔餅乾,Yellow,Cookie,_,R,B,2,3
+BS4-027,月兔餅乾,Yellow,Cookie,_,R,B,2,4
 BS4-028,梅雀果餅乾,Yellow,Cookie,_,C,B,1,2
 BS4-029,風神餅乾,Yellow,Cookie,_,U,B,3,1
 BS4-030,桃花餅乾,Yellow,Cookie,_,R,B,2,4

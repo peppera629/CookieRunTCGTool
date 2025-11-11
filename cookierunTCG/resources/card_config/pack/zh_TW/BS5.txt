@@ -89,7 +89,7 @@ BS5-088,百蓮城,Blue,Stage,_,U,B,,
 BS5-089,肌肉餅乾,Purple,Cookie,_,R,B,1,2
 BS5-090,草莓巧克力棒餅乾,Purple,Cookie,F,C,B,2,2
 BS5-091,紫丁香餅乾,Purple,Cookie,_,SR,B,2,4
-BS5-092,紅毛丹餅乾,Purple,Cookie,_,UR,B,2,2
+BS5-092,紅毛丹餅乾,Purple,Cookie,_,UR,B,2,4
 BS5-093,荔枝龍族餅乾,Purple,Cookie,_,UR,B,3,5
 BS5-094,山竹餅乾,Purple,Cookie,_,C,B,2,2
 BS5-095,薄荷夾心酥餅乾,Purple,Cookie,F,C,B,3,3

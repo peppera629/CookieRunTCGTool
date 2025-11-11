@@ -7,8 +7,8 @@ BS1-006,麻辣餅乾,Red,Cookie,_,U,A,2,2
 BS1-007,哈密瓜麵包餅乾,Red,Cookie,_,C,A,1,4
 BS1-008,石榴餅乾,Red,Cookie,_,R,A,2,5
 BS1-009,阿芙佳朵餅乾,Red,Cookie,_,R,A,1,3
-BS1-010,惡魔餅乾,Red,Cookie,_,C,A,2,3
-BS1-011,山櫻桃餅乾,Red,Cookie,_,C,A,1,3
+BS1-010,惡魔餅乾,Red,Cookie,_,C,A,2,2
+BS1-011,山櫻桃餅乾,Red,Cookie,_,C,A,1,2
 BS1-012,野莓餅乾,Red,Cookie,_,SR,A,3,6
 BS1-013,勇敢餅乾,Red,Cookie,_,C,A,1,1
 BS1-014,勇敢餅乾,Red,Cookie,_,UR,A,1,2

@@ -166,7 +166,7 @@ public class Deck {
 			}
 			return count;
     	}
-    }    
+    }
     
     public int[] getCookieSummary() {
     	int L0Count = getTargetCardCount(CookieList[0]);
@@ -181,4 +181,13 @@ public class Deck {
     	int StageCount = getTargetCardCount(StageList);
     	return new int[] {ItemCount, TrapCount, StageCount};
     }
+
+	public boolean getLegality() {
+		for (Card card : cardList) {
+			if (card.getCount() > card.getMaxCount()) {
+				return false;
+			} 
+		}
+		return true;
+	}
 }

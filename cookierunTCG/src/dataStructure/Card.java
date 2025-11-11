@@ -27,6 +27,8 @@ public class Card {
 	private CardRarity _rarity;
 	private String _mark;
 	private int _lv;
+	private int _hp;
+	private int _maxCount;
 	private String _cardLanguage = "";
 	private ImageIcon _cardIcon;
 	private String _cardImagePath;
@@ -42,7 +44,7 @@ public class Card {
 	private String _translationFlip = "";
 	
 	public Card(String pack, String id, String name, CardColor color, CardType type,
-			boolean flip, boolean extra, CardRarity rarity, String mark, int lv) {
+			boolean flip, boolean extra, CardRarity rarity, String mark, int lv, int hp) {
 		_PanelList = new ArrayList<ClickableCardPanel>();
 		_serial_number = SERIAL_NUMBER++;
 		_pack = pack;
@@ -55,6 +57,8 @@ public class Card {
 		_rarity = rarity;
 		_mark = mark;
 		_lv = lv;
+		_hp = hp;
+		_maxCount = 4; // 4: Normal, 1: Restricted, 0: Banned
 		_cardCount = 0;
 		int lv_weight = CardUtil.LEVEL_MAX  - _lv + 1;
 		_position = _serial_number
@@ -89,9 +93,9 @@ public class Card {
 
 	public String dump() {
         System.out.println(_pack + ", " + _id + ", " + _name + ", " + _color + ", " + _type + ", " 
-	+ _isFlip + ", " + _rarity + ", " + _mark +", lv = "+_lv+"      : "+_position);
+	+ _isFlip + ", " + _rarity + ", " + _mark +", lv = "+_lv+", HP = "+_hp+"      : "+_position);
 		return _pack + ", " + _id + ", " + _name + ", " + _color + ", " + _type + ", " 
-	+ _isFlip + ", " + _rarity + ", " + _mark +", lv = "+_lv+"      : "+_position;
+	+ _isFlip + ", " + _rarity + ", " + _mark +", lv = "+_lv+", HP = "+_hp+"      : "+_position;
 	}
 
 	public int compareTo(Card card) {
@@ -157,6 +161,10 @@ public class Card {
 	public int getLv() {
 		return _lv;
 	}
+
+	public int getHP() {
+		return _hp;
+	}
 	
 	public boolean isFlip() {
 		return _isFlip;
@@ -187,9 +195,17 @@ public class Card {
 	public int getCount() {
 		return _cardCount;
 	}
+
+	public int getMaxCount() {
+		return _maxCount;
+	}
 	
 	public void setCount(int count) {
 		_cardCount = count;
+	}
+
+	public void setMaxCount(int count) {
+		_maxCount = count;
 	}
 
 	public void setName(String name) {

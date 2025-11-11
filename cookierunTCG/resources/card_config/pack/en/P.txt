@@ -1,38 +1,38 @@
-P-001,GingerBright,Red,Cookie,_,P,A,1,
-P-002,GingerBright,Yellow,Cookie,_,P,A,1,
-P-003,GingerBright,Green,Cookie,_,P,A,1,
-P-004,GingerBrave & Mumu,Red,Cookie,_,P,A,2,
-P-005,Strawberry Cookie,Yellow,Cookie,_,P,A,3,
-P-006,Zombie Cookie,Green,Cookie,_,P,A,1,
-P-007,Chestnut Cookie,Red,Cookie,_,P,A,2,
+P-001,GingerBright,Red,Cookie,_,P,A,1,3
+P-002,GingerBright,Yellow,Cookie,_,P,A,1,3
+P-003,GingerBright,Green,Cookie,_,P,A,1,3
+P-004,GingerBrave & Mumu,Red,Cookie,_,P,A,2,3
+P-005,Strawberry Cookie,Yellow,Cookie,_,P,A,3,4
+P-006,Zombie Cookie,Green,Cookie,_,P,A,1,2
+P-007,Chestnut Cookie,Red,Cookie,_,P,A,2,1
 P-008,Macaron Hammer,Red,Item,_,P,A,_,
-P-009,Stardust Cookie,Yellow,Cookie,_,P,A,3,
-P-010,Adventurer Cookie,Yellow,Cookie,_,P,A,2,
-P-011,Strawberry Cookie,Green,Cookie,_,P,A,2,
+P-009,Stardust Cookie,Yellow,Cookie,_,P,A,3,6
+P-010,Adventurer Cookie,Yellow,Cookie,_,P,A,2,4
+P-011,Strawberry Cookie,Green,Cookie,_,P,A,2,2
 P-012,Mischievous Ladybug,Green,Item,_,P,A,_,
-P-013,GingerBright,Blue,Cookie,_,P,A,1,
-P-014,GingerBright,Purple,Cookie,_,P,A,1,
-P-015,Muscle Cookie,Red,Cookie,_,P,A,2,
-P-016,Gumball Cookie,Yellow,Cookie,_,P,A,2,
-P-017,Purple Yam Cookie,Green,Cookie,_,P,A,1,
-P-018,Mustard Cookie,Blue,Cookie,_,P,A,3,
-P-019,Hero Cookie,Purple,Cookie,_,P,A,2,
-P-020,Lemon Thyme Cookie,Green,Cookie,F,P,A,3,
-P-021,Durian Cookie,Purple,Cookie,F,P,A,3,
+P-013,GingerBright,Blue,Cookie,_,P,A,1,3
+P-014,GingerBright,Purple,Cookie,_,P,A,1,3
+P-015,Muscle Cookie,Red,Cookie,_,P,A,2,5
+P-016,Gumball Cookie,Yellow,Cookie,_,P,A,2,2
+P-017,Purple Yam Cookie,Green,Cookie,_,P,A,1,3
+P-018,Mustard Cookie,Blue,Cookie,_,P,A,3,4
+P-019,Hero Cookie,Purple,Cookie,_,P,A,2,3
+P-020,Lemon Thyme Cookie,Green,Cookie,F,P,A,3,3
+P-021,Durian Cookie,Purple,Cookie,F,P,A,3,3
 P-022,Milky Way Cookie,Green,Cookie,F,P,A,3,3
 P-023,GingerBrave,Yellow,Cookie,_,P,A,1,1
-P-024,Caramel Choux Cookie,Red,Cookie,F,P,A,2,
-P-025,Marzipan Cookie 2,Yellow,Cookie,F,P,A,3,
-P-026,Marzipan Cookie 3,Yellow,Cookie,F,P,A,3,
-P-027,Marzipan Cookie 4,Yellow,Cookie,F,P,A,3,
+P-024,Caramel Choux Cookie,Red,Cookie,F,P,A,2,2
+P-025,Marzipan Cookie 2,Yellow,Cookie,F,P,A,3,3
+P-026,Marzipan Cookie 3,Yellow,Cookie,F,P,A,3,3
+P-027,Marzipan Cookie 4,Yellow,Cookie,F,P,A,3,3
 P-028,Golden Cheese Warehouse,Yellow,Stage,_,P,A,_,
 P-029,Ritual of Life,Green,Trap,_,P,A,_,
-P-030,Sherbet Cookie,Blue,Cookie,_,P,A,3,
+P-030,Sherbet Cookie,Blue,Cookie,_,P,A,3,5
 P-031,The Heir's Betrayal,Purple,Trap,_,P,A,_,
 P-032,Hall of Ancient Heroes,Colorless,Stage,_,P,A,_,
-P-033,GingerBrave,Red,Cookie,_,P,A,3,
-P-034,Twisted Donut Cookie,Yellow,Cookie,F,P,A,1,
-P-035,Cream Soda Cookie,Blue,Cookie,_,P,A,2,
+P-033,GingerBrave,Red,Cookie,_,P,A,3,4
+P-034,Twisted Donut Cookie,Yellow,Cookie,F,P,A,1,1
+P-035,Cream Soda Cookie,Blue,Cookie,_,P,A,2,3
 P-036,GingerBrave,Red,Cookie,_,P,A,3,5
 P-037,Strawberry Crepe Cookie,Yellow,Cookie,_,P,A,2,2
 P-038,Espresso Cookie,Green,Cookie,_,P,A,1,2
@@ -84,3 +84,6 @@ P-083,Dumpling Cake Hound,Green,Cookie,_,P,B,1,1
 P-084,Magic Lettering Pens,Green,Item,_,P,B,,
 P-085,Tropical Pop Cake Hound,Blue,Cookie,F,P,B,1,1
 P-086,Black & White Cake Hound,Purple,Cookie,_,P,B,1,1
+P-089,GingerBrave,Green,Cookie,_,P,B,2,5
+P-091,DJ Miya,Blue,Cookie,_,P,B,2,5
+P-092,DJ Miya,Blue,Cookie,F,P,B,2,3

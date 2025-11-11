@@ -57,8 +57,6 @@ public class CardLoader {
 		                new InputStreamReader(new FileInputStream(file), "utf-8")); 
 		        String data;
 		        while((data= input.readLine())!=null) {
-		            System.out.println(data);
-	
 		            if (!data.equals("") && !data.startsWith("//")) {
 		            	CardUtil.CardPack.add(data);
 		            }
@@ -83,6 +81,7 @@ public class CardLoader {
 		for (int i=0; i<CardUtil.CardPack.size() ;i++) {
         	loadPack(CardUtil.CardPack.get(i), cardList);
 			loadPackTranslations(CardUtil.CardPack.get(i), cardList);
+			loadRestrictedCards(CardUtil.CardPack.get(i), cardList);
 		}
 	    return cardList;
 	}
@@ -117,11 +116,17 @@ public class CardLoader {
 	            	}
 	            	
 	            	int level = 0;
+					int hp = 0;
 	            	CardType type;
 	            	if (cardData[3].equals("Cookie")) {
 	            		type = CardType.Cookie;
 	            		if (cardData.length >7) {
 	            			level = Integer.parseInt(cardData[7]);
+							if (cardData.length >8) {
+								// Awaken HP bonus is kept for later use
+								cardData[8] = cardData[8].replace("+", "");
+								hp = Integer.parseInt(cardData[8]);
+							}
 	            		}
 	            	} else if (cardData[3].equals("Item")) {
 	            		type = CardType.Item;
@@ -133,9 +138,8 @@ public class CardLoader {
 	            		type = CardType.Cookie;
 	            	}
 	            	
-					System.out.println(cardData[0]);
 	            	Card c = new Card(packName, cardData[0], cardData[1], color, type, (cardData[4].equals("F") || cardData[4].equals("H") || cardData[4].equals("D")) || cardData[4].equals("S"),
-					cardData[4].equals("EX"), CardUtil.CardRarity.fromString(cardData[5]), cardData[6], level);
+					cardData[4].equals("EX"), CardUtil.CardRarity.fromString(cardData[5]), cardData[6], level, hp);
 
 	            	cardList.add(c);
 	            }
@@ -172,7 +176,6 @@ public class CardLoader {
 	    try {
 	        File translationFile = new File("resources/card_config/translations/"+Config.LANGUAGE+"/"+packName+".txt");
 			if (translationFile.exists()) {
-				FileInputStream reader = new FileInputStream(translationFile);
 		        BufferedReader input = new BufferedReader(
 		                new InputStreamReader(new FileInputStream(translationFile), StandardCharsets.UTF_8));
 				String data;
@@ -205,14 +208,41 @@ public class CardLoader {
 						for (Card c : cardList) {
 							if (c.getPack().equals(packName) && c.getId().equals(cardData[0])) {
 								// Set card translations
-								System.out.println(cardData[1] + ", " + cardData[2] + ", " + cardData[3] + ", " + cardData[4] + ", " + cardData[5] + ", " + cardData[6] + ", " + cardData[7]);
+								// System.out.println(cardData[1] + ", " + cardData[2] + ", " + cardData[3] + ", " + cardData[4] + ", " + cardData[5] + ", " + cardData[6] + ", " + cardData[7]);
 								c.setCardTranslation(cardData[1], cardData[2], cardData[3], cardData[4], cardData[5], cardData[6], (cardData[7] == "" ? cardData[7] : iconPathFlip + cardData[7]));
 								break;
 							}
 						}
 					}
 				}
-				reader.close();
+				input.close();
+			}
+		} catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void loadRestrictedCards(String packName, List<Card> cardList) {
+		try {
+			File banListFile = new File("resources/card_config/bans.txt");
+			if (banListFile.exists()) {
+				BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(banListFile), StandardCharsets.UTF_8));
+				String data;
+				while((data = input.readLine()) != null) {
+					if (!data.equals("") && !data.startsWith("//")) {
+						String[] banData = data.split(",", -1);
+						for (Card c : cardList) {
+							if (c.getPack().equals(packName) && c.getId().equals(banData[0])) {
+								c.setMaxCount(Integer.parseInt(banData[1]));
+							}
+						}
+					}
+				}
 				input.close();
 			}
 		} catch (FileNotFoundException e) {
