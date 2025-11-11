@@ -1,5 +1,20 @@
 Note: Card images are not included in the source code, nor are any preset deck configurations.
 
+=== Version 0.7.0 : 2025-11-11
+- Added filtering by HP
+- Added display and icons for restricted and banned cards
+- Added translation text toggle (translation text size toggle WIP)
+
+=== Version 0.6.0 : 2025-11-05
+- Added translations (currently only available for zh-TW on English-only BS8 and P cards)
+- Merged "load" and "select file" functions
+- Added option to change card hover preview size in settings
+- Minor UI tweaks
+
+=== Version 0.5.3 : 2025-11-01
+- Added deck folder fallbacks
+- Minor UI tweaks
+
 === Version 0.5.2 : 2025-10-29
 - UI language and card language can now be configured separately
 - EXTRA cards are now counted separately from total cards
