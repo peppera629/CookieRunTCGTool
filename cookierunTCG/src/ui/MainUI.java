@@ -75,8 +75,7 @@ import javax.swing.JButton;
 // FEATURE: Add FLIP card types and filtering (Heal/Draw/Special)
 // FEATURE: Add slider to change deck list / card list size
 // FEATURE: Find better way to present Lv1~3 Cookie distribution and somehow fit FLIP type distribution
-// FEATURE: Implement "enlarge translation text" option in settings
-// FIX: Fix bug where translations will never appear for the entire runtime if the starting language is not zh_TW
+// FEATURE: Add buttons to hide/show filter menu and card preview panels
 // FIX: Add auto-resize to deck overview
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
@@ -162,7 +161,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JButton showDeckBtn;
     private JMenuItem settingsMenuItem, sortSettingsMenuItem;
     private ImageIcon cardIcon;
-    public static Font CRnormal, CRbold, CRnormalLarge, CRnormalSmall, CRnormalEXLarge, CRboldLarge, CRboldSmall, CRboldEXLarge;
+    public static Font CRnormal, CRbold, CRnormalLarge, CRnormalSmall, CRnormalEXLarge, CRboldLarge, CRboldSmall, CRboldEXLarge, CRtranslation, CRtranslationBold;
     public static InputStream fontStream, fontStreamBold;
     public static Map<java.awt.Component, String> componentFontMap = new HashMap<>();
     private int columns = 6, previewHeight;
@@ -203,6 +202,13 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             CRboldLarge = CRbold.deriveFont(20f);
             CRboldSmall = CRbold.deriveFont(12f);
             CRboldEXLarge = CRbold.deriveFont(28f);
+            if (Config.LARGE_TRANSLATION_TEXT) {
+                CRtranslation = CRnormalLarge;
+                CRtranslationBold = CRboldEXLarge;
+            } else {
+                CRtranslation = CRnormal;
+                CRtranslationBold = CRboldLarge;
+            }
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(CRnormal);
             ge.registerFont(CRnormalSmall);
@@ -475,7 +481,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 // Calculate heights for each pane
                 int deckDetailPaneHeight = 120; // Fixed height
                 columns = Math.max(1, (int) Math.floor(width / (Config.SMALL_CARD_WIDTH + 10))); // At least 1 column
-                int deckPaneHeight = (int) (height - deckDetailPaneHeight) / 2; // 50% of the height
+                int deckPaneHeight = (int) ((height - deckDetailPaneHeight) * 0.5f); // 50% of the height
                 int cardsPaneHeight = height - deckPaneHeight - deckDetailPaneHeight; // Remaining height
 
                 // Set bounds for each pane
@@ -548,24 +554,24 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cardTranslationFlavorTextGroup.add(cardTranslationSkillIcon);
         cardTranslationSkillFlavorText = new JLabel("", JLabel.CENTER);
         cardTranslationSkillFlavorText.setAlignmentX(Component.CENTER_ALIGNMENT);
-        cardTranslationSkillFlavorText.setFont(CRnormal);
-        componentFontMap.put(cardTranslationSkillFlavorText, "CRnormal"); // Store the font type
+        cardTranslationSkillFlavorText.setFont(CRtranslation);
+        componentFontMap.put(cardTranslationSkillFlavorText, "CRtranslation"); // Store the font type
         cardTranslationFlavorTextGroup.add(cardTranslationSkillFlavorText);
 
         cardTranslationSkill = new JLabel("", JLabel.LEFT);
         cardTranslationSkill.setAlignmentX(Component.LEFT_ALIGNMENT);
-        cardTranslationSkill.setFont(CRnormal);
-        componentFontMap.put(cardTranslationSkill, "CRnormal"); // Store the font type
+        cardTranslationSkill.setFont(CRtranslation);
+        componentFontMap.put(cardTranslationSkill, "CRtranslation"); // Store the font type
 
         cardTranslationAttackGroup = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         cardTranslationAttackCost = new JLabel("", JLabel.LEFT);
         cardTranslationAttackCost.setAlignmentX(Component.LEFT_ALIGNMENT);
-        cardTranslationAttackCost.setFont(CRnormal);
-        componentFontMap.put(cardTranslationAttackCost, "CRnormal"); // Store the font type
+        cardTranslationAttackCost.setFont(CRtranslation);
+        componentFontMap.put(cardTranslationAttackCost, "CRtranslation"); // Store the font type
         cardTranslationAttackFlavorText = new JLabel("", JLabel.LEFT);
         cardTranslationAttackFlavorText.setAlignmentX(Component.LEFT_ALIGNMENT);
-        cardTranslationAttackFlavorText.setFont(CRnormal);
-        componentFontMap.put(cardTranslationAttackFlavorText, "CRnormal"); // Store the font type
+        cardTranslationAttackFlavorText.setFont(CRtranslation);
+        componentFontMap.put(cardTranslationAttackFlavorText, "CRtranslation"); // Store the font type
         cardTranslationAttackGroup.add(cardTranslationAttackCost);
         cardTranslationAttackGroup.add(cardTranslationAttackFlavorText);
 
@@ -574,19 +580,19 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         cardTranslationAttack = new JLabel("", JLabel.LEFT);
         cardTranslationAttack.setAlignmentX(Component.LEFT_ALIGNMENT);
-        cardTranslationAttack.setFont(CRboldLarge);
-        componentFontMap.put(cardTranslationAttack, "CRboldLarge"); // Store the font type
+        cardTranslationAttack.setFont(CRtranslationBold);
+        componentFontMap.put(cardTranslationAttack, "CRtranslationBold"); // Store the font type
         cardTranslationAttackGroup.add(cardTranslationAttack);
 
         cardTranslationAttackThen = new JLabel("", JLabel.LEFT);
         cardTranslationAttackThen.setAlignmentX(Component.LEFT_ALIGNMENT);
-        cardTranslationAttackThen.setFont(CRnormal);
-        componentFontMap.put(cardTranslationAttackThen, "CRnormal"); // Store the font type
+        cardTranslationAttackThen.setFont(CRtranslation);
+        componentFontMap.put(cardTranslationAttackThen, "CRtranslation"); // Store the font type
 
         cardTranslationFlip = new JLabel("", JLabel.LEFT);
         cardTranslationFlip.setAlignmentX(Component.LEFT_ALIGNMENT);
-        cardTranslationFlip.setFont(CRnormal);
-        componentFontMap.put(cardTranslationFlip, "CRnormal"); // Store the font type
+        cardTranslationFlip.setFont(CRtranslation);
+        componentFontMap.put(cardTranslationFlip, "CRtranslation"); // Store the font type
 
         // Add cardTranslationFlavorTextGroup (centered)
         gbc.gridx = 0;
@@ -1098,7 +1104,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 cardTranslationSkillIcon.setIcon(null);
                 cardTranslationSkillFlavorText.setText("");
             } else {
-                cardTranslationSkillIcon.setIcon(new ImageIcon("resources/icons/16px/SKILL.png"));
+                cardTranslationSkillIcon.setIcon(new ImageIcon("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "SKILL.png"));
                 cardTranslationSkillFlavorText.setText("<html>" + card.getCardTranslation()[0] + "</html>");
             }
             if (card.getCardTranslation()[2].isEmpty()) {
@@ -1134,9 +1140,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         int fileOpHeight = mFileOpPane.getHeight();
         int sidebarHeight = sidebarPanel.getHeight();
         int cardInfoHeight = cardId.getPreferredSize().height + cardName.getPreferredSize().height;
-        //System.out.println(translationHeight + "/" + fileOpHeight + "/" + sidebarHeight + "/" + cardInfoHeight);
-        previewHeight = Math.min(sidebarHeight - cardInfoHeight - (card.getCardTranslation() == null ? 0 : translationHeight) - fileOpHeight - 50, Config.CARD_PREVIEW_HEIGHT);
-        //System.out.println(previewHeight + "/" + Config.CARD_PREVIEW_HEIGHT);
+
+        int textPadding = (Config.LARGE_TRANSLATION_TEXT ? 100 : 50);
+        previewHeight = Math.min(sidebarHeight - cardInfoHeight - (card.getCardTranslation() == null ? 0 : translationHeight) - fileOpHeight - textPadding, Config.CARD_PREVIEW_HEIGHT);
 
         Image image = cardIcon.getImage().getScaledInstance((int) (previewHeight / Config.CARD_RATIO), previewHeight, java.awt.Image.SCALE_SMOOTH);
         cardIcon = new ImageIcon(image);
@@ -1200,6 +1206,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         button_settings.setText(CardUtil.getTranslation("settings"));
 
         cardTranslationAttackFlavorText.setText(null);
+        cardTranslationSkillIcon.setIcon(null);
         cardTranslationSkillFlavorText.setText(null);
         cardTranslationSkill.setText(null);
         cardTranslationAttackCost.setText(null);
@@ -1269,6 +1276,12 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                         break;
                     case "CRboldLarge":
                         newFont = CRboldLarge;
+                        break;
+                    case "CRtranslation":
+                        newFont = CRtranslation;
+                        break;
+                    case "CRtranslationBold":
+                        newFont = CRtranslationBold;
                         break;
                 }
 

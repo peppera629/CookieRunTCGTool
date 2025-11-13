@@ -1,8 +1,8 @@
 #Application Configuration
-#Thu Nov 13 09:59:10 CST 2025
+#Thu Nov 13 12:01:57 CST 2025
 card_icon_scale=1.0
-card_language=en
-card_preview_scale=1.5
+card_language=zh_TW
+card_preview_scale=1.25
 card_translation=true
-language=en
+language=zh_TW
 large_translation_text=false
