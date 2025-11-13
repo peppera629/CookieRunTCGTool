@@ -108,4 +108,4 @@ BS5-107,Red Pepper Cookie,Purple,Cookie,_,C,B,1,1
 BS5-108,Rambirdtan Handler Glove,Purple,Item,_,U,B,,
 BS5-109,Charmed Miners,Purple,Trap,_,U,B,,
 BS5-110,Lychee Dragon Cookie's Cave,Purple,Stage,_,U,B,,
-BS5-111,Wrath of the Dragons,Colorless,Stage,_,UR,B,,
+BS5-111,Wrath of the Dragons,Colorless,Item,_,UR,B,,

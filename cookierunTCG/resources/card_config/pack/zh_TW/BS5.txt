@@ -108,4 +108,4 @@ BS5-107,紅辣椒餅乾,Purple,Cookie,_,C,B,1,1
 BS5-108,馴鷹手套,Purple,Item,_,U,B,,
 BS5-109,被洗腦的勞動,Purple,Trap,_,U,B,,
 BS5-110,荔枝龍族餅乾的洞窟,Purple,Stage,_,U,B,,
-BS5-111,覺醒！龍之怒,Colorless,Stage,_,UR,B,,
+BS5-111,覺醒！龍之怒,Colorless,Item,_,UR,B,,

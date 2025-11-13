@@ -3,6 +3,8 @@
 cookierunTCG/.settings
 cookierunTCG/bin
 cookierunTCG/bin/ui
+cookierunTCG/bin/dataStructure
+cookierunTCG/bin/util
 
 cookierunTCG/resources/cards
 cookierunTCG/deck/*
@@ -11,3 +13,4 @@ compile.bat
 compile&start.bat
 start.bat
 cookierunTCG/config/default_state.txt
+cookierunTCG/run.bat
