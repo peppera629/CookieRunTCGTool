@@ -255,4 +255,14 @@ public class Card {
 		translation[6] = _translationFlip;
 		return translation;
 	}
+
+	public void clearCardTranslation() {
+		_translationSkillName = "";
+		_translationSkill = "";
+		_translationAttackName = "";
+		_translationAttackCost = "";
+		_translationAttack = "";
+		_translationAttackThen = "";
+		_translationFlip = "";
+	}
 }

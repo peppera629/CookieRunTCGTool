@@ -86,12 +86,10 @@ public class CardLoader {
 	    return cardList;
 	}
 
-	public static List<Card> reloadTranslations() {
-		List<Card> cardList = new ArrayList<Card>();
+	public static void reloadTranslations(List<Card> cardList) {
 		for (int i=0; i<CardUtil.CardPack.size() ;i++) {
 			loadPackTranslations(CardUtil.CardPack.get(i), cardList);
 		}
-	    return cardList;
 	}
 	
 	private static void loadPack(String packName, List<Card> cardList) {
@@ -216,6 +214,12 @@ public class CardLoader {
 					}
 				}
 				input.close();
+			} else {
+				for (Card c : cardList) {
+					if (c.getPack().equals(packName)) {
+						c.clearCardTranslation();
+					}
+				}
 			}
 		} catch (FileNotFoundException e) {
             System.out.println("An error occurred.");

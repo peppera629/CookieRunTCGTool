@@ -1222,6 +1222,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         }
 
         CardLoader.refreshAllCardNames();
+        CardLoader.reloadTranslations(CardList.getInstance().getAllCards());
 
         sidebarPanel.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()));
         mCardDetailPane.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()-60));
