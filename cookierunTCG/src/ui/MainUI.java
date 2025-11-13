@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
@@ -148,13 +149,13 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
     private Deck mDeck;
     private ScrollPane scrollPane;
-    private JPanel mCardDetailPane, mCardTranslationPane;
+    private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane;
     private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup;
     private JTextField mDeckText;
     private JButton saveBtn, selectBtn;
     private JButton mClearDeckBtn, button_search, button_clean, button_sort, button_settings;
     private JLabel mCardCountHintTxt, mFlipCountHintTxt, mExtraCountHintTxt, mDeckCookieSummaryHintTxt, mDeckCookieLv1HintTxt, mDeckCookieLv2HintTxt, mDeckCookieLv3HintTxt;
-    private JLabel mDeckItemHintTxt, mDeckTrapHintTxt, mDeckStageHintTxt;
+    private JLabel mDeckItemHintTxt, mDeckTrapHintTxt, mDeckStageHintTxt, mDeckPaneLabel, mCardsPaneLabel;
     private JLabel mCardCountTxt, mFlipCountTxt, mExtraCountTxt, mDeckCookieSummaryTxt, mDeckCookieLv1Txt, mDeckCookieLv2Txt, mDeckCookieLv3Txt;
     private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardTranslationSkill, cardTranslationAttackCost;
     private JLabel cardTranslationAttack, cardTranslationAttackIcon, cardTranslationAttackThen, cardTranslationFlip, cardTranslationSkillFlavorText, cardTranslationSkillIcon, cardTranslationAttackFlavorText;
@@ -289,10 +290,19 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         // ===== 中間區域 =====
 
         JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(null);
+        centerPanel.setLayout(new BorderLayout());
         frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
 
         // ==== 卡組
+        deckPane = new JPanel(new BorderLayout());
+        mDeckPaneLabel = new JLabel(CardUtil.getTranslation("deck"));
+        mDeckPaneLabel.setFont(CRboldSmall);
+        mDeckPaneLabel.setOpaque(true);
+        mDeckPaneLabel.setBackground(new Color(10, 10, 10));
+        mDeckPaneLabel.setForeground(new Color(255,255,255));
+        componentFontMap.put(mDeckPaneLabel, "CRboldSmall");
+        deckPane.add(mDeckPaneLabel, BorderLayout.NORTH);
+
         mDeckPane = new JPanel();
         mDeckPane.setLayout(new GridLayout(0, 6, 5, 5));
         JScrollPane scrollDeckPane = new JScrollPane(mDeckPane);
@@ -300,12 +310,41 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         scrollDeckPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         JScrollBar deckScrollBar = scrollDeckPane.getVerticalScrollBar();
         deckScrollBar.setUnitIncrement(16);
-        centerPanel.add(scrollDeckPane);
+        deckPane.add(scrollDeckPane, BorderLayout.CENTER);
+
+        // ==== 卡片列表
+        cardListPane = new JPanel(new BorderLayout());
+        mCardsPaneLabel = new JLabel(CardUtil.getTranslation("cardlist"));
+        mCardsPaneLabel.setFont(CRboldSmall);
+        mCardsPaneLabel.setOpaque(true);
+        mCardsPaneLabel.setBackground(new Color(10, 10, 10));
+        mCardsPaneLabel.setForeground(new Color(255,255,255));
+        componentFontMap.put(mCardsPaneLabel, "CRboldSmall");
+        cardListPane.add(mCardsPaneLabel, BorderLayout.NORTH);
+
+        mCardsPane = new JPanel();
+        mCardsPane.setLayout(new GridLayout(0, 4, 5, 5));
+        
+        JScrollPane scrollCardsPane = new JScrollPane(mCardsPane);
+        scrollCardsPane.setBackground(new Color(255, 255, 255));
+        scrollCardsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollCardsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollBar cardListScrollBar = scrollCardsPane.getVerticalScrollBar();
+        cardListScrollBar.setUnitIncrement(16);
+        cardListPane.add(scrollCardsPane, BorderLayout.CENTER);
+
+        // ==== JSplitPane
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, deckPane, cardListPane);
+        splitPane.setDividerLocation(300);
+        splitPane.setResizeWeight(0.5);
+        splitPane.setContinuousLayout(true);
+        splitPane.setOneTouchExpandable(true);
+        centerPanel.add(splitPane, BorderLayout.CENTER);
 
         // ==== 卡組資訊
         JPanel deckDetailPane = new JPanel();
         deckDetailPane.setLayout(new BorderLayout());
-        centerPanel.add(deckDetailPane);
+        centerPanel.add(deckDetailPane, BorderLayout.SOUTH);
 
         mClearDeckBtn = new JButton(CardUtil.getTranslation("deck.clear"));
         mClearDeckBtn.setFont(CRnormalLarge);
@@ -457,18 +496,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mDeckStageTxt.setFont(CRnormalEXLarge);
         componentFontMap.put(mDeckStageTxt, "CRnormalEXLarge"); // Store the font type as a String
         mTextsPane.add(mDeckStageTxt, gbc);
-
-        // ==== 卡片列表
-        mCardsPane = new JPanel();
-        mCardsPane.setLayout(new GridLayout(0, 4, 5, 5));
-        
-        JScrollPane scrollCardsPane = new JScrollPane(mCardsPane);
-        scrollCardsPane.setBackground(new Color(255, 255, 255));
-        scrollCardsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollCardsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        JScrollBar cardListScrollBar = scrollCardsPane.getVerticalScrollBar();
-        cardListScrollBar.setUnitIncrement(16);
-        centerPanel.add(scrollCardsPane);
 
         // Add a ComponentListener to dynamically resize panes
         frame.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -1084,7 +1111,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mCardDetailPane.removeAll();
         cardIcon = new ImageIcon("resources/cards/"+Config.CARD_LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
         //System.out.println("resources/cards/"+Config.CARD_LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
-        System.out.println(card.getHP());
+        //System.out.println(card.getHP());
 
         if (card.getMaxCount() == 1) {
             cardId.setText(card.getId() + " [" + CardUtil.getTranslation("restricted") + "]");
@@ -1168,6 +1195,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         frame.setTitle(CardUtil.getTranslation("app.title") + " v." + Constant.VERSION);
         button_search.setText(CardUtil.getTranslation("search"));
         button_clean.setText(CardUtil.getTranslation("clear"));
+        mDeckPaneLabel.setText(CardUtil.getTranslation("deck"));
+        mCardsPaneLabel.setText(CardUtil.getTranslation("cardlist"));
         mClearDeckBtn.setText(CardUtil.getTranslation("deck.clear"));
         mCardCountHintTxt.setText(CardUtil.getTranslation("deck.cards"));
         mFlipCountHintTxt.setText(CardUtil.getTranslation("deck.flip"));
