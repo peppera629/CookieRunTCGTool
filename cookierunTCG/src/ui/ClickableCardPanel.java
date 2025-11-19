@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 import dataStructure.Card;
 import dataStructure.CardLoader;
+import dataStructure.Collection;
 import util.Config;
 import util.UIUtil;
 
@@ -28,14 +29,14 @@ public class ClickableCardPanel extends JPanel {
 
     private Card mCard;
     private CardListCallBack mCardListCallBack;
-    private boolean mShouldShowCount;
+    private int mShowCountMode;
     private int mCardSize;
 	private Dimension cardListSize;
     ImageIcon mCardIcon;
 
-	public ClickableCardPanel(Card card, boolean showCount, int cardSize) {
+	public ClickableCardPanel(Card card, int showCountMode, int cardSize) {
         mCard = card;
-    	mShouldShowCount = showCount;
+		mShowCountMode = showCountMode;
 		mCardSize = cardSize;
     	mCardIcon = CardLoader.createCardImage(mCard, mCardSize);
 		cardListSize = new Dimension(mCardIcon.getIconWidth(), mCardIcon.getIconHeight());
@@ -75,12 +76,17 @@ public class ClickableCardPanel extends JPanel {
         // 繪製卡片的 ImageIcon
 		mCardIcon.paintIcon(this, g, 0, 0);
 
-        if(mShouldShowCount) {
+        if(mShowCountMode != 0) {
 	        Graphics2D g2d = (Graphics2D) g.create();
 			try {
 				g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
 				g2d.setRenderingHint(java.awt.RenderingHints.KEY_TEXT_ANTIALIASING, java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				int boxWidth = mCardIcon.getIconWidth()/3;
+				int boxWidth;
+				if (mShowCountMode == 3) {
+					boxWidth = mCardIcon.getIconWidth()/2;
+				} else {
+					boxWidth = mCardIcon.getIconWidth()/3;
+				}
 				int boxHeight = mCardIcon.getIconWidth()/3;
 				int boxX = getWidth() - boxWidth;
 				int boxY = getHeight() - boxHeight;
@@ -98,14 +104,44 @@ public class ClickableCardPanel extends JPanel {
 				// 在方塊上顯示白色數字
 				g2d.setColor(Color.WHITE);
 				Font cardPanelFont = MainUI.CRbold.deriveFont(mCardIcon.getIconWidth()/5f);
+				Font cardPanelFontSmall = MainUI.CRnormal.deriveFont(mCardIcon.getIconWidth()/8f);
+				String text = "";
+				String ownedText = "";
+				switch (mShowCountMode) {
+					case 1: // Deck Count
+						text = Integer.toString(mCard.getCount());
+						break;
+					case 2: // Collection Count
+						text = Integer.toString(Collection.getInstance().getCardOwnedCount(mCard.getId()));
+						break;
+					case 3: // Both (for "build from collection" mode)
+						text = Integer.toString(mCard.getCount());
+						ownedText = "/" + Integer.toString(Collection.getInstance().getCardOwnedCount(mCard.getId()));
+						if (mCard.getCount() > Collection.getInstance().getCardOwnedCount(mCard.getId())) {
+							g2d.setColor(new Color(255, 128, 128));
+						}
+						break;
+				}
+
 				g2d.setFont(cardPanelFont);
-				String text = Integer.toString(mCard.getCount());
 				FontMetrics metrics = g2d.getFontMetrics(cardPanelFont);
 				int textWidth = metrics.stringWidth(text);
 				int textHeight = metrics.getHeight();
-				int textX = boxX + (boxWidth - textWidth) / 2;
-				int textY = boxY + (boxHeight - textHeight) / 2 + metrics.getAscent();
+
+				g2d.setFont(cardPanelFontSmall);
+				FontMetrics metricsOwned = g2d.getFontMetrics(cardPanelFontSmall);
+				int ownedTextWidth = metricsOwned.stringWidth(ownedText);
+
+				int totalTextWidth = textWidth + ownedTextWidth;
+				int textX = boxX + (boxWidth - totalTextWidth) / 2;
+				int textY = boxY + (boxHeight - metrics.getHeight()) / 2 + metrics.getAscent();
+				
+				g2d.setFont(cardPanelFont);
 				g2d.drawString(text, textX, textY);
+
+				g2d.setFont(cardPanelFontSmall);
+				g2d.drawString(ownedText, textX + textWidth, textY);
+
 			} finally {
 				g2d.dispose();
 			}
@@ -159,6 +195,17 @@ public class ClickableCardPanel extends JPanel {
     	mCardIcon = CardLoader.createCardImage(mCard, mCardSize);
 		repaint();
     }
+
+	public int getCountShowMode() {
+		return mShowCountMode;
+	}
+
+	public void updateCountsForCardList() {
+		if (mShowCountMode == 3) {
+			repaint();
+		}
+	}
+
     public void repaintImage() {
     	updateImage();
 		System.out.println("========== updateImage "+mCard.getName()+" =============");

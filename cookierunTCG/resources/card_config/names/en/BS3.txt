@@ -1,0 +1,121 @@
+BS3-001,Princess Cookie
+BS3-002,Raspberry Cookie
+BS3-003,Royal Margarine Cookie
+BS3-004,Royal Berry Cookie
+BS3-005,Mala Sauce Cookie
+BS3-006,Snapdragon Cookie
+BS3-007,Tea Knight Cookie
+BS3-008,Devil Cookie
+BS3-009,Wildberry Cookie
+BS3-010,Pitaya Dragon Cookie
+BS3-011,Knight Cookie
+BS3-012,Jungleberry Cookie
+BS3-013,Tiger Lily Cookie
+BS3-014,Schwarzwälder
+BS3-015,Capsaicin Cookie
+BS3-016,Tarte Tatin Cookie
+BS3-017,Hollyberry Cookie
+BS3-018,Mushroom Spore Punch
+BS3-019,Soul Jam: Light of Passion
+BS3-020,Miniature Dragon Boat
+BS3-021,Oath on the Shield
+BS3-022,Banquet of Victory
+BS3-023,Passionate Hollyberry Kingdom
+BS3-024,Dragon's Valley
+BS3-025,Golden Cheese Cookie
+BS3-026,Linzer Cookie
+BS3-027,Marzipan Cookie
+BS3-028,Mozzarella Cookie
+BS3-029,Burnt Cheese Cookie
+BS3-030,Black Raisin Cookie
+BS3-031,Pancake Cookie
+BS3-032,Smoked Cheese Cookie
+BS3-033,Stardust Cookie
+BS3-034,Sparkling Cookie
+BS3-035,High Priest Cheesenbird
+BS3-036,Olive Cookie
+BS3-037,Angel Cookie
+BS3-038,Cocoa Cookie
+BS3-039,Crème Brûlée Cookie
+BS3-040,Adventurer Cookie
+BS3-041,Fettuccine Cookie
+BS3-042,Golden Cheese Guardian Golem
+BS3-043,Soul Jam: Light of Abundance
+BS3-044,Cheesepad Tablet
+BS3-045,Golden Monarch's Counterattack
+BS3-046,Golden Cheese Colosseum
+BS3-047,Kingdom of Eternal Abundance
+BS3-048,Golden City's Control Chamber
+BS3-049,Carrot Cookie
+BS3-050,Matcha Cookie
+BS3-051,Fig Cookie
+BS3-052,Mint Choco Cookie
+BS3-053,Butter Roll Cookie
+BS3-054,Beet Cookie
+BS3-055,White Lily Cookie
+BS3-056,Pinecone Cookie
+BS3-057,Mercurial Knight Cookie
+BS3-058,Avocado Cookie
+BS3-059,Onion Cookie
+BS3-060,Elder Faerie Cookie
+BS3-061,Silverbell Cookie
+BS3-062,Carol Cookie
+BS3-063,Carameleon Cookie
+BS3-064,Clover Cookie
+BS3-065,Herb Cookie
+BS3-066,Soul Jam: Light of Freedom
+BS3-067,Faerie Kingdom's Music
+BS3-068,Elder Faerie's Sword
+BS3-069,The New Guardian's Power
+BS3-070,Puppet Theater of Chaos
+BS3-071,Ancient Silver Tree
+BS3-072,Mystical Faerie Kingdom
+BS3-073,Candy Diver Cookie
+BS3-074,Grand Madeleine Cookie
+BS3-075,Strawberry Cookie
+BS3-076,Strawberry Crepe Cookie
+BS3-077,Madeleine Cookie
+BS3-078,Wizard Cookie
+BS3-079,Sugar Gnome
+BS3-080,Espresso Cookie
+BS3-081,Oyster Cookie
+BS3-082,GingerBrave
+BS3-083,Captain Caviar Cookie
+BS3-084,Custard Cookie III
+BS3-085,Custard Cookie
+BS3-086,Kouign-Amann Cookie
+BS3-087,Clotted Cream Cookie
+BS3-088,Pure Vanilla Cookie
+BS3-089,Financier Cookie
+BS3-090,Sword of Radiant Light
+BS3-091,Soul Jam: Light of Truth
+BS3-092,Old Vanilla Orchid Locket
+BS3-093,Convocation of Elders
+BS3-094,Radiant Coronation
+BS3-095,Glorious Crème Republic
+BS3-096,Peaceful Vanilla Kingdom
+BS3-097,Licorice Cookie
+BS3-098,Kumiho Cookie
+BS3-099,Dark Choco Cookie
+BS3-100,Dark Cacao Cookie
+BS3-101,Moon Rabbit Cookie
+BS3-102,Poison Mushroom Cookie
+BS3-103,Red Velvet Cookie
+BS3-104,Pomegranate Cookie
+BS3-105,Affogato Cookie
+BS3-106,Alchemist Cookie
+BS3-107,Prophet Cookie
+BS3-108,Milk Cookie
+BS3-109,Werewolf Cookie
+BS3-110,Purple Yam Cookie
+BS3-111,Crunchy Chip Cookie
+BS3-112,Prune Juice Cookie
+BS3-113,Caramel Arrow Cookie
+BS3-114,Bittersweet Incense
+BS3-115,Soul Jam: Light of Resolution
+BS3-116,First Watcher's Bow
+BS3-117,Chocolate Altar of the Fallen
+BS3-118,Founding Resolution
+BS3-119,Roiling Licorice Sea
+BS3-120,Resolute Dark Cacao Kingdom
+BS3-121,Age of Heroes and Kingdoms

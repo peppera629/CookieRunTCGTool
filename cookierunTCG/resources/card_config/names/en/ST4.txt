@@ -1,0 +1,22 @@
+ST4-001,Candy Diver Cookie
+ST4-002,Snow Sugar Cookie
+ST4-003,Dr. Wasabi Cookie
+ST4-004,Lobster Cookie
+ST4-005,GingerBright
+ST4-006,Peppermint Cookie
+ST4-007,Sour Belt Cookie
+ST4-008,Soda Cookie
+ST4-009,Ice Candy Cookie
+ST4-010,Squid Ink Cookie
+ST4-011,GingerBrave
+ST4-012,Werewolf Cookie
+ST4-013,Captain Caviar Cookie
+ST4-014,Skating Queen Cookie
+ST4-015,Pirate Cookie
+ST4-016,Bear Jelly Ice Cream
+ST4-017,Emergency Lifebuoy
+ST4-018,Lucky Pearls
+ST4-019,Sugar Crystal Lamp
+ST4-020,Octo-Ink Spray
+ST4-021,Fallen Ice Statue
+ST4-022,Sugar Glass Dome

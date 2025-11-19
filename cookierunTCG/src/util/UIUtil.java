@@ -19,13 +19,14 @@ public class UIUtil {
 	public static final int CARD_SIZE_DECK = 1;
 	public static final int CARD_SIZE_OUTPUT = 2;
 	public static final int CARD_SIZE_FULL = 3;
-	public static void showDeck(CardListCallBack callback, JPanel panel, List<Card> cardList, int minSize, int rowSize, int cardSize, boolean showCount) {
+	public static void showDeck(CardListCallBack callback, JPanel panel, List<Card> cardList, int minSize, int rowSize, int cardSize, int showCountMode) {
+		// showCountMode: 0 = None (false, false), 1 = Deck Count (true, false), 2 = Collection Count (true, true), 3 = Both (for "build from collection" mode)
 		panel.removeAll();
 		panel.setLayout(new GridLayout(0, rowSize, 5, 5));
 		System.out.println("========== start updateDeck =============");
 		for (Card card : cardList) {
 			ClickableCardPanel cardPanel;
-			cardPanel = new ClickableCardPanel( card, Config.SHOW_CARD_COUNT && showCount, cardSize);
+			cardPanel = new ClickableCardPanel(card, showCountMode, cardSize);
 			if(callback != null) {
 				cardPanel.addClickListener(callback);
 			}

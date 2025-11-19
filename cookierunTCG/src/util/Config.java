@@ -22,11 +22,11 @@ public class Config {
 			CARD_LANGUAGE = properties.getProperty("card_language", "en"); // Default to "en" if not found
 			CARD_PREVIEW_SCALE = Double.parseDouble(properties.getProperty("card_preview_scale", "1.0")); // Default to 1.0 if not found
 			CARD_ICON_SCALE = Double.parseDouble(properties.getProperty("card_icon_scale", "1.5")); // Default to 1.5 if not found
-			Config.CARD_PREVIEW_WIDTH = (int) (400 * Config.CARD_PREVIEW_SCALE);
-            Config.CARD_PREVIEW_HEIGHT = (int) (Config.CARD_PREVIEW_WIDTH * Config.CARD_RATIO);
-			Config.CARD_TRANSLATION_ENABLED = Boolean.parseBoolean(properties.getProperty("card_translation", "true")); // Default to true if not found
-			Config.LARGE_TRANSLATION_TEXT = Boolean.parseBoolean(properties.getProperty("large_translation_text", "false")); // Default to false if not found
-			System.out.println(LANGUAGE);
+			CARD_PREVIEW_WIDTH = (int) (400 * Config.CARD_PREVIEW_SCALE);
+            CARD_PREVIEW_HEIGHT = (int) (Config.CARD_PREVIEW_WIDTH * Config.CARD_RATIO);
+			CARD_TRANSLATION_ENABLED = Boolean.parseBoolean(properties.getProperty("card_translation", "true")); // Default to true if not found
+			LARGE_TRANSLATION_TEXT = Boolean.parseBoolean(properties.getProperty("large_translation_text", "false")); // Default to false if not found
+			DECK_BUILD_FROM_COLLECTION = Boolean.parseBoolean(properties.getProperty("deck_build_from_collection", "false")); // Default to false if not found
         } catch (IOException e) {
             System.err.println("Could not load config file. Using default settings.");
         }
@@ -43,6 +43,7 @@ public class Config {
         Config.CARD_PREVIEW_HEIGHT = (int) (Config.CARD_PREVIEW_WIDTH * Config.CARD_RATIO);
 		properties.setProperty("card_translation", String.valueOf(CARD_TRANSLATION_ENABLED));
 		properties.setProperty("large_translation_text", String.valueOf(LARGE_TRANSLATION_TEXT));
+		properties.setProperty("deck_build_from_collection", String.valueOf(DECK_BUILD_FROM_COLLECTION));
         try (OutputStream output = new FileOutputStream(CONFIG_FILE)) {
             properties.store(output, "Application Configuration");
         } catch (IOException e) {
@@ -74,6 +75,7 @@ public class Config {
 
 	public static boolean CARD_TRANSLATION_ENABLED = true;
 	public static boolean LARGE_TRANSLATION_TEXT = false;
+	public static boolean DECK_BUILD_FROM_COLLECTION = false;
 
 	// ========================= sort config ========================
 	public static final String SORT_NAME_TYPE = "卡片類型"; 

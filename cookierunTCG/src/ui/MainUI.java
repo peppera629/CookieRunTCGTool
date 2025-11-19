@@ -29,10 +29,12 @@ import dataStructure.Card;
 import dataStructure.CardList;
 import dataStructure.CardLoader;
 import dataStructure.Deck;
+import dataStructure.Collection;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.border.Border;
 
 import java.util.List;
@@ -72,12 +74,12 @@ import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 
-// MAJOR FEATURE: Add "Collection" mode and include secret/promo cards
+// FEATURE: Include secret/promo cards in collection mode
 // FEATURE: Add FLIP card types and filtering (Heal/Draw/Special)
-// FEATURE: Add slider to change deck list / card list size
 // FEATURE: Find better way to present Lv1~3 Cookie distribution and somehow fit FLIP type distribution
 // FEATURE: Add buttons to hide/show filter menu and card preview panels
 // FIX: Add auto-resize to deck overview
+// FIX: Decide on desired behavior when switching languages while in Collection mode
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
 
@@ -154,11 +156,13 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JTextField mDeckText;
     private JButton saveBtn, selectBtn;
     private JButton mClearDeckBtn, button_search, button_clean, button_sort, button_settings;
+    private JToggleButton button_collection;
     private JLabel mCardCountHintTxt, mFlipCountHintTxt, mExtraCountHintTxt, mDeckCookieSummaryHintTxt, mDeckCookieLv1HintTxt, mDeckCookieLv2HintTxt, mDeckCookieLv3HintTxt;
     private JLabel mDeckItemHintTxt, mDeckTrapHintTxt, mDeckStageHintTxt, mDeckPaneLabel, mCardsPaneLabel;
     private JLabel mCardCountTxt, mFlipCountTxt, mExtraCountTxt, mDeckCookieSummaryTxt, mDeckCookieLv1Txt, mDeckCookieLv2Txt, mDeckCookieLv3Txt;
     private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardTranslationSkill, cardTranslationAttackCost;
     private JLabel cardTranslationAttack, cardTranslationAttackIcon, cardTranslationAttackThen, cardTranslationFlip, cardTranslationSkillFlavorText, cardTranslationSkillIcon, cardTranslationAttackFlavorText;
+    private JSplitPane splitPane;
     private JButton showDeckBtn;
     private JMenuItem settingsMenuItem, sortSettingsMenuItem;
     private ImageIcon cardIcon;
@@ -166,6 +170,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     public static InputStream fontStream, fontStreamBold;
     public static Map<java.awt.Component, String> componentFontMap = new HashMap<>();
     private int columns = 6, previewHeight;
+    private double previousSplitLocation = 0.3d;
+    private boolean isCollectionMode = false;
+    private Collection collection = Collection.getInstance();
 
     private void initialize() {
         Config.loadConfig();
@@ -238,49 +245,92 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         initCheckBox();
 
         JPanel searchPanelButtons = new JPanel();
-        searchPanelButtons.setLayout(new GridLayout(2, 2, 5, 5));
-        searchPanelButtons.setBorder(new EmptyBorder(10, 10, 10, 10));
+        searchPanelButtons.setLayout(new GridBagLayout());
+        searchPanelButtons.setBorder(new EmptyBorder(3, 3, 3, 3));
         mSearchPane.add(searchPanelButtons);
+        
+        GridBagConstraints gbc_buttons = new GridBagConstraints();
+        gbc_buttons.fill = GridBagConstraints.BOTH;
+        gbc_buttons.gridx = 0;
+        gbc_buttons.gridy = 0;
+        gbc_buttons.weightx = 1.0;
+        gbc_buttons.gridwidth = 2;
+        gbc_buttons.insets = new Insets(3, 3, 3, 3);
+        button_collection = new JToggleButton();
+        if (isCollectionMode) {
+            button_collection.setText(CardUtil.getTranslation("collectionedit.disable"));
+        } else {
+            button_collection.setText(CardUtil.getTranslation("collectionedit.enable"));
+        }
+        button_collection.setFont(CRnormalLarge);
+        componentFontMap.put(button_collection, "CRnormalLarge"); // Store the font type as a String
+        searchPanelButtons.add(button_collection, gbc_buttons);
+        
+        button_collection.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	isCollectionMode = button_collection.isSelected();
+            	if (isCollectionMode) {
+            		button_collection.setText(CardUtil.getTranslation("collectionedit.disable"));
+            	} else {
+            		button_collection.setText(CardUtil.getTranslation("collectionedit.enable"));
+            	}
+            	updateUIForCollectionMode();
+            }
+        });
+
+        gbc_buttons.gridy = 1;
+        gbc_buttons.gridwidth = 1;
         
         button_search = new JButton(CardUtil.getTranslation("search"));
         button_search.setFont(CRnormalLarge);
         componentFontMap.put(button_search, "CRnormalLarge"); // Store the font type as a String
-        searchPanelButtons.add(button_search);
+        searchPanelButtons.add(button_search, gbc_buttons);
         button_search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	updateCardList();
+                updateCardList();
+                if (isCollectionMode) {
+                    updateCardListForCollection();
+                }
                 mDefaultState.saveDefaultState();
             }
         });
-        
+
+        gbc_buttons.gridx = 1;
         button_clean = new JButton(CardUtil.getTranslation("clear"));
         button_clean.setFont(CRnormalLarge);
         componentFontMap.put(button_clean, "CRnormalLarge"); // Store the font type as a String
-        searchPanelButtons.add(button_clean);
+        searchPanelButtons.add(button_clean, gbc_buttons);
         
         button_clean.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	cleanCheckBox();
             	updateCardList();
+                if (isCollectionMode) {
+                    updateCardListForCollection();
+                }
                 mDefaultState.cleanSearchFlag();
                 mDefaultState.saveDefaultState();
             }
         });
 
+        gbc_buttons.gridx = 0;
+        gbc_buttons.gridy = 2;
         button_sort = new JButton(CardUtil.getTranslation("sort.settings"));
         button_sort.setFont(CRnormal);
         componentFontMap.put(button_sort, "CRnormal"); // Store the font type as a String
-        searchPanelButtons.add(button_sort);
+        searchPanelButtons.add(button_sort, gbc_buttons);
         button_sort.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	sortSettingsWindow.show();
             }
         });
 
+        gbc_buttons.gridx = 1;
+        gbc_buttons.gridy = 2;
         button_settings = new JButton(CardUtil.getTranslation("settings"));
         button_settings.setFont(CRnormal);
         componentFontMap.put(button_settings, "CRnormal"); // Store the font type as a String
-        searchPanelButtons.add(button_settings);
+        searchPanelButtons.add(button_settings, gbc_buttons);
         button_settings.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 settingsWindow.show();
@@ -334,7 +384,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cardListPane.add(scrollCardsPane, BorderLayout.CENTER);
 
         // ==== JSplitPane
-        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, deckPane, cardListPane);
+        splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, deckPane, cardListPane);
         splitPane.setDividerLocation(300);
         splitPane.setResizeWeight(0.5);
         splitPane.setContinuousLayout(true);
@@ -354,7 +404,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mClearDeckBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mDeck.clear();
+                CardList.getInstance().clearCardListCount();
                 updateDeck();
+                CardList.getInstance().updateAllCardPanels();
             }
         });
 
@@ -530,6 +582,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     cardsLayout.setColumns(columns);
                     mCardsPane.revalidate();
                     mCardsPane.repaint();
+                }
+
+                if (isCollectionMode) {
+                    splitPane.setDividerLocation(0.0);
                 }
                 
                 // Revalidate and repaint to apply changes
@@ -720,9 +776,12 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 					String filename = selectedFile.getName();
 					System.out.println(selectedFile.getName());
 					mDeckText.setText(filename.substring(0, filename.length() - 4));
+                    mDeck.clear();
+                    CardList.getInstance().clearCardListCount();
                     mDeck = CardLoader.loadDeck(mDeckText.getText());
                     mDeck.sort();
                     updateDeck();
+                    CardList.getInstance().updateAllCardPanels();
                     mDefaultState.setDefaultDeckName(mDeckText.getText());
                     mDefaultState.saveDefaultState();
 				} 
@@ -750,6 +809,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     }
 	
     private void initCheckBox() {
+
+        Border filterBorder = BorderFactory.createEmptyBorder(0, 0, 20, 0);
     	
         // ========================= color ==================================
         labelColor = new JLabel(CardUtil.getTranslation("color"), JLabel.LEFT);
@@ -762,6 +823,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         JPanel colorOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
         JPanel colorCheckboxGroup = new JPanel();
         colorCheckboxGroup.setLayout(new GridLayout(0, 3));
+        colorCheckboxGroup.setBorder(filterBorder);
         colorOuterPanel.add(colorCheckboxGroup);
         mSearchPane.add(colorOuterPanel);
 
@@ -791,6 +853,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         JPanel typeOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
         JPanel typeCheckboxGroup = new JPanel();
         typeCheckboxGroup.setLayout(new GridLayout(0, 3));
+        typeCheckboxGroup.setBorder(filterBorder);
         typeOuterPanel.add(typeCheckboxGroup);
         mSearchPane.add(typeOuterPanel);
 
@@ -886,6 +949,39 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
         });
 
+        // ========================= HP ==================================
+        labelHP = new JLabel("HP", JLabel.LEFT);
+        labelHP.setFont(CRboldEXLarge);
+        componentFontMap.put(labelHP, "CRboldEXLarge"); // Store the font type as a String
+        JPanel HPLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the label
+        HPLabelPanel.add(labelHP);
+        mSearchPane.add(HPLabelPanel);
+
+        JPanel HPOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
+        JPanel HPCheckboxGroup = new JPanel();
+        HPCheckboxGroup.setLayout(new GridLayout(0, 6));
+        HPCheckboxGroup.setBorder(filterBorder);
+        HPOuterPanel.add(HPCheckboxGroup);
+        mSearchPane.add(HPOuterPanel);
+
+        cb_HP = new JCheckBox[CardUtil.HP_MAX];
+        for(int i=0; i<CardUtil.HP_MAX; i++) {
+            final int id = i;
+            final int hp = i+1;
+        	cb_HP[i] = new JCheckBox(Integer.toString(hp));
+        	cb_HP[i].setSelected(mDefaultState.getDefaultHPFlag(hp));
+            cb_HP[i].setFont(CRnormal);
+            componentFontMap.put(cb_HP[i], "CRnormal"); // Store the font type as a String
+            HPCheckboxGroup.add(cb_HP[i]);
+            
+            cb_HP[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                	mDefaultState.setDefaultHPFlag(hp, cb_HP[id].isSelected());
+                }
+            });
+            cb_HP[i].setEnabled(cb_type_cookie.isSelected());
+        }
+
         // ========================= pack ==================================
 
         labelSeries = new JLabel(CardUtil.getTranslation("series"), JLabel.LEFT);
@@ -899,6 +995,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         JPanel packOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
         JPanel packCheckboxGroup = new JPanel();
         packCheckboxGroup.setLayout(new GridLayout(0, 4));
+        packCheckboxGroup.setBorder(filterBorder);
         packOuterPanel.add(packCheckboxGroup);
         mSearchPane.add(packOuterPanel);
 
@@ -928,6 +1025,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         JPanel rarityOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
         JPanel rarityCheckboxGroup = new JPanel();
         rarityCheckboxGroup.setLayout(new GridLayout(0, 6));
+        rarityCheckboxGroup.setBorder(filterBorder);
         rarityOuterPanel.add(rarityCheckboxGroup);
         mSearchPane.add(rarityOuterPanel);
 
@@ -944,38 +1042,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 	mDefaultState.setDefaultRarityFlag(id, cb_rarity[id].isSelected());
                 }
             });
-        }
-
-        // ========================= HP ==================================
-        labelHP = new JLabel("HP", JLabel.LEFT);
-        labelHP.setFont(CRboldEXLarge);
-        componentFontMap.put(labelHP, "CRboldEXLarge"); // Store the font type as a String
-        JPanel HPLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the label
-        HPLabelPanel.add(labelHP);
-        mSearchPane.add(HPLabelPanel);
-
-        JPanel HPOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
-        JPanel HPCheckboxGroup = new JPanel();
-        HPCheckboxGroup.setLayout(new GridLayout(0, 6));
-        HPOuterPanel.add(HPCheckboxGroup);
-        mSearchPane.add(HPOuterPanel);
-
-        cb_HP = new JCheckBox[CardUtil.HP_MAX];
-        for(int i=0; i<CardUtil.HP_MAX; i++) {
-            final int id = i;
-            final int hp = i+1;
-        	cb_HP[i] = new JCheckBox(Integer.toString(hp));
-        	cb_HP[i].setSelected(mDefaultState.getDefaultHPFlag(hp));
-            cb_HP[i].setFont(CRnormal);
-            componentFontMap.put(cb_HP[i], "CRnormal"); // Store the font type as a String
-            HPCheckboxGroup.add(cb_HP[i]);
-            
-            cb_HP[i].addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                	mDefaultState.setDefaultHPFlag(hp, cb_HP[id].isSelected());
-                }
-            });
-            cb_HP[i].setEnabled(cb_type_cookie.isSelected());
         }
     }
 
@@ -1044,36 +1110,52 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     	}
         
         mCardsPane.removeAll();
-        UIUtil.showDeck(this, mCardsPane, list.getSelectCards(), 13, columns, UIUtil.CARD_SIZE_SMALL, false);
+        UIUtil.showDeck(this, mCardsPane, list.getSelectCards(), 13, columns, UIUtil.CARD_SIZE_SMALL, (isCollectionMode ? 2 : (Config.DECK_BUILD_FROM_COLLECTION ? 3 : 0)));
         mCardsPane.revalidate();
         mCardsPane.repaint();
     }
     
     private void updateDeck() {
         mDeckPane.removeAll();
-        UIUtil.showDeck(this, mDeckPane, mDeck.getAllCards(), 18, columns, UIUtil.CARD_SIZE_SMALL, true);
+        UIUtil.showDeck(this, mDeckPane, mDeck.getAllCards(), 18, columns, UIUtil.CARD_SIZE_SMALL, 1);
 
         mDeckPane.revalidate();
         mDeckPane.repaint();
         mCardCountTxt.setText(mDeck.getCardCount()-mDeck.getExtraCount()+"/60");
-        if ((mDeck.getCardCount()-mDeck.getExtraCount() > 60) || (!mDeck.getLegality())) {
+        if ((mDeck.getCardCount()-mDeck.getExtraCount() > 60) || (!mDeck.getLegality()) || (Config.DECK_BUILD_FROM_COLLECTION && !mDeck.getOwnershipLegality().isEmpty())) {
         	mCardCountTxt.setForeground(Color.RED);
+            String invalidReasonString = ((mDeck.getCardCount()-mDeck.getExtraCount() > 60) ? CardUtil.getTranslation("warning.overlimit") : "");
+            invalidReasonString = invalidReasonString + (!mDeck.getLegality() ? ((invalidReasonString.isEmpty()) ? CardUtil.getTranslation("warning.bannedoverlimit") : "<br>" + CardUtil.getTranslation("warning.bannedoverlimit")) : "");
+            if (Config.DECK_BUILD_FROM_COLLECTION && !mDeck.getOwnershipLegality().isEmpty()) {
+                invalidReasonString = invalidReasonString + ((invalidReasonString.isEmpty()) ? CardUtil.getTranslation("warning.collectionoverlimit") : "<br>" + CardUtil.getTranslation("warning.collectionoverlimit"));
+                for (String entry : mDeck.getOwnershipLegality()) {
+                    invalidReasonString = invalidReasonString + "<br>- " + entry;
+                }
+            }
+
+            System.out.println(mDeck.getOwnershipLegality());
+            mCardCountTxt.setToolTipText("<html>" + invalidReasonString + "</html>");
         } else {
         	mCardCountTxt.setForeground(Color.BLACK);
+            mCardCountTxt.setToolTipText(null);
         }
 
         mFlipCountTxt.setText(mDeck.getFlipCount()+"/16");
         if (mDeck.getFlipCount() > 16) {
         	mFlipCountTxt.setForeground(Color.RED);
+            mFlipCountTxt.setToolTipText("<html>" + CardUtil.getTranslation("warning.flipoverlimit") + "</html>");
         } else {
         	mFlipCountTxt.setForeground(Color.BLACK);
+            mFlipCountTxt.setToolTipText(null);
         }
 
         mExtraCountTxt.setText(mDeck.getExtraCount()+"/6");
         if (mDeck.getExtraCount() > 6) {
         	mExtraCountTxt.setForeground(Color.RED);
+            mExtraCountTxt.setToolTipText("<html>" + CardUtil.getTranslation("warning.extraoverlimit") + "</html>");
         } else {
         	mExtraCountTxt.setForeground(Color.BLACK);
+            mExtraCountTxt.setToolTipText(null);
         }
         
         int[] cookieSummary = mDeck.getCookieSummary();
@@ -1094,6 +1176,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         if (mDeck.addCard(card)) {
             mDeck.sort();
             updateDeck();
+            for (ClickableCardPanel panel : card.getPanels()) {
+                panel.updateCountsForCardList();
+            }
         }
     }
 
@@ -1103,6 +1188,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         if (mDeck.removeCard(card)) {
             mDeck.sort();
             updateDeck();
+            for (ClickableCardPanel panel : card.getPanels()) {
+                panel.updateCountsForCardList();
+            }
         }
     }
 
@@ -1187,9 +1275,14 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
     @Override
     public void onLanguageChange() {
+        isCollectionMode = false;
+        System.out.println("Language changed");
+        System.out.println(isCollectionMode);
         
         // Reload fonts and translations
         loadFont();
+        button_collection.setSelected(false);
+        button_collection.setText(CardUtil.getTranslation("collectionedit.enable"));
 
         // Update all components with the new translations
         frame.setTitle(CardUtil.getTranslation("app.title") + " v." + Constant.VERSION);
@@ -1234,15 +1327,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         button_sort.setText(CardUtil.getTranslation("sort.settings"));
         button_settings.setText(CardUtil.getTranslation("settings"));
 
-        cardTranslationAttackFlavorText.setText(null);
-        cardTranslationSkillIcon.setIcon(null);
-        cardTranslationSkillFlavorText.setText(null);
-        cardTranslationSkill.setText(null);
-        cardTranslationAttackCost.setText(null);
-        cardTranslationAttackIcon.setIcon(null);
-        cardTranslationAttack.setText(null);
-        cardTranslationAttackThen.setText(null);
-        cardTranslationFlip.setText(null);
+        clearTranslations();
 
         cardId.setText(null);
         cardName.setText(null);
@@ -1259,12 +1344,14 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         CardLoader.refreshAllCardNames();
         CardLoader.reloadTranslations(CardList.getInstance().getAllCards());
+        CardLoader.reloadCardNames(CardList.getInstance().getAllCards());
 
         sidebarPanel.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()));
         mCardDetailPane.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()-60));
         System.out.println(Config.CARD_PREVIEW_WIDTH + "x" + (frame.getBounds().getHeight()-60));
         System.out.println(mCardDetailPane.getWidth() + "x" + mCardDetailPane.getHeight());
 
+        updateUIForCollectionMode();
         updateCardList();
         updateDeck();
         
@@ -1272,6 +1359,18 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         frame.revalidate();
         frame.repaint();
         frame.getComponentListeners()[0].componentResized(null);
+    }
+
+    public void clearTranslations() {
+        cardTranslationAttackFlavorText.setText(null);
+        cardTranslationSkillIcon.setIcon(null);
+        cardTranslationSkillFlavorText.setText(null);
+        cardTranslationSkill.setText(null);
+        cardTranslationAttackCost.setText(null);
+        cardTranslationAttackIcon.setIcon(null);
+        cardTranslationAttack.setText(null);
+        cardTranslationAttackThen.setText(null);
+        cardTranslationFlip.setText(null);
     }
 
     private void updateComponents(java.awt.Container container) {
@@ -1338,5 +1437,104 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             default:
                 return null;
         }
+    }
+
+    private void updateUIForCollectionMode() {
+        if (isCollectionMode) {
+            int divLoc = splitPane.getDividerLocation();
+            int splitHeight = splitPane.getHeight();
+            previousSplitLocation = (double) (divLoc) / splitHeight;
+            mDeckPane.setVisible(false);
+            mDeckPaneLabel.setVisible(false);
+            mCardsPaneLabel.setText(CardUtil.getTranslation("collection"));
+            splitPane.setDividerLocation(0.0);
+            splitPane.setEnabled(false);
+            updateCardListForCollection();
+        } else {
+            mDeckPane.setVisible(true);
+            mDeckPaneLabel.setVisible(true);
+            mCardsPaneLabel.setText(CardUtil.getTranslation("cardlist"));
+            System.out.println(previousSplitLocation);
+            splitPane.setDividerLocation(previousSplitLocation);
+            splitPane.setEnabled(true);
+            collection.saveCollection();
+            updateCardList();
+        }
+    }
+
+    private class CollectionModeCallback implements CardListCallBack { // For redefining callback functions just for collection mode
+        @Override
+        public void addCard(Card card) {
+            // Increment the collection count
+            int newCount = collection.getCardOwnedCount(card.getId()) + 1;
+            collection.setCardOwnedCount(card.getId(), newCount);
+            updateCardListForCollection(); // Refresh the card list to show the updated count
+        }
+
+        @Override
+        public void removeCard(Card card) {
+            // Decrement the collection count
+            int newCount = collection.getCardOwnedCount(card.getId()) - 1;
+            collection.setCardOwnedCount(card.getId(), newCount);
+            updateCardListForCollection(); // Refresh the card list to show the updated count
+        }
+
+        @Override
+        public void showCard(Card card) {
+            // Show card details (same as in collection mode)
+            mCardDetailPane.removeAll();
+            cardIcon = new ImageIcon("resources/cards/" + Config.CARD_LANGUAGE + "/" + card.getPack() + "/" + card.getId() + ".png");
+
+            if (card.getMaxCount() == 1) {
+                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("restricted") + "]");
+                cardId.setForeground(new Color(160, 128, 0));
+            } else if (card.getMaxCount() == 0) {
+                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("banned") + "]");
+                cardId.setForeground(new Color(160, 0, 0));
+            } else {
+                cardId.setText(card.getId());
+                cardId.setForeground(Color.BLACK);
+            }
+
+            cardName.setText(card.getName());
+            clearTranslations();
+
+            mCardTranslationPane.revalidate();
+            mCardTranslationPane.repaint();
+            sidebarPanel.revalidate();
+            sidebarPanel.repaint();
+
+            int translationHeight = mCardTranslationPane.getPreferredSize().height;
+            int fileOpHeight = mFileOpPane.getHeight();
+            int sidebarHeight = sidebarPanel.getHeight();
+            int cardInfoHeight = cardId.getPreferredSize().height + cardName.getPreferredSize().height;
+
+            int textPadding = (Config.LARGE_TRANSLATION_TEXT ? 100 : 50);
+            previewHeight = Math.min(sidebarHeight - cardInfoHeight - (card.getCardTranslation() == null ? 0 : translationHeight) - fileOpHeight - textPadding, Config.CARD_PREVIEW_HEIGHT);
+
+            Image image = cardIcon.getImage().getScaledInstance((int) (previewHeight / Config.CARD_RATIO), previewHeight, java.awt.Image.SCALE_SMOOTH);
+            cardIcon = new ImageIcon(image);
+            JLabel cardLabel = new JLabel(cardIcon);
+            mCardDetailPane.add(cardLabel, BorderLayout.CENTER);
+            mCardDetailPane.revalidate();
+            mCardDetailPane.repaint();
+        }
+    }
+
+    private void updateCardListForCollection() {
+        mCardsPane.removeAll();
+        CardList list = CardList.getInstance();
+        List<Card> filteredCards = list.getSelectCards();
+
+        UIUtil.showDeck(new CollectionModeCallback(), mCardsPane, filteredCards, 13, columns, UIUtil.CARD_SIZE_SMALL, 2);
+        
+        for (Card card : filteredCards) {
+            for (ClickableCardPanel panel : card.getPanels()) {
+                panel.updateCountsForCardList();
+            }
+        }
+        
+        mCardsPane.revalidate();
+        mCardsPane.repaint();
     }
 }

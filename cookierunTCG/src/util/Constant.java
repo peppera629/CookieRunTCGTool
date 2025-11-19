@@ -1,5 +1,5 @@
 package util;
 
 public class Constant {
-	public static String VERSION = "0.7.5"; 
+	public static String VERSION = "0.8.0"; 
 }

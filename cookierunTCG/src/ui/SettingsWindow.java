@@ -31,7 +31,7 @@ public class SettingsWindow implements LanguageChangeListener{
     private JComboBox<String> languageDropdown, cardLanguageDropdown;
     private JButton btnConfirm;
     private JSlider cardPreviewScaleSlider, cardListScaleSlider;
-    private JToggleButton cardTranslationToggle, largeTranslationTextToggle;
+    private JToggleButton cardTranslationToggle, largeTranslationTextToggle, buildModeToggle;
 
 	public static void addLanguageChangeListener(LanguageChangeListener listener) {
         listeners.add(listener);
@@ -72,7 +72,7 @@ public class SettingsWindow implements LanguageChangeListener{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(150, 150, 650, 350);
+		frame.setBounds(150, 150, 650, 450);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -159,6 +159,32 @@ public class SettingsWindow implements LanguageChangeListener{
         gbc.gridy = 3;
         frame.getContentPane().add(cardPreviewScaleSlider, gbc);
 
+        // ==== Build From Collection mode toggle ====
+        buildModeToggle = new JToggleButton();
+        if (Config.DECK_BUILD_FROM_COLLECTION) {
+            buildModeToggle.setText(CardUtil.getTranslation("settings.deckbuildfromcollection") + ": " + CardUtil.getTranslation("settings.enabled"));
+            buildModeToggle.setSelected(true);
+        } else {
+            buildModeToggle.setText(CardUtil.getTranslation("settings.deckbuildfromcollection") + ": " + CardUtil.getTranslation("settings.disabled"));
+            buildModeToggle.setSelected(false);
+        }
+        buildModeToggle.setToolTipText(CardUtil.getTranslation("settings.deckbuildfromcollection.tooltip"));
+        buildModeToggle.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(buildModeToggle, "CRnormal");
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        frame.getContentPane().add(buildModeToggle, gbc);
+        buildModeToggle.addActionListener(e -> {
+            boolean isSelected = buildModeToggle.isSelected();
+            Config.DECK_BUILD_FROM_COLLECTION = isSelected;
+            if (isSelected) {
+                buildModeToggle.setText(CardUtil.getTranslation("settings.deckbuildfromcollection") + ": " + CardUtil.getTranslation("settings.enabled"));
+            } else {
+                buildModeToggle.setText(CardUtil.getTranslation("settings.deckbuildfromcollection") + ": " + CardUtil.getTranslation("settings.disabled"));
+            }
+        });
+
         // ==== Card Translation Toggle & Large Translation Text Toggle ====
         cardTranslationToggle = new JToggleButton();
         if (Config.CARD_TRANSLATION_ENABLED) {
@@ -169,7 +195,8 @@ public class SettingsWindow implements LanguageChangeListener{
         cardTranslationToggle.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(cardTranslationToggle, "CRnormal");
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridwidth = 1;
+        gbc.gridy = 5;
         frame.getContentPane().add(cardTranslationToggle, gbc);
 
         cardTranslationToggle.addActionListener(e -> {
@@ -191,7 +218,7 @@ public class SettingsWindow implements LanguageChangeListener{
         largeTranslationTextToggle.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(largeTranslationTextToggle, "CRnormal");
         gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         frame.getContentPane().add(largeTranslationTextToggle, gbc);
         largeTranslationTextToggle.addActionListener(e -> {
             boolean isSelected = largeTranslationTextToggle.isSelected();
@@ -211,7 +238,7 @@ public class SettingsWindow implements LanguageChangeListener{
         btnConfirm.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(btnConfirm, "CRnormal");
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         frame.getContentPane().add(btnConfirm, gbc);

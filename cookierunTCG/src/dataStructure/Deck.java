@@ -190,4 +190,14 @@ public class Deck {
 		}
 		return true;
 	}
+
+	public List<String> getOwnershipLegality() {
+		List<String> invalidCards = new ArrayList<String>();
+		for (Card card : cardList) {
+			if (card.getCount() > Collection.getInstance().getCardOwnedCount(card.getId())) {
+				invalidCards.add(card.getId());
+			}
+		}
+		return invalidCards;
+	}
 }

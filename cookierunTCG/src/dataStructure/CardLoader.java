@@ -80,6 +80,7 @@ public class CardLoader {
 		List<Card> cardList = new ArrayList<Card>();
 		for (int i=0; i<CardUtil.CardPack.size() ;i++) {
         	loadPack(CardUtil.CardPack.get(i), cardList);
+			loadCardNames(CardUtil.CardPack.get(i), cardList);
 			loadPackTranslations(CardUtil.CardPack.get(i), cardList);
 			loadRestrictedCards(CardUtil.CardPack.get(i), cardList);
 		}
@@ -91,10 +92,16 @@ public class CardLoader {
 			loadPackTranslations(CardUtil.CardPack.get(i), cardList);
 		}
 	}
+
+	public static void reloadCardNames(List<Card> cardList) {
+		for (int i=0; i<CardUtil.CardPack.size() ;i++) {
+			loadCardNames(CardUtil.CardPack.get(i), cardList);
+		}
+	}
 	
 	private static void loadPack(String packName, List<Card> cardList) {
 	    try {
-	        File file = new File("resources/card_config/pack/"+Config.LANGUAGE+"/"+packName+".txt");
+	        File file = new File("resources/card_config/pack/"+packName+".txt");
 			FileInputStream reader = new FileInputStream(file);
 	        BufferedReader input = new BufferedReader(
 	                new InputStreamReader(new FileInputStream(file), "utf-8")); 
@@ -102,12 +109,12 @@ public class CardLoader {
 	        while((data= input.readLine())!=null) {
 	            if (!data.equals("") && !data.startsWith("//")) {
 	            	String[] cardData = data.split(",");
-					//                0   1     2      3     4           5       6                7      8
-					// For each row: [ID, Name, Color, Type, FLIP/EXTRA, Rarity, Regulation Mark, Level, HP]
+					//                0   1      2     3                4       5                6      7
+					// For each row: [ID, Color, Type, FLIP Type/EXTRA, Rarity, Regulation Mark, Level, HP]
 	            	CardColor color = CardColor.Green;
 	            	for (int i=0; i<CardUtil.COLOR_MAX; i++) {
 	            		CardColor c = CardColor.fromValue(i);
-	            		if (cardData[2].equals(c.getName())) {
+	            		if (cardData[1].equals(c.getName())) {
 	            			color = c;
 	            			break;
 	            		}
@@ -116,38 +123,75 @@ public class CardLoader {
 	            	int level = 0;
 					int hp = 0;
 	            	CardType type;
-	            	if (cardData[3].equals("Cookie")) {
+	            	if (cardData[2].equals("Cookie")) {
 	            		type = CardType.Cookie;
-	            		if (cardData.length >7) {
-	            			level = Integer.parseInt(cardData[7]);
-							if (cardData.length >8) {
+	            		if (cardData.length >6) {
+	            			level = Integer.parseInt(cardData[6]);
+							if (cardData.length >7) {
 								// Awaken HP bonus is kept for later use
-								cardData[8] = cardData[8].replace("+", "");
-								hp = Integer.parseInt(cardData[8]);
+								cardData[7] = cardData[7].replace("+", "");
+								hp = Integer.parseInt(cardData[7]);
 							}
 	            		}
-	            	} else if (cardData[3].equals("Item")) {
+	            	} else if (cardData[2].equals("Item")) {
 	            		type = CardType.Item;
-	            	} else if (cardData[3].equals("Trap")) {
+	            	} else if (cardData[2].equals("Trap")) {
 	            		type = CardType.Trap;
-	            	} else if (cardData[3].equals("Stage")) {
+	            	} else if (cardData[2].equals("Stage")) {
 	            		type = CardType.Stage;
 	            	} else {
 	            		type = CardType.Cookie;
 	            	}
+
+					boolean isFlip = (cardData[3].equals("F") || cardData[3].equals("H") || cardData[3].equals("D")) || cardData[3].equals("S");
 	            	
-	            	Card c = new Card(packName, cardData[0], cardData[1], color, type, (cardData[4].equals("F") || cardData[4].equals("H") || cardData[4].equals("D")) || cardData[4].equals("S"),
-					cardData[4].equals("EX"), CardUtil.CardRarity.fromString(cardData[5]), cardData[6], level, hp);
+					// Name will be loaded later
+	            	Card c = new Card(packName, cardData[0], "", color, type, isFlip, (isFlip ? cardData[3] : ""), cardData[3].equals("EX"), CardUtil.CardRarity.fromString(cardData[4]), cardData[5], level, hp);
 
 	            	cardList.add(c);
 	            }
 	        }
+
 			reader.close();
 	        input.close();
+	        
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void loadCardNames(String packName, List<Card> cardList) {
+	    try {
+	        File file = new File("resources/card_config/names/"+Config.LANGUAGE+"/"+packName+".txt");
+			FileInputStream reader = new FileInputStream(file);
+	        BufferedReader input = new BufferedReader(
+	                new InputStreamReader(new FileInputStream(file), "utf-8")); 
+			String data;
+	        while((data= input.readLine())!=null) {
+	            if (!data.equals("") && !data.startsWith("//")) {
+	            	String[] cardData = data.split(",");
+					// For each row: [ID, Name]
+	            	for (Card c : cardList) {
+	            		if (c.getPack().equals(packName) && c.getId().equals(cardData[0])) {
+	            			c.setName(cardData[1]);
+	            			break;
+	            		}
+	            	}
+	            }
+	        }
+
+			reader.close();
+	        input.close();
+	        
+		} catch (FileNotFoundException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -200,7 +244,6 @@ public class CardLoader {
 										 .replace("【登場時】", iconPathOnPlay)
 										 .replace("\\n", "<br>");
 						}
-						System.out.println("Translation length: " + cardData.length);
 						//                0   1            2      3            4            5           6                   7
 						// For each row: [ID, Skill Name, Skill, Attack Cost, Attack Name, Attack DMG, Attack Then Effect, FLIP]
 						for (Card c : cardList) {
@@ -276,7 +319,6 @@ public class CardLoader {
 							System.err.println("Card ID not found: " + data);
 							continue; // Skip this card
 						}
-						System.out.println(card.getId());
 		            	deck.addCard(card);
 		            }
 		        } 

@@ -3,8 +3,11 @@ package dataStructure;
 import java.util.ArrayList;
 import java.util.List;
 
+import ui.ClickableCardPanel;
 import util.CardUtil;
 import util.CardUtil.CardType;
+
+// Card List: singleton class to manage all cards and selected cards based on search criteria
 
 public class CardList {
 	private static CardList instance;
@@ -180,5 +183,24 @@ public class CardList {
 	
 	public Card getCardById(String id) {
 		return cardList.stream().filter(card -> id.equals(card.getId())).findFirst().orElse(null);
+	}
+
+	public void clearCardListCount() {
+		for (Card card : cardList) {
+			card.setCount(0);
+		}
+	}
+
+	public void updateAllCardPanels() {
+		for (Card card : cardList) {
+			System.out.println(card.getId() + "/" + card.getCount());
+			for (ClickableCardPanel panel : card.getPanels()) {
+				if (panel.getCountShowMode() == 3) {
+					//System.out.println(card.getId());
+					panel.revalidate();
+					panel.repaint();
+				}
+			}
+		}
 	}
 }

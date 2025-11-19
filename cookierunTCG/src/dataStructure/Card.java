@@ -23,6 +23,7 @@ public class Card {
 	private CardColor _color;
 	private CardType _type;
 	private boolean _isFlip;
+	private String _flipType;
 	private boolean _isExtra;
 	private CardRarity _rarity;
 	private String _mark;
@@ -44,7 +45,7 @@ public class Card {
 	private String _translationFlip = "";
 	
 	public Card(String pack, String id, String name, CardColor color, CardType type,
-			boolean flip, boolean extra, CardRarity rarity, String mark, int lv, int hp) {
+			boolean flip, String flipType, boolean extra, CardRarity rarity, String mark, int lv, int hp) {
 		_PanelList = new ArrayList<ClickableCardPanel>();
 		_serial_number = SERIAL_NUMBER++;
 		_pack = pack;
@@ -53,6 +54,7 @@ public class Card {
 		_color = color;
 		_type = type;
 		_isFlip = flip;
+		_flipType = flipType;
 		_isExtra = extra;
 		_rarity = rarity;
 		_mark = mark;
@@ -165,9 +167,17 @@ public class Card {
 	public int getHP() {
 		return _hp;
 	}
+
+	public boolean getOwnershipLegality() {
+		return (Collection.getInstance().getCardOwnedCount(_id) >= _cardCount);
+	}
 	
 	public boolean isFlip() {
 		return _isFlip;
+	}
+
+	public String getFlipType() {
+		return _flipType;
 	}
 
 	public boolean isExtra() {

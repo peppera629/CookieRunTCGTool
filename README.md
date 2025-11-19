@@ -1,5 +1,17 @@
 Note: Card images are not included in the source code, nor are any preset deck configurations.
 
+=== Version 0.8.0 : 2025-11-19
+- New "Collection" mode. You can keep track of the cards you own using a dedicated menu. (Secret rare and variant tracking will be available in the future)
+- "Build from Collection" mode: number of copies you own for each card will be displayed, and you'll get a warning when cards you don't own or don't have enough of are added to the deck
+- Added tooltips for invalid decks (check by hovering over red UI text) and certain UI elements
+- Minor UI adjustments
+- Card names and card attributes are modularized for easier maintenance
+- Fixed some card attribute errors
+
+=== Version 0.7.5 : 2025-11-13
+- Implemented "enlarge translation text" feature
+- Fixed bugs related to translation text
+
 === Version 0.7.0 : 2025-11-11
 - Added filtering by HP
 - Added display and icons for restricted and banned cards

@@ -7,6 +7,7 @@ cookierunTCG/bin/dataStructure
 cookierunTCG/bin/util
 
 cookierunTCG/resources/cards
+cookierunTCG/resources/cards_variant
 cookierunTCG/deck/*
 cookierunTCG/deck_readable/*
 compile.bat
