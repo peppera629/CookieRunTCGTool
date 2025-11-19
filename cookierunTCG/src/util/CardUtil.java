@@ -135,6 +135,37 @@ public class CardUtil {
 
 	}
 
+	public enum FlipType {
+		H(0), D(1), S(2);
+	    private final int value;
+
+	    private FlipType(int value) {
+	        this.value = value;
+	    }
+
+	    public int getValue() {
+	        return value;
+	    }
+
+		public static FlipType fromString(String flipTypeStr) {
+			for (FlipType type : FlipType.values()) {
+	            if (type.name().equals(flipTypeStr)) {
+	                return type;
+	            }
+	        }
+	        throw new IllegalArgumentException("No enum constant with name " + flipTypeStr);
+		}
+
+		public static FlipType fromValue(int value) {
+	        for (FlipType type : FlipType.values()) {
+	            if (type.getValue() == value) {
+	                return type;
+	            }
+	        }
+	        throw new IllegalArgumentException("No enum constant with value " + value);
+		}
+	}
+
 	public static ImageIcon CardBack;
 	
 	

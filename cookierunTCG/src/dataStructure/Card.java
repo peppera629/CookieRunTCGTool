@@ -10,6 +10,7 @@ import ui.ClickableCardPanel;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardRarity;
 import util.CardUtil.CardType;
+import util.CardUtil.FlipType;
 import util.CardUtil;
 import util.Config;
 
@@ -23,7 +24,7 @@ public class Card {
 	private CardColor _color;
 	private CardType _type;
 	private boolean _isFlip;
-	private String _flipType;
+	private FlipType _flipType;
 	private boolean _isExtra;
 	private CardRarity _rarity;
 	private String _mark;
@@ -45,7 +46,7 @@ public class Card {
 	private String _translationFlip = "";
 	
 	public Card(String pack, String id, String name, CardColor color, CardType type,
-			boolean flip, String flipType, boolean extra, CardRarity rarity, String mark, int lv, int hp) {
+			boolean flip, FlipType flipType, boolean extra, CardRarity rarity, String mark, int lv, int hp) {
 		_PanelList = new ArrayList<ClickableCardPanel>();
 		_serial_number = SERIAL_NUMBER++;
 		_pack = pack;
@@ -176,7 +177,7 @@ public class Card {
 		return _isFlip;
 	}
 
-	public String getFlipType() {
+	public FlipType getFlipType() {
 		return _flipType;
 	}
 

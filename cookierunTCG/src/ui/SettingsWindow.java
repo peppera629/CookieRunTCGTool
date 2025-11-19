@@ -31,7 +31,7 @@ public class SettingsWindow implements LanguageChangeListener{
     private JComboBox<String> languageDropdown, cardLanguageDropdown;
     private JButton btnConfirm;
     private JSlider cardPreviewScaleSlider, cardListScaleSlider;
-    private JToggleButton cardTranslationToggle, largeTranslationTextToggle, buildModeToggle;
+    private JToggleButton cardTranslationToggle, largeTranslationTextToggle, buildModeToggle, showOwnedOnlyToggle;
 
 	public static void addLanguageChangeListener(LanguageChangeListener listener) {
         listeners.add(listener);
@@ -173,7 +173,6 @@ public class SettingsWindow implements LanguageChangeListener{
         MainUI.componentFontMap.put(buildModeToggle, "CRnormal");
         gbc.gridx = 0;
         gbc.gridy = 4;
-        gbc.gridwidth = 2;
         frame.getContentPane().add(buildModeToggle, gbc);
         buildModeToggle.addActionListener(e -> {
             boolean isSelected = buildModeToggle.isSelected();
@@ -182,6 +181,30 @@ public class SettingsWindow implements LanguageChangeListener{
                 buildModeToggle.setText(CardUtil.getTranslation("settings.deckbuildfromcollection") + ": " + CardUtil.getTranslation("settings.enabled"));
             } else {
                 buildModeToggle.setText(CardUtil.getTranslation("settings.deckbuildfromcollection") + ": " + CardUtil.getTranslation("settings.disabled"));
+            }
+        });
+
+        showOwnedOnlyToggle = new JToggleButton();
+        if (Config.SHOW_OWNED_ONLY) {
+            showOwnedOnlyToggle.setText(CardUtil.getTranslation("settings.showownedonly") + ": " + CardUtil.getTranslation("settings.enabled"));
+            showOwnedOnlyToggle.setSelected(true);
+        } else {
+            showOwnedOnlyToggle.setText(CardUtil.getTranslation("settings.showownedonly") + ": " + CardUtil.getTranslation("settings.disabled"));
+            showOwnedOnlyToggle.setSelected(false);
+        }
+        showOwnedOnlyToggle.setFont(MainUI.CRnormal);
+        showOwnedOnlyToggle.setToolTipText(CardUtil.getTranslation("settings.showownedonly.tooltip"));
+        MainUI.componentFontMap.put(showOwnedOnlyToggle, "CRnormal");
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        frame.getContentPane().add(showOwnedOnlyToggle, gbc);
+        showOwnedOnlyToggle.addActionListener(e -> {
+            boolean isSelected = showOwnedOnlyToggle.isSelected();
+            Config.SHOW_OWNED_ONLY = isSelected;
+            if (isSelected) {
+                showOwnedOnlyToggle.setText(CardUtil.getTranslation("settings.showownedonly") + ": " + CardUtil.getTranslation("settings.enabled"));
+            } else {
+                showOwnedOnlyToggle.setText(CardUtil.getTranslation("settings.showownedonly") + ": " + CardUtil.getTranslation("settings.disabled"));
             }
         });
 

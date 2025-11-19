@@ -141,6 +141,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     //search panel
     private JPanel mSearchPane, sidebarPanel;
     private JCheckBox[] cb_color;
+    private JCheckBox[] cb_flipType;
     private JCheckBox[] cb_level;
     private JCheckBox[] cb_pack;
     private JCheckBox[] cb_rarity;
@@ -252,34 +253,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         GridBagConstraints gbc_buttons = new GridBagConstraints();
         gbc_buttons.fill = GridBagConstraints.BOTH;
         gbc_buttons.gridx = 0;
-        gbc_buttons.gridy = 0;
         gbc_buttons.weightx = 1.0;
-        gbc_buttons.gridwidth = 2;
-        gbc_buttons.insets = new Insets(3, 3, 3, 3);
-        button_collection = new JToggleButton();
-        if (isCollectionMode) {
-            button_collection.setText(CardUtil.getTranslation("collectionedit.disable"));
-        } else {
-            button_collection.setText(CardUtil.getTranslation("collectionedit.enable"));
-        }
-        button_collection.setFont(CRnormalLarge);
-        componentFontMap.put(button_collection, "CRnormalLarge"); // Store the font type as a String
-        searchPanelButtons.add(button_collection, gbc_buttons);
-        
-        button_collection.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	isCollectionMode = button_collection.isSelected();
-            	if (isCollectionMode) {
-            		button_collection.setText(CardUtil.getTranslation("collectionedit.disable"));
-            	} else {
-            		button_collection.setText(CardUtil.getTranslation("collectionedit.enable"));
-            	}
-            	updateUIForCollectionMode();
-            }
-        });
-
-        gbc_buttons.gridy = 1;
+        gbc_buttons.gridy = 0;
         gbc_buttons.gridwidth = 1;
+        gbc_buttons.insets = new Insets(3, 3, 3, 3);
         
         button_search = new JButton(CardUtil.getTranslation("search"));
         button_search.setFont(CRnormalLarge);
@@ -313,7 +290,34 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
         });
 
+        gbc_buttons.gridy = 1;
         gbc_buttons.gridx = 0;
+        gbc_buttons.gridwidth = 2;
+        
+        button_collection = new JToggleButton();
+        if (isCollectionMode) {
+            button_collection.setText(CardUtil.getTranslation("collectionedit.disable"));
+        } else {
+            button_collection.setText(CardUtil.getTranslation("collectionedit.enable"));
+        }
+        button_collection.setFont(CRnormal);
+        componentFontMap.put(button_collection, "CRnormal"); // Store the font type as a String
+        searchPanelButtons.add(button_collection, gbc_buttons);
+        
+        button_collection.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	isCollectionMode = button_collection.isSelected();
+            	if (isCollectionMode) {
+            		button_collection.setText(CardUtil.getTranslation("collectionedit.disable"));
+            	} else {
+            		button_collection.setText(CardUtil.getTranslation("collectionedit.enable"));
+            	}
+            	updateUIForCollectionMode();
+            }
+        });
+
+        gbc_buttons.gridx = 0;
+        gbc_buttons.gridwidth = 1;
         gbc_buttons.gridy = 2;
         button_sort = new JButton(CardUtil.getTranslation("sort.settings"));
         button_sort.setFont(CRnormal);
@@ -852,7 +856,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         JPanel typeOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
         JPanel typeCheckboxGroup = new JPanel();
-        typeCheckboxGroup.setLayout(new GridLayout(0, 3));
+        typeCheckboxGroup.setLayout(new GridLayout(0, 4));
         typeCheckboxGroup.setBorder(filterBorder);
         typeOuterPanel.add(typeCheckboxGroup);
         mSearchPane.add(typeOuterPanel);
@@ -873,29 +877,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 }
             }
         });
-        
-        cb_flip = new JCheckBox(CardUtil.getTranslation("filter.flip"));
-        cb_flip.setSelected(mDefaultState.getDefaultFlipFlag());
-        cb_flip.setFont(CRnormal);
-        componentFontMap.put(cb_flip, "CRnormal"); // Store the font type as a String
-        typeCheckboxGroup.add(cb_flip);
-        cb_flip.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	mDefaultState.setDefaultFlipFlag(cb_flip.isSelected());
-            }
-        });
 
-        cb_extra = new JCheckBox(CardUtil.getTranslation("filter.extra"));
-        cb_extra.setSelected(mDefaultState.getDefaultExtraFlag());
-        cb_extra.setFont(CRnormal);
-        componentFontMap.put(cb_extra, "CRnormal"); // Store the font type as a String
-        typeCheckboxGroup.add(cb_extra);
-        cb_extra.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	mDefaultState.setDefaultExtraFlag(cb_extra.isSelected());
-            }
-        });
-        
         cb_level = new JCheckBox[CardUtil.LEVEL_MAX];
         for(int i=0; i<CardUtil.LEVEL_MAX; i++) {
         	final int lv = i+1;
@@ -913,7 +895,50 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             cb_level[i].setEnabled(cb_type_cookie.isSelected());
             
         }
+        
+        cb_flip = new JCheckBox(CardUtil.getTranslation("filter.flip"));
+        cb_flip.setSelected(mDefaultState.getDefaultFlipFlag());
+        cb_flip.setFont(CRnormal);
+        componentFontMap.put(cb_flip, "CRnormal"); // Store the font type as a String
+        typeCheckboxGroup.add(cb_flip);
+        cb_flip.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	mDefaultState.setDefaultFlipFlag(cb_flip.isSelected());
+                for (JCheckBox cb : cb_flipType) {
+            		cb.setEnabled(cb_flip.isSelected());
+            	}
+            }
+        });
 
+        cb_flipType = new JCheckBox[3];
+        cb_flipType[0] = new JCheckBox(CardUtil.getTranslation("flip.heal"));
+        cb_flipType[1] = new JCheckBox(CardUtil.getTranslation("flip.draw"));
+        cb_flipType[2] = new JCheckBox(CardUtil.getTranslation("flip.special"));
+        for (int i=0; i<3; i++) {
+        	final int id = i;
+        	cb_flipType[i].setSelected(mDefaultState.getDefaultFlipTypeFlag(i));
+            cb_flipType[i].setFont(CRnormal);
+            componentFontMap.put(cb_flipType[i], "CRnormal"); // Store the font type as a String
+            typeCheckboxGroup.add(cb_flipType[i]);
+            cb_flipType[i].setEnabled(cb_flip.isSelected());
+            cb_flipType[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                	mDefaultState.setDefaultFlipTypeFlag(id, cb_flipType[id].isSelected());
+                }
+            });
+        }
+
+        cb_extra = new JCheckBox(CardUtil.getTranslation("filter.extra"));
+        cb_extra.setSelected(mDefaultState.getDefaultExtraFlag());
+        cb_extra.setFont(CRnormal);
+        componentFontMap.put(cb_extra, "CRnormal"); // Store the font type as a String
+        typeCheckboxGroup.add(cb_extra);
+        cb_extra.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	mDefaultState.setDefaultExtraFlag(cb_extra.isSelected());
+            }
+        });
+        
         cb_type_item = new JCheckBox(CardUtil.getTranslation("filter.item"));
         cb_type_item.setSelected(mDefaultState.getDefaultTypeFlag(1));
         cb_type_item.setFont(CRnormal);
@@ -1104,13 +1129,16 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             list.setPack(CardUtil.CardPack.get(i), cb_pack[i].isSelected());
     	}
         list.setFlip(cb_flip.isSelected());
+        for (int i=0; i< cb_flipType.length; i++) {
+            list.setFlipType(i, cb_flipType[i].isSelected());
+        }
         list.setExtra(cb_extra.isSelected());
         for (int i=0; i< cb_rarity.length; i++) {
             list.setRarity(i, cb_rarity[i].isSelected());
     	}
         
         mCardsPane.removeAll();
-        UIUtil.showDeck(this, mCardsPane, list.getSelectCards(), 13, columns, UIUtil.CARD_SIZE_SMALL, (isCollectionMode ? 2 : (Config.DECK_BUILD_FROM_COLLECTION ? 3 : 0)));
+        UIUtil.showDeck(this, mCardsPane, list.getSelectCards(false), 13, columns, UIUtil.CARD_SIZE_SMALL, (isCollectionMode ? 2 : (Config.DECK_BUILD_FROM_COLLECTION ? 3 : 0)));
         mCardsPane.revalidate();
         mCardsPane.repaint();
     }
@@ -1315,6 +1343,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         labelType.setText(CardUtil.getTranslation("type"));
         cb_type_cookie.setText(CardUtil.getTranslation("filter.cookie"));
         cb_flip.setText(CardUtil.getTranslation("filter.flip"));
+        cb_flipType[0].setText(CardUtil.getTranslation("flip.heal"));
+        cb_flipType[1].setText(CardUtil.getTranslation("flip.draw"));
+        cb_flipType[2].setText(CardUtil.getTranslation("flip.special"));
         cb_extra.setText(CardUtil.getTranslation("filter.extra"));
         cb_type_item.setText(CardUtil.getTranslation("filter.item"));
         cb_type_trap.setText(CardUtil.getTranslation("filter.trap"));
@@ -1524,7 +1555,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private void updateCardListForCollection() {
         mCardsPane.removeAll();
         CardList list = CardList.getInstance();
-        List<Card> filteredCards = list.getSelectCards();
+        List<Card> filteredCards = list.getSelectCards(true); // Ignore ownership for colleciton mode view
 
         UIUtil.showDeck(new CollectionModeCallback(), mCardsPane, filteredCards, 13, columns, UIUtil.CARD_SIZE_SMALL, 2);
         

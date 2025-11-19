@@ -25,6 +25,7 @@ public class DefaultState {
 	public String DeckName = "NewDeck";
 	public boolean[] color;
 	public boolean[] type;
+	public boolean[] flipType;
 	public boolean[] lv;
 	public boolean[] hp;
 	public boolean[] rarity;
@@ -45,6 +46,7 @@ public class DefaultState {
 	private DefaultState() {
 		color = new boolean[CardUtil.COLOR_MAX];
 		type = new boolean[CardUtil.TYPE_MAX];
+		flipType = new boolean[3]; // Heal, Draw, Special
 		rarity = new boolean[CardUtil.RARITY_MAX];
 		lv = new boolean[CardUtil.LEVEL_MAX + 1];
 		hp = new boolean[CardUtil.HP_MAX + 1];
@@ -99,6 +101,18 @@ public class DefaultState {
 			if ((data = input.readLine()) != null) {
 				if (data.equals("v")) {
 					flip = true;
+				}
+			}
+
+			// flip type
+			if ((data = input.readLine()) != null) {
+				String[] flags = data.split(",");
+				for (int i = 0; i < flags.length; i++) {
+					if (flipType.length > i) {
+						if (flags[i].equals("v")) {
+							flipType[i] = true;
+						}
+					}
 				}
 			}
 
@@ -296,6 +310,10 @@ public class DefaultState {
 		return flip;
 	}
 
+	public boolean getDefaultFlipTypeFlag(int i) {
+		return flipType[i];
+	}
+
 	public boolean getDefaultExtraFlag() {
 		return extra;
 	}
@@ -342,6 +360,10 @@ public class DefaultState {
 
 	public void setDefaultFlipFlag(boolean selected) {
 		flip = selected;
+	}
+
+	public void setDefaultFlipTypeFlag(int i, boolean selected) {
+		flipType[i] = selected;
 	}
 
 	public void setDefaultLvFlag(int i, boolean selected) {

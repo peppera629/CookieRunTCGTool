@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ui.ClickableCardPanel;
+import util.Config;
 import util.CardUtil;
 import util.CardUtil.CardType;
 
@@ -20,6 +21,7 @@ public class CardList {
 	private boolean _search_type[];
 	private boolean _search_lv[];
 	private boolean _search_flip;
+	private boolean _search_flip_type[];
 	private boolean _search_extra;
 	private boolean _search_rarity[];
 	private boolean _search_hp[];
@@ -39,6 +41,7 @@ public class CardList {
 		_search_type = new boolean[CardUtil.TYPE_MAX];
 		_search_lv = new boolean[CardUtil.LEVEL_MAX + 1];
 		_search_flip = false;
+		_search_flip_type = new boolean[3];
 		_search_extra = false;
 		_search_rarity = new boolean[CardUtil.RARITY_MAX];
 		_search_hp = new boolean[CardUtil.HP_MAX + 1];
@@ -49,10 +52,11 @@ public class CardList {
 		return cardList;
 	}
 	
-	public List<Card> getSelectCards() {	
+	public List<Card> getSelectCards(boolean forceShowAll) {	
 		boolean selectColor = isSelectedColor();
 		boolean selectType = isSelectedType();
 		boolean selectLv = isSelectedLv();
+		boolean selectFlipType = isSelectedFlipType();
 		boolean selectHP = isSelectedHP();
 		boolean selectRarity = isSelectedRarity();
 		if (!selectColor && !selectType && !_search_flip && !_search_extra && !selectRarity && !selectHP && _search_pack_list.size() == 0) {
@@ -63,12 +67,14 @@ public class CardList {
 		boolean colorCorrect;
 		boolean typeCorrect;
 		boolean flipCorrect;
+		boolean flipTypeCorrect;
 		boolean extraCorrect;
 		boolean rarityCorrect;
 		boolean lvCorrect;
 		boolean hpCorrect;
 		boolean packCorrect;
-		dumpPackList();
+		boolean owned;
+		//dumpPackList();
 		for (Card c: cardList) {
 			colorCorrect = !selectColor || _search_color[c.getColor().getValue()];
 			typeCorrect = !selectType || _search_type[c.getType().getValue()];
@@ -77,16 +83,23 @@ public class CardList {
 					|| c.getType() != CardType.Cookie || _search_lv[c.getLv()];
 			hpCorrect = !selectHP || !_search_type[CardType.Cookie.getValue()]
 					|| c.getType() != CardType.Cookie || _search_hp[c.getHP()];
-			//System.out.println(!selectHP+" "+!_search_type[CardType.Cookie.getValue()]+" "+(c.getType() != CardType.Cookie)+" "+_search_hp[c.getHP()]);
 			flipCorrect = !_search_flip || c.isFlip();
+			flipTypeCorrect = !selectFlipType || !_search_flip || !c.isFlip() || _search_flip_type[c.getFlipType().getValue()];
 			extraCorrect = !_search_extra || c.isExtra();
 			rarityCorrect = !selectRarity || _search_rarity[c.getRarity().getValue()];
 			packCorrect = _search_pack_list.size() == 0 || _search_pack_list.contains(c.getPack());
-			//System.out.println(_search_hp[0]+" "+_search_hp[1]+" "+_search_hp[2]+" "+_search_hp[3]+" "+_search_hp[4]+" "+_search_hp[5]+" "+_search_hp[6]);
-			//c.dump();
-			if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && extraCorrect && rarityCorrect && packCorrect) {
-				selectList.add(c);
+			owned = Collection.getInstance().getCardOwnedCount(c.getId()) > 0;
+			if (forceShowAll) {
+				if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && packCorrect) {
+					selectList.add(c);
+				}
+			} else {
+				if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && packCorrect
+					&& (!Config.SHOW_OWNED_ONLY || owned)) {
+					selectList.add(c);
+				}
 			}
+			
 		}
 		System.out.println("selectList size : "+selectList.size());
 		return selectList;
@@ -113,6 +126,15 @@ public class CardList {
 	private boolean isSelectedLv() {
 		for (int i=0; i<=CardUtil.LEVEL_MAX; i++) {
 			if(_search_lv[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isSelectedFlipType() {
+		for (int i=0; i<3; i++) {
+			if(_search_flip_type[i]) {
 				return true;
 			}
 		}
@@ -151,6 +173,10 @@ public class CardList {
 
 	public void setFlip(boolean enabled) {
 		_search_flip = enabled;
+	}
+
+	public void setFlipType(int id, boolean enabled) {
+		_search_flip_type[id] = enabled;
 	}
 
 	public void setExtra(boolean enabled) {

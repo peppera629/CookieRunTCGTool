@@ -16,6 +16,7 @@ import util.UIUtil;
 import util.CardUtil;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardType;
+import util.CardUtil.FlipType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,8 +147,7 @@ public class CardLoader {
 					boolean isFlip = (cardData[3].equals("F") || cardData[3].equals("H") || cardData[3].equals("D")) || cardData[3].equals("S");
 	            	
 					// Name will be loaded later
-	            	Card c = new Card(packName, cardData[0], "", color, type, isFlip, (isFlip ? cardData[3] : ""), cardData[3].equals("EX"), CardUtil.CardRarity.fromString(cardData[4]), cardData[5], level, hp);
-
+	            	Card c = new Card(packName, cardData[0], "", color, type, isFlip, (isFlip ? FlipType.fromString(cardData[3]) : null), cardData[3].equals("EX"), CardUtil.CardRarity.fromString(cardData[4]), cardData[5], level, hp);
 	            	cardList.add(c);
 	            }
 	        }
