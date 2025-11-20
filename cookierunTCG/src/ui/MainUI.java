@@ -76,6 +76,7 @@ import javax.swing.JButton;
 
 // FEATURE: Include secret/promo cards in collection mode
 // FEATURE: Add buttons to hide/show filter menu and card preview panels
+// FEATURE: Save reminders when loading new deck or closing program with unsaved changes
 // FIX: Add auto-resize to deck overview
 // OPTIMIZATION: Reduce memory usage (somehow)
 
@@ -747,6 +748,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 CardLoader.saveDeck(mDeckText.getText(), mDeck);
                 mDefaultState.setDefaultDeckName(mDeckText.getText());
                 mDefaultState.saveDefaultState();
+                Dialog dialog = new Dialog();
+                dialog.show(CardUtil.getTranslation("deck.saved"));
             }
         });
 
@@ -1143,8 +1146,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             invalidReasonString = invalidReasonString + (!mDeck.getLegality() ? ((invalidReasonString.isEmpty()) ? CardUtil.getTranslation("warning.bannedoverlimit") : "<br>" + CardUtil.getTranslation("warning.bannedoverlimit")) : "");
             if (Config.DECK_BUILD_FROM_COLLECTION && !mDeck.getOwnershipLegality().isEmpty()) {
                 invalidReasonString = invalidReasonString + ((invalidReasonString.isEmpty()) ? CardUtil.getTranslation("warning.collectionoverlimit") : "<br>" + CardUtil.getTranslation("warning.collectionoverlimit"));
-                for (String entry : mDeck.getOwnershipLegality()) {
-                    invalidReasonString = invalidReasonString + "<br>- " + entry;
+                for (Card entry : mDeck.getOwnershipLegality()) {
+                    invalidReasonString = invalidReasonString + "<br>- " + entry.getId() + " " + entry.getName();
                 }
             }
 

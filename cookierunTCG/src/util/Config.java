@@ -69,10 +69,10 @@ public class Config {
 	public static int SMALL_CARD_WIDTH = ((int) (120 * CARD_ICON_SCALE) == 0 ? 120 : (int) (120 * CARD_ICON_SCALE));
 	public static int SMALL_CARD_HEIGHT = (int) (SMALL_CARD_WIDTH * CARD_RATIO);
 	
-	public static int DW_CARD_WIDTH = 180;
+	public static int DW_CARD_WIDTH = 150;
 	public static int DW_CARD_HEIGHT = (int) (DW_CARD_WIDTH * CARD_RATIO);
 	
-	public static int DW_OUTPUT_WIDTH = 300;
+	public static int DW_OUTPUT_WIDTH = 400;
 	public static int DW_OUTPUT_HEIGHT = (int) (DW_OUTPUT_WIDTH * CARD_RATIO);
 
 	public static boolean CARD_TRANSLATION_ENABLED = true;

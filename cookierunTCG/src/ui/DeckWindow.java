@@ -21,6 +21,7 @@ import dataStructure.Deck;
 import util.Config;
 import util.UIUtil;
 import util.CardUtil;
+import ui.MainUI;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -108,7 +109,8 @@ public class DeckWindow {
 				outputImage();
 			}
 		});
-		btnNewButton.setBounds(5, h + 10, w - 15, 23);
+		btnNewButton.setBounds(4, h, w - 15, 30);
+		btnNewButton.setFont(MainUI.CRbold);
 		frame.getContentPane().add(btnNewButton);
 		createOutputWindow();
 	}
@@ -135,6 +137,8 @@ public class DeckWindow {
 		try {
 			ImageIO.write(image, "png", outputFile);
 			System.out.println("圖片已保存至 " + outputFile.getAbsolutePath());
+			Dialog dialog = new Dialog();
+			dialog.show(CardUtil.getTranslation("deck.imagesaved") + outputFile.getAbsolutePath());
 		} catch (IOException e) {
 			System.out.println("保存圖片時出現錯誤: " + e.getMessage());
 		}
