@@ -1,10 +1,10 @@
 #Application Configuration
-#Thu Nov 20 12:15:09 CST 2025
+#Thu Nov 20 12:17:51 CST 2025
 card_icon_scale=1.0
-card_language=en
+card_language=zh_TW
 card_preview_scale=1.0
 card_translation=true
 deck_build_from_collection=true
-language=en
+language=zh_TW
 large_translation_text=false
 show_owned_only=true

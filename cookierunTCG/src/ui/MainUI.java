@@ -75,11 +75,9 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 
 // FEATURE: Include secret/promo cards in collection mode
-// FEATURE: Add FLIP card types and filtering (Heal/Draw/Special)
-// FEATURE: Find better way to present Lv1~3 Cookie distribution and somehow fit FLIP type distribution
 // FEATURE: Add buttons to hide/show filter menu and card preview panels
 // FIX: Add auto-resize to deck overview
-// FIX: Decide on desired behavior when switching languages while in Collection mode
+// OPTIMIZATION: Reduce memory usage (somehow)
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
 
