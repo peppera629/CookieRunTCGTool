@@ -14,6 +14,7 @@ public class CardList {
 	private static CardList instance;
 	private List<Card> cardList;
 	private List<Card> selectList;
+	private List<Card> ownedList;
 
 	private String _id;
 	private String _name;
@@ -36,6 +37,7 @@ public class CardList {
 	
 	private CardList() {
 		selectList = new ArrayList<Card>();
+		ownedList = new ArrayList<Card>();
 		cardList = CardLoader.loadAllCards();
 		_search_color = new boolean[CardUtil.COLOR_MAX];
 		_search_type = new boolean[CardUtil.TYPE_MAX];
@@ -51,6 +53,16 @@ public class CardList {
 	public List<Card> getAllCards() {
 		return cardList;
 	}
+
+	public List<Card> getOwnedCards() {
+		for (Card c : cardList) {
+			int ownedCount = Collection.getInstance().getCardOwnedCount(c.getId());
+			if (ownedCount > 0) {
+				ownedList.add(c);
+			}
+		}
+		return ownedList;
+	}
 	
 	public List<Card> getSelectCards(boolean forceShowAll) {	
 		boolean selectColor = isSelectedColor();
@@ -60,7 +72,11 @@ public class CardList {
 		boolean selectHP = isSelectedHP();
 		boolean selectRarity = isSelectedRarity();
 		if (!selectColor && !selectType && !_search_flip && !_search_extra && !selectRarity && !selectHP && _search_pack_list.size() == 0) {
-			return getAllCards();
+			if (Config.SHOW_OWNED_ONLY && !forceShowAll) {
+				return getOwnedCards();
+			} else {
+				return getAllCards();
+			}
 		}
 		
 		selectList.clear();

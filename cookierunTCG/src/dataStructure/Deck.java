@@ -10,6 +10,7 @@ public class Deck {
 	private List<Card> flipList;
 	private List<Card> extraList;
 	private List<Card>[] CookieList;
+	private List<Card>[] flipTypeList;
 	private List<Card> ItemList;
 	private List<Card> TrapList;
 	private List<Card> StageList;
@@ -17,10 +18,14 @@ public class Deck {
 	public Deck() {
 		cardList = new ArrayList<Card>();
 		flipList = new ArrayList<Card>();
+		flipTypeList = new ArrayList[3];
 		extraList = new ArrayList<Card>();
 		CookieList = new ArrayList[4];
 		for(int i=0;i<=3;i++) {
 			CookieList[i] = new ArrayList<Card>();
+		}
+		for(int i=0;i<=2;i++) {
+			flipTypeList[i] = new ArrayList<Card>();
 		}
 		ItemList = new ArrayList<Card>();
 		TrapList = new ArrayList<Card>();
@@ -65,6 +70,9 @@ public class Deck {
 			case Cookie:
 				if(card.isFlip()) {
 					flipList.add(card);
+					if(card.getFlipType() != null){
+						flipTypeList[card.getFlipType().getValue()].add(card);
+					}
 				}
 				if(card.isExtra()) {
 					extraList.add(card);
@@ -103,6 +111,9 @@ public class Deck {
 			case Cookie:
 				if(card.isFlip()) {
 					flipList.remove(card);
+					if(card.getFlipType() != null){
+						flipTypeList[card.getFlipType().getValue()].remove(card);
+					}
 				}
 				if(card.isExtra()) {
 					extraList.remove(card);
@@ -125,11 +136,13 @@ public class Deck {
 	public void clear() {
 		cardList.clear();
 		flipList.clear();
+		for(int i=0;i<=2;i++) {
+			flipTypeList[i].clear();
+		}
 		extraList.clear();
-		CookieList[0].clear();
-		CookieList[1].clear();
-		CookieList[2].clear();
-		CookieList[3].clear();
+		for(int i=0;i<=3;i++) {
+			CookieList[i].clear();
+		}
 		ItemList.clear();
 		TrapList.clear();
 		StageList.clear();
@@ -175,6 +188,14 @@ public class Deck {
     	int L3Count = getTargetCardCount(CookieList[3]);
 		return new int[] {(L0Count + L1Count + L2Count + L3Count), L1Count, L2Count, L3Count};
     }
+
+	public int[] getFlipTypeSummary() {
+		int FlipType0Count = getTargetCardCount(flipTypeList[0]);
+		int FlipType1Count = getTargetCardCount(flipTypeList[1]);
+		int FlipType2Count = getTargetCardCount(flipTypeList[2]);
+		return new int[] {FlipType0Count, FlipType1Count, FlipType2Count};
+	}
+
     public int[] getOtherSummary() {
     	int ItemCount = getTargetCardCount(ItemList);
     	int TrapCount = getTargetCardCount(TrapList);
