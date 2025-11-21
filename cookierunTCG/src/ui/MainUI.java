@@ -75,7 +75,6 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 
 // FEATURE: Include secret/promo cards in collection mode
-// FEATURE: Add buttons to hide/show filter menu and card preview panels
 // FEATURE: Save reminders when loading new deck or closing program with unsaved changes
 // FIX: Add auto-resize to deck overview
 // OPTIMIZATION: Reduce memory usage (somehow)
@@ -135,10 +134,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private SettingsWindow settingsWindow;
 	private SortSettingsWindow sortSettingsWindow;
     private DefaultState mDefaultState;
-    private JPanel mCardsPane, mDeckPane, mTextsPane;
+    private JPanel mCardsPane, mDeckPane, mTextsPane, mDeckDetailButtonsPane;
     
     //search panel
-    private JPanel mSearchPane, sidebarPanel;
+    private JPanel mSearchPane, mSearchPaneOuter, sidebarPanel;
     private JCheckBox[] cb_color;
     private JCheckBox[] cb_flipType;
     private JCheckBox[] cb_level;
@@ -154,7 +153,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane;
     private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup;
     private JTextField mDeckText;
-    private JButton saveBtn, selectBtn;
+    private JButton saveBtn, selectBtn, hideSearchPaneBtn, hidePreviewPaneBtn;
     private JButton mClearDeckBtn, button_search, button_clean, button_sort, button_settings;
     private JToggleButton button_collection;
     private JLabel mCardCountHintTxt, mFlipCountHintTxt, mExtraCountHintTxt, mDeckCookieSummaryHintTxt, mDeckCookieLv1HintTxt, mDeckCookieLv2HintTxt, mDeckCookieLv3HintTxt, 
@@ -237,8 +236,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new BorderLayout());
         
+        mSearchPaneOuter = new JPanel(new BorderLayout());
         mSearchPane = new JPanel();
-        frame.getContentPane().add(mSearchPane, BorderLayout.WEST);
+        frame.getContentPane().add(mSearchPaneOuter, BorderLayout.WEST);
+        mSearchPaneOuter.add(mSearchPane, BorderLayout.NORTH);
         mSearchPane.setLayout(new BoxLayout(mSearchPane, BoxLayout.Y_AXIS));
         Border searchPanePadding = BorderFactory.createEmptyBorder(15, 15, 15, 15);
         mSearchPane.setBorder(searchPanePadding);
@@ -248,7 +249,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         JPanel searchPanelButtons = new JPanel();
         searchPanelButtons.setLayout(new GridBagLayout());
         searchPanelButtons.setBorder(new EmptyBorder(3, 3, 3, 3));
-        mSearchPane.add(searchPanelButtons);
+        mSearchPaneOuter.add(searchPanelButtons, BorderLayout.SOUTH);
         
         GridBagConstraints gbc_buttons = new GridBagConstraints();
         gbc_buttons.fill = GridBagConstraints.BOTH;
@@ -400,10 +401,45 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         deckDetailPane.setLayout(new BorderLayout());
         centerPanel.add(deckDetailPane, BorderLayout.SOUTH);
 
+        mDeckDetailButtonsPane = new JPanel();
+        mDeckDetailButtonsPane.setLayout(new GridBagLayout());
+        deckDetailPane.add(mDeckDetailButtonsPane, BorderLayout.SOUTH);
+        GridBagConstraints gbc_deckbuttons = new GridBagConstraints();
+        gbc_deckbuttons.fill = GridBagConstraints.BOTH;
+
+        gbc_deckbuttons.gridx = 0;
+        gbc_deckbuttons.gridy = 0;
+        gbc_deckbuttons.weightx = 1;
+        hideSearchPaneBtn = new JButton();
+        if (mSearchPaneOuter.isVisible()) {
+            hideSearchPaneBtn.setText("<< " + CardUtil.getTranslation("filter"));
+        } else {
+            hideSearchPaneBtn.setText(">> " + CardUtil.getTranslation("filter"));
+        }
+        hideSearchPaneBtn.setFont(CRnormalSmall);
+        componentFontMap.put(hideSearchPaneBtn, "CRnormalSmall"); // Store the font type as a String
+        mDeckDetailButtonsPane.add(hideSearchPaneBtn, gbc_deckbuttons);
+        hideSearchPaneBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (mSearchPaneOuter.isVisible()) {
+                    mSearchPaneOuter.setVisible(false);
+                    hideSearchPaneBtn.setText(">> " + CardUtil.getTranslation("filter"));
+                } else {
+                    mSearchPaneOuter.setVisible(true);
+                    hideSearchPaneBtn.setText("<< " + CardUtil.getTranslation("filter"));
+                }
+                frame.revalidate();
+                frame.repaint();
+                frame.getComponentListeners()[0].componentResized(null);
+            }
+        });
+
+        gbc_deckbuttons.gridx = 1;
+        gbc_deckbuttons.weightx = 10;
         mClearDeckBtn = new JButton(CardUtil.getTranslation("deck.clear"));
         mClearDeckBtn.setFont(CRnormalLarge);
         componentFontMap.put(mClearDeckBtn, "CRnormalLarge"); // Store the font type as a String
-        deckDetailPane.add(mClearDeckBtn, BorderLayout.SOUTH);
+        mDeckDetailButtonsPane.add(mClearDeckBtn, gbc_deckbuttons);
 
         mClearDeckBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -414,17 +450,46 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
         });
 
+        gbc_deckbuttons.gridx = 2;
+        gbc_deckbuttons.weightx = 1;
+        hidePreviewPaneBtn = new JButton();
+        if (sidebarPanel == null || sidebarPanel.isVisible()) {
+            hidePreviewPaneBtn.setText(">> " + CardUtil.getTranslation("preview"));
+        } else {
+            hidePreviewPaneBtn.setText("<< " + CardUtil.getTranslation("preview"));
+        }
+        hidePreviewPaneBtn.setFont(CRnormalSmall);
+        componentFontMap.put(hidePreviewPaneBtn, "CRnormalSmall"); // Store the font type as a String
+        mDeckDetailButtonsPane.add(hidePreviewPaneBtn, gbc_deckbuttons);
+        hidePreviewPaneBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (sidebarPanel.isVisible()) {
+                    sidebarPanel.setVisible(false);
+                    hidePreviewPaneBtn.setText("<< " + CardUtil.getTranslation("preview"));
+                } else {
+                    sidebarPanel.setVisible(true);
+                    hidePreviewPaneBtn.setText(">> " + CardUtil.getTranslation("preview"));
+                }
+                frame.revalidate();
+                frame.repaint();
+                frame.getComponentListeners()[0].componentResized(null);
+            }
+        });
+
         mTextsPane = new JPanel();
         mTextsPane.setLayout(new GridBagLayout());
         deckDetailPane.add(mTextsPane, BorderLayout.CENTER);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.BOTH;
+
+        
         
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 2;
         gbc.weighty = 0.3;
+        gbc.gridheight = 1;
         mCardCountHintTxt = new JLabel(CardUtil.getTranslation("deck.cards"));
         mCardCountHintTxt.setFont(CRnormalSmall);
         componentFontMap.put(mCardCountHintTxt, "CRnormalSmall"); // Store the font type as a String
@@ -490,10 +555,13 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         componentFontMap.put(mDeckStageHintTxt, "CRnormalSmall"); // Store the font type as a String
         mTextsPane.add(mDeckStageHintTxt, gbc);
 
+
+
         gbc.gridy = 1;
         gbc.gridx = 0;
         gbc.weightx = 2;
         gbc.weighty = 0.7;
+        gbc.gridheight = 1;
         mCardCountTxt = new JLabel("0/60");
         mCardCountTxt.setFont(CRnormalEXLarge);
         componentFontMap.put(mCardCountTxt, "CRnormalEXLarge"); // Store the font type as a String
@@ -1351,6 +1419,16 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         labelSeries.setText(CardUtil.getTranslation("series"));
         button_sort.setText(CardUtil.getTranslation("sort.settings"));
         button_settings.setText(CardUtil.getTranslation("settings"));
+        if (mSearchPaneOuter.isVisible()) {
+            hideSearchPaneBtn.setText("<< " + CardUtil.getTranslation("filter"));
+        } else {
+            hideSearchPaneBtn.setText(">> " + CardUtil.getTranslation("filter"));
+        }
+        if (sidebarPanel.isVisible()) {
+            hidePreviewPaneBtn.setText(">> " + CardUtil.getTranslation("preview"));
+        } else {
+            hidePreviewPaneBtn.setText("<< " + CardUtil.getTranslation("preview"));
+        }
 
         clearTranslations();
 
