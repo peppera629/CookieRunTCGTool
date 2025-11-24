@@ -198,7 +198,7 @@ public class SortSettingsWindow implements util.LanguageChangeListener {
 		btnConfirm = new JButton(CardUtil.getTranslation("sort.confirm"));
 		btnConfirm.setFont(MainUI.CRnormal);
 		MainUI.componentFontMap.put(btnConfirm, "CRnormal");
-		btnConfirm.setBounds(341, 230, 85, 23);
+		btnConfirm.setBounds(321, 221, 105, 32);
 		frame.getContentPane().add(btnConfirm);
 		btnConfirm.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

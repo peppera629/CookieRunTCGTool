@@ -153,7 +153,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane;
     private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup;
     private JTextField mDeckText;
-    private JButton saveBtn, selectBtn, hideSearchPaneBtn, hidePreviewPaneBtn;
+    private JButton saveBtn, selectBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST;
     private JButton mClearDeckBtn, button_search, button_clean, button_sort, button_settings;
     private JToggleButton button_collection;
     private JLabel mCardCountHintTxt, mFlipCountHintTxt, mExtraCountHintTxt, mDeckCookieSummaryHintTxt, mDeckCookieLv1HintTxt, mDeckCookieLv2HintTxt, mDeckCookieLv3HintTxt, 
@@ -1073,11 +1073,23 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         JPanel seriesLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the label
         seriesLabelPanel.add(labelSeries);
         mSearchPane.add(seriesLabelPanel);
+
+        JPanel quickSelectBtnGroup = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        mSearchPane.add(quickSelectBtnGroup);
         
+        quickSelectBtnST = new JButton(CardUtil.getTranslation("filter.ST"));
+        quickSelectBtnST.setFont(CRnormal);
+        componentFontMap.put(quickSelectBtnST, "CRnormal");
+        quickSelectBtnGroup.add(quickSelectBtnST);
+
+        quickSelectBtnBS = new JButton(CardUtil.getTranslation("filter.BS"));
+        quickSelectBtnBS.setFont(CRnormal);
+        componentFontMap.put(quickSelectBtnBS, "CRnormal");
+        quickSelectBtnGroup.add(quickSelectBtnBS);
 
         JPanel packOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
         JPanel packCheckboxGroup = new JPanel();
-        packCheckboxGroup.setLayout(new GridLayout(0, 4));
+        packCheckboxGroup.setLayout(new GridLayout(0, 5));
         packCheckboxGroup.setBorder(filterBorder);
         packOuterPanel.add(packCheckboxGroup);
         mSearchPane.add(packOuterPanel);
@@ -1096,6 +1108,45 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 }
             });
         }
+
+        
+        quickSelectBtnBS.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                boolean quickSelectMode = false;
+                for (JCheckBox cb : cb_pack) {
+                    if (cb.getText().contains("BS") && !cb.isSelected()) {
+                        quickSelectMode = true;
+                        break;
+                    }
+                }
+
+                for (JCheckBox cb : cb_pack) {
+                    if (cb.getText().contains("BS")) {
+                        cb.setSelected(quickSelectMode);
+                        mDefaultState.setDefaultPackFlag(cb.getText(), quickSelectMode);
+                    }
+                }
+            }
+        });
+
+        quickSelectBtnST.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                boolean quickSelectMode = false;
+                for (JCheckBox cb : cb_pack) {
+                    if (cb.getText().contains("ST") && !cb.isSelected()) {
+                        quickSelectMode = true;
+                        break;
+                    }
+                }
+
+                for (JCheckBox cb : cb_pack) {
+                    if (cb.getText().contains("ST")) {
+                        cb.setSelected(quickSelectMode);
+                        mDefaultState.setDefaultPackFlag(cb.getText(), quickSelectMode);
+                    }
+                }
+            }
+        });
 
         // ========================= rarity ==================================
         labelRarity = new JLabel(CardUtil.getTranslation("rarity"), JLabel.LEFT);
@@ -1395,6 +1446,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         saveBtn.setText(CardUtil.getTranslation("save"));
         selectBtn.setText(CardUtil.getTranslation("select.file"));
         showDeckBtn.setText(CardUtil.getTranslation("deck.show"));
+        quickSelectBtnBS.setText(CardUtil.getTranslation("filter.BS"));
+        quickSelectBtnST.setText(CardUtil.getTranslation("filter.ST"));
         labelColor.setText(CardUtil.getTranslation("color"));
         cb_color[0].setText(CardUtil.CardColor.Red.getDisplayName());
         cb_color[1].setText(CardUtil.CardColor.Yellow.getDisplayName());

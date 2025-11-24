@@ -133,6 +133,9 @@ public class DeckWindow {
 		g2d.dispose();
 
 		// 將 BufferedImage 保存為圖檔
+		if (!new File("deck_image").exists()) {
+			new File("deck_image").mkdirs();
+		}
 		File outputFile = new File("deck_image/" + mDeckName + ".png");
 		try {
 			ImageIO.write(image, "png", outputFile);
