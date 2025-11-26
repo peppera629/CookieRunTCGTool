@@ -17,9 +17,12 @@ import util.CardUtil;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardType;
 import util.CardUtil.FlipType;
+import util.CardUtil.CardRarity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -84,6 +87,7 @@ public class CardLoader {
 			loadCardNames(CardUtil.CardPack.get(i), cardList);
 			loadPackTranslations(CardUtil.CardPack.get(i), cardList);
 			loadRestrictedCards(CardUtil.CardPack.get(i), cardList);
+			loadVariants(CardUtil.CardPack.get(i), cardList);
 		}
 	    return cardList;
 	}
@@ -291,6 +295,52 @@ public class CardLoader {
 					}
 				}
 				input.close();
+			}
+		} catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void loadVariants(String packName, List<Card> cardList) {
+		try {
+			File rarityListFile = new File("resources/card_config/rarity.txt");
+			File rarityDescListFile = new File("resources/card_config/rarity_desc.txt");
+			if (rarityListFile.exists() && rarityDescListFile.exists()) {
+				BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(rarityListFile), StandardCharsets.UTF_8));
+				BufferedReader inputDesc = new BufferedReader(new InputStreamReader(new FileInputStream(rarityDescListFile), StandardCharsets.UTF_8));
+				String data, dataDesc;
+				while((data = input.readLine()) != null && (dataDesc = inputDesc.readLine()) != null) {
+					if (!data.equals("") && !data.startsWith("//")) {
+						String[] variantData = data.split(",", -1);
+						variantData = Arrays.stream(variantData).filter(Objects::nonNull).filter(s -> !s.trim().isEmpty()).toArray(String[]::new);
+						CardRarity[] variantRarity = new CardRarity[variantData.length - 1];
+						for (int i = 1; i < variantData.length; i++) {
+							if (variantData[i].isEmpty()) {
+								continue;
+							}
+							variantRarity[i - 1] = CardRarity.fromString(variantData[i]);
+						}
+						//String[] variantDescData = dataDesc.split(",", -1);
+						for (Card c : cardList) {
+							if (c.getPack().equals(packName) && c.getId().equals(variantData[0])) {
+								for (int i = 1; i < variantData.length; i++) {
+									if (variantData[i].isEmpty()) {
+										continue;
+									}
+									System.out.println("Variant for " + c.getId() + ": " + variantRarity[i - 1].getValue());
+								}
+								c.setVariantInfo(variantRarity);
+							}
+						}
+					}
+				}
+				input.close();
+				inputDesc.close();
 			}
 		} catch (FileNotFoundException e) {
             System.out.println("An error occurred.");

@@ -1,11 +1,14 @@
 package dataStructure;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Collection {
-    private Map<String, Integer> collection; // Map of card ID to count
+    private Map<String, List<Integer>> collection; // Map of card ID to count
     private static Collection instance;
     private static final String COLLECTION_FILE = "collection/collection.txt";
 
@@ -35,8 +38,12 @@ public class Collection {
                 String[] parts = line.split(",");
                 if (parts.length == 2) { // Assuming no variants
                     String cardId = parts[0].trim();
-                    int count = Integer.parseInt(parts[1].trim());
-                    collection.put(cardId, count);
+                    String[] variantCounts = parts[1].trim().split(";");
+                    List<Integer> counts = new ArrayList<>();
+                    for (String countStr : variantCounts) {
+                        counts.add(Integer.parseInt(countStr.trim()));
+                    }
+                    collection.put(cardId, counts);
                 }
             }
             System.out.println("Collection loaded from " + COLLECTION_FILE);
@@ -47,29 +54,64 @@ public class Collection {
 
     public void saveCollection() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(COLLECTION_FILE))) {
-            for (Map.Entry<String, Integer> entry : collection.entrySet()) {
-                bw.write(entry.getKey() + "," + entry.getValue());
-                bw.newLine();
-            }
+            collection.entrySet().stream()
+            .sorted(Map.Entry.comparingByKey()) // Sort by card ID (key)
+            .forEach(entry -> {
+                try {
+                    List<Integer> counts = entry.getValue();
+                    StringBuilder countsStr = new StringBuilder();
+                    for (int i = 0; i < counts.size(); i++) {
+                        countsStr.append(counts.get(i));
+                        if (i < counts.size() - 1) {
+                            countsStr.append(";");
+                        }
+                    }
+                    bw.write(entry.getKey() + "," + countsStr.toString());
+                    bw.newLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
             System.out.println("Collection saved to " + COLLECTION_FILE);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public int getCardOwnedCount(String cardId) {
-        return collection.getOrDefault(cardId, 0);
-    }
-
-    public void setCardOwnedCount(String cardId, int count) {
-        if (count <= 0) {
-            collection.remove(cardId);
-        } else {
-            collection.put(cardId, count);
+    public int getCardOwnedCount(String cardId, int variantIndex) {
+        List<Integer> counts = collection.get(cardId);
+        if (counts == null || variantIndex < 0 || variantIndex >= counts.size()) {
+            return 0;
         }
+        return counts.get(variantIndex);
     }
 
-    public Map<String, Integer> getCollection() {
+    public int getCardTotalOwnedCount(String cardId) {
+        List<Integer> counts = collection.get(cardId);
+        if (counts == null) {
+            return 0;
+        }
+        int total = 0;
+        for (int count : counts) {
+            total += count;
+        }
+        return total;
+    }
+
+    public void setCardOwnedCount(String cardId, int variantIndex, int count) {
+        List<Integer> counts = collection.getOrDefault(cardId, new ArrayList<>());
+        while (counts.size() <= variantIndex) {
+            counts.add(0); // Initialize missing variants with 0
+        }
+        if (count <= 0) {
+            counts.set(variantIndex, 0);
+        } else {
+            counts.set(variantIndex, count);
+        }
+        collection.put(cardId, counts);
+    }
+
+    public Map<String, List<Integer>> getCollection() {
         return collection;
     }
 }

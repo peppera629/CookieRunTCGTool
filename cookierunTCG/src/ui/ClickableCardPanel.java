@@ -112,12 +112,12 @@ public class ClickableCardPanel extends JPanel {
 						text = Integer.toString(mCard.getCount());
 						break;
 					case 2: // Collection Count
-						text = Integer.toString(Collection.getInstance().getCardOwnedCount(mCard.getId()));
+						text = Integer.toString(Collection.getInstance().getCardTotalOwnedCount(mCard.getId()));
 						break;
 					case 3: // Both (for "build from collection" mode)
 						text = Integer.toString(mCard.getCount());
-						ownedText = "/" + Integer.toString(Collection.getInstance().getCardOwnedCount(mCard.getId()));
-						if (mCard.getCount() > Collection.getInstance().getCardOwnedCount(mCard.getId())) {
+						ownedText = "/" + Integer.toString(Collection.getInstance().getCardTotalOwnedCount(mCard.getId()));
+						if (mCard.getCount() > Collection.getInstance().getCardTotalOwnedCount(mCard.getId())) {
 							g2d.setColor(new Color(255, 128, 128));
 						}
 						break;

@@ -27,6 +27,7 @@ public class Card {
 	private FlipType _flipType;
 	private boolean _isExtra;
 	private CardRarity _rarity;
+	private CardRarity[] _variants;
 	private String _mark;
 	private int _lv;
 	private int _hp;
@@ -161,6 +162,10 @@ public class Card {
 		return _rarity;
 	}
 
+	public CardRarity[] getVariants() {
+		return _variants;
+	}
+
 	public int getLv() {
 		return _lv;
 	}
@@ -170,7 +175,7 @@ public class Card {
 	}
 
 	public boolean getOwnershipLegality() {
-		return (Collection.getInstance().getCardOwnedCount(_id) >= _cardCount);
+		return (Collection.getInstance().getCardTotalOwnedCount(_id) >= _cardCount);
 	}
 	
 	public boolean isFlip() {
@@ -221,6 +226,10 @@ public class Card {
 
 	public void setName(String name) {
 		_name = name;
+	}
+
+	public void setVariantInfo(CardRarity[] variants) {
+		_variants = variants;
 	}
 	
 	public void add() {

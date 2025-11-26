@@ -56,7 +56,7 @@ public class CardList {
 
 	public List<Card> getOwnedCards() {
 		for (Card c : cardList) {
-			int ownedCount = Collection.getInstance().getCardOwnedCount(c.getId());
+			int ownedCount = Collection.getInstance().getCardTotalOwnedCount(c.getId());
 			if (ownedCount > 0) {
 				ownedList.add(c);
 			}
@@ -104,7 +104,7 @@ public class CardList {
 			extraCorrect = !_search_extra || c.isExtra();
 			rarityCorrect = !selectRarity || _search_rarity[c.getRarity().getValue()];
 			packCorrect = _search_pack_list.size() == 0 || _search_pack_list.contains(c.getPack());
-			owned = Collection.getInstance().getCardOwnedCount(c.getId()) > 0;
+			owned = Collection.getInstance().getCardTotalOwnedCount(c.getId()) > 0;
 			if (forceShowAll) {
 				if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && packCorrect) {
 					selectList.add(c);

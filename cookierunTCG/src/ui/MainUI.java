@@ -44,6 +44,7 @@ import java.awt.ScrollPane;
 import ui.ClickableCardPanel.CardListCallBack;
 import ui.SortSettingsWindow.ConfigChangedCallback;
 import util.CardUtil.CardColor;
+import util.CardUtil.CardRarity;
 import util.CardUtil.CardType;
 import util.CardUtil;
 
@@ -75,6 +76,10 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 
 // FEATURE: Include secret/promo cards in collection mode
+// FEATURE: Add card variant addition/removal in collection mode (hold corresponding key + mouse click)
+// FEATURE: Add quick card addition/removal in collection mode (hold corresponding key + scroll wheel)
+// FEATURE: Show description text for promo variants in collection mode
+// FEATURE: Change owned card count display layout as needed
 // FEATURE: Save reminders when loading new deck or closing program with unsaved changes
 // FIX: Add auto-resize to deck overview
 // OPTIMIZATION: Reduce memory usage (somehow)
@@ -160,7 +165,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mLevelCountTxt, mFlipTypeCountTxt;
     private JLabel mDeckItemHintTxt, mDeckTrapHintTxt, mDeckStageHintTxt, mDeckPaneLabel, mCardsPaneLabel;
     private JLabel mCardCountTxt, mFlipCountTxt, mExtraCountTxt, mDeckCookieSummaryTxt, mDeckCookieLv1Txt, mDeckCookieLv2Txt, mDeckCookieLv3Txt;
-    private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardTranslationSkill, cardTranslationAttackCost;
+    private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardTranslationSkill, cardTranslationAttackCost, ownedInfoLabel;
     private JLabel cardTranslationAttack, cardTranslationAttackIcon, cardTranslationAttackThen, cardTranslationFlip, cardTranslationSkillFlavorText, cardTranslationSkillIcon, cardTranslationAttackFlavorText;
     private JSplitPane splitPane;
     private JButton showDeckBtn;
@@ -169,7 +174,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     public static Font CRnormal, CRbold, CRnormalLarge, CRnormalSmall, CRnormalEXLarge, CRboldLarge, CRboldSmall, CRboldEXLarge, CRtranslation, CRtranslationBold;
     public static InputStream fontStream, fontStreamBold;
     public static Map<java.awt.Component, String> componentFontMap = new HashMap<>();
-    private int columns = 6, previewHeight;
+    private int columns = 6, previewHeight, collectionAddVariant = 0;
     private double previousSplitLocation = 0.3d;
     private boolean isCollectionMode = false;
     private Collection collection = Collection.getInstance();
@@ -683,6 +688,13 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mCardDetailPane.setLayout(new BorderLayout());
         mCardDetailPane.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()-60));
         cardInfo.add(mCardDetailPane);
+
+        // ==== Card Ownership Info (when Collection Mode is active)
+        ownedInfoLabel = new JLabel("", JLabel.CENTER);
+        ownedInfoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        ownedInfoLabel.setFont(CRboldEXLarge);
+        componentFontMap.put(ownedInfoLabel, "CRboldEXLarge"); // Store the font type
+        cardInfo.add(ownedInfoLabel);
 
         // ==== Card Translations (when available)
         mCardTranslationPane = new JPanel();
@@ -1356,7 +1368,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             cardId.setForeground(Color.BLACK);
         }
 
-        cardName.setText(card.getName());
+        cardName.setText("<html>" + card.getName() + " " + "<img src=\"file:" + new File("resources/icons_rarity/16px/" + card.getRarity().getName() + ".png").getAbsolutePath() + "\">" + "</html>");
         if (card.getCardTranslation() != null && Config.CARD_TRANSLATION_ENABLED) {
             cardTranslationSkill.setText("<html>" + card.getCardTranslation()[1] + "</html>");
             if (card.getCardTranslation()[0].isEmpty()) {
@@ -1610,6 +1622,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckPane.setVisible(true);
             mDeckPaneLabel.setVisible(true);
             mCardsPaneLabel.setText(CardUtil.getTranslation("cardlist"));
+            ownedInfoLabel.setText("");
             System.out.println(previousSplitLocation);
             splitPane.setDividerLocation(previousSplitLocation);
             splitPane.setEnabled(true);
@@ -1622,17 +1635,19 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         @Override
         public void addCard(Card card) {
             // Increment the collection count
-            int newCount = collection.getCardOwnedCount(card.getId()) + 1;
-            collection.setCardOwnedCount(card.getId(), newCount);
+            int newCount = collection.getCardOwnedCount(card.getId(), 0) + 1;
+            collection.setCardOwnedCount(card.getId(), 0, newCount);
             updateCardListForCollection(); // Refresh the card list to show the updated count
+            updateCardOwnedInfoLabel(card);
         }
 
         @Override
         public void removeCard(Card card) {
             // Decrement the collection count
-            int newCount = collection.getCardOwnedCount(card.getId()) - 1;
-            collection.setCardOwnedCount(card.getId(), newCount);
+            int newCount = collection.getCardOwnedCount(card.getId(), 0) - 1;
+            collection.setCardOwnedCount(card.getId(), 0, newCount);
             updateCardListForCollection(); // Refresh the card list to show the updated count
+            updateCardOwnedInfoLabel(card);
         }
 
         @Override
@@ -1654,6 +1669,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
             cardName.setText(card.getName());
             clearTranslations();
+
+            updateCardOwnedInfoLabel(card);
 
             mCardTranslationPane.revalidate();
             mCardTranslationPane.repaint();
@@ -1692,5 +1709,27 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         
         mCardsPane.revalidate();
         mCardsPane.repaint();
+    }
+
+    private void updateCardOwnedInfoLabel(Card card) {
+        StringBuilder ownedInfo = new StringBuilder();
+        CardRarity[] rarities = card.getVariants();
+
+        ownedInfo.append("<html>");
+        for (int i = 0; i < rarities.length; i++) {
+            int ownedCount = collection.getCardOwnedCount(card.getId(), i);
+            System.out.println(rarities[i].getName());
+            System.out.println(ownedCount);
+            ownedInfo.append("<img src=\"file:" + new File("resources/keyicons/24px/" + (i+1) + ".png").getAbsolutePath() + "\">").append("&nbsp;");
+            ownedInfo.append("<img src=\"file:" + new File("resources/icons_rarity/24px/" + rarities[i].getName() + ".png").getAbsolutePath() + "\">").append("&nbsp;").append(ownedCount);
+            if (i < rarities.length - 1) {
+                ownedInfo.append("<br>");
+            }
+        }
+        ownedInfo.append("</html>");
+
+        ownedInfoLabel.setText(ownedInfo.toString());
+        sidebarPanel.revalidate();
+        sidebarPanel.repaint();
     }
 }

@@ -111,6 +111,10 @@ public class CardUtil {
 	        return value;
 	    }
 
+		public String getName() {
+			return this.name();
+		}
+
 		public static CardRarity fromString(String rarityStr) {
 			for (CardRarity rarity : CardRarity.values()) {
 	            if (rarity.name().equals(rarityStr)) {
