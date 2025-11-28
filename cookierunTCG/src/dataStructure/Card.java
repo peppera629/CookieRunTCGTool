@@ -28,6 +28,7 @@ public class Card {
 	private boolean _isExtra;
 	private CardRarity _rarity;
 	private CardRarity[] _variants;
+	private String[] _variantNames;
 	private String _mark;
 	private int _lv;
 	private int _hp;
@@ -166,6 +167,10 @@ public class Card {
 		return _variants;
 	}
 
+	public String[] getVariantNames() {
+		return _variantNames;
+	}
+
 	public int getLv() {
 		return _lv;
 	}
@@ -228,8 +233,10 @@ public class Card {
 		_name = name;
 	}
 
-	public void setVariantInfo(CardRarity[] variants) {
+	public void setVariantInfo(CardRarity[] variants, String[] variantNames) {
 		_variants = variants;
+		_variantNames = variantNames;
+		_variantNames[0] = ""; // Remove ID on normal variant
 	}
 	
 	public void add() {

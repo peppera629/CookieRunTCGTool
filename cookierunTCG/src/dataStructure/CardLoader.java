@@ -317,6 +317,7 @@ public class CardLoader {
 				while((data = input.readLine()) != null && (dataDesc = inputDesc.readLine()) != null) {
 					if (!data.equals("") && !data.startsWith("//")) {
 						String[] variantData = data.split(",", -1);
+						String[] variantNames = Arrays.asList(dataDesc.split(",", -1)).subList(1, variantData.length).toArray(new String[0]);
 						variantData = Arrays.stream(variantData).filter(Objects::nonNull).filter(s -> !s.trim().isEmpty()).toArray(String[]::new);
 						CardRarity[] variantRarity = new CardRarity[variantData.length - 1];
 						for (int i = 1; i < variantData.length; i++) {
@@ -332,9 +333,9 @@ public class CardLoader {
 									if (variantData[i].isEmpty()) {
 										continue;
 									}
-									System.out.println("Variant for " + c.getId() + ": " + variantRarity[i - 1].getValue());
+									System.out.println("Variant for " + c.getId() + ": " + variantRarity[i - 1].getValue() + " - " + variantNames[i - 1]);
 								}
-								c.setVariantInfo(variantRarity);
+								c.setVariantInfo(variantRarity, variantNames);
 							}
 						}
 					}

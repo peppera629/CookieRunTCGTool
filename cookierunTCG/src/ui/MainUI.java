@@ -12,18 +12,22 @@ import javax.swing.JMenuItem;
 
 import java.awt.BorderLayout;
 
+import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+import javax.swing.KeyStroke;
 
 import dataStructure.Card;
 import dataStructure.CardList;
@@ -54,6 +58,9 @@ import util.LanguageChangeListener;
 import util.UIUtil;
 
 import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyAdapter;
 import java.io.File;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
@@ -76,10 +83,8 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 
 // FEATURE: Include secret/promo cards in collection mode
-// FEATURE: Add card variant addition/removal in collection mode (hold corresponding key + mouse click)
 // FEATURE: Add quick card addition/removal in collection mode (hold corresponding key + scroll wheel)
-// FEATURE: Show description text for promo variants in collection mode
-// FEATURE: Change owned card count display layout as needed
+// TODO: Finish all descriptions for variants
 // FEATURE: Save reminders when loading new deck or closing program with unsaved changes
 // FIX: Add auto-resize to deck overview
 // OPTIMIZATION: Reduce memory usage (somehow)
@@ -109,6 +114,32 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 try {
                     MainUI window = new MainUI();
                     window.frame.setVisible(true);
+                    
+                    /*
+                    window.frame.getContentPane().addKeyListener(new KeyAdapter() {
+                        @Override
+                        public void keyPressed(KeyEvent e) {
+                            System.out.println("Pressed: " + e.getKeyCode());
+                            int keyCode = e.getKeyCode();
+                            if (keyCode >= 48 && keyCode <= 57) { // Number keys 0-9
+                                collectionAddVariant = keyCode - 48;
+                                window.updateCardOwnedInfoHighlight(collectionAddVariant);
+                                System.out.println("Set collectionAddVariant to " + collectionAddVariant);
+                            }
+                        }
+                        
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+                            int keyCode = e.getKeyCode();
+                            if (keyCode >= 48 && keyCode <= 57) { // Number keys 0-9
+                                collectionAddVariant = 0;
+                                window.updateCardOwnedInfoHighlight(collectionAddVariant);
+                                System.out.println("Reset collectionAddVariant to " + collectionAddVariant);
+                            }
+                        }
+                    });
+                    window.frame.setFocusable(true);
+                    window.frame.requestFocusInWindow(); */
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -128,6 +159,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 		sortSettingsWindow = new SortSettingsWindow();
 		sortSettingsWindow.setConfigChangedCallback(this);
         SettingsWindow.addLanguageChangeListener(this);
+
         initialize();
     }
 
@@ -155,7 +187,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
     private Deck mDeck;
     private ScrollPane scrollPane;
-    private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane;
+    private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane, ownedInfoPanel;
     private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup;
     private JTextField mDeckText;
     private JButton saveBtn, selectBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST;
@@ -165,8 +197,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mLevelCountTxt, mFlipTypeCountTxt;
     private JLabel mDeckItemHintTxt, mDeckTrapHintTxt, mDeckStageHintTxt, mDeckPaneLabel, mCardsPaneLabel;
     private JLabel mCardCountTxt, mFlipCountTxt, mExtraCountTxt, mDeckCookieSummaryTxt, mDeckCookieLv1Txt, mDeckCookieLv2Txt, mDeckCookieLv3Txt;
-    private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardTranslationSkill, cardTranslationAttackCost, ownedInfoLabel;
+    private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardTranslationSkill, cardTranslationAttackCost;
     private JLabel cardTranslationAttack, cardTranslationAttackIcon, cardTranslationAttackThen, cardTranslationFlip, cardTranslationSkillFlavorText, cardTranslationSkillIcon, cardTranslationAttackFlavorText;
+    private JLabel[] ownedInfoRarityRows, ownedInfoCountRows;
     private JSplitPane splitPane;
     private JButton showDeckBtn;
     private JMenuItem settingsMenuItem, sortSettingsMenuItem;
@@ -174,7 +207,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     public static Font CRnormal, CRbold, CRnormalLarge, CRnormalSmall, CRnormalEXLarge, CRboldLarge, CRboldSmall, CRboldEXLarge, CRtranslation, CRtranslationBold;
     public static InputStream fontStream, fontStreamBold;
     public static Map<java.awt.Component, String> componentFontMap = new HashMap<>();
-    private int columns = 6, previewHeight, collectionAddVariant = 0;
+    private int columns = 6, previewHeight;
+    private static int collectionAddVariant = 0;
     private double previousSplitLocation = 0.3d;
     private boolean isCollectionMode = false;
     private Collection collection = Collection.getInstance();
@@ -183,6 +217,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         Config.loadConfig();
     	initialData();
     	initialUI();
+        keyBindingsSetup();
     }
 
     private void initialData() {
@@ -190,6 +225,28 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     	mDefaultState = DefaultState.getInstance();
         mDeck = new Deck();
         frame = new JFrame();
+    }
+
+    private void keyBindingsSetup() {
+        InputMap inputMap = frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = frame.getRootPane().getActionMap();
+
+        // Key bindings for changing variants in collection mode
+        for (int i = 0; i <= 9; i++) { // (I would do anything to replace typing out every function manually)
+            final int variant = i;
+            String key = Integer.toString(i);
+            if (i >= 1) {
+                inputMap.put(KeyStroke.getKeyStroke(key), "variant" + key);
+            }
+            inputMap.put(KeyStroke.getKeyStroke("released " + key), "variant0");
+            actionMap.put("variant" + key, new javax.swing.AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    collectionAddVariant = variant;
+                    updateCardOwnedInfoHighlight(variant);
+                }
+            });
+        }
     }
     
     public static void loadFont() {
@@ -690,11 +747,49 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cardInfo.add(mCardDetailPane);
 
         // ==== Card Ownership Info (when Collection Mode is active)
-        ownedInfoLabel = new JLabel("", JLabel.CENTER);
-        ownedInfoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        ownedInfoLabel.setFont(CRboldEXLarge);
-        componentFontMap.put(ownedInfoLabel, "CRboldEXLarge"); // Store the font type
-        cardInfo.add(ownedInfoLabel);
+        ownedInfoPanel = new JPanel();
+        ownedInfoPanel.setLayout(new GridBagLayout());
+        ownedInfoPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        cardInfo.add(ownedInfoPanel);
+
+        ownedInfoRarityRows = new JLabel[] {
+            new JLabel("", JLabel.LEFT),
+            new JLabel("", JLabel.LEFT),
+            new JLabel("", JLabel.LEFT),
+            new JLabel("", JLabel.LEFT),
+            new JLabel("", JLabel.LEFT),
+            new JLabel("", JLabel.LEFT),
+            new JLabel("", JLabel.LEFT)
+        };
+
+        ownedInfoCountRows = new JLabel[] {
+            new JLabel("", JLabel.RIGHT),
+            new JLabel("", JLabel.RIGHT),
+            new JLabel("", JLabel.RIGHT),
+            new JLabel("", JLabel.RIGHT),
+            new JLabel("", JLabel.RIGHT),
+            new JLabel("", JLabel.RIGHT),
+            new JLabel("", JLabel.RIGHT)
+        };
+
+        GridBagConstraints gbc_owned = new GridBagConstraints();
+        gbc_owned.fill = GridBagConstraints.BOTH;
+        gbc_owned.gridx = 0;
+        gbc_owned.gridy = 0;
+        
+        for (int i = 0; i < ownedInfoRarityRows.length; i++) {
+            gbc_owned.gridx = 0;
+            gbc_owned.weightx = 5;
+            ownedInfoRarityRows[i].setFont(CRnormal);
+            componentFontMap.put(ownedInfoRarityRows[i], "CRnormal"); // Store the font type
+            ownedInfoPanel.add(ownedInfoRarityRows[i], gbc_owned);
+            gbc_owned.gridx = 1;
+            gbc_owned.weightx = 1;
+            ownedInfoCountRows[i].setFont(CRboldEXLarge);
+            componentFontMap.put(ownedInfoCountRows[i], "CRboldEXLarge"); // Store the font type
+            ownedInfoPanel.add(ownedInfoCountRows[i], gbc_owned);
+            gbc_owned.gridy++;
+        }
 
         // ==== Card Translations (when available)
         mCardTranslationPane = new JPanel();
@@ -1494,7 +1589,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         } else {
             hidePreviewPaneBtn.setText("<< " + CardUtil.getTranslation("preview"));
         }
-
         clearTranslations();
 
         cardId.setText(null);
@@ -1617,16 +1711,31 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mCardsPaneLabel.setText(CardUtil.getTranslation("collection"));
             splitPane.setDividerLocation(0.0);
             splitPane.setEnabled(false);
+            for (JLabel label : ownedInfoCountRows) {
+                label.setText("");
+                label.setVisible(true);
+            }
+            for (JLabel label : ownedInfoRarityRows) {
+                label.setText("");
+                label.setVisible(true);
+            }
             updateCardListForCollection();
         } else {
             mDeckPane.setVisible(true);
             mDeckPaneLabel.setVisible(true);
             mCardsPaneLabel.setText(CardUtil.getTranslation("cardlist"));
-            ownedInfoLabel.setText("");
             System.out.println(previousSplitLocation);
             splitPane.setDividerLocation(previousSplitLocation);
             splitPane.setEnabled(true);
             collection.saveCollection();
+            for (JLabel label : ownedInfoCountRows) {
+                label.setText("");
+                label.setVisible(false);
+            }
+            for (JLabel label : ownedInfoRarityRows) {
+                label.setText("");
+                label.setVisible(false);
+            }
             updateCardList();
         }
     }
@@ -1635,8 +1744,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         @Override
         public void addCard(Card card) {
             // Increment the collection count
-            int newCount = collection.getCardOwnedCount(card.getId(), 0) + 1;
-            collection.setCardOwnedCount(card.getId(), 0, newCount);
+            int newCount = collection.getCardOwnedCount(card.getId(), collectionAddVariant) + 1;
+            collection.setCardOwnedCount(card.getId(), collectionAddVariant, newCount);
             updateCardListForCollection(); // Refresh the card list to show the updated count
             updateCardOwnedInfoLabel(card);
         }
@@ -1644,8 +1753,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         @Override
         public void removeCard(Card card) {
             // Decrement the collection count
-            int newCount = collection.getCardOwnedCount(card.getId(), 0) - 1;
-            collection.setCardOwnedCount(card.getId(), 0, newCount);
+            int newCount = collection.getCardOwnedCount(card.getId(), collectionAddVariant) - 1;
+            collection.setCardOwnedCount(card.getId(), collectionAddVariant, newCount);
             updateCardListForCollection(); // Refresh the card list to show the updated count
             updateCardOwnedInfoLabel(card);
         }
@@ -1697,7 +1806,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private void updateCardListForCollection() {
         mCardsPane.removeAll();
         CardList list = CardList.getInstance();
-        List<Card> filteredCards = list.getSelectCards(true); // Ignore ownership for colleciton mode view
+        List<Card> filteredCards = list.getSelectCards(true); // Ignore ownership for collection mode view
 
         UIUtil.showDeck(new CollectionModeCallback(), mCardsPane, filteredCards, 13, columns, UIUtil.CARD_SIZE_SMALL, 2);
         
@@ -1712,23 +1821,45 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     }
 
     private void updateCardOwnedInfoLabel(Card card) {
-        StringBuilder ownedInfo = new StringBuilder();
+        
         CardRarity[] rarities = card.getVariants();
-
-        ownedInfo.append("<html>");
-        for (int i = 0; i < rarities.length; i++) {
-            int ownedCount = collection.getCardOwnedCount(card.getId(), i);
-            System.out.println(rarities[i].getName());
-            System.out.println(ownedCount);
-            ownedInfo.append("<img src=\"file:" + new File("resources/keyicons/24px/" + (i+1) + ".png").getAbsolutePath() + "\">").append("&nbsp;");
-            ownedInfo.append("<img src=\"file:" + new File("resources/icons_rarity/24px/" + rarities[i].getName() + ".png").getAbsolutePath() + "\">").append("&nbsp;").append(ownedCount);
-            if (i < rarities.length - 1) {
-                ownedInfo.append("<br>");
+        String[] variantNames = card.getVariantNames();
+    
+        for (int i = 0; i < 7; i++) {
+            if (i < rarities.length) {
+                StringBuilder ownedInfo = new StringBuilder();
+                int ownedCount = collection.getCardOwnedCount(card.getId(), i);
+                System.out.println(rarities[i].getName());
+                System.out.println(ownedCount);
+                ownedInfo.append("<html>");
+                ownedInfo.append("<img src=\"file:" + new File("resources/keyicons/24px/" + i + ".png").getAbsolutePath() + "\">").append("&nbsp;");
+                ownedInfo.append("<img src=\"file:" + new File("resources/icons_rarity/24px/" + rarities[i].getName() + ".png").getAbsolutePath() + "\">");
+                ownedInfo.append("&nbsp;").append(variantNames[i]);
+                if (i < rarities.length - 1) {
+                    ownedInfo.append("<br>");
+                }
+                ownedInfo.append("</html>");
+                ownedInfoRarityRows[i].setText(ownedInfo.toString());
+                ownedInfoCountRows[i].setText("×" + String.valueOf(ownedCount));
+            } else {
+                ownedInfoRarityRows[i].setText("");
+                ownedInfoCountRows[i].setText("");
             }
         }
-        ownedInfo.append("</html>");
 
-        ownedInfoLabel.setText(ownedInfo.toString());
+        sidebarPanel.revalidate();
+        sidebarPanel.repaint();
+    }
+
+    private void updateCardOwnedInfoHighlight(int variantIndex) {
+        for (int i = 0; i < ownedInfoCountRows.length; i++) {
+            if (i == variantIndex && variantIndex > 0) {
+                ownedInfoCountRows[i].setForeground(new Color(60,60,255,255));
+            } else {
+                ownedInfoCountRows[i].setForeground(Color.BLACK);
+            }
+        }
+
         sidebarPanel.revalidate();
         sidebarPanel.repaint();
     }
