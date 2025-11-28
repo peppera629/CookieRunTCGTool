@@ -943,7 +943,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 				{ 
 					File selectedFile = fileChooser.getSelectedFile();
 					String filename = selectedFile.getName();
-					System.out.println(selectedFile.getName());
+					//System.out.println(selectedFile.getName());
 					mDeckText.setText(filename.substring(0, filename.length() - 4));
                     mDeck.clear();
                     CardList.getInstance().clearCardListCount();
@@ -1377,7 +1377,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 }
             }
 
-            System.out.println(mDeck.getOwnershipLegality());
+            //System.out.println(mDeck.getOwnershipLegality());
             mCardCountTxt.setToolTipText("<html>" + invalidReasonString + "</html>");
         } else {
         	mCardCountTxt.setForeground(Color.BLACK);
@@ -1724,7 +1724,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckPane.setVisible(true);
             mDeckPaneLabel.setVisible(true);
             mCardsPaneLabel.setText(CardUtil.getTranslation("cardlist"));
-            System.out.println(previousSplitLocation);
+            //System.out.println(previousSplitLocation);
             splitPane.setDividerLocation(previousSplitLocation);
             splitPane.setEnabled(true);
             collection.saveCollection();
@@ -1824,13 +1824,16 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         
         CardRarity[] rarities = card.getVariants();
         String[] variantNames = card.getVariantNames();
-    
+        if (rarities == null || variantNames == null) {
+            System.out.println("Card " + card.getId() + " has no variants. Maybe you saved as CSV instead of TXT?");
+            return;
+        }
         for (int i = 0; i < 7; i++) {
             if (i < rarities.length) {
                 StringBuilder ownedInfo = new StringBuilder();
                 int ownedCount = collection.getCardOwnedCount(card.getId(), i);
-                System.out.println(rarities[i].getName());
-                System.out.println(ownedCount);
+                //System.out.println(rarities[i].getName());
+                //System.out.println(ownedCount);
                 ownedInfo.append("<html>");
                 ownedInfo.append("<img src=\"file:" + new File("resources/keyicons/24px/" + i + ".png").getAbsolutePath() + "\">").append("&nbsp;");
                 ownedInfo.append("<img src=\"file:" + new File("resources/icons_rarity/24px/" + rarities[i].getName() + ".png").getAbsolutePath() + "\">");

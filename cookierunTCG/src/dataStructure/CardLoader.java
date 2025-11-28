@@ -333,7 +333,7 @@ public class CardLoader {
 									if (variantData[i].isEmpty()) {
 										continue;
 									}
-									System.out.println("Variant for " + c.getId() + ": " + variantRarity[i - 1].getValue() + " - " + variantNames[i - 1]);
+									//System.out.println("Variant for " + c.getId() + ": " + variantRarity[i - 1].getValue() + " - " + variantNames[i - 1]);
 								}
 								c.setVariantInfo(variantRarity, variantNames);
 							}
