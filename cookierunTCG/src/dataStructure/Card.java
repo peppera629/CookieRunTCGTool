@@ -79,19 +79,23 @@ public class Card {
 
 	public synchronized void createCardLabel() {
 		if (!_isImageLoaded || (_cardLanguage != null && !_cardLanguage.equals(Config.CARD_LANGUAGE))) {
-			_cardImagePath = "resources/cards/"+Config.CARD_LANGUAGE+"/"+getPack()+"/"+getId()+".png";
-	        ImageIcon cardIcon = new ImageIcon(_cardImagePath);
-	        
-	        Image image = cardIcon.getImage().getScaledInstance(Config.SMALL_CARD_WIDTH, Config.SMALL_CARD_HEIGHT,  java.awt.Image.SCALE_SMOOTH);
-	        _cardIcon = new ImageIcon(image);
-	        _isImageLoaded = true;
-			_cardLanguage = Config.CARD_LANGUAGE;
-		    for (ClickableCardPanel panel : _PanelList) {
-				SwingUtilities.invokeLater(() -> {
-					if (panel != null) {
-						panel.updateImage();
+			for (String lang : Config.FALLBACK_ORDER) {
+				_cardImagePath = "resources/cards/"+lang+"/"+getPack()+"/"+getId()+".png";
+		        ImageIcon cardIcon = new ImageIcon(_cardImagePath);
+		        if (cardIcon.getIconWidth() > 0 && cardIcon.getIconHeight() > 0) {
+			        Image image = cardIcon.getImage().getScaledInstance(Config.SMALL_CARD_WIDTH, Config.SMALL_CARD_HEIGHT,  java.awt.Image.SCALE_SMOOTH);
+			        _cardIcon = new ImageIcon(image);
+			        _isImageLoaded = true;
+					_cardLanguage = lang;
+				    for (ClickableCardPanel panel : _PanelList) {
+						SwingUtilities.invokeLater(() -> {
+							if (panel != null) {
+								panel.updateImage();
+							}
+						});
 					}
-				});
+					break;
+		        }
 			}
 		}
 	}

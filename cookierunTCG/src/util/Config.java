@@ -39,6 +39,7 @@ public class Config {
         Properties properties = new Properties();
         properties.setProperty("language", LANGUAGE);
         properties.setProperty("card_language", CARD_LANGUAGE);
+		FALLBACK_ORDER = (CARD_LANGUAGE.equals("en")) ? new String[] {"en", "kr", "zh_TW"} : new String[] {"zh_TW", "en", "kr"};
         properties.setProperty("card_preview_scale", String.valueOf(CARD_PREVIEW_SCALE));
         properties.setProperty("card_icon_scale", String.valueOf(CARD_ICON_SCALE));
 		Config.CARD_PREVIEW_WIDTH = (int) (400 * Config.CARD_PREVIEW_SCALE);
