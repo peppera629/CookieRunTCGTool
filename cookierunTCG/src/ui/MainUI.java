@@ -82,10 +82,10 @@ import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 
-// FEATURE: Include secret/promo cards in collection mode
-// FEATURE: Add quick card addition/removal in collection mode (hold corresponding key + scroll wheel)
+// FEATURE: Include secret/promo cards in collection mode (EN done and TW pending)
 // TODO: Finish all descriptions for variants
 // FEATURE: Save reminders when loading new deck or closing program with unsaved changes
+// FEATURE: Add "fallbacks" when a card is not available in a certain language (EN->TW->KR or TW->EN->KR)
 // FIX: Add auto-resize to deck overview
 // OPTIMIZATION: Reduce memory usage (somehow)
 
@@ -194,7 +194,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JButton mClearDeckBtn, button_search, button_clean, button_sort, button_settings;
     private JToggleButton button_collection;
     private JLabel mCardCountHintTxt, mFlipCountHintTxt, mExtraCountHintTxt, mDeckCookieSummaryHintTxt, mDeckCookieLv1HintTxt, mDeckCookieLv2HintTxt, mDeckCookieLv3HintTxt, 
-        mLevelCountTxt, mFlipTypeCountTxt;
+        mLevelCountTxt, mFlipTypeCountTxt, cardLabel;
     private JLabel mDeckItemHintTxt, mDeckTrapHintTxt, mDeckStageHintTxt, mDeckPaneLabel, mCardsPaneLabel;
     private JLabel mCardCountTxt, mFlipCountTxt, mExtraCountTxt, mDeckCookieSummaryTxt, mDeckCookieLv1Txt, mDeckCookieLv2Txt, mDeckCookieLv3Txt;
     private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardTranslationSkill, cardTranslationAttackCost;
@@ -212,6 +212,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private double previousSplitLocation = 0.3d;
     private boolean isCollectionMode = false;
     private Collection collection = Collection.getInstance();
+    private Card currentCard;
 
     private void initialize() {
         Config.loadConfig();
@@ -242,8 +243,12 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             actionMap.put("variant" + key, new javax.swing.AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    int prevVariant = collectionAddVariant;
                     collectionAddVariant = variant;
-                    updateCardOwnedInfoHighlight(variant);
+                    if (prevVariant != collectionAddVariant) {
+                        updateCardOwnedInfoHighlight(variant);
+                        updateCardPreview();
+                    }
                 }
             });
         }
@@ -1448,6 +1453,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     @Override
     public void showCard(Card card) {
         mCardDetailPane.removeAll();
+
+        currentCard = card;
+
         cardIcon = new ImageIcon("resources/cards/"+Config.CARD_LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
         //System.out.println("resources/cards/"+Config.CARD_LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
         //System.out.println(card.getHP());
@@ -1763,8 +1771,15 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         public void showCard(Card card) {
             // Show card details (same as in collection mode)
             mCardDetailPane.removeAll();
-            cardIcon = new ImageIcon("resources/cards/" + Config.CARD_LANGUAGE + "/" + card.getPack() + "/" + card.getId() + ".png");
 
+            currentCard = card;
+
+            if (collectionAddVariant == 0 || collectionAddVariant >= currentCard.getVariants().length) {
+                cardIcon = new ImageIcon("resources/cards/" + Config.CARD_LANGUAGE + "/" + card.getPack() + "/" + card.getId() + ".png");
+            } else {
+                cardIcon = new ImageIcon("resources/cards_variant/" + Config.CARD_LANGUAGE + "/" + card.getPack() + "/" + card.getId() + "@" + collectionAddVariant + ".png");
+            }
+            
             if (card.getMaxCount() == 1) {
                 cardId.setText(card.getId() + " [" + CardUtil.getTranslation("restricted") + "]");
                 cardId.setForeground(new Color(160, 128, 0));
@@ -1796,7 +1811,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
             Image image = cardIcon.getImage().getScaledInstance((int) (previewHeight / Config.CARD_RATIO), previewHeight, java.awt.Image.SCALE_SMOOTH);
             cardIcon = new ImageIcon(image);
-            JLabel cardLabel = new JLabel(cardIcon);
+            cardLabel = new JLabel(cardIcon);
             mCardDetailPane.add(cardLabel, BorderLayout.CENTER);
             mCardDetailPane.revalidate();
             mCardDetailPane.repaint();
@@ -1865,5 +1880,18 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         sidebarPanel.revalidate();
         sidebarPanel.repaint();
+    }
+
+    private void updateCardPreview() {
+        if (isCollectionMode) {
+            if (collectionAddVariant == 0 || collectionAddVariant >= currentCard.getVariants().length) {
+                cardIcon = new ImageIcon("resources/cards/" + Config.CARD_LANGUAGE + "/" + currentCard.getPack() + "/" + currentCard.getId() + ".png");
+            } else {
+                cardIcon = new ImageIcon("resources/cards_variant/" + Config.CARD_LANGUAGE + "/" + currentCard.getPack() + "/" + currentCard.getId() + "@" + collectionAddVariant + ".png");
+            }
+            cardLabel.setIcon(new ImageIcon(cardIcon.getImage().getScaledInstance((int) (previewHeight / Config.CARD_RATIO), previewHeight, java.awt.Image.SCALE_SMOOTH)));
+            mCardDetailPane.revalidate();
+            mCardDetailPane.repaint();
+        }
     }
 }
