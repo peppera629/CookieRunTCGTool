@@ -85,6 +85,8 @@ import javax.swing.JButton;
 // FEATURE: Include secret/promo cards in collection mode (EN done and TW pending)
 // TODO: Finish all descriptions for variants
 // FEATURE: Save reminders when loading new deck or closing program with unsaved changes
+// FEATURE: Add searching by card name
+// FEATURE: Add filtering by keywords (Ancient, Dragon, Beast, Arena)
 // FIX: Add auto-resize to deck overview
 // OPTIMIZATION: Reduce memory usage (somehow)
 
