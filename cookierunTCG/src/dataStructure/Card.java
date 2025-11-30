@@ -86,7 +86,8 @@ public class Card {
 			        Image image = cardIcon.getImage().getScaledInstance(Config.SMALL_CARD_WIDTH, Config.SMALL_CARD_HEIGHT,  java.awt.Image.SCALE_SMOOTH);
 			        _cardIcon = new ImageIcon(image);
 			        _isImageLoaded = true;
-					_cardLanguage = lang;
+					_cardLanguage = Config.CARD_LANGUAGE;
+					System.out.println("Loaded image for card " + getId() + " in language: " + lang);
 				    for (ClickableCardPanel panel : _PanelList) {
 						SwingUtilities.invokeLater(() -> {
 							if (panel != null) {
@@ -240,7 +241,6 @@ public class Card {
 	public void setVariantInfo(CardRarity[] variants, String[] variantNames) {
 		_variants = variants;
 		_variantNames = variantNames;
-		_variantNames[0] = ""; // Remove ID on normal variant
 	}
 	
 	public void add() {

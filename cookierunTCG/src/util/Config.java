@@ -20,7 +20,7 @@ public class Config {
             properties.load(input);
             LANGUAGE = properties.getProperty("language", "en"); // Default to "en" if not found
 			CARD_LANGUAGE = properties.getProperty("card_language", "en"); // Default to "en" if not found
-			FALLBACK_ORDER = (CARD_LANGUAGE.equals("en")) ? new String[] {"en", "zh_TW", "kr"} : new String[] {"zh_TW", "en", "kr"};
+			FALLBACK_ORDER = (CARD_LANGUAGE.equals("en")) ? new String[] {"en", "kr", "zh_TW"} : new String[] {"zh_TW", "en", "kr"};
 			CARD_PREVIEW_SCALE = Double.parseDouble(properties.getProperty("card_preview_scale", "1.0")); // Default to 1.0 if not found
 			CARD_ICON_SCALE = Double.parseDouble(properties.getProperty("card_icon_scale", "1.5")); // Default to 1.5 if not found
 			CARD_PREVIEW_WIDTH = (int) (400 * Config.CARD_PREVIEW_SCALE);
