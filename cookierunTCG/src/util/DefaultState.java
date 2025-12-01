@@ -118,7 +118,6 @@ public class DefaultState {
 
 			// lv
 			if ((data = input.readLine()) != null) {
-				System.out.println(data);
 				String[] flags = data.split(",");
 				for (int i = 0; i < flags.length; i++) {
 					if (lv.length > i + 1) {
@@ -152,7 +151,6 @@ public class DefaultState {
 
 			// HP
 			if ((data = input.readLine()) != null) {
-				System.out.println(data);
 				String[] flags = data.split(",");
 				for (int i = 0; i < flags.length; i++) {
 					if (hp.length > i + 1) {

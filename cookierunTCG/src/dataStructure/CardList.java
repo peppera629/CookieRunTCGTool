@@ -102,7 +102,7 @@ public class CardList {
 			flipCorrect = !_search_flip || c.isFlip();
 			flipTypeCorrect = !selectFlipType || !_search_flip || !c.isFlip() || _search_flip_type[c.getFlipType().getValue()];
 			extraCorrect = !_search_extra || c.isExtra();
-			rarityCorrect = !selectRarity || _search_rarity[c.getRarity().getValue()];
+			rarityCorrect = (c.getPack().equals("P") ? (_search_pack_list.contains("P") ? true : false) : (!selectRarity || _search_rarity[c.getRarity().getValue()]));
 			packCorrect = _search_pack_list.size() == 0 || _search_pack_list.contains(c.getPack());
 			owned = Collection.getInstance().getCardTotalOwnedCount(c.getId()) > 0;
 			if (forceShowAll) {
@@ -117,7 +117,7 @@ public class CardList {
 			}
 			
 		}
-		System.out.println("selectList size : "+selectList.size());
+		//System.out.println("selectList size : "+selectList.size());
 		return selectList;
 	}
 	
@@ -235,7 +235,7 @@ public class CardList {
 
 	public void updateAllCardPanels() {
 		for (Card card : cardList) {
-			System.out.println(card.getId() + "/" + card.getCount());
+			//System.out.println(card.getId() + "/" + card.getCount());
 			for (ClickableCardPanel panel : card.getPanels()) {
 				if (panel.getCountShowMode() == 3) {
 					//System.out.println(card.getId());

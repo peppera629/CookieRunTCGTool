@@ -87,7 +87,7 @@ public class Card {
 			        _cardIcon = new ImageIcon(image);
 			        _isImageLoaded = true;
 					_cardLanguage = Config.CARD_LANGUAGE;
-					System.out.println("Loaded image for card " + getId() + " in language: " + lang);
+					//System.out.println("Loaded image for card " + getId() + " in language: " + lang);
 				    for (ClickableCardPanel panel : _PanelList) {
 						SwingUtilities.invokeLater(() -> {
 							if (panel != null) {

@@ -151,6 +151,7 @@ public class CardLoader {
 					boolean isFlip = (cardData[3].equals("F") || cardData[3].equals("H") || cardData[3].equals("D")) || cardData[3].equals("S");
 	            	
 					// Name will be loaded later
+					//System.out.println(packName);
 	            	Card c = new Card(packName, cardData[0], "", color, type, isFlip, (isFlip ? FlipType.fromString(cardData[3]) : null), cardData[3].equals("EX"), CardUtil.CardRarity.fromString(cardData[4]), cardData[5], level, hp);
 	            	cardList.add(c);
 	            }
@@ -482,6 +483,6 @@ public class CardLoader {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("All card names have been refreshed.");
+		//System.out.println("All card names have been refreshed.");
 	}
 }

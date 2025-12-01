@@ -17,3 +17,4 @@ start.bat
 cookierunTCG/config/default_state.txt
 cookierunTCG/run.bat
 cookierunTCG/collection/*
+cookierunTCG/compile&start_new.bat

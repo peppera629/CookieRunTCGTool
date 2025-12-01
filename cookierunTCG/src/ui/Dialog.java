@@ -43,7 +43,7 @@ public class Dialog {
             public void run() {
                 try {
                     message = msg;
-                    initialize();
+                    initialize(false);
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -52,7 +52,7 @@ public class Dialog {
         });
     }
 
-    private void initialize() {
+    private void initialize(boolean choiceMode) {
         frame = new JFrame();
         frame.setTitle(CardUtil.getTranslation("dialog.title"));
         frame.setBounds(100, 100, message.length() * 10 + 50, 150);
@@ -63,7 +63,7 @@ public class Dialog {
         messageLabel.setHorizontalAlignment(JLabel.CENTER);
         messageLabel.setFont(MainUI.CRnormal);
         frame.getContentPane().add(messageLabel, BorderLayout.CENTER);
-        
+
         JButton okButton = new JButton("OK");
         okButton.setFont(MainUI.CRnormal);
         okButton.addActionListener(new ActionListener() {

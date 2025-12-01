@@ -139,11 +139,11 @@ public class DeckWindow {
 		File outputFile = new File("deck_image/" + mDeckName + ".png");
 		try {
 			ImageIO.write(image, "png", outputFile);
-			System.out.println("圖片已保存至 " + outputFile.getAbsolutePath());
+			System.out.println("Deck overview saved to " + outputFile.getAbsolutePath());
 			Dialog dialog = new Dialog();
 			dialog.show(CardUtil.getTranslation("deck.imagesaved") + outputFile.getAbsolutePath());
 		} catch (IOException e) {
-			System.out.println("保存圖片時出現錯誤: " + e.getMessage());
+			System.out.println("Deck saving failed: " + e.getMessage());
 		}
 	}
 

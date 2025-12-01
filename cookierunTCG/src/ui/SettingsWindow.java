@@ -147,7 +147,7 @@ public class SettingsWindow implements LanguageChangeListener{
         frame.getContentPane().add(cardPreviewScaleLabel, gbc);
 
         // ==== Card Preview Scale Slider ====
-        cardPreviewScaleSlider = new JSlider(JSlider.HORIZONTAL, 75, 150, (int) (Config.CARD_PREVIEW_SCALE * 100));
+        cardPreviewScaleSlider = new JSlider(JSlider.HORIZONTAL, 75, 125, (int) (Config.CARD_PREVIEW_SCALE * 100));
         cardPreviewScaleSlider.setMajorTickSpacing(25);
         cardPreviewScaleSlider.setMinorTickSpacing(5);
         cardPreviewScaleSlider.setSnapToTicks(true);
