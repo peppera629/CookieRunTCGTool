@@ -60,6 +60,8 @@ import util.LanguageChangeListener;
 import util.UIUtil;
 
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -85,11 +87,12 @@ import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 
-// TODO: Finish all descriptions for variants
 // FEATURE: Add more views for collection summary in collection mode (by color, by promo set, etc.)
-// FEATURE: Add searching by card name
 // FEATURE: Add filtering by keywords (Ancient, Dragon, Beast, Arena)
+// TODO: Finish all descriptions for variants
+// TODO: Check all card names in zh_TW
 // FIX: Add auto-resize to deck overview
+// FIX: Pause detection for collection mode variant toggles when typing in search box
 // FIX: Remove starter decks from collection summary secret rare view
 // FIX: Change ways of compiling (JAR, or fix command prompt window not closing)
 // OPTIMIZATION: Reduce memory usage (somehow)
@@ -161,19 +164,19 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JCheckBox[] cb_rarity;
     private JCheckBox[] cb_HP;
     private JCheckBox cb_type_cookie, cb_type_item, cb_type_trap, cb_type_stage;
-    private JCheckBox cb_flip, cb_extra;
+    private JCheckBox cb_flip, cb_extra, cb_variant;
     private JLabel labelColor, labelType, labelSeries, labelRarity, labelHP;
 
     private Deck mDeck;
     private ScrollPane scrollPane;
     private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane, ownedInfoPanel;
-    private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup;
-    private JTextField mDeckText;
+    private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup, deckDetailPane, centerPanel;
+    private JTextField mDeckText, searchBox;
     private JButton saveBtn, selectBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST;
     private JButton mClearDeckBtn, button_search, button_clean, button_sort, button_settings;
     private JToggleButton button_collection;
     private JLabel mCardCountHintTxt, mFlipCountHintTxt, mExtraCountHintTxt, mDeckCookieSummaryHintTxt, mDeckCookieLv1HintTxt, mDeckCookieLv2HintTxt, mDeckCookieLv3HintTxt, 
-        mLevelCountTxt, mFlipTypeCountTxt, cardLabel, filterResults;
+        mLevelCountTxt, mFlipTypeCountTxt, cardLabel, filterResults, labelSearch;
     private JLabel mDeckItemHintTxt, mDeckTrapHintTxt, mDeckStageHintTxt, mDeckPaneLabel, mCardsPaneLabel;
     private JLabel mCardCountTxt, mFlipCountTxt, mExtraCountTxt, mDeckCookieSummaryTxt, mDeckCookieLv1Txt, mDeckCookieLv2Txt, mDeckCookieLv3Txt;
     private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardTranslationSkill, cardTranslationAttackCost;
@@ -183,10 +186,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JButton showDeckBtn;
     private JMenuItem settingsMenuItem, sortSettingsMenuItem;
     private ImageIcon cardIcon;
+    private JScrollPane scrollDeckPane, scrollCardsPane;
     public static Font CRnormal, CRbold, CRnormalLarge, CRnormalSmall, CRnormalEXLarge, CRboldLarge, CRboldSmall, CRboldEXLarge, CRtranslation, CRtranslationBold;
     public static InputStream fontStream, fontStreamBold;
     public static Map<java.awt.Component, String> componentFontMap = new HashMap<>();
-    private int columns = 6, previewHeight;
+    private int columns = 6, previewHeight, divLoc = 400;
     private static int collectionAddVariant = 0;
     private double previousSplitLocation = 0.3d;
     private boolean isCollectionMode = false, deckChanged = false;
@@ -231,6 +235,19 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 }
             });
         }
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "search");
+        actionMap.put("search", new javax.swing.AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateCardList();
+                if (isCollectionMode) {
+                    updateCardListForCollection();
+                }
+                mDefaultState.saveDefaultState();
+            }
+        });
+
     }
     
     public static void loadFont() {
@@ -391,6 +408,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             		button_collection.setText(CardUtil.getTranslation("collectionedit.enable"));
             	}
             	updateUIForCollectionMode();
+                frame.getComponentListeners()[0].componentResized(null);
             }
         });
 
@@ -420,7 +438,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         // ===== 中間區域 =====
 
-        JPanel centerPanel = new JPanel();
+        centerPanel = new JPanel();
         centerPanel.setLayout(new BorderLayout());
         frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
 
@@ -436,7 +454,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         mDeckPane = new JPanel();
         mDeckPane.setLayout(new GridLayout(0, 6, 5, 5));
-        JScrollPane scrollDeckPane = new JScrollPane(mDeckPane);
+        scrollDeckPane = new JScrollPane(mDeckPane);
         scrollDeckPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollDeckPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         JScrollBar deckScrollBar = scrollDeckPane.getVerticalScrollBar();
@@ -456,7 +474,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mCardsPane = new JPanel();
         mCardsPane.setLayout(new GridLayout(0, 4, 5, 5));
         
-        JScrollPane scrollCardsPane = new JScrollPane(mCardsPane);
+        scrollCardsPane = new JScrollPane(mCardsPane);
         scrollCardsPane.setBackground(new Color(255, 255, 255));
         scrollCardsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollCardsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -468,12 +486,13 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, deckPane, cardListPane);
         splitPane.setDividerLocation(300);
         splitPane.setResizeWeight(0.5);
+        splitPane.setDividerSize(8);
         splitPane.setContinuousLayout(true);
         splitPane.setOneTouchExpandable(true);
         centerPanel.add(splitPane, BorderLayout.CENTER);
 
         // ==== 卡組資訊
-        JPanel deckDetailPane = new JPanel();
+        deckDetailPane = new JPanel();
         deckDetailPane.setLayout(new BorderLayout());
         centerPanel.add(deckDetailPane, BorderLayout.SOUTH);
 
@@ -527,6 +546,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     CardList.getInstance().clearCardListCount();
                     updateDeck();
                     CardList.getInstance().updateAllCardPanels();
+                    deckChanged = true;
                 }
             }
         });
@@ -725,11 +745,14 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     mCardsPane.repaint();
                 }
 
-                if (isCollectionMode) {
-                    splitPane.setDividerLocation(0.0);
+                if (!isCollectionMode && divLoc > 0) {
+                    // Refresh saved location after a resize
+                    divLoc = splitPane.getDividerLocation();
                 }
                 
                 // Revalidate and repaint to apply changes
+                splitPane.revalidate();
+                splitPane.repaint();
                 centerPanel.revalidate();
                 centerPanel.repaint();
             }
@@ -1010,8 +1033,21 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     }
 	
     private void initCheckBox() {
-
         Border filterBorder = BorderFactory.createEmptyBorder(0, 0, 20, 0);
+
+        // ========================= search by name =========================
+        JPanel searchLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the search box
+        mSearchPane.add(searchLabelPanel);
+
+        labelSearch = new JLabel(CardUtil.getTranslation("search.name"), JLabel.LEFT);
+        labelSearch.setFont(CRboldEXLarge);
+        componentFontMap.put(labelSearch, "CRboldEXLarge"); // Store the font type as a String
+        searchLabelPanel.add(labelSearch);
+        
+        searchBox = new JTextField();
+        searchBox.setFont(CRnormal);
+        componentFontMap.put(searchBox, "CRnormal"); // Store the font type as a String
+        mSearchPane.add(searchBox);
     	
         // ========================= color ==================================
         labelColor = new JLabel(CardUtil.getTranslation("color"), JLabel.LEFT);
@@ -1296,19 +1332,22 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mSearchPane.add(rarityLabelPanel);
 
         JPanel rarityOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
-        JPanel rarityCheckboxGroup = new JPanel();
-        rarityCheckboxGroup.setLayout(new GridLayout(0, 6));
-        rarityCheckboxGroup.setBorder(filterBorder);
-        rarityOuterPanel.add(rarityCheckboxGroup);
         mSearchPane.add(rarityOuterPanel);
+        JPanel rarityCheckboxGroup = new JPanel(new GridBagLayout());
+        rarityCheckboxGroup.setBorder(filterBorder);
+
+        GridBagConstraints gbc_rarity = new GridBagConstraints();
+        gbc_rarity.anchor = GridBagConstraints.WEST;
+        gbc_rarity.gridy = 0;
 
         cb_rarity = new JCheckBox[CardUtil.RARITY_MAX-1]; // P is now excluded
         for(int i=0; i<CardUtil.RARITY_MAX-1; i++) {
+            gbc_rarity.gridx = i;
         	cb_rarity[i] = new JCheckBox(CardUtil.CardRarity.fromValue(i).getDisplayName());
         	cb_rarity[i].setSelected(mDefaultState.getDefaultRarityFlag(i));
             cb_rarity[i].setFont(CRnormal);
             componentFontMap.put(cb_rarity[i], "CRnormal"); // Store the font type as a String
-            rarityCheckboxGroup.add(cb_rarity[i]);
+            rarityCheckboxGroup.add(cb_rarity[i], gbc_rarity);
             final int id = i;
             cb_rarity[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1316,6 +1355,15 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 }
             });
         }
+
+        gbc_rarity.gridx = 0;
+        gbc_rarity.gridy = 1;
+        gbc_rarity.gridwidth = 5;
+        cb_variant = new JCheckBox(CardUtil.getTranslation("rarity.variant"));
+        cb_variant.setFont(CRnormal);
+        componentFontMap.put(cb_variant, "CRnormal"); // Store the font type as a String
+        rarityCheckboxGroup.add(cb_variant, gbc_rarity);
+        rarityOuterPanel.add(rarityCheckboxGroup);
     }
 
     private void cleanCheckBox() {
@@ -1328,6 +1376,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     	cb_type_trap.setSelected(false);
         cb_extra.setSelected(false);
         cb_flip.setSelected(false);
+        cb_variant.setSelected(false);
     	cb_type_stage.setSelected(false);
 
     	for (JCheckBox cb : cb_level) {
@@ -1354,7 +1403,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         for (JCheckBox cb : cb_HP) {
             cb.setEnabled(cb_type_cookie.isSelected());
         }
-
+        searchBox.setText("");
     }
     
     private void updateCardList() {
@@ -1384,6 +1433,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         for (int i=0; i< cb_rarity.length; i++) {
             list.setRarity(i, cb_rarity[i].isSelected());
     	}
+        list.setHasVariantsOnly(cb_variant.isSelected());
+        list.setSearchTerm(searchBox.getText().trim().equals("Search by Card Name...") ? "" : searchBox.getText().trim());
         
         mCardsPane.removeAll();
         List<Card> currentList = list.getSelectCards(false);
@@ -1587,6 +1638,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         // Update all components with the new translations
         frame.setTitle(CardUtil.getTranslation("app.title") + " v." + Constant.VERSION);
+        searchBox.setText("");
+        labelSearch.setText(CardUtil.getTranslation("search.name"));
         button_search.setText(CardUtil.getTranslation("search"));
         button_clean.setText(CardUtil.getTranslation("clear"));
         mDeckPaneLabel.setText(CardUtil.getTranslation("deck"));
@@ -1622,6 +1675,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_type_item.setText(CardUtil.getTranslation("filter.item"));
         cb_type_trap.setText(CardUtil.getTranslation("filter.trap"));
         cb_type_stage.setText(CardUtil.getTranslation("filter.stage"));
+        cb_variant.setText(CardUtil.getTranslation("rarity.variant"));
         labelRarity.setText(CardUtil.getTranslation("rarity"));
         for(int i=0; i< cb_rarity.length; i++) {
             cb_rarity[i].setText(CardUtil.CardRarity.fromValue(i).getDisplayName());
@@ -1753,15 +1807,19 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
     private void updateUIForCollectionMode() {
         if (isCollectionMode) {
-            int divLoc = splitPane.getDividerLocation();
-            int splitHeight = splitPane.getHeight();
-            previousSplitLocation = (double) (divLoc) / splitHeight;
-            mDeckPane.setVisible(false);
+            if (splitPane.getTopComponent() != null) {
+                divLoc = splitPane.getDividerLocation();
+            }
+            
+            mTextsPane.setVisible(false);
             mDeckPaneLabel.setVisible(false);
+            splitPane.setTopComponent(null);
             mCardsPaneLabel.setText(CardUtil.getTranslation("collection"));
             mClearDeckBtn.setText(CardUtil.getTranslation("collection.summary"));
-            splitPane.setDividerLocation(0.0);
+            splitPane.setResizeWeight(0.0);
+            splitPane.setDividerSize(0);
             splitPane.setEnabled(false);
+            
             for (JLabel label : ownedInfoCountRows) {
                 label.setText("");
                 label.setVisible(true);
@@ -1772,14 +1830,24 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
             mFileOpPane.setVisible(false);
             updateCardListForCollection();
+            splitPane.revalidate();
+            splitPane.repaint();
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                splitPane.setDividerLocation(0); // topmost
+                splitPane.revalidate();
+                splitPane.repaint();
+            });
         } else {
-            mDeckPane.setVisible(true);
+            splitPane.setTopComponent(deckPane);
+            mTextsPane.setVisible(true);
             mDeckPaneLabel.setVisible(true);
             mCardsPaneLabel.setText(CardUtil.getTranslation("cardlist"));
             mClearDeckBtn.setText(CardUtil.getTranslation("deck.clear"));
-            //System.out.println(previousSplitLocation);
-            splitPane.setDividerLocation(previousSplitLocation);
+            splitPane.setDividerSize(8);
             splitPane.setEnabled(true);
+            splitPane.setResizeWeight(0.5);
+            splitPane.setDividerLocation(divLoc);
+
             collection.saveCollection();
             for (JLabel label : ownedInfoCountRows) {
                 label.setText("");
@@ -1791,6 +1859,18 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
             mFileOpPane.setVisible(true);
             updateCardList();
+
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                splitPane.revalidate();
+                splitPane.repaint();
+                /*
+                if (divLoc > 0) {
+                    // Only restore after components exist and are laid out
+                    splitPane.setDividerLocation(divLoc);
+                } else {
+                    splitPane.setDividerLocation(0.5); 
+                }*/
+            });
         }
     }
 
