@@ -86,9 +86,11 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 
 // TODO: Finish all descriptions for variants
+// FEATURE: Add more views for collection summary in collection mode (by color, by promo set, etc.)
 // FEATURE: Add searching by card name
 // FEATURE: Add filtering by keywords (Ancient, Dragon, Beast, Arena)
 // FIX: Add auto-resize to deck overview
+// FIX: Remove starter decks from collection summary secret rare view
 // FIX: Change ways of compiling (JAR, or fix command prompt window not closing)
 // OPTIMIZATION: Reduce memory usage (somehow)
 
@@ -289,12 +291,12 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                         CardLoader.saveDeck(mDeckText.getText(), mDeck);
                         mDefaultState.setDefaultDeckName(mDeckText.getText());
                         mDefaultState.saveDefaultState();
-                        frame.dispose();
+                        System.exit(0);
                     } else if (result == 1) {
-                        frame.dispose();
+                        System.exit(0);
                     }
                 } else {
-                    frame.dispose(); // Dispose the window directly if no changes
+                    System.exit(0);
                 }
             }
         });
@@ -517,10 +519,15 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         mClearDeckBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mDeck.clear();
-                CardList.getInstance().clearCardListCount();
-                updateDeck();
-                CardList.getInstance().updateAllCardPanels();
+                if (isCollectionMode) {
+                    CollectionSummaryDialog dialog = new CollectionSummaryDialog();
+                    dialog.show();
+                } else {
+                    mDeck.clear();
+                    CardList.getInstance().clearCardListCount();
+                    updateDeck();
+                    CardList.getInstance().updateAllCardPanels();
+                }
             }
         });
 
@@ -1752,6 +1759,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckPane.setVisible(false);
             mDeckPaneLabel.setVisible(false);
             mCardsPaneLabel.setText(CardUtil.getTranslation("collection"));
+            mClearDeckBtn.setText(CardUtil.getTranslation("collection.summary"));
             splitPane.setDividerLocation(0.0);
             splitPane.setEnabled(false);
             for (JLabel label : ownedInfoCountRows) {
@@ -1768,6 +1776,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckPane.setVisible(true);
             mDeckPaneLabel.setVisible(true);
             mCardsPaneLabel.setText(CardUtil.getTranslation("cardlist"));
+            mClearDeckBtn.setText(CardUtil.getTranslation("deck.clear"));
             //System.out.println(previousSplitLocation);
             splitPane.setDividerLocation(previousSplitLocation);
             splitPane.setEnabled(true);

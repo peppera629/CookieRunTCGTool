@@ -1,12 +1,13 @@
 package dataStructure;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import ui.ClickableCardPanel;
 import util.Config;
 import util.CardUtil;
-import util.CardUtil.CardType;
+import util.CardUtil.*;
 
 // Card List: singleton class to manage all cards and selected cards based on search criteria
 
@@ -52,6 +53,19 @@ public class CardList {
 	
 	public List<Card> getAllCards() {
 		return cardList;
+	}
+
+	public int getCardCountByCondition(String packId, CardRarity rarity, CardColor color, CardType type) {
+		int total = 0;
+		for (Card c : cardList) {
+			if (((packId == null && packId != "P") || c.getPack().equals(packId)) &&
+				(rarity == null || (rarity.getValue() >= 6 ? Arrays.asList(c.getVariants()).contains(rarity) : c.getRarity() == rarity)) && // If requested rarity is a Secret Rare, check if it has that rarity
+				(color == null || c.getColor() == color) &&
+				(type == null || c.getType() == type)) {
+				total++;
+			}
+		}
+		return total;
 	}
 
 	public List<Card> getOwnedCards() {
