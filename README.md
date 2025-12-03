@@ -1,5 +1,25 @@
 Note: Card images are not included in the source code, nor are any preset deck configurations.
 
+=== Version 0.10.0 : 2025-12-03
+- New collection summary view: see your collection status by pack and rarity. Enter collection mode and press "Collection Summary" to view. Currently supports 2 modes: by rarity and by rarity (secret rare)
+- Traditional Chinese secret rare card images added
+
+=== Version 0.9.1 : 2025-12-01
+- Added language fallbacks for region- or language-exclusive cards (for English: EN > KR > ZH_TW, for Traditional Chinese: ZH_TW > EN > KR)
+- Save reminders will now pop up when closing/switching to new deck with unsaved changes
+
+=== Version 0.9.0 : 2025-11-29
+- Collection now supports keeping track of "variants" (secret rares, promo versions, etc.). Enter collection mode and hold the corresponding number key to change currently-set variant and illustration (only shows English cards for now)
+- Added buttons to toggle filter/card preview panels
+- Added Booster Pack and Starter Deck quick toggles
+
+=== Version 0.8.1 : 2025-11-20
+- Added FLIP card types and filtering
+- Allowed hiding of unowned cards
+- Changed deck detail layout
+- Added flip type display
+- Added basic dialog boxes for saving deck & saving deck image
+
 === Version 0.8.0 : 2025-11-19
 - New "Collection" mode. You can keep track of the cards you own using a dedicated menu. (Secret rare and variant tracking will be available in the future)
 - "Build from Collection" mode: number of copies you own for each card will be displayed, and you'll get a warning when cards you don't own or don't have enough of are added to the deck
