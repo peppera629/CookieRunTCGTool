@@ -1,5 +1,6 @@
 package dataStructure;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -122,7 +123,7 @@ public class CardList {
 			extraCorrect = !_search_extra || c.isExtra();
 			rarityCorrect = (c.getPack().equals("P") ? (_search_pack_list.contains("P") || _search_pack_list.size() == 0 ? true : false) : (!selectRarity || _search_rarity[c.getRarity().getValue()]));
 			packCorrect = _search_pack_list.size() == 0 || _search_pack_list.contains(c.getPack());
-			nameCorrect = _search_name.equals("") || c.getName().toLowerCase().contains(_search_name);
+			nameCorrect = _search_name.equals("") || Normalizer.normalize(c.getName().toLowerCase(), Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").contains(_search_name);
 			hasVariants = !_search_variants || (c.getVariants().length > 1);
 			owned = Collection.getInstance().getCardTotalOwnedCount(c.getId()) > 0;
 			if (forceShowAll) {
