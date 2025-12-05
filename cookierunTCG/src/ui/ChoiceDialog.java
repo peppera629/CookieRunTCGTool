@@ -40,6 +40,7 @@ public class ChoiceDialog {
         // Create a modal JDialog
         dialog = new JDialog((JFrame) null, CardUtil.getTranslation("dialog.title"), true);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setSize(200 + msg.length() * 10, 200);
         dialog.setLayout(new BorderLayout());
         dialog.setLocationRelativeTo(null);
 
@@ -90,7 +91,6 @@ public class ChoiceDialog {
 
         // Show the dialog (this will block until the dialog is closed)
         dialog.setVisible(true);
-        dialog.pack();
 
         return userChoice;
     }

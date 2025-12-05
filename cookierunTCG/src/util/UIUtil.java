@@ -17,7 +17,9 @@ import javax.swing.JPanel;
 import dataStructure.Card;
 import dataStructure.CardList;
 import dataStructure.Deck;
+import dataStructure.CardLoader;
 import ui.ClickableCardPanel;
+import ui.DeckWindowDifferential;
 import ui.ClickableCardPanel.CardListCallBack;
 
 public class UIUtil {
@@ -36,10 +38,10 @@ public class UIUtil {
 		if (showCountMode == 4 && counts2 != null) {
 			Map<String, Integer> counts1 = new HashMap<>();
 			CardList globalCardList = CardList.getInstance();
+			int differentCardCount = 0;
 			
 			for (Card card : cardList) {
 				counts1.merge(card.getId(), card.getCount(), Integer::sum);
-				System.out.println("Card in deck 1: " + card.getId() + " Count: " + card.getCount());
 			}
 
 			LinkedHashSet<String> allIds = new LinkedHashSet<>();
@@ -62,6 +64,7 @@ public class UIUtil {
                 }
 
 				Card cardInstance = null;
+				differentCardCount += 1;
 
                 // Find any card instance to render, current deck (deck 1) takes priority
                 for (Card c : cardList) {
@@ -74,18 +77,25 @@ public class UIUtil {
                     for (String id2 : counts2.keySet()) {
 						if (id.equals(id2)) {
 							cardInstance = globalCardList.getCardById(id);
+							CardLoader.loadCardImage(cardInstance);
 							break;
 						}
 					}
                 }
+				
                 if (cardInstance == null) {
                     System.out.println("No card instance found for id: " + id);
                     continue;
                 }
 
+				System.out.println(cardInstance.getImageLoadStatus());
+
                 ClickableCardPanel cardPanel = new ClickableCardPanel(cardInstance, showCountMode, cardSize, differential);
                 panel.add(cardPanel);
 			}
+
+			DeckWindowDifferential.setDifferentCardCountStatic(differentCardCount);
+			
 		} else {
 			for (Card card : cardList) {
 				ClickableCardPanel cardPanel;

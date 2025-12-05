@@ -77,6 +77,8 @@ public class DeckWindowDifferential {
 	private JPanel mDeckPane;
 	private JPanel mOutputPane;
 	private JButton btnNewButton;
+	private JScrollPane scrollDeckPane;
+	private static int differentCardCount = 0;
 	private int w = 670;
 	private int h = 550;
 
@@ -86,25 +88,38 @@ public class DeckWindowDifferential {
 		}
 		frame = new JFrame();
 		frame.setTitle(mDeckName1 + " -> " + mDeckName2);
-		int anotherLine = 0;
-		if ((mDeck1.getCardArrayListSize() % Config.DW_ROW_SIZE) > 0) {
-			anotherLine++;
-		}
-		w = (Config.DW_CARD_WIDTH + 5) * Config.DW_ROW_SIZE + 20;
-		h = (Config.DW_CARD_HEIGHT + 5) * ((mDeck1.getCardArrayListSize() / Config.DW_ROW_SIZE) + anotherLine) + 20;
-		frame.setSize(w + 10, h + 70);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		// ==== 卡組
 		mDeckPane = new JPanel();
 
-		JScrollPane scrollDeckPane = new JScrollPane(mDeckPane);
-		scrollDeckPane.setBounds(0, 0, w, h);
+		scrollDeckPane = new JScrollPane(mDeckPane);
+		
 		scrollDeckPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollDeckPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
 		frame.getContentPane().add(scrollDeckPane);
+
+		createOutputWindow();
+	}
+
+	private void updateDeck() {
+		mDeckPane.removeAll();
+
+        UIUtil.showDeck(null, mDeckPane, mDeck1.getAllCards(), mDeck2, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_DECK, 4);
+
+		int anotherLine = 0;
+		if ((differentCardCount % Config.DW_ROW_SIZE) > 0) {
+			anotherLine++;
+		}
+		w = (Config.DW_CARD_WIDTH + 5) * Config.DW_ROW_SIZE + 20;
+		h = (Config.DW_CARD_HEIGHT + 5) * ((differentCardCount / Config.DW_ROW_SIZE) + anotherLine) + 20;
+		frame.setSize(w + 10, h + 70);
+		scrollDeckPane.setBounds(0, 0, w, h);
+
+		mDeckPane.revalidate();
+		mDeckPane.repaint();
 
 		btnNewButton = new JButton(CardUtil.getTranslation("deck.export"));
 		btnNewButton.addActionListener(new ActionListener() {
@@ -115,16 +130,6 @@ public class DeckWindowDifferential {
 		btnNewButton.setBounds(4, h, w - 15, 30);
 		btnNewButton.setFont(MainUI.CRbold);
 		frame.getContentPane().add(btnNewButton);
-		createOutputWindow();
-	}
-
-	private void updateDeck() {
-		mDeckPane.removeAll();
-
-        UIUtil.showDeck(null, mDeckPane, mDeck1.getAllCards(), mDeck2, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_DECK, 4);
-
-		mDeckPane.revalidate();
-		mDeckPane.repaint();
 	}
 
 	private void outputImage() {
@@ -152,12 +157,12 @@ public class DeckWindowDifferential {
 
 	private void createOutputWindow() {
 		int anotherLine = 0;
-		if ((mDeck1.getCardArrayListSize() % Config.DW_ROW_SIZE) > 0) {
+		
+		if ((differentCardCount % Config.DW_ROW_SIZE) > 0) {
 			anotherLine++;
 		}
 		int output_w = (Config.DW_OUTPUT_WIDTH + 5) * Config.DW_ROW_SIZE + 20;
-		int output_h = (Config.DW_OUTPUT_HEIGHT + 5) * ((mDeck1.getCardArrayListSize() / Config.DW_ROW_SIZE) + anotherLine) + 20;
-
+		int output_h = (Config.DW_OUTPUT_HEIGHT + 5) * ((differentCardCount / Config.DW_ROW_SIZE) + anotherLine) + 20;
 		mOutputPane = new JPanel();
 		mOutputPane.setLayout(new GridLayout(0, Config.DW_ROW_SIZE, 5, 5));
 		mOutputPane.setBounds(w + 100, h+100, output_w + 10, output_h + 80);
@@ -175,4 +180,7 @@ public class DeckWindowDifferential {
 		mOutputPane.repaint();
 	}
 
+	public static void setDifferentCardCountStatic(int count) {
+		differentCardCount = count;
+	}
 }

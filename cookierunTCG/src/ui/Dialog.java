@@ -56,6 +56,7 @@ public class Dialog {
     private void initialize(boolean choiceMode) {
         frame = new JFrame();
         frame.setTitle(CardUtil.getTranslation("dialog.title"));
+        frame.setSize(200 + message.length() * 10, 200);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(new BorderLayout());
@@ -74,6 +75,5 @@ public class Dialog {
             }
         });
         frame.getContentPane().add(okButton, BorderLayout.SOUTH);
-        frame.pack();
     }
 }

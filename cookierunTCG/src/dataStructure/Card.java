@@ -240,6 +240,10 @@ public class Card {
 		return _maxCount;
 	}
 	
+	public boolean getImageLoadStatus() {
+		return _isImageLoaded;
+	}
+
 	public void setCount(int count) {
 		_cardCount = count;
 	}

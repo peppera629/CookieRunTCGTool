@@ -1054,18 +1054,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 				fileChooser.setCurrentDirectory(new File("deck/"));
 				int returnValue = fileChooser.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    if (deckChanged) {
-                        ChoiceDialog dialog = new ChoiceDialog();
-                        int result = dialog.show(CardUtil.getTranslation("confirmation"));
-                        System.out.println(result);
-                        if (result == 0) {
-                            CardLoader.saveDeck(mDeckText.getText(), mDeck);
-                            mDefaultState.setDefaultDeckName(mDeckText.getText());
-                            mDefaultState.saveDefaultState();
-                        } else if (result == 2) {
-                            return; // Cancel the file selection
-                        }
-                    }
                     File selectedFile = fileChooser.getSelectedFile();
                     String filename = selectedFile.getName();
                     Map<String, Integer> mDeck2 = CardLoader.loadDeckTemp(filename.substring(0, filename.length() - 4));
