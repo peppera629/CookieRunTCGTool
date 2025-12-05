@@ -11,6 +11,8 @@ import util.CardUtil.CardColor;
 import util.CardUtil.CardRarity;
 import util.CardUtil.CardType;
 import util.CardUtil.FlipType;
+import util.CardUtil.SkillType;
+import util.CardUtil.Keyword;
 import util.CardUtil;
 import util.Config;
 
@@ -32,6 +34,8 @@ public class Card {
 	private String _mark;
 	private int _lv;
 	private int _hp;
+	private List<SkillType> _skillType;
+	private Keyword _keyword;
 	private int _maxCount;
 	private String _cardLanguage = "";
 	private ImageIcon _cardIcon;
@@ -48,7 +52,7 @@ public class Card {
 	private String _translationFlip = "";
 	
 	public Card(String pack, String id, String name, CardColor color, CardType type,
-			boolean flip, FlipType flipType, boolean extra, CardRarity rarity, String mark, int lv, int hp) {
+			boolean flip, FlipType flipType, boolean extra, CardRarity rarity, String mark, int lv, int hp, List<SkillType> skillType, Keyword keyword) {
 		_PanelList = new ArrayList<ClickableCardPanel>();
 		_serial_number = SERIAL_NUMBER++;
 		_pack = pack;
@@ -63,6 +67,8 @@ public class Card {
 		_mark = mark;
 		_lv = lv;
 		_hp = hp;
+		_skillType = skillType;
+		_keyword = keyword;
 		_maxCount = 4; // 4: Normal, 1: Restricted, 0: Banned
 		_cardCount = 0;
 		int lv_weight = CardUtil.LEVEL_MAX  - _lv + 1;
@@ -182,6 +188,14 @@ public class Card {
 
 	public int getHP() {
 		return _hp;
+	}
+
+	public List<SkillType> getSkillType() {
+		return _skillType;
+	}
+
+	public Keyword getKeyword() {
+		return _keyword;
 	}
 
 	public boolean getOwnershipLegality() {

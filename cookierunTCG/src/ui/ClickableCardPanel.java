@@ -31,13 +31,15 @@ public class ClickableCardPanel extends JPanel {
     private CardListCallBack mCardListCallBack;
     private int mShowCountMode;
     private int mCardSize;
+	private int mDifferential;
 	private Dimension cardListSize;
     ImageIcon mCardIcon;
 
-	public ClickableCardPanel(Card card, int showCountMode, int cardSize) {
+	public ClickableCardPanel(Card card, int showCountMode, int cardSize, int differential) {
         mCard = card;
 		mShowCountMode = showCountMode;
 		mCardSize = cardSize;
+		mDifferential = differential;
     	mCardIcon = CardLoader.createCardImage(mCard, mCardSize);
 		cardListSize = new Dimension(mCardIcon.getIconWidth(), mCardIcon.getIconHeight());
         setPreferredSize(cardListSize);
@@ -118,6 +120,17 @@ public class ClickableCardPanel extends JPanel {
 						text = Integer.toString(mCard.getCount());
 						ownedText = "/" + Integer.toString(Collection.getInstance().getCardTotalOwnedCount(mCard.getId()));
 						if (mCard.getCount() > Collection.getInstance().getCardTotalOwnedCount(mCard.getId())) {
+							g2d.setColor(new Color(255, 128, 128));
+						}
+						break;
+					case 4: // Differential Mode (what cards to change from one deck to another)
+						text = Integer.toString(mDifferential);
+						if (mDifferential > 0) {
+							text = "+" + text;
+							g2d.setColor(new Color(128, 255, 128));
+						} else if (text.equals("0")) {
+							g2d.setColor(new Color(192, 192, 192));
+						} else {
 							g2d.setColor(new Color(255, 128, 128));
 						}
 						break;

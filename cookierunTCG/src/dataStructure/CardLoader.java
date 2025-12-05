@@ -17,11 +17,15 @@ import util.CardUtil;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardType;
 import util.CardUtil.FlipType;
+import util.CardUtil.SkillType;
 import util.CardUtil.CardRarity;
+import util.CardUtil.Keyword;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -114,8 +118,8 @@ public class CardLoader {
 	        while((data= input.readLine())!=null) {
 	            if (!data.equals("") && !data.startsWith("//")) {
 	            	String[] cardData = data.split(",");
-					//                0   1      2     3                4       5                6      7
-					// For each row: [ID, Color, Type, FLIP Type/EXTRA, Rarity, Regulation Mark, Level, HP]
+					//                0   1      2     3                4       5                6      7   8           9
+					// For each row: [ID, Color, Type, FLIP Type/EXTRA, Rarity, Regulation Mark, Level, HP, Skill Type, Keyword]
 	            	CardColor color = CardColor.Green;
 	            	for (int i=0; i<CardUtil.COLOR_MAX; i++) {
 	            		CardColor c = CardColor.fromValue(i);
@@ -131,11 +135,15 @@ public class CardLoader {
 	            	if (cardData[2].equals("Cookie")) {
 	            		type = CardType.Cookie;
 	            		if (cardData.length >6) {
-	            			level = Integer.parseInt(cardData[6]);
+							if (!cardData[6].equals("_")) {
+	            				level = Integer.parseInt(cardData[6]);
+							}
 							if (cardData.length >7) {
 								// Awaken HP bonus is kept for later use
 								cardData[7] = cardData[7].replace("+", "");
-								hp = Integer.parseInt(cardData[7]);
+								if (!cardData[7].equals("_")) {
+									hp = Integer.parseInt(cardData[7]);
+								}
 							}
 	            		}
 	            	} else if (cardData[2].equals("Item")) {
@@ -150,9 +158,36 @@ public class CardLoader {
 
 					boolean isFlip = (cardData[3].equals("F") || cardData[3].equals("H") || cardData[3].equals("D")) || cardData[3].equals("S");
 	            	
+					List<SkillType> skillType = new ArrayList<SkillType>();
+	            	if (cardData.length >8) {
+						if (cardData[8].equals("_")) {
+							skillType.add(SkillType.None);
+						} else {
+							if (cardData[8].contains("P")) {
+								skillType.add(SkillType.Passive);
+							}
+							if (cardData[8].contains("O")) {
+								skillType.add(SkillType.OnPlay);
+							}
+							if (cardData[8].contains("A")) {
+								skillType.add(SkillType.Activate);
+							}
+							if (cardData[8].contains("B")) {
+								skillType.add(SkillType.Blocker);
+							}
+							if (cardData[8].contains("Y")) {
+								skillType.add(SkillType.OwnTurn);
+							}
+						}
+	            	} else {
+	            		skillType.add(SkillType.None);
+	            	}
+
+					Keyword keyword = (cardData.length >9) ? Keyword.fromString(cardData[9]) : Keyword.None;
+
 					// Name will be loaded later
 					//System.out.println(packName);
-	            	Card c = new Card(packName, cardData[0], "", color, type, isFlip, (isFlip ? FlipType.fromString(cardData[3]) : null), cardData[3].equals("EX"), CardUtil.CardRarity.fromString(cardData[4]), cardData[5], level, hp);
+	            	Card c = new Card(packName, cardData[0], "", color, type, isFlip, (isFlip ? FlipType.fromString(cardData[3]) : null), cardData[3].equals("EX"), CardUtil.CardRarity.fromString(cardData[4]), cardData[5], level, hp, skillType, keyword);
 	            	cardList.add(c);
 	            }
 	        }
@@ -366,6 +401,7 @@ public class CardLoader {
 		        String data;
 		        while((data= input.readLine())!=null) {	
 		            if (!data.equals("") && !data.startsWith("//")) {
+						System.out.println("Loading card ID: " + data);
 		            	Card card = cardList.getCardById(data);
 						if (card == null) {
 							System.err.println("Card ID not found: " + data);
@@ -386,6 +422,39 @@ public class CardLoader {
 			e.printStackTrace();
 		}
 	    return deck;
+	}
+
+	public static Map<String, Integer> loadDeckTemp(String deckName) {
+		Map<String, Integer> counts = new HashMap<>();
+	    try {
+	        File file = new File("deck/"+deckName+".txt");
+	        if (file.exists()) {
+				FileInputStream reader = new FileInputStream(file);
+		        BufferedReader input = new BufferedReader(
+		                new InputStreamReader(new FileInputStream(file), "utf-8")); 
+		        String data;
+		        while((data= input.readLine())!=null) {	
+		            if (!data.equals("") && !data.startsWith("//")) {
+						System.out.println("Loading card ID: " + data);
+		            	if (counts.containsKey(data)) {
+		            		counts.put(data, counts.get(data) + 1);
+		            	} else {
+		            		counts.put(data, 1);
+		            	}
+		            }
+		        } 
+		        reader.close();
+		        input.close();
+	        }
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	    return counts;
 	}
 	
 	public static void saveDeck(String deckName, Deck deck) {

@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -27,20 +28,21 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class DeckWindow {
+public class DeckWindowDifferential {
 
 	private JFrame frame;
-	private Deck mDeck;
-	private String mDeckName;
+	private Deck mDeck1;
+	private Map<String, Integer> mDeck2;
+	private String mDeckName1, mDeckName2;
 
 	/**
 	 * Launch the application.
 	 */
-	public void show(Deck deck, String deckname) {
+	public void show(Deck deck1, String deckName1, Map<String, Integer> deck2, String deckName2) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					setDeck(deck, deckname);
+					setDeck(deck1, deckName1, deck2, deckName2);
 					initialize();
 					frame.setVisible(true);
 					updateDeck();
@@ -52,18 +54,20 @@ public class DeckWindow {
 		});
 	}
 
-	private void setDeck(Deck deck, String deckname) {
-		mDeck = deck;
-		mDeckName = deckname;
+	private void setDeck(Deck deck1, String deckName1, Map<String, Integer> deck2, String deckName2) {
+		mDeck1 = deck1;
+		mDeckName1 = deckName1;
+		mDeck2 = deck2;
+		mDeckName2 = deckName2;
 		if (frame != null) {
-			frame.setTitle(mDeckName);
+			frame.setTitle(mDeckName1 + " -> " + mDeckName2);
 		}
 	}
 
 	/**
 	 * Create the application.
 	 */
-	public DeckWindow() {
+	public DeckWindowDifferential() {
 		
 	}
 
@@ -81,14 +85,13 @@ public class DeckWindow {
 			frame.setVisible(false);
 		}
 		frame = new JFrame();
-		frame.setTitle(mDeckName);
+		frame.setTitle(mDeckName1 + " -> " + mDeckName2);
 		int anotherLine = 0;
-		if ((mDeck.getCardArrayListSize() % Config.DW_ROW_SIZE) > 0) {
+		if ((mDeck1.getCardArrayListSize() % Config.DW_ROW_SIZE) > 0) {
 			anotherLine++;
 		}
 		w = (Config.DW_CARD_WIDTH + 5) * Config.DW_ROW_SIZE + 20;
-		h = (Config.DW_CARD_HEIGHT + 5) * ((mDeck.getCardArrayListSize() / Config.DW_ROW_SIZE) + anotherLine) + 20;
-
+		h = (Config.DW_CARD_HEIGHT + 5) * ((mDeck1.getCardArrayListSize() / Config.DW_ROW_SIZE) + anotherLine) + 20;
 		frame.setSize(w + 10, h + 70);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -118,7 +121,7 @@ public class DeckWindow {
 	private void updateDeck() {
 		mDeckPane.removeAll();
 
-        UIUtil.showDeck(null, mDeckPane, mDeck.getAllCards(), null, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_DECK, 1);
+        UIUtil.showDeck(null, mDeckPane, mDeck1.getAllCards(), mDeck2, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_DECK, 4);
 
 		mDeckPane.revalidate();
 		mDeckPane.repaint();
@@ -136,7 +139,7 @@ public class DeckWindow {
 		if (!new File("deck_image").exists()) {
 			new File("deck_image").mkdirs();
 		}
-		File outputFile = new File("deck_image/" + mDeckName + ".png");
+		File outputFile = new File("deck_image/" + mDeckName1 + "_to_" + mDeckName2 + ".png");
 		try {
 			ImageIO.write(image, "png", outputFile);
 			System.out.println("Deck overview saved to " + outputFile.getAbsolutePath());
@@ -149,11 +152,11 @@ public class DeckWindow {
 
 	private void createOutputWindow() {
 		int anotherLine = 0;
-		if ((mDeck.getCardArrayListSize() % Config.DW_ROW_SIZE) > 0) {
+		if ((mDeck1.getCardArrayListSize() % Config.DW_ROW_SIZE) > 0) {
 			anotherLine++;
 		}
 		int output_w = (Config.DW_OUTPUT_WIDTH + 5) * Config.DW_ROW_SIZE + 20;
-		int output_h = (Config.DW_OUTPUT_HEIGHT + 5) * ((mDeck.getCardArrayListSize() / Config.DW_ROW_SIZE) + anotherLine) + 20;
+		int output_h = (Config.DW_OUTPUT_HEIGHT + 5) * ((mDeck1.getCardArrayListSize() / Config.DW_ROW_SIZE) + anotherLine) + 20;
 
 		mOutputPane = new JPanel();
 		mOutputPane.setLayout(new GridLayout(0, Config.DW_ROW_SIZE, 5, 5));
@@ -166,7 +169,7 @@ public class DeckWindow {
 
 		mOutputPane.removeAll();
 		
-        UIUtil.showDeck(null, mOutputPane, mDeck.getAllCards(), null, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_OUTPUT, 1);
+        UIUtil.showDeck(null, mOutputPane, mDeck1.getAllCards(), mDeck2, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_OUTPUT, 4);
 
 		mOutputPane.revalidate();
 		mOutputPane.repaint();

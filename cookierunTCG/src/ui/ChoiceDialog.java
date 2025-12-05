@@ -41,7 +41,7 @@ public class ChoiceDialog {
         dialog = new JDialog((JFrame) null, CardUtil.getTranslation("dialog.title"), true);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setLayout(new BorderLayout());
-        dialog.setSize(msg.length() * 10 + 50, 150);
+        dialog.setLocationRelativeTo(null);
 
         // Message label
         JLabel messageLabel = new JLabel(msg, JLabel.CENTER);
@@ -90,6 +90,7 @@ public class ChoiceDialog {
 
         // Show the dialog (this will block until the dialog is closed)
         dialog.setVisible(true);
+        dialog.pack();
 
         return userChoice;
     }

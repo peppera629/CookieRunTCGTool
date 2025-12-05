@@ -29,6 +29,7 @@ public class Config {
 			LARGE_TRANSLATION_TEXT = Boolean.parseBoolean(properties.getProperty("large_translation_text", "false")); // Default to false if not found
 			DECK_BUILD_FROM_COLLECTION = Boolean.parseBoolean(properties.getProperty("deck_build_from_collection", "false")); // Default to false if not found
 			SHOW_OWNED_ONLY = Boolean.parseBoolean(properties.getProperty("show_owned_only", "false")); // Default to false if not found
+			ADVANCED_FILTERING = Boolean.parseBoolean(properties.getProperty("advanced_filtering", "false")); // Default to false if not found
         } catch (IOException e) {
             System.err.println("Could not load config file. Using default settings.");
         }
@@ -48,6 +49,7 @@ public class Config {
 		properties.setProperty("large_translation_text", String.valueOf(LARGE_TRANSLATION_TEXT));
 		properties.setProperty("deck_build_from_collection", String.valueOf(DECK_BUILD_FROM_COLLECTION));
 		properties.setProperty("show_owned_only", String.valueOf(SHOW_OWNED_ONLY));
+		properties.setProperty("advanced_filtering", String.valueOf(ADVANCED_FILTERING));
         try (OutputStream output = new FileOutputStream(CONFIG_FILE)) {
             properties.store(output, "Application Configuration");
         } catch (IOException e) {
@@ -82,6 +84,7 @@ public class Config {
 	public static boolean LARGE_TRANSLATION_TEXT = false;
 	public static boolean DECK_BUILD_FROM_COLLECTION = false;
 	public static boolean SHOW_OWNED_ONLY = false;
+	public static boolean ADVANCED_FILTERING = false;
 
 	// ========================= sort config ========================
 	public static final String SORT_NAME_TYPE = "卡片類型"; 

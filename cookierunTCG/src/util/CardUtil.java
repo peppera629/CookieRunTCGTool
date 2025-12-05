@@ -14,6 +14,8 @@ public class CardUtil {
 	public static int COLOR_MAX = 6;
 	public static int RARITY_MAX = 6;
 	public static int HP_MAX = 6;
+	public static int SKILL_TYPE_MAX = 6;
+	public static int KEYWORD_MAX = 5;
 	
 	// For language translation
 	private static ResourceBundle messages;
@@ -167,6 +169,71 @@ public class CardUtil {
 	            }
 	        }
 	        throw new IllegalArgumentException("No enum constant with value " + value);
+		}
+	}
+
+	public enum Keyword {
+		None(0), Ancient(1), Dragon(2), Arena(3), Beast(4);
+		private final int value;
+
+		private Keyword(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return value;
+		}
+
+		public static Keyword fromValue(int value) {
+			for (Keyword keyword : Keyword.values()) {
+				if (keyword.getValue() == value) {
+					return keyword;
+				}
+			}
+			throw new IllegalArgumentException("No enum constant with value " + value);
+		}
+
+		public static Keyword fromString(String keywordStr) {
+			for (Keyword keyword : Keyword.values()) {
+				if (keyword.name().equals(keywordStr)) {
+					return keyword;
+				}
+			}
+			if (keywordStr.equals("None") || keywordStr.equals("_") || keywordStr.equals("")) {
+				return Keyword.None;
+			}
+			throw new IllegalArgumentException("No enum constant with name " + keywordStr);
+		}
+
+		public String getDisplayName() {
+			return CardUtil.getTranslation("keyword." + this.name().toLowerCase());
+		}
+	}
+
+	public enum SkillType {
+		// Represented in the card data as: _, P, O, A, B, Y
+		None(0), Passive(1), OnPlay(2), Activate(3), Blocker(4), OwnTurn(5);
+		private final int value;
+
+		private SkillType(int value) {
+			this.value = value;
+		}
+
+		public int getValue() {
+			return value;
+		}
+
+		public static SkillType fromValue(int value) {
+			for (SkillType skillType : SkillType.values()) {
+				if (skillType.getValue() == value) {
+					return skillType;
+				}
+			}
+			throw new IllegalArgumentException("No enum constant with value " + value);
+		}
+
+		public String getDisplayName() {
+			return CardUtil.getTranslation("skilltype." + this.name().toLowerCase());
 		}
 	}
 

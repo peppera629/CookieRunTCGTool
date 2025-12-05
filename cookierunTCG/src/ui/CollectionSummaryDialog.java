@@ -64,7 +64,8 @@ public class CollectionSummaryDialog {
 
     private void initialize(boolean choiceMode) {
         frame = new JFrame(CardUtil.getTranslation("collection.summary"));
-        frame.setBounds(100, 100, 800, 600);
+        frame.setSize(800, 600);
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         
         JTabbedPane tabbedPane = new JTabbedPane();

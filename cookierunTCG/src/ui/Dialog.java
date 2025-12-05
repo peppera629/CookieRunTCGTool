@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -55,13 +56,14 @@ public class Dialog {
     private void initialize(boolean choiceMode) {
         frame = new JFrame();
         frame.setTitle(CardUtil.getTranslation("dialog.title"));
-        frame.setBounds(100, 100, message.length() * 10 + 50, 150);
+        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(new BorderLayout());
         
         JLabel messageLabel = new JLabel(message);
         messageLabel.setHorizontalAlignment(JLabel.CENTER);
         messageLabel.setFont(MainUI.CRnormal);
+        messageLabel.setBorder(BorderFactory.createEmptyBorder(30,30,30,30));
         frame.getContentPane().add(messageLabel, BorderLayout.CENTER);
 
         JButton okButton = new JButton("OK");
@@ -72,5 +74,6 @@ public class Dialog {
             }
         });
         frame.getContentPane().add(okButton, BorderLayout.SOUTH);
+        frame.pack();
     }
 }

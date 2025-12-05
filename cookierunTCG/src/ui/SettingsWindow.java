@@ -31,7 +31,7 @@ public class SettingsWindow implements LanguageChangeListener{
     private JComboBox<String> languageDropdown, cardLanguageDropdown;
     private JButton btnConfirm;
     private JSlider cardPreviewScaleSlider, cardListScaleSlider;
-    private JToggleButton cardTranslationToggle, largeTranslationTextToggle, buildModeToggle, showOwnedOnlyToggle;
+    private JToggleButton cardTranslationToggle, largeTranslationTextToggle, buildModeToggle, showOwnedOnlyToggle, advFilteringToggle;
 
 	public static void addLanguageChangeListener(LanguageChangeListener listener) {
         listeners.add(listener);
@@ -72,7 +72,9 @@ public class SettingsWindow implements LanguageChangeListener{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(150, 150, 650, 450);
+        frame.setTitle(CardUtil.getTranslation("settings"));
+		//frame.setSize(650, 450);
+        frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -256,12 +258,38 @@ public class SettingsWindow implements LanguageChangeListener{
         cardTranslationToggle.setSelected(Config.CARD_TRANSLATION_ENABLED);
         largeTranslationTextToggle.setSelected(Config.LARGE_TRANSLATION_TEXT);
 
+        // ==== Advanced Filtering Options Toggle ====
+        advFilteringToggle = new JToggleButton();
+        if (Config.ADVANCED_FILTERING) {
+            advFilteringToggle.setText(CardUtil.getTranslation("settings.advfiltering") + ": " + CardUtil.getTranslation("settings.enabled"));
+        } else {
+            advFilteringToggle.setText(CardUtil.getTranslation("settings.advfiltering") + ": " + CardUtil.getTranslation("settings.disabled"));
+        }
+        advFilteringToggle.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(advFilteringToggle, "CRnormal");
+        gbc.gridx = 0;
+        gbc.gridwidth = 1;
+        gbc.gridy = 6;
+        frame.getContentPane().add(advFilteringToggle, gbc);
+        advFilteringToggle.addActionListener(e -> {
+            boolean isSelected = advFilteringToggle.isSelected();
+            Config.ADVANCED_FILTERING = isSelected;
+            if (isSelected) {
+                advFilteringToggle.setText(CardUtil.getTranslation("settings.advfiltering") + ": " + CardUtil.getTranslation("settings.enabled"));
+            } else {
+                advFilteringToggle.setText(CardUtil.getTranslation("settings.advfiltering") + ": " + CardUtil.getTranslation("settings.disabled"));
+            }
+        });
+
+        advFilteringToggle.setSelected(Config.ADVANCED_FILTERING);
+        advFilteringToggle.setToolTipText(CardUtil.getTranslation("settings.advfiltering.tooltip"));
+
         // ==== Confirm Button ====
         btnConfirm = new JButton(CardUtil.getTranslation("settings.confirm"));
         btnConfirm.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(btnConfirm, "CRnormal");
         gbc.gridx = 0;
-        gbc.gridy = 6;
+        gbc.gridy = 7;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         frame.getContentPane().add(btnConfirm, gbc);
@@ -287,6 +315,8 @@ public class SettingsWindow implements LanguageChangeListener{
             notifyLanguageChange();
             frame.dispose();
         });
+
+        frame.pack();
 	}
 
 	@Override

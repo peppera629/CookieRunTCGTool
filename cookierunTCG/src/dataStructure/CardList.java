@@ -28,6 +28,8 @@ public class CardList {
 	private boolean _search_extra;
 	private boolean _search_rarity[];
 	private boolean _search_hp[];
+	private boolean _search_skill_type[];
+	private boolean _search_keyword[];
 	private String _search_name;
 	private List<String> _search_pack_list;
 	private boolean _search_variants;
@@ -52,6 +54,8 @@ public class CardList {
 		_search_rarity = new boolean[CardUtil.RARITY_MAX];
 		_search_variants = false;
 		_search_hp = new boolean[CardUtil.HP_MAX + 1];
+		_search_skill_type = new boolean[CardUtil.SKILL_TYPE_MAX];
+		_search_keyword = new boolean[CardUtil.KEYWORD_MAX];
 		_search_pack_list = new ArrayList<String>();
 	}
 	
@@ -89,7 +93,10 @@ public class CardList {
 		boolean selectFlipType = isSelectedFlipType();
 		boolean selectHP = isSelectedHP();
 		boolean selectRarity = isSelectedRarity();
-		if (!selectColor && !selectType && !_search_flip && !_search_extra && !selectRarity && !selectHP && !_search_variants && _search_name.equals("") && _search_pack_list.size() == 0) {
+		boolean selectSkillType = isSelectedSkillType();
+		boolean selectKeyword = isSelectedKeyword();
+		
+		if (!selectColor && !selectType && !_search_flip && !_search_extra && !selectRarity && !selectHP && !selectSkillType && !selectKeyword && !_search_variants && _search_name.equals("") && _search_pack_list.size() == 0) {
 			if (Config.SHOW_OWNED_ONLY && !forceShowAll) {
 				return getOwnedCards();
 			} else {
@@ -108,6 +115,8 @@ public class CardList {
 		boolean hpCorrect;
 		boolean packCorrect;
 		boolean nameCorrect;
+		boolean skillTypeCorrect;
+		boolean keywordCorrect;
 		boolean owned;
 		//dumpPackList();
 		for (Card c: cardList) {
@@ -122,16 +131,25 @@ public class CardList {
 			flipTypeCorrect = !selectFlipType || !_search_flip || !c.isFlip() || _search_flip_type[c.getFlipType().getValue()];
 			extraCorrect = !_search_extra || c.isExtra();
 			rarityCorrect = (c.getPack().equals("P") ? (_search_pack_list.contains("P") || _search_pack_list.size() == 0 ? true : false) : (!selectRarity || _search_rarity[c.getRarity().getValue()]));
+			boolean skillTypeCorrectCheck = false;
+			for (SkillType st : c.getSkillType()) {
+				if (_search_skill_type[st.getValue()]) {
+					skillTypeCorrectCheck = true;
+					break;
+				}
+			}
+			skillTypeCorrect = !selectSkillType || skillTypeCorrectCheck;
+			keywordCorrect = !selectKeyword || _search_keyword[c.getKeyword().getValue()];
 			packCorrect = _search_pack_list.size() == 0 || _search_pack_list.contains(c.getPack());
 			nameCorrect = _search_name.equals("") || Normalizer.normalize(c.getName().toLowerCase(), Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").contains(_search_name);
 			hasVariants = !_search_variants || (c.getVariants().length > 1);
 			owned = Collection.getInstance().getCardTotalOwnedCount(c.getId()) > 0;
 			if (forceShowAll) {
-				if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && packCorrect && nameCorrect && hasVariants) {
+				if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && skillTypeCorrect && keywordCorrect && packCorrect && nameCorrect && hasVariants) {
 					selectList.add(c);
 				}
 			} else {
-				if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && packCorrect && nameCorrect
+				if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && skillTypeCorrect && keywordCorrect && packCorrect && nameCorrect
 					&& (!Config.SHOW_OWNED_ONLY || owned) && hasVariants) {
 					selectList.add(c);
 				}
@@ -196,6 +214,24 @@ public class CardList {
 		return false;
 	}
 
+	private boolean isSelectedSkillType() {
+		for (int i=0; i<CardUtil.SKILL_TYPE_MAX; i++) {
+			if(_search_skill_type[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isSelectedKeyword() {
+		for (int i=0; i<CardUtil.KEYWORD_MAX; i++) {
+			if(_search_keyword[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void setColor(int id, boolean enabled) {
 		_search_color[id] = enabled;
 	}
@@ -226,6 +262,14 @@ public class CardList {
 
 	public void setHP(int hp, boolean enabled) {
 		_search_hp[hp] = enabled;
+	}
+
+	public void setSkillType(int id, boolean enabled) {
+		_search_skill_type[id] = enabled;
+	}
+
+	public void setKeyword(int id, boolean enabled) {
+		_search_keyword[id] = enabled;
 	}
 
 	public void setPack(String pack, boolean enabled) {
