@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
@@ -11,10 +12,12 @@ import java.io.IOException;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 import dataStructure.Card;
@@ -74,6 +77,7 @@ public class DeckWindowDifferential {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	private JPanel visibleComponents;
 	private JPanel mDeckPane;
 	private JPanel mOutputPane;
 	private JButton btnNewButton;
@@ -91,15 +95,10 @@ public class DeckWindowDifferential {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
+
+
 		// ==== 卡組
 		mDeckPane = new JPanel();
-
-		scrollDeckPane = new JScrollPane(mDeckPane);
-		
-		scrollDeckPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		scrollDeckPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-		frame.getContentPane().add(scrollDeckPane);
 
 		createOutputWindow();
 	}
@@ -115,8 +114,12 @@ public class DeckWindowDifferential {
 		}
 		w = (Config.DW_CARD_WIDTH + 5) * Config.DW_ROW_SIZE + 20;
 		h = (Config.DW_CARD_HEIGHT + 5) * ((differentCardCount / Config.DW_ROW_SIZE) + anotherLine) + 20;
-		frame.setSize(w + 10, h + 70);
-		scrollDeckPane.setBounds(0, 0, w, h);
+		frame.setSize(w + 16, Math.min(h, 900) + 48);
+
+		visibleComponents = new JPanel();
+		visibleComponents.setLayout(new BorderLayout());
+		visibleComponents.setBounds(0, 0, w, Math.min(h, 900));
+		frame.getContentPane().add(visibleComponents);
 
 		mDeckPane.revalidate();
 		mDeckPane.repaint();
@@ -129,7 +132,7 @@ public class DeckWindowDifferential {
 		});
 		btnNewButton.setBounds(4, h, w - 15, 30);
 		btnNewButton.setFont(MainUI.CRbold);
-		frame.getContentPane().add(btnNewButton);
+		
 	}
 
 	private void outputImage() {
@@ -156,6 +159,14 @@ public class DeckWindowDifferential {
 	}
 
 	private void createOutputWindow() {
+		mOutputPane = new JPanel(); // Storage for what will eventually be the image
+		mOutputPane.setLayout(new GridLayout(0, Config.DW_ROW_SIZE, 5, 5));
+	}
+	
+	private void updateOutputDeck() {
+
+		mOutputPane.removeAll();
+
 		int anotherLine = 0;
 		
 		if ((differentCardCount % Config.DW_ROW_SIZE) > 0) {
@@ -163,24 +174,28 @@ public class DeckWindowDifferential {
 		}
 		int output_w = (Config.DW_OUTPUT_WIDTH + 5) * Config.DW_ROW_SIZE + 20;
 		int output_h = (Config.DW_OUTPUT_HEIGHT + 5) * ((differentCardCount / Config.DW_ROW_SIZE) + anotherLine) + 20;
-		mOutputPane = new JPanel();
-		mOutputPane.setLayout(new GridLayout(0, Config.DW_ROW_SIZE, 5, 5));
-		mOutputPane.setBounds(w + 100, h+100, output_w + 10, output_h + 80);
-
-		frame.getContentPane().add(mOutputPane);
-	}
-	
-	private void updateOutputDeck() {
-
-		mOutputPane.removeAll();
+		System.out.println("Output height: (" + Config.DW_OUTPUT_HEIGHT + " + 5) * (" + (differentCardCount / Config.DW_ROW_SIZE) + " + " + anotherLine + ") + 20 = " + output_h);
+		mOutputPane.setBounds(w + 100, h + 100, output_w + 10, output_h + 80);
 		
         UIUtil.showDeck(null, mOutputPane, mDeck1.getAllCards(), mDeck2, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_OUTPUT, 4);
-
 		mOutputPane.revalidate();
 		mOutputPane.repaint();
+
+		scrollDeckPane = new JScrollPane(mDeckPane);
+		
+		scrollDeckPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollDeckPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollDeckPane.setBounds(0, 0, w, Math.min(h, 900));
+		JScrollBar deckScrollBar = scrollDeckPane.getVerticalScrollBar();
+		deckScrollBar.setUnitIncrement(16);
+
+		visibleComponents.add(scrollDeckPane, BorderLayout.CENTER);
+		visibleComponents.add(btnNewButton, BorderLayout.SOUTH);
+		frame.getContentPane().add(mOutputPane);
 	}
 
 	public static void setDifferentCardCountStatic(int count) {
 		differentCardCount = count;
+		System.out.println("Different card count set to: " + differentCardCount);
 	}
 }

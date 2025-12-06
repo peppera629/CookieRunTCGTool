@@ -58,7 +58,7 @@ public class UIUtil {
 				int count2 = counts2.getOrDefault(id, 0);
 				int differential = count2 - count1;
 
-				System.out.println(id + " Differential: " + differential);
+				//System.out.println(id + " Differential: " + differential);
                 if (differential == 0) {
                     continue;
                 }

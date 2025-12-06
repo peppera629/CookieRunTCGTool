@@ -39,7 +39,7 @@ BS1-038,Yellow,Cookie,_,U,A,1,1,A,_
 BS1-039,Yellow,Cookie,_,U,A,2,3,_,_
 BS1-040,Yellow,Cookie,H,R,A,3,3,_,_
 BS1-041,Yellow,Cookie,H,C,A,1,1,_,_
-BS1-042,Yellow,Cookie,_,C,A,2,2,P,_
+BS1-042,Yellow,Cookie,_,C,A,2,2,B,_
 BS1-043,Yellow,Cookie,_,C,A,2,2,_,_
 BS1-044,Yellow,Cookie,_,SR,A,2,3,A,_
 BS1-045,Yellow,Cookie,_,C,A,3,4,_,_
