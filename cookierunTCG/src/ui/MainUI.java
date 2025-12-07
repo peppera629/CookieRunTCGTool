@@ -19,6 +19,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JCheckBox;
@@ -38,6 +39,7 @@ import dataStructure.Deck;
 import dataStructure.Collection;
 
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
@@ -89,9 +91,8 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 
 // FEATURE: Add more views for collection summary in collection mode (by color, by promo set, etc.)
-// FEATURE: Add filtering by keywords (Ancient, Dragon, Beast, Arena)
-// TODO: Finish all descriptions for variants
-// TODO: Check all card names in zh_TW
+// FIX: When comparing decks, categorize cards by positive/negative change
+// FIX: Add way to sort EXTRA cards in deck separately
 // FIX: Add auto-resize to deck overview
 // FIX: Pause detection for collection mode variant toggles when typing in search box
 // FIX: Remove starter decks from collection summary secret rare view
@@ -1051,13 +1052,24 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         showDeckDifferentialBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();
+                JPanel compareModePanel = new JPanel(new GridLayout(0, 1));
+                ButtonGroup compareModeGroup = new ButtonGroup();
+                JRadioButton compareModeFrom = new JRadioButton(CardUtil.getTranslation("deck.compare.from"));
+                compareModeGroup.add(compareModeFrom);
+                JRadioButton compareModeTo = new JRadioButton(CardUtil.getTranslation("deck.compare.to"));
+                compareModeGroup.add(compareModeTo);
+                compareModeTo.setSelected(true);
+                compareModePanel.add(compareModeFrom);
+                compareModePanel.add(compareModeTo);
+                fileChooser.setAccessory(compareModePanel);
 				fileChooser.setCurrentDirectory(new File("deck/"));
 				int returnValue = fileChooser.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    boolean compareMode = compareModeTo.isSelected();
                     File selectedFile = fileChooser.getSelectedFile();
                     String filename = selectedFile.getName();
                     Map<String, Integer> mDeck2 = CardLoader.loadDeckTemp(filename.substring(0, filename.length() - 4));
-                    deckDifferentialWindow.show(mDeck, mDeckText.getText(), mDeck2, filename.substring(0, filename.length() - 4));
+                    deckDifferentialWindow.show(mDeck, mDeckText.getText(), mDeck2, filename.substring(0, filename.length() - 4), compareMode);
 				} 
             }
         });
@@ -1380,8 +1392,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         gbc_rarity.anchor = GridBagConstraints.WEST;
         gbc_rarity.gridy = 0;
 
-        cb_rarity = new JCheckBox[CardUtil.RARITY_MAX-1]; // P is now excluded
-        for(int i=0; i<CardUtil.RARITY_MAX-1; i++) {
+        cb_rarity = new JCheckBox[CardUtil.RARITY_MAX];
+        for(int i=0; i<CardUtil.RARITY_MAX; i++) {
             gbc_rarity.gridx = i;
         	cb_rarity[i] = new JCheckBox(CardUtil.CardRarity.fromValue(i).getDisplayName());
         	cb_rarity[i].setSelected(mDefaultState.getDefaultRarityFlag(i));
@@ -1564,7 +1576,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         
         mCardsPane.removeAll();
         List<Card> currentList = list.getSelectCards(false);
-        UIUtil.showDeck(this, mCardsPane, currentList, null, 13, columns, UIUtil.CARD_SIZE_SMALL, (isCollectionMode ? 3 : (Config.DECK_BUILD_FROM_COLLECTION ? 4 : 0)));
+        UIUtil.showDeck(this, mCardsPane, currentList, null, 13, columns, UIUtil.CARD_SIZE_SMALL, (isCollectionMode ? 3 : (Config.DECK_BUILD_FROM_COLLECTION ? 4 : 0)), false);
         if (currentList.size() == 0) {
             filterResults.setText(CardUtil.getTranslation("displaycount.empty"));
             filterResults.setForeground(Color.RED);
@@ -1579,7 +1591,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     
     private void updateDeck() {
         mDeckPane.removeAll();
-        UIUtil.showDeck(this, mDeckPane, mDeck.getAllCards(), null, 18, columns, UIUtil.CARD_SIZE_SMALL, (Config.DECK_BUILD_FROM_COLLECTION ? 4 : 1));
+        UIUtil.showDeck(this, mDeckPane, mDeck.getAllCards(), null, 18, columns, UIUtil.CARD_SIZE_SMALL, (Config.DECK_BUILD_FROM_COLLECTION ? 4 : 1), false);
 
         mDeckPane.revalidate();
         mDeckPane.repaint();
@@ -2103,7 +2115,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         CardList list = CardList.getInstance();
         List<Card> filteredCards = list.getSelectCards(true); // Ignore ownership for collection mode view
 
-        UIUtil.showDeck(new CollectionModeCallback(), mCardsPane, filteredCards, null, 13, columns, UIUtil.CARD_SIZE_SMALL, 3);
+        UIUtil.showDeck(new CollectionModeCallback(), mCardsPane, filteredCards, null, 13, columns, UIUtil.CARD_SIZE_SMALL, 3, false);
         
         for (Card card : filteredCards) {
             for (ClickableCardPanel panel : card.getPanels()) {

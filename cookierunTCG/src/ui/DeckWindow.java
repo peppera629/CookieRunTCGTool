@@ -72,6 +72,7 @@ public class DeckWindow {
 	 */
 	private JPanel mDeckPane;
 	private JPanel mOutputPane;
+	private JScrollPane scrollDeckPane;
 	private JButton btnNewButton;
 	private int w = 670;
 	private int h = 550;
@@ -82,6 +83,7 @@ public class DeckWindow {
 		}
 		frame = new JFrame();
 		frame.setTitle(mDeckName);
+		frame.setResizable(false);
 		int anotherLine = 0;
 		if ((mDeck.getCardArrayListSize() % Config.DW_ROW_SIZE) > 0) {
 			anotherLine++;
@@ -118,7 +120,7 @@ public class DeckWindow {
 	private void updateDeck() {
 		mDeckPane.removeAll();
 
-        UIUtil.showDeck(null, mDeckPane, mDeck.getAllCards(), null, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_DECK, 1);
+        UIUtil.showDeck(null, mDeckPane, mDeck.getAllCards(), null, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_DECK, 1, false);
 
 		mDeckPane.revalidate();
 		mDeckPane.repaint();
@@ -166,7 +168,7 @@ public class DeckWindow {
 
 		mOutputPane.removeAll();
 		
-        UIUtil.showDeck(null, mOutputPane, mDeck.getAllCards(), null, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_OUTPUT, 1);
+        UIUtil.showDeck(null, mOutputPane, mDeck.getAllCards(), null, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_OUTPUT, 1, false);
 
 		mOutputPane.revalidate();
 		mOutputPane.repaint();

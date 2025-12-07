@@ -28,14 +28,14 @@ public class UIUtil {
 	public static final int CARD_SIZE_DECK = 1;
 	public static final int CARD_SIZE_OUTPUT = 2;
 	public static final int CARD_SIZE_FULL = 3;
-	public static void showDeck(CardListCallBack callback, JPanel panel, List<Card> cardList, Map<String, Integer> counts2, int minSize, int rowSize, int cardSize, int showCountMode) {
-		// showCountMode: 0 = None (false, false), 1 = Deck Count (true, false), 2 = Collection Count (true, true),
-		// 3 = Both (for "build from collection" mode), 4 = Differential Mode (what cards to change from one deck to another)
+	public static void showDeck(CardListCallBack callback, JPanel panel, List<Card> cardList, Map<String, Integer> counts2, int minSize, int rowSize, int cardSize, int showCountMode, boolean compareMode) {
+		// showCountMode: 0 = None (false, false), 1 and 2 = Deck Count (true, false), 3 = Collection Count (true, true),
+		// 4 = Both (for "build from collection" mode), 5 = Differential Mode (what cards to change from one deck to another)
 		panel.removeAll();
 		panel.setLayout(new GridLayout(0, rowSize, 5, 5));
 		System.out.println("========== start updateDeck =============");
 
-		if (showCountMode == 4 && counts2 != null) {
+		if (showCountMode == 5 && counts2 != null) {
 			Map<String, Integer> counts1 = new HashMap<>();
 			CardList globalCardList = CardList.getInstance();
 			int differentCardCount = 0;
@@ -56,9 +56,9 @@ public class UIUtil {
 
 				int count1 = counts1.getOrDefault(id, 0);
 				int count2 = counts2.getOrDefault(id, 0);
-				int differential = count2 - count1;
+				int differential = (compareMode ? count2 - count1 : count1 - count2);
 
-				//System.out.println(id + " Differential: " + differential);
+				System.out.println(id + " Differential: " + differential);
                 if (differential == 0) {
                     continue;
                 }
@@ -93,6 +93,8 @@ public class UIUtil {
                 ClickableCardPanel cardPanel = new ClickableCardPanel(cardInstance, showCountMode, cardSize, differential);
                 panel.add(cardPanel);
 			}
+
+			System.out.println(differentCardCount);
 
 			DeckWindowDifferential.setDifferentCardCountStatic(differentCardCount);
 			

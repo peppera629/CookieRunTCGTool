@@ -130,7 +130,7 @@ public class CardList {
 			flipCorrect = !_search_flip || c.isFlip();
 			flipTypeCorrect = !selectFlipType || !_search_flip || !c.isFlip() || _search_flip_type[c.getFlipType().getValue()];
 			extraCorrect = !_search_extra || c.isExtra();
-			rarityCorrect = (c.getPack().equals("P") ? (_search_pack_list.contains("P") || _search_pack_list.size() == 0 ? true : false) : (!selectRarity || _search_rarity[c.getRarity().getValue()]));
+			rarityCorrect = (c.getPack().equals("P") ? (_search_rarity[_search_rarity.length-1] || !isSelectedRarity() ? true : false) : (!selectRarity || _search_rarity[c.getRarity().getValue()]));
 			boolean skillTypeCorrectCheck = false;
 			for (SkillType st : c.getSkillType()) {
 				if (_search_skill_type[st.getValue()]) {
