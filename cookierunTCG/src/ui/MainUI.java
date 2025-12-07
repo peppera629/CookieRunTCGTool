@@ -1564,7 +1564,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         
         mCardsPane.removeAll();
         List<Card> currentList = list.getSelectCards(false);
-        UIUtil.showDeck(this, mCardsPane, currentList, null, 13, columns, UIUtil.CARD_SIZE_SMALL, (isCollectionMode ? 2 : (Config.DECK_BUILD_FROM_COLLECTION ? 3 : 0)));
+        UIUtil.showDeck(this, mCardsPane, currentList, null, 13, columns, UIUtil.CARD_SIZE_SMALL, (isCollectionMode ? 3 : (Config.DECK_BUILD_FROM_COLLECTION ? 4 : 0)));
         if (currentList.size() == 0) {
             filterResults.setText(CardUtil.getTranslation("displaycount.empty"));
             filterResults.setForeground(Color.RED);
@@ -1579,7 +1579,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     
     private void updateDeck() {
         mDeckPane.removeAll();
-        UIUtil.showDeck(this, mDeckPane, mDeck.getAllCards(), null, 18, columns, UIUtil.CARD_SIZE_SMALL, 1);
+        UIUtil.showDeck(this, mDeckPane, mDeck.getAllCards(), null, 18, columns, UIUtil.CARD_SIZE_SMALL, (Config.DECK_BUILD_FROM_COLLECTION ? 4 : 1));
 
         mDeckPane.revalidate();
         mDeckPane.repaint();
@@ -2103,7 +2103,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         CardList list = CardList.getInstance();
         List<Card> filteredCards = list.getSelectCards(true); // Ignore ownership for collection mode view
 
-        UIUtil.showDeck(new CollectionModeCallback(), mCardsPane, filteredCards, null, 13, columns, UIUtil.CARD_SIZE_SMALL, 2);
+        UIUtil.showDeck(new CollectionModeCallback(), mCardsPane, filteredCards, null, 13, columns, UIUtil.CARD_SIZE_SMALL, 3);
         
         for (Card card : filteredCards) {
             for (ClickableCardPanel panel : card.getPanels()) {

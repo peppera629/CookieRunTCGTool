@@ -84,7 +84,7 @@ public class ClickableCardPanel extends JPanel {
 				g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
 				g2d.setRenderingHint(java.awt.RenderingHints.KEY_TEXT_ANTIALIASING, java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 				int boxWidth;
-				if (mShowCountMode == 3) {
+				if (mShowCountMode == 4) {
 					boxWidth = mCardIcon.getIconWidth()/2;
 				} else {
 					boxWidth = mCardIcon.getIconWidth()/3;
@@ -113,17 +113,23 @@ public class ClickableCardPanel extends JPanel {
 					case 1: // Deck Count
 						text = Integer.toString(mCard.getCount());
 						break;
-					case 2: // Collection Count
+					case 2: // Deck Count (with red indication for unowned/insufficient)
+						text = Integer.toString(mCard.getCount());
+						if (mCard.getCount() > Collection.getInstance().getCardTotalOwnedCount(mCard.getId())) {
+							g2d.setColor(new Color(255, 128, 128));
+						}
+						break;
+					case 3: // Collection Count
 						text = Integer.toString(Collection.getInstance().getCardTotalOwnedCount(mCard.getId()));
 						break;
-					case 3: // Both (for "build from collection" mode)
+					case 4: // Both (for "build from collection" mode)
 						text = Integer.toString(mCard.getCount());
 						ownedText = "/" + Integer.toString(Collection.getInstance().getCardTotalOwnedCount(mCard.getId()));
 						if (mCard.getCount() > Collection.getInstance().getCardTotalOwnedCount(mCard.getId())) {
 							g2d.setColor(new Color(255, 128, 128));
 						}
 						break;
-					case 4: // Differential Mode (what cards to change from one deck to another)
+					case 5: // Differential Mode (what cards to change from one deck to another)
 						text = Integer.toString(mDifferential);
 						if (mDifferential > 0) {
 							text = "+" + text;
@@ -214,7 +220,7 @@ public class ClickableCardPanel extends JPanel {
 	}
 
 	public void updateCountsForCardList() {
-		if (mShowCountMode == 3) {
+		if (mShowCountMode == 4) {
 			repaint();
 		}
 	}
