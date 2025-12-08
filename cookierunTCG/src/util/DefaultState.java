@@ -14,12 +14,6 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
-import dataStructure.Card;
-import dataStructure.Deck;
-import util.CardUtil.CardColor;
-import util.CardUtil.CardType;
-import util.CardUtil.CardRarity;
-
 public class DefaultState {
 	static final String CONFIG_PATH = "config/default_state.txt";
 	public String DeckName = "NewDeck";
@@ -166,8 +160,9 @@ public class DefaultState {
 				String[] flags = data.split(",");
 				Config.CARD_SORT_ORDER_TYPE = Integer.valueOf(flags[0]);
 				Config.CARD_SORT_ORDER_FLIP = Integer.valueOf(flags[1]);
-				Config.CARD_SORT_ORDER_LEVEL = Integer.valueOf(flags[2]);
-				Config.CARD_SORT_ORDER_COLOR = Integer.valueOf(flags[3]);
+				Config.CARD_SORT_ORDER_EXTRA = Integer.valueOf(flags[2]);
+				Config.CARD_SORT_ORDER_LEVEL = Integer.valueOf(flags[3]);
+				Config.CARD_SORT_ORDER_COLOR = Integer.valueOf(flags[4]);
 			}
 			
 			input.close();
@@ -282,6 +277,7 @@ public class DefaultState {
 			//sort order
 			fw.write(Config.CARD_SORT_ORDER_TYPE+",");
 			fw.write(Config.CARD_SORT_ORDER_FLIP+",");
+			fw.write(Config.CARD_SORT_ORDER_EXTRA+",");
 			fw.write(Config.CARD_SORT_ORDER_LEVEL+",");
 			fw.write(Config.CARD_SORT_ORDER_COLOR+"\n");
 			
@@ -382,10 +378,11 @@ public class DefaultState {
 		int currentPosition = 29;
         System.out.println("CARD_SORT_ORDER_TYPE = "+Config.CARD_SORT_ORDER_TYPE);
         System.out.println("CARD_SORT_ORDER_FLIP = "+Config.CARD_SORT_ORDER_FLIP);
+        System.out.println("CARD_SORT_ORDER_EXTRA = "+Config.CARD_SORT_ORDER_EXTRA);
         System.out.println("CARD_SORT_ORDER_LEVEL = "+Config.CARD_SORT_ORDER_LEVEL);
         System.out.println("CARD_SORT_ORDER_COLOR = "+Config.CARD_SORT_ORDER_COLOR);
         System.out.println("");
-		for(int i = 1; i <= 4; i++) {
+		for(int i = 1; i <= 6; i++) {
 			if(Config.CARD_SORT_ORDER_TYPE == i) {
 				currentPosition -= Config.CARD_SORT_SIZE_TYPE;
 				Config.CARD_SORT_VALUE_TYPE = 2 << currentPosition;
@@ -395,6 +392,11 @@ public class DefaultState {
 				currentPosition -= Config.CARD_SORT_SIZE_FLIP;
 				Config.CARD_SORT_VALUE_FLIP = 2 << currentPosition;
 		        System.out.println("CARD_SORT_VALUE_FLIP = "+Config.CARD_SORT_VALUE_FLIP);
+
+			} else if(Config.CARD_SORT_ORDER_EXTRA == i) {
+				currentPosition -= Config.CARD_SORT_SIZE_EXTRA;
+				Config.CARD_SORT_VALUE_EXTRA = 2 << currentPosition;
+		        System.out.println("CARD_SORT_VALUE_EXTRA = "+Config.CARD_SORT_VALUE_EXTRA);
 
 			} else if(Config.CARD_SORT_ORDER_LEVEL == i) {
 				currentPosition -= Config.CARD_SORT_SIZE_LEVEL;
@@ -413,6 +415,9 @@ public class DefaultState {
 		}
 		if(Config.CARD_SORT_ORDER_FLIP == 0) {
 			Config.CARD_SORT_VALUE_FLIP = 0;
+		}
+		if(Config.CARD_SORT_ORDER_EXTRA == 0) {
+			Config.CARD_SORT_VALUE_EXTRA = 0;
 		}
 		if(Config.CARD_SORT_ORDER_LEVEL == 0) {
 			Config.CARD_SORT_VALUE_LEVEL = 0;

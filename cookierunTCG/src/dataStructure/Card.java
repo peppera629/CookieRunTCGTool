@@ -58,29 +58,31 @@ public class Card {
 		_pack = pack;
 		_id = id;
 		_name = name;
-		_color = color;
-		_type = type;
+		_color = color; // In order: 0 red, 1 yellow, 2 green, 3 blue, 4 purple, 5 colorless
+		_type = type; // In order: 0 Cookie, 1 Item, 2 Trap, 3 Stage
 		_isFlip = flip;
 		_flipType = flipType;
 		_isExtra = extra;
 		_rarity = rarity;
-		_mark = mark;
+		_mark = mark; // Currently unused
 		_lv = lv;
 		_hp = hp;
 		_skillType = skillType;
 		_keyword = keyword;
 		_maxCount = 4; // 4: Normal, 1: Restricted, 0: Banned
 		_cardCount = 0;
-		int lv_weight = CardUtil.LEVEL_MAX  - _lv + 1;
+		int lv_weight = CardUtil.LEVEL_MAX  - _lv + 1; // Lv.1: 3, Lv2: 2, Lv.3: 1 (for ascending order)
 		_position = _serial_number
-				+ (CardUtil.TYPE_MAX - _type.getValue()) * Config.CARD_SORT_VALUE_TYPE
-				+ (_isFlip ? 0 : Config.CARD_SORT_VALUE_FLIP)
-				+ lv_weight * Config.CARD_SORT_VALUE_LEVEL
-				+ (CardUtil.COLOR_MAX - _color.getValue()) * Config.CARD_SORT_VALUE_COLOR 
+				+ (CardUtil.TYPE_MAX - _type.getValue()) * Config.CARD_SORT_VALUE_TYPE // Type descending
+				+ (_isFlip ? 0 : Config.CARD_SORT_VALUE_FLIP) // Flip first
+				+ (_isExtra ? 0 : Config.CARD_SORT_VALUE_EXTRA) // Extra first
+				+ lv_weight * Config.CARD_SORT_VALUE_LEVEL // Level descending
+				+ (CardUtil.COLOR_MAX - _color.getValue()) * Config.CARD_SORT_VALUE_COLOR // Color descending 
 				;
 //		dump();
 
 		_cardIcon = CardUtil.CardBack;
+		//System.out.println("Created card: " + _id + " - " + _serial_number + " - Position: " + _position + "- Is Extra: " + _isExtra);
 	}
 
 	public synchronized void createCardLabel() {
@@ -139,6 +141,7 @@ public class Card {
 		_position = _serial_number
 				+ (CardUtil.TYPE_MAX - _type.getValue()) * Config.CARD_SORT_VALUE_TYPE
 				+ (_isFlip ? 0 : Config.CARD_SORT_VALUE_FLIP)
+				+ (_isExtra ? 0 : Config.CARD_SORT_VALUE_EXTRA)
 				+ lv_weight * Config.CARD_SORT_VALUE_LEVEL
 				+ (CardUtil.COLOR_MAX - _color.getValue()) * Config.CARD_SORT_VALUE_COLOR 
 				;

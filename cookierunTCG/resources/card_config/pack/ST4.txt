@@ -10,9 +10,9 @@ ST4-009,Blue,Cookie,H,C,A,2,2,_,_
 ST4-010,Blue,Cookie,_,C,A,1,1,P,_
 ST4-011,Blue,Cookie,_,C,A,1,2,_,_
 ST4-012,Blue,Cookie,_,U,A,3,4,A,_
-ST4-013,Blue,Cookie,_,SR,A,2,3,O,_
+ST4-013,Blue,Cookie,_,SR,A,2,3,OT,_
 ST4-014,Blue,Cookie,D,C,A,1,1,_,_
-ST4-015,Blue,Cookie,_,C,A,2,2,_,_
+ST4-015,Blue,Cookie,_,C,A,2,2,T,_
 ST4-016,Blue,Item,_,U,A,_,,_,_
 ST4-017,Blue,Item,_,U,A,_,,_,_
 ST4-018,Blue,Item,_,U,A,_,,_,_

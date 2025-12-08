@@ -87,11 +87,13 @@ public class CardLoader {
 	public static List<Card> loadAllCards() {
 		List<Card> cardList = new ArrayList<Card>();
 		for (int i=0; i<CardUtil.CardPack.size() ;i++) {
-        	loadPack(CardUtil.CardPack.get(i), cardList);
-			loadCardNames(CardUtil.CardPack.get(i), cardList);
-			loadPackTranslations(CardUtil.CardPack.get(i), cardList);
-			loadRestrictedCards(CardUtil.CardPack.get(i), cardList);
-			loadVariants(CardUtil.CardPack.get(i), cardList);
+			if (!CardUtil.CardPack.get(i).endsWith("_")) { // Unreleased packs can be denoted with a trailing underscore
+				loadPack(CardUtil.CardPack.get(i), cardList);
+				loadCardNames(CardUtil.CardPack.get(i), cardList);
+				loadPackTranslations(CardUtil.CardPack.get(i), cardList);
+				loadRestrictedCards(CardUtil.CardPack.get(i), cardList);
+				loadVariants(CardUtil.CardPack.get(i), cardList);
+			}
 		}
 	    return cardList;
 	}
@@ -177,6 +179,9 @@ public class CardLoader {
 							}
 							if (cardData[8].contains("Y")) {
 								skillType.add(SkillType.OwnTurn);
+							}
+							if (cardData[8].contains("T")) {
+								skillType.add(SkillType.ThenEffect);
 							}
 						}
 	            	} else {
@@ -401,7 +406,7 @@ public class CardLoader {
 		        String data;
 		        while((data= input.readLine())!=null) {	
 		            if (!data.equals("") && !data.startsWith("//")) {
-						System.out.println("Loading card ID: " + data);
+						//System.out.println("Loading card ID: " + data);
 		            	Card card = cardList.getCardById(data);
 						if (card == null) {
 							System.err.println("Card ID not found: " + data);

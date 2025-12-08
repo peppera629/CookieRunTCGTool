@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
@@ -100,7 +101,13 @@ public class ClickableCardPanel extends JPanel {
 					boxColor = new Color(160, 128, 0, 192); // Translucent yellow
 				}
 				
-				g2d.setColor(boxColor);
+				GradientPaint extraGradient = new GradientPaint(boxX, boxY, new Color(80, 140, 241, 192), boxX + boxWidth, boxY + boxHeight, new Color(180, 60, 206, 192));
+
+				if (mCard.isExtra()) {
+					g2d.setPaint(extraGradient);
+				} else {
+					g2d.setColor(boxColor);
+				}
 				g2d.fillRect(boxX, boxY, boxWidth, boxHeight);
 				
 				// 在方塊上顯示白色數字

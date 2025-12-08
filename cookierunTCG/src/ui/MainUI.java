@@ -1324,8 +1324,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_pack = new JCheckBox[CardUtil.CardPack.size()];
         for(int i=0; i<CardUtil.CardPack.size(); i++) {
         	final int id = i;
-        	cb_pack[i] = new JCheckBox(CardUtil.CardPack.get(i));
+        	cb_pack[i] = new JCheckBox(CardUtil.CardPack.get(i).replace("_", ""));
         	cb_pack[i].setSelected(mDefaultState.getDefaultPackFlag(CardUtil.CardPack.get(i)));
+            cb_pack[i].setEnabled(!CardUtil.CardPack.get(i).endsWith("_"));
             cb_pack[i].setFont(CRnormal);
             componentFontMap.put(cb_pack[i], "CRnormal"); // Store the font type as a String
             packCheckboxGroup.add(cb_pack[i]);

@@ -61,6 +61,9 @@ public class SortSettingsWindow implements util.LanguageChangeListener {
 		        	if (Config.CARD_SORT_ORDER_FLIP == 0) {
 		        		mNotSortListModel.addElement(CardUtil.getTranslation("sort.name.flip"));
 		        	} 
+		        	if (Config.CARD_SORT_ORDER_EXTRA == 0) {
+		        		mNotSortListModel.addElement(CardUtil.getTranslation("sort.name.extra"));
+		        	}
 		        	if (Config.CARD_SORT_ORDER_LEVEL == 0) {
 		        		mNotSortListModel.addElement(CardUtil.getTranslation("sort.name.level"));
 		        	} 
@@ -69,11 +72,13 @@ public class SortSettingsWindow implements util.LanguageChangeListener {
 		        	}
 		        	
 		        	int id = 0;
-			        for (int i=1; i<5; i++) {
+			        for (int i=1; i<6; i++) {
 			        	if (Config.CARD_SORT_ORDER_TYPE == i) {
 			        		mSortListModel.add(id++, CardUtil.getTranslation("sort.name.type"));
 			        	} else if (Config.CARD_SORT_ORDER_FLIP == i) {
 			        		mSortListModel.add(id++, CardUtil.getTranslation("sort.name.flip"));
+						} else if (Config.CARD_SORT_ORDER_EXTRA == i) {
+			        		mSortListModel.add(id++, CardUtil.getTranslation("sort.name.extra"));
 			        	} else if (Config.CARD_SORT_ORDER_LEVEL == i) {
 			        		mSortListModel.add(id++, CardUtil.getTranslation("sort.name.level"));
 			        	} else if (Config.CARD_SORT_ORDER_COLOR == i) {
@@ -102,6 +107,7 @@ public class SortSettingsWindow implements util.LanguageChangeListener {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(150, 150, 450, 300);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -122,14 +128,14 @@ public class SortSettingsWindow implements util.LanguageChangeListener {
         mSortList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		mSortList.setFont(MainUI.CRnormal);
 		MainUI.componentFontMap.put(mSortList, "CRnormal");
-		mSortList.setBounds(10, 55, 161, 111);
+		mSortList.setBounds(10, 55, 161, 135);
 		frame.getContentPane().add(mSortList);
 		
 		mNotSortList = new JList<String>(mNotSortListModel);
 		mNotSortList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		mNotSortList.setFont(MainUI.CRnormal);
 		MainUI.componentFontMap.put(mNotSortList, "CRnormal");
-		mNotSortList.setBounds(242, 55, 161, 111);
+		mNotSortList.setBounds(242, 55, 161, 135);
 		frame.getContentPane().add(mNotSortList);
 		
 		
@@ -220,6 +226,9 @@ public class SortSettingsWindow implements util.LanguageChangeListener {
 			} else if (s.equals(CardUtil.getTranslation("sort.name.flip"))) {
 				Config.CARD_SORT_ORDER_FLIP = i + 1;
 
+			} else if (s.equals(CardUtil.getTranslation("sort.name.extra"))) {
+				Config.CARD_SORT_ORDER_EXTRA = i + 1;
+
 			} else if (s.equals(CardUtil.getTranslation("sort.name.level"))) {
 				Config.CARD_SORT_ORDER_LEVEL = i + 1;
 
@@ -238,6 +247,9 @@ public class SortSettingsWindow implements util.LanguageChangeListener {
 
 			} else if(s.equals(CardUtil.getTranslation("sort.name.flip"))) {
 				Config.CARD_SORT_ORDER_FLIP = 0;
+
+			} else if(s.equals(CardUtil.getTranslation("sort.name.extra"))) {
+				Config.CARD_SORT_ORDER_EXTRA = 0;
 
 			} else if(s.equals(CardUtil.getTranslation("sort.name.level"))) {
 				Config.CARD_SORT_ORDER_LEVEL = 0;
