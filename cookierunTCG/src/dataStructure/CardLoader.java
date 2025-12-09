@@ -165,10 +165,14 @@ public class CardLoader {
 						if (cardData[8].equals("_")) {
 							skillType.add(SkillType.None);
 						} else {
-							if (cardData[8].contains("P")) {
+							if (cardData[8].contains("PY")) {
+								skillType.add(SkillType.PassiveOwnTurn);
+							} else if (cardData[8].contains("P")) {
 								skillType.add(SkillType.Passive);
 							}
-							if (cardData[8].contains("O")) {
+							if (cardData[8].contains("OY")) {
+								skillType.add(SkillType.OnPlayOwnTurn);
+							} else if (cardData[8].contains("O")) {
 								skillType.add(SkillType.OnPlay);
 							}
 							if (cardData[8].contains("A")) {
@@ -176,9 +180,6 @@ public class CardLoader {
 							}
 							if (cardData[8].contains("B")) {
 								skillType.add(SkillType.Blocker);
-							}
-							if (cardData[8].contains("Y")) {
-								skillType.add(SkillType.OwnTurn);
 							}
 							if (cardData[8].contains("T")) {
 								skillType.add(SkillType.ThenEffect);

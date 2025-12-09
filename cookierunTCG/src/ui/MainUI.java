@@ -92,10 +92,8 @@ import javax.swing.JButton;
 
 // FEATURE: Add more views for collection summary in collection mode (by color, by promo set, etc.)
 // FIX: When comparing decks, categorize cards by positive/negative change
-// FIX: Add way to sort EXTRA cards in deck separately
 // FIX: Add auto-resize to deck overview
 // FIX: Pause detection for collection mode variant toggles when typing in search box
-// FIX: Remove starter decks from collection summary secret rare view
 // FIX: Change ways of compiling (JAR, or fix command prompt window not closing)
 // OPTIMIZATION: Reduce memory usage (somehow)
 
@@ -468,6 +466,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mDeckPaneLabel = new JLabel(CardUtil.getTranslation("deck"));
         mDeckPaneLabel.setFont(CRboldSmall);
         mDeckPaneLabel.setOpaque(true);
+        mDeckPaneLabel.setBorder(null);
         mDeckPaneLabel.setBackground(new Color(10, 10, 10));
         mDeckPaneLabel.setForeground(new Color(255,255,255));
         componentFontMap.put(mDeckPaneLabel, "CRboldSmall");
@@ -476,6 +475,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mDeckPane = new ScrollablePanel();
         mDeckPane.setLayout(new GridLayout(0, 6, 5, 5));
         scrollDeckPane = new JScrollPane(mDeckPane);
+        scrollDeckPane.setMinimumSize(new Dimension(0, 0));
         scrollDeckPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollDeckPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         JScrollBar deckScrollBar = scrollDeckPane.getVerticalScrollBar();
@@ -487,6 +487,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mCardsPaneLabel = new JLabel(CardUtil.getTranslation("cardlist"));
         mCardsPaneLabel.setFont(CRboldSmall);
         mCardsPaneLabel.setOpaque(true);
+        mCardsPaneLabel.setBorder(null);
         mCardsPaneLabel.setBackground(new Color(10, 10, 10));
         mCardsPaneLabel.setForeground(new Color(255,255,255));
         componentFontMap.put(mCardsPaneLabel, "CRboldSmall");
@@ -497,6 +498,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         
         scrollCardsPane = new JScrollPane(mCardsPane);
         scrollCardsPane.setBackground(new Color(255, 255, 255));
+        scrollCardsPane.setMinimumSize(new Dimension(0, 0));
         scrollCardsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollCardsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         JScrollBar cardListScrollBar = scrollCardsPane.getVerticalScrollBar();
@@ -1650,6 +1652,34 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mDeckItemTxt.setText(String.valueOf(otherSummary[0]));
         mDeckTrapTxt.setText(String.valueOf(otherSummary[1]));
         mDeckStageTxt.setText(String.valueOf(otherSummary[2]));
+
+        CardColor dominantColor = mDeck.getDominantDeckColor();
+        switch (dominantColor) {
+            case Red:
+                mDeckPaneLabel.setBackground(new Color(215, 14, 26));
+                mDeckPaneLabel.setForeground(Color.WHITE);
+                break;
+            case Yellow:
+                mDeckPaneLabel.setBackground(new Color(254, 220, 0));
+                mDeckPaneLabel.setForeground(Color.BLACK);
+                break;
+            case Green:
+                mDeckPaneLabel.setBackground(new Color(0, 139, 64));
+                mDeckPaneLabel.setForeground(Color.WHITE);
+                break;
+            case Blue:
+                mDeckPaneLabel.setBackground(new Color(0, 134, 207));
+                mDeckPaneLabel.setForeground(Color.WHITE);
+                break;
+            case Purple:
+                mDeckPaneLabel.setBackground(new Color(89, 32, 133));
+                mDeckPaneLabel.setForeground(Color.WHITE);
+                break;
+            default:
+                mDeckPaneLabel.setBackground(new Color(226, 224, 226));
+                mDeckPaneLabel.setForeground(Color.BLACK);
+                break;
+        }
     }
 
     @Override

@@ -186,6 +186,9 @@ public class CollectionSummaryDialog {
         gbc_byRaritySecret.gridx = 0;
         gbc_byRaritySecret.gridy = 1;
         for (int i = 0; i < CardUtil.CardPack.size()-1; i++) {
+            if (CardUtil.CardPack.get(i).contains("ST")) {
+                continue;
+            }
             JLabel label = new JLabel(CardUtil.CardPack.get(i) + " ", JLabel.RIGHT);
             label.setAlignmentX(Component.RIGHT_ALIGNMENT);
             label.setFont(MainUI.CRnormal);

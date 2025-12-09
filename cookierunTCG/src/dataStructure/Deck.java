@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.Config;
+import util.CardUtil.CardColor;
 
 public class Deck {
 	private List<Card> cardList;
@@ -220,5 +221,28 @@ public class Deck {
 			}
 		}
 		return invalidCards;
+	}
+
+	public CardColor getDominantDeckColor() {
+		int[] colorCount = new int[CardColor.values().length];
+		for (Card card : cardList) {
+			colorCount[card.getColor().getValue()] += card.getCount();
+		}
+		int nonZeroColors = 0;
+		for (int i=0; i<colorCount.length-1; i++) {
+			if (colorCount[i] > 0) {
+				nonZeroColors++;
+			}
+		}
+		int dominantColorIndex = 0;
+		int maxCount = 0;
+		for (int i=0; i<colorCount.length-1; i++) { // Excluding colorless
+			if (colorCount[i] > maxCount) {
+				maxCount = colorCount[i];
+				dominantColorIndex = i;
+			}
+		}
+
+		return (nonZeroColors == 1 ? CardColor.fromValue(dominantColorIndex) : CardColor.Colorless);
 	}
 }

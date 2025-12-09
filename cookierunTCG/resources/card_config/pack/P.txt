@@ -14,7 +14,7 @@ P-013,Blue,Cookie,_,P,A,1,3,PY,_
 P-014,Purple,Cookie,_,P,A,1,3,PY,_
 P-015,Red,Cookie,_,P,A,2,5,T,_
 P-016,Yellow,Cookie,_,P,A,2,2,O,_
-P-017,Green,Cookie,_,P,A,1,3,AY,_
+P-017,Green,Cookie,_,P,A,1,3,PY,_
 P-018,Blue,Cookie,_,P,A,3,4,OY,_
 P-019,Purple,Cookie,_,P,A,2,3,T,_
 P-020,Green,Cookie,H,P,A,3,3,_,_
