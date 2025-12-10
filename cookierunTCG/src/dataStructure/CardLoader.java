@@ -251,15 +251,15 @@ public class CardLoader {
 		iconPathB = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "B.png").getAbsolutePath() + "\">";
 		iconPathP = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "P.png").getAbsolutePath() + "\">";
 		iconPathW = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "W.png").getAbsolutePath() + "\">";
-		iconPathActivate = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Activate.png").getAbsolutePath() + "\">";
-		iconPathYourTurn = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "YourTurn.png").getAbsolutePath() + "\">";
-		iconPathOncePerTurn = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "OncePerTurn.png").getAbsolutePath() + "\">";
-		iconPathOnPlay = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "OnPlay.png").getAbsolutePath() + "\">";
-		iconPathBlocker = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Blocker.png").getAbsolutePath() + "\">";
-		iconPathEquip = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Equip.png").getAbsolutePath() + "\">";
-		iconPathExtra = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Extra.png").getAbsolutePath() + "\">";
-		iconPathAwaken = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Awaken.png").getAbsolutePath() + "\">";
-		iconPathFlip = "<img src=\"file:" + new File("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "FLIP.png").getAbsolutePath() + "\">";
+		iconPathActivate = "<img src=\"file:" + new File("resources/icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Activate.png").getAbsolutePath() + "\">";
+		iconPathYourTurn = "<img src=\"file:" + new File("resources/icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "YourTurn.png").getAbsolutePath() + "\">";
+		iconPathOncePerTurn = "<img src=\"file:" + new File("resources/icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "OncePerTurn.png").getAbsolutePath() + "\">";
+		iconPathOnPlay = "<img src=\"file:" + new File("resources/icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "OnPlay.png").getAbsolutePath() + "\">";
+		iconPathBlocker = "<img src=\"file:" + new File("resources/icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Blocker.png").getAbsolutePath() + "\">";
+		iconPathEquip = "<img src=\"file:" + new File("resources/icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Equip.png").getAbsolutePath() + "\">";
+		iconPathExtra = "<img src=\"file:" + new File("resources/icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Extra.png").getAbsolutePath() + "\">";
+		iconPathAwaken = "<img src=\"file:" + new File("resources/icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Awaken.png").getAbsolutePath() + "\">";
+		iconPathFlip = "<img src=\"file:" + new File("resources/icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "FLIP.png").getAbsolutePath() + "\">";
 
 	    try {
 	        File translationFile = new File("resources/card_config/translations/"+Config.LANGUAGE+"/"+packName+".txt");
@@ -281,13 +281,21 @@ public class CardLoader {
 										 .replace("[P]", iconPathP)
 										 .replace("[W]", iconPathW)
 										 .replace("【啟動】", iconPathActivate)
+										 .replace("[Activate]", iconPathActivate)
 										 .replace("【1回合1次】", iconPathOncePerTurn)
+										 .replace("[Once Per Turn]", iconPathOncePerTurn)
 										 .replace("【阻擋】", iconPathBlocker)
+										 .replace("[Blocker]", iconPathBlocker)
 										 .replace("【裝載】", iconPathEquip)
+										 .replace("[Equip]", iconPathEquip)
 										 .replace("【額外】", iconPathExtra)
+										 .replace("[EXTRA]", iconPathExtra)
 										 .replace("【覺醒】", iconPathAwaken)
+										 .replace("[Awaken]", iconPathAwaken)
 										 .replace("【在自己的回合中】", iconPathYourTurn)
+										 .replace("[Your Turn]", iconPathYourTurn)
 										 .replace("【登場時】", iconPathOnPlay)
+										 .replace("[On Play]", iconPathOnPlay)
 										 .replace("\\n", "<br>");
 						}
 						//                0   1            2      3            4            5           6                   7

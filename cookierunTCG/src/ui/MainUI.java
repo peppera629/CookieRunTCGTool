@@ -94,6 +94,7 @@ import javax.swing.JButton;
 
 // FEATURE: Add more views for collection summary in collection mode (overview, by color, by promo set, etc.)
 // FEATURE: Fully implement getTranslationPromo for promo card and promo set descriptions
+// FEATURE: Add "Credits" popup
 // FIX: When comparing decks, categorize cards by positive/negative change
 // FIX: Add auto-resize to deck overview
 // FIX: Pause detection for collection mode variant toggles when typing in search box
@@ -1771,7 +1772,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 cardTranslationSkillIcon.setIcon(null);
                 cardTranslationSkillFlavorText.setText("");
             } else {
-                cardTranslationSkillIcon.setIcon(new ImageIcon("resources/icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "SKILL.png"));
+                cardTranslationSkillIcon.setIcon(new ImageIcon("resources/icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "SKILL.png"));
                 cardTranslationSkillFlavorText.setText("<html>" + card.getCardTranslation()[0] + "</html>");
             }
             if (card.getCardTranslation()[2].isEmpty()) {
