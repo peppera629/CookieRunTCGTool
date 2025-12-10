@@ -219,6 +219,9 @@ public class CollectionSummaryDialog {
         for (int i = 0; i < 5; i++) {
             gbc_byRaritySecret.gridy = 1;
             for (int j = 0; j < CardUtil.CardPack.size()-1; j++) {
+                if (CardUtil.CardPack.get(j).contains("ST")) {
+                    continue;
+                }
                 count = (i == 4 ? totalOwnedPerPackSec[j] : Collection.getInstance().getCardOwnedCount(CardUtil.CardPack.get(j), CardUtil.CardRarity.fromValue(6+i), false));
                 int total = (i == 4 ? totalPerPackSec[j] : CardList.getInstance().getCardCountByCondition(CardUtil.CardPack.get(j), CardUtil.CardRarity.fromValue(6+i), null, null));
 

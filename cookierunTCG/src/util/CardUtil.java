@@ -18,7 +18,7 @@ public class CardUtil {
 	public static int KEYWORD_MAX = 5;
 	
 	// For language translation
-	private static ResourceBundle messages;
+	private static ResourceBundle messages, messages_promo;
 
 	public static void loadLanguage() {
         Locale locale;
@@ -34,6 +34,7 @@ public class CardUtil {
                 break;
         }
         messages = ResourceBundle.getBundle("lang", locale);
+		messages_promo = ResourceBundle.getBundle("lang_promo", locale);
     }
 
 	// Static method to get translated text
@@ -43,6 +44,12 @@ public class CardUtil {
         }
         return messages.getString(key);
     }
+	public static String getTranslationPromo(String key) {
+		if (messages_promo == null) {
+			loadLanguage(); // Ensure messages is loaded
+		}
+		return messages_promo.getString(key);
+	}
 
 	public enum CardColor {
 	    Red(0), Yellow(1), Green(2), Blue(3), Purple(4), Colorless(5);

@@ -67,6 +67,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.KeyAdapter;
 import java.io.File;
@@ -90,7 +92,8 @@ import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 
-// FEATURE: Add more views for collection summary in collection mode (by color, by promo set, etc.)
+// FEATURE: Add more views for collection summary in collection mode (overview, by color, by promo set, etc.)
+// FEATURE: Fully implement getTranslationPromo for promo card and promo set descriptions
 // FIX: When comparing decks, categorize cards by positive/negative change
 // FIX: Add auto-resize to deck overview
 // FIX: Pause detection for collection mode variant toggles when typing in search box
@@ -206,7 +209,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         Config.loadConfig();
     	initialData();
     	initialUI();
-        keyBindingsSetup();
+        keyBindingsToggle(true);
     }
 
     private void initialData() {
@@ -216,29 +219,39 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         frame = new JFrame();
     }
 
-    private void keyBindingsSetup() {
+    private void keyBindingsToggle(boolean enabled) {
         InputMap inputMap = frame.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap = frame.getRootPane().getActionMap();
-
+        
         // Key bindings for changing variants in collection mode
         for (int i = 0; i <= 9; i++) { // (I would do anything to replace typing out every function manually)
             final int variant = i;
             String key = Integer.toString(i);
             if (i >= 1) {
-                inputMap.put(KeyStroke.getKeyStroke(key), "variant" + key);
-            }
-            inputMap.put(KeyStroke.getKeyStroke("released " + key), "variant0");
-            actionMap.put("variant" + key, new javax.swing.AbstractAction() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    int prevVariant = collectionAddVariant;
-                    collectionAddVariant = variant;
-                    if (prevVariant != collectionAddVariant) {
-                        updateCardOwnedInfoHighlight(variant);
-                        updateCardPreview();
-                    }
+                if (!enabled) {
+                    inputMap.remove(KeyStroke.getKeyStroke(key));
+                } else {
+                    inputMap.put(KeyStroke.getKeyStroke(key), "variant" + key);
                 }
-            });
+            }
+
+            if (!enabled) {
+                inputMap.remove(KeyStroke.getKeyStroke("released " + key));
+                actionMap.remove("variant" + key);
+            } else {
+                inputMap.put(KeyStroke.getKeyStroke("released " + key), "variant0");
+                actionMap.put("variant" + key, new javax.swing.AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        int prevVariant = collectionAddVariant;
+                        collectionAddVariant = variant;
+                        if (prevVariant != collectionAddVariant) {
+                            updateCardOwnedInfoHighlight(variant);
+                            updateCardPreview();
+                        }
+                    }
+                });
+            }
         }
 
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "search");
@@ -333,6 +346,13 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         
         mSearchPaneOuter = new JPanel(new BorderLayout());
         mSearchPane = new ScrollablePanel();
+        mSearchPane.setFocusable(true);
+        mSearchPane.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mSearchPane.requestFocusInWindow();
+            }
+        });
         
         mSearchPane.setLayout(new BoxLayout(mSearchPane, BoxLayout.Y_AXIS));
         mSearchPane.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -1100,6 +1120,15 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         searchBox = new JTextField();
         //searchBox.setMaximumSize(new Dimension(300, CRnormal.getSize()+5));
         searchBox.setFont(CRnormal);
+        searchBox.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {
+                keyBindingsToggle(false);
+            }
+
+            public void focusLost(FocusEvent e) {
+                keyBindingsToggle(true);
+            }
+        });
         componentFontMap.put(searchBox, "CRnormal"); // Store the font type as a String
         mSearchPane.add(searchBox);
     	
