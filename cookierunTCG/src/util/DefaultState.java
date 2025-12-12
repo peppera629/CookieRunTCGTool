@@ -62,12 +62,12 @@ public class DefaultState {
 			BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
 			String data;
 
-			// 卡組名稱
+			// Last loaded deck name
 			if ((data = input.readLine()) != null) {
 				DeckName = data;
 			}
 
-			// color
+			// Color checkbox status
 			if ((data = input.readLine()) != null) {
 				String[] flags = data.split(",");
 				for (int i = 0; i < flags.length; i++) {
@@ -79,7 +79,7 @@ public class DefaultState {
 				}
 			}
 
-			// type
+			// Type checkbox status
 			if ((data = input.readLine()) != null) {
 				String[] flags = data.split(",");
 				for (int i = 0; i < flags.length; i++) {
@@ -91,14 +91,14 @@ public class DefaultState {
 				}
 			}
 
-			// flip
+			// Flip checkbox status
 			if ((data = input.readLine()) != null) {
 				if (data.equals("v")) {
 					flip = true;
 				}
 			}
 
-			// flip type
+			// Flip type checkbox status
 			if ((data = input.readLine()) != null) {
 				String[] flags = data.split(",");
 				for (int i = 0; i < flags.length; i++) {
@@ -110,7 +110,7 @@ public class DefaultState {
 				}
 			}
 
-			// lv
+			// Level checkbox status
 			if ((data = input.readLine()) != null) {
 				String[] flags = data.split(",");
 				for (int i = 0; i < flags.length; i++) {
@@ -122,7 +122,7 @@ public class DefaultState {
 				}
 			}
 
-			// pack
+			// Pack checkbox status
 			if ((data = input.readLine()) != null) {
 				String[] flags = data.split(",");
 				for (int i = 0; i < flags.length; i++) {
@@ -130,8 +130,7 @@ public class DefaultState {
 				}
 			}
 
-			// rarity
-
+			// Rarity checkbox status
 			if ((data = input.readLine()) != null) {
 				String[] flags = data.split(",");
 				for (int i = 0; i < flags.length; i++) {
@@ -143,7 +142,7 @@ public class DefaultState {
 				}
 			}
 
-			// HP
+			// HP checkbox status
 			if ((data = input.readLine()) != null) {
 				String[] flags = data.split(",");
 				for (int i = 0; i < flags.length; i++) {
@@ -155,7 +154,7 @@ public class DefaultState {
 				}
 			}
 
-			// sort
+			// Sort order
 			if ((data = input.readLine()) != null) {
 				String[] flags = data.split(",");
 				Config.CARD_SORT_ORDER_TYPE = Integer.valueOf(flags[0]);
@@ -166,14 +165,14 @@ public class DefaultState {
 			}
 			
 			input.close();
+			reader.close();
+			
 		} catch (FileNotFoundException e) {
 			System.out.println("An error occurred.");
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

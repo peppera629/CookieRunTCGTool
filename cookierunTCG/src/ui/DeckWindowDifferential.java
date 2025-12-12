@@ -2,30 +2,23 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
-import dataStructure.Card;
 import dataStructure.Deck;
 import util.Config;
 import util.UIUtil;
 import util.CardUtil;
-import ui.MainUI;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;

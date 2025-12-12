@@ -11,7 +11,6 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 import util.Config;
-import util.LanguageChangeListener;
 import util.UIUtil;
 import util.CardUtil;
 import util.CardUtil.CardColor;
@@ -500,7 +499,6 @@ public class CardLoader {
 			}
 			fw = new FileWriter("deck_readable/"+deckName+".txt");
 			List<Card> cardList = deck.getAllCards();
-			Card lastCard = null;
 			int lastCardCount = 0;
 			for (Card c : cardList) {
 				fw.write("["+c.getId()+"] "+c.getName());

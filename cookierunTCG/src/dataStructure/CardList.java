@@ -18,8 +18,6 @@ public class CardList {
 	private List<Card> selectList;
 	private List<Card> ownedList;
 
-	private String _id;
-	private String _name;
 	private boolean _search_color[];
 	private boolean _search_type[];
 	private boolean _search_lv[];
@@ -287,13 +285,6 @@ public class CardList {
 
 	public void setSearchTerm(String term) {
 		_search_name = term.toLowerCase();
-	}
-	
-	private void dumpPackList() {
-		System.out.println(">>> "+_search_pack_list.size());
-		for(String s : _search_pack_list) {
-			System.out.println(">>> "+s);
-		}
 	}
 	
 	public Card getCardById(String id) {

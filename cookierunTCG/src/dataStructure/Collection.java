@@ -1,7 +1,6 @@
 package dataStructure;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import util.CardUtil;
-import dataStructure.*;
 
 public class Collection {
     private Map<String, List<Integer>> collection; // Map of card ID to count

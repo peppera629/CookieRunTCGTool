@@ -4,11 +4,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Set;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -16,7 +13,6 @@ import javax.swing.JPanel;
 
 import dataStructure.Card;
 import dataStructure.CardList;
-import dataStructure.Deck;
 import dataStructure.CardLoader;
 import ui.ClickableCardPanel;
 import ui.DeckWindowDifferential;

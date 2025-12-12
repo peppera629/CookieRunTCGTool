@@ -19,7 +19,6 @@ import java.awt.Insets;
 import javax.swing.DefaultComboBoxModel;
 
 import util.CardUtil;
-import util.Config;
 import util.LanguageChangeListener;
 
 public class SettingsWindow implements LanguageChangeListener{

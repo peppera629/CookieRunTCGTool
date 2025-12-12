@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
-import dataStructure.Card;
-
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -24,10 +22,10 @@ public class CardUtil {
         Locale locale;
         switch (Config.LANGUAGE) {
             case "en":
-                locale = new Locale("en", "US");
+                locale = Locale.ENGLISH;
                 break;
             case "zh_TW":
-                locale = new Locale("zh", "TW");
+                locale = Locale.TRADITIONAL_CHINESE;
                 break;
             default:
                 locale = Locale.getDefault();

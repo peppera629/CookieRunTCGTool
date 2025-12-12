@@ -1,49 +1,26 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.Border;
 
-import dataStructure.Card;
 import dataStructure.CardList;
-import dataStructure.Deck;
 import dataStructure.Collection;
-import util.Config;
-import util.UIUtil;
 import util.CardUtil;
-import ui.MainUI;
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 // Dialog box
 
 public class CollectionSummaryDialog {
     private JFrame frame;
-    private String message;
     private int count;
 
     /**

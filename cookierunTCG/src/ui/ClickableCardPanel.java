@@ -11,14 +11,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import dataStructure.Card;
 import dataStructure.CardLoader;
 import dataStructure.Collection;
-import util.Config;
-import util.UIUtil;
 
 public class ClickableCardPanel extends JPanel {
 	
@@ -152,7 +149,6 @@ public class ClickableCardPanel extends JPanel {
 				g2d.setFont(cardPanelFont);
 				FontMetrics metrics = g2d.getFontMetrics(cardPanelFont);
 				int textWidth = metrics.stringWidth(text);
-				int textHeight = metrics.getHeight();
 
 				g2d.setFont(cardPanelFontSmall);
 				FontMetrics metricsOwned = g2d.getFontMetrics(cardPanelFontSmall);

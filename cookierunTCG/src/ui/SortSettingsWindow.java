@@ -2,28 +2,17 @@ package ui;
 
 import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
-import javax.swing.TransferHandler;
-import javax.swing.TransferHandler.TransferSupport;
 
-import dataStructure.Card;
 import util.Config;
 import util.DefaultState;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.ListModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;

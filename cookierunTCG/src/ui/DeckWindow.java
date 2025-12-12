@@ -1,27 +1,21 @@
 package ui;
 
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import dataStructure.Card;
 import dataStructure.Deck;
 import util.Config;
 import util.UIUtil;
 import util.CardUtil;
-import ui.MainUI;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -72,7 +66,6 @@ public class DeckWindow {
 	 */
 	private JPanel mDeckPane;
 	private JPanel mOutputPane;
-	private JScrollPane scrollDeckPane;
 	private JButton btnNewButton;
 	private int w = 670;
 	private int h = 550;

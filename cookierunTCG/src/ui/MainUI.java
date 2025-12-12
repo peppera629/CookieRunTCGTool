@@ -6,17 +6,11 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 
 import java.awt.BorderLayout;
-import java.awt.Choice;
 
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -46,8 +40,6 @@ import javax.swing.JToggleButton;
 import javax.swing.border.Border;
 
 import java.util.List;
-import java.util.concurrent.Flow;
-import java.awt.ScrollPane;
 
 import ui.ClickableCardPanel.CardListCallBack;
 import ui.SortSettingsWindow.ConfigChangedCallback;
@@ -70,10 +62,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
-import java.awt.event.KeyAdapter;
 import java.io.File;
 import java.io.IOException;
-import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.io.InputStream;
@@ -87,8 +77,6 @@ import java.awt.Component;
 import java.awt.Insets;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 
@@ -103,7 +91,6 @@ import javax.swing.JButton;
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
 
-	private static boolean DEBUG = false;
     private JFrame frame;
 
     /**
@@ -177,23 +164,21 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JLabel labelColor, labelType, labelSeries, labelRarity, labelHP, labelSkillType, labelKeyword;
 
     private Deck mDeck;
-    private ScrollPane scrollPane;
     private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane, ownedInfoPanel, keywordLabelPanel, keywordOuterPanel, skillTypeLabelPanel, skillTypeOuterPanel;
     private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup, deckDetailPane, centerPanel;
     private JTextField mDeckText, searchBox;
     private JButton saveBtn, selectBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST;
     private JButton mClearDeckBtn, button_search, button_clean, button_sort, button_settings;
     private JToggleButton button_collection;
-    private JLabel mCardCountHintTxt, mFlipCountHintTxt, mExtraCountHintTxt, mDeckCookieSummaryHintTxt, mDeckCookieLv1HintTxt, mDeckCookieLv2HintTxt, mDeckCookieLv3HintTxt, 
+    private JLabel mCardCountHintTxt, mFlipCountHintTxt, mExtraCountHintTxt, mDeckCookieSummaryHintTxt, 
         mLevelCountTxt, mFlipTypeCountTxt, cardLabel, filterResults, labelSearch;
     private JLabel mDeckItemHintTxt, mDeckTrapHintTxt, mDeckStageHintTxt, mDeckPaneLabel, mCardsPaneLabel;
-    private JLabel mCardCountTxt, mFlipCountTxt, mExtraCountTxt, mDeckCookieSummaryTxt, mDeckCookieLv1Txt, mDeckCookieLv2Txt, mDeckCookieLv3Txt;
+    private JLabel mCardCountTxt, mFlipCountTxt, mExtraCountTxt, mDeckCookieSummaryTxt;
     private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardTranslationSkill, cardTranslationAttackCost;
     private JLabel cardTranslationAttack, cardTranslationAttackIcon, cardTranslationAttackThen, cardTranslationFlip, cardTranslationSkillFlavorText, cardTranslationSkillIcon, cardTranslationAttackFlavorText;
     private JLabel[] ownedInfoRarityRows, ownedInfoCountRows;
     private JSplitPane splitPane;
     private JButton showDeckBtn, showDeckDifferentialBtn;
-    private JMenuItem settingsMenuItem, sortSettingsMenuItem;
     private ImageIcon cardIcon;
     private JScrollPane scrollDeckPane, scrollCardsPane, scrollSearchPane;
     public static Font CRnormal, CRbold, CRnormalLarge, CRnormalSmall, CRnormalEXLarge, CRboldLarge, CRboldSmall, CRboldEXLarge, CRtranslation, CRtranslationBold, CRboldEXLargeFilter;
@@ -201,7 +186,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     public static Map<java.awt.Component, String> componentFontMap = new HashMap<>();
     private int columns = 6, previewHeight, divLoc = 400;
     private static int collectionAddVariant = 0;
-    private double previousSplitLocation = 0.3d;
     private boolean isCollectionMode = false, deckChanged = false;
     private Collection collection = Collection.getInstance();
     private Card currentCard;
@@ -1456,13 +1440,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             cb_skillType[i].setFont(CRnormal);
             componentFontMap.put(cb_skillType[i], "CRnormal"); // Store the font type as a String
             skillTypeCheckboxGroup.add(cb_skillType[i]);
-            final int id = i;
-            /*
-            cb_skillType[i].addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                	mDefaultState.setDefaultSkillTypeFlag(id, cb_skillType[id].isSelected());
-                }
-            }); */
         }
         skillTypeOuterPanel.add(skillTypeCheckboxGroup);
         skillTypeLabelPanel.setVisible(Config.ADVANCED_FILTERING);
@@ -1489,13 +1466,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             cb_keyword[i].setFont(CRnormal);
             componentFontMap.put(cb_keyword[i], "CRnormal"); // Store the font type as a String
             keywordCheckboxGroup.add(cb_keyword[i]);
-            final int id = i;
-            /*
-            cb_keyword[i].addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                	mDefaultState.setDefaultKeywordFlag(id, cb_keyword[id].isSelected());
-                }
-            }); */
         }
         keywordOuterPanel.add(keywordCheckboxGroup);
 

@@ -10,8 +10,8 @@ public class Deck {
 	private List<Card> cardList;
 	private List<Card> flipList;
 	private List<Card> extraList;
-	private List<Card>[] CookieList;
-	private List<Card>[] flipTypeList;
+	private List<List<Card>> CookieList;
+	private List<List<Card>> flipTypeList;
 	private List<Card> ItemList;
 	private List<Card> TrapList;
 	private List<Card> StageList;
@@ -19,14 +19,14 @@ public class Deck {
 	public Deck() {
 		cardList = new ArrayList<Card>();
 		flipList = new ArrayList<Card>();
-		flipTypeList = new ArrayList[3];
+		flipTypeList = new ArrayList<>();
 		extraList = new ArrayList<Card>();
-		CookieList = new ArrayList[4];
+		CookieList = new ArrayList<>();
 		for(int i=0;i<=3;i++) {
-			CookieList[i] = new ArrayList<Card>();
+			CookieList.add(new ArrayList<Card>());
 		}
 		for(int i=0;i<=2;i++) {
-			flipTypeList[i] = new ArrayList<Card>();
+			flipTypeList.add(new ArrayList<Card>());
 		}
 		ItemList = new ArrayList<Card>();
 		TrapList = new ArrayList<Card>();
@@ -72,13 +72,13 @@ public class Deck {
 				if(card.isFlip()) {
 					flipList.add(card);
 					if(card.getFlipType() != null){
-						flipTypeList[card.getFlipType().getValue()].add(card);
+						flipTypeList.get(card.getFlipType().getValue()).add(card);
 					}
 				}
 				if(card.isExtra()) {
 					extraList.add(card);
 				}
-				CookieList[card.getLv()].add(card);
+				CookieList.get(card.getLv()).add(card);
 				break;
 			case Item:
 				ItemList.add(card);
@@ -113,13 +113,13 @@ public class Deck {
 				if(card.isFlip()) {
 					flipList.remove(card);
 					if(card.getFlipType() != null){
-						flipTypeList[card.getFlipType().getValue()].remove(card);
+						flipTypeList.get(card.getFlipType().getValue()).remove(card);
 					}
 				}
 				if(card.isExtra()) {
 					extraList.remove(card);
 				}
-				CookieList[card.getLv()].remove(card);
+				CookieList.get(card.getLv()).remove(card);
 				break;
 			case Item:
 				ItemList.remove(card);
@@ -138,11 +138,11 @@ public class Deck {
 		cardList.clear();
 		flipList.clear();
 		for(int i=0;i<=2;i++) {
-			flipTypeList[i].clear();
+			flipTypeList.get(i).clear();
 		}
 		extraList.clear();
 		for(int i=0;i<=3;i++) {
-			CookieList[i].clear();
+			CookieList.get(i).clear();
 		}
 		ItemList.clear();
 		TrapList.clear();
@@ -183,17 +183,17 @@ public class Deck {
     }
     
     public int[] getCookieSummary() {
-    	int L0Count = getTargetCardCount(CookieList[0]);
-    	int L1Count = getTargetCardCount(CookieList[1]);
-    	int L2Count = getTargetCardCount(CookieList[2]);
-    	int L3Count = getTargetCardCount(CookieList[3]);
+    	int L0Count = getTargetCardCount(CookieList.get(0));
+    	int L1Count = getTargetCardCount(CookieList.get(1));
+    	int L2Count = getTargetCardCount(CookieList.get(2));
+    	int L3Count = getTargetCardCount(CookieList.get(3));
 		return new int[] {(L0Count + L1Count + L2Count + L3Count), L1Count, L2Count, L3Count};
     }
 
 	public int[] getFlipTypeSummary() {
-		int FlipType0Count = getTargetCardCount(flipTypeList[0]);
-		int FlipType1Count = getTargetCardCount(flipTypeList[1]);
-		int FlipType2Count = getTargetCardCount(flipTypeList[2]);
+		int FlipType0Count = getTargetCardCount(flipTypeList.get(0));
+		int FlipType1Count = getTargetCardCount(flipTypeList.get(1));
+		int FlipType2Count = getTargetCardCount(flipTypeList.get(2));
 		return new int[] {FlipType0Count, FlipType1Count, FlipType2Count};
 	}
 
