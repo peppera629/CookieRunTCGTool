@@ -427,8 +427,7 @@ public class CardLoader {
 		        input.close();
 	        }
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+            // Load empty deck if file not found
         } catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

@@ -3,6 +3,7 @@ package util;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -43,6 +44,9 @@ public class UIUtil {
 			LinkedHashSet<String> allIds = new LinkedHashSet<>();
             for (Card c : cardList) allIds.add(c.getId());
             for (String id : counts2.keySet()) allIds.add(id);
+
+			List<ClickableCardPanel> positiveChange = new ArrayList<>();
+			List<ClickableCardPanel> negativeChange = new ArrayList<>();
 
 			for (String id : allIds) {
 				if (id == null || id.isEmpty()) {
@@ -87,10 +91,20 @@ public class UIUtil {
 				System.out.println(cardInstance.getImageLoadStatus());
 
                 ClickableCardPanel cardPanel = new ClickableCardPanel(cardInstance, showCountMode, cardSize, differential);
-                panel.add(cardPanel);
+                
+				if (differential > 0) {
+					positiveChange.add(cardPanel);
+				} else {
+					negativeChange.add(cardPanel);
+				}
 			}
 
-			System.out.println(differentCardCount);
+			for (ClickableCardPanel panelPos : positiveChange) {
+				panel.add(panelPos);
+			}
+			for (ClickableCardPanel panelNeg : negativeChange) {
+				panel.add(panelNeg);
+			}
 
 			DeckWindowDifferential.setDifferentCardCountStatic(differentCardCount);
 			

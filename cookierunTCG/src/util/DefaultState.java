@@ -166,10 +166,33 @@ public class DefaultState {
 			
 			input.close();
 			reader.close();
-			
+
 		} catch (FileNotFoundException e) {
-			System.out.println("An error occurred.");
-			e.printStackTrace();
+			System.out.println("Config file not found, using default settings");
+			setDefaultDeckName("");
+			for (int i = 0; i < color.length; i++) {
+				color[i] = false;
+			}
+			for (int i = 0; i < type.length; i++) {
+				type[i] = false;
+			}
+			flip = false;
+			extra = false;
+			for (int i = 0; i < rarity.length; i++) {
+				rarity[i] = false;
+			}
+			for (int i = 0; i < lv.length; i++) {
+				lv[i] = false;
+			}
+			for (int i = 0; i < hp.length; i++) {
+				hp[i] = false;
+			}
+			for (int i = 0; i < flipType.length; i++) {
+				flipType[i] = false;
+			}
+			for (int i = 0; i < _search_pack_list.size(); i++) {
+				_search_pack_list.remove(i);
+			}
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

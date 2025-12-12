@@ -16,23 +16,25 @@ public class Config {
 	// Load the language setting from the config file
     public static void loadConfig() {
         Properties properties = new Properties();
-        try (InputStream input = new FileInputStream(CONFIG_FILE)) {
-            properties.load(input);
-            LANGUAGE = properties.getProperty("language", "en"); // Default to "en" if not found
-			CARD_LANGUAGE = properties.getProperty("card_language", "en"); // Default to "en" if not found
-			FALLBACK_ORDER = (CARD_LANGUAGE.equals("en")) ? new String[] {"en", "kr", "zh_TW"} : new String[] {"zh_TW", "en", "kr"};
-			CARD_PREVIEW_SCALE = Double.parseDouble(properties.getProperty("card_preview_scale", "1.0")); // Default to 1.0 if not found
-			CARD_ICON_SCALE = Double.parseDouble(properties.getProperty("card_icon_scale", "1.5")); // Default to 1.5 if not found
-			CARD_PREVIEW_WIDTH = (int) (400 * Config.CARD_PREVIEW_SCALE);
-            CARD_PREVIEW_HEIGHT = (int) (Config.CARD_PREVIEW_WIDTH * Config.CARD_RATIO);
-			CARD_TRANSLATION_ENABLED = Boolean.parseBoolean(properties.getProperty("card_translation", "true")); // Default to true if not found
-			LARGE_TRANSLATION_TEXT = Boolean.parseBoolean(properties.getProperty("large_translation_text", "false")); // Default to false if not found
-			DECK_BUILD_FROM_COLLECTION = Boolean.parseBoolean(properties.getProperty("deck_build_from_collection", "false")); // Default to false if not found
-			SHOW_OWNED_ONLY = Boolean.parseBoolean(properties.getProperty("show_owned_only", "false")); // Default to false if not found
-			ADVANCED_FILTERING = Boolean.parseBoolean(properties.getProperty("advanced_filtering", "false")); // Default to false if not found
-        } catch (IOException e) {
-            System.err.println("Could not load config file. Using default settings.");
-        }
+        try {
+			InputStream input = new FileInputStream(CONFIG_FILE);
+			properties.load(input);
+			input.close();
+		} catch (IOException e) {
+			System.err.println("Could not load config file. Using default settings.");
+		}
+		LANGUAGE = properties.getProperty("language", "en"); // Default to "en" if not found
+		CARD_LANGUAGE = properties.getProperty("card_language", "en"); // Default to "en" if not found
+		FALLBACK_ORDER = (CARD_LANGUAGE.equals("en")) ? new String[] {"en", "kr", "zh_TW"} : new String[] {"zh_TW", "en", "kr"};
+		CARD_PREVIEW_SCALE = Double.parseDouble(properties.getProperty("card_preview_scale", "1.0")); // Default to 1.0 if not found
+		CARD_ICON_SCALE = Double.parseDouble(properties.getProperty("card_icon_scale", "1.0")); // Default to 1.0 if not found
+		CARD_PREVIEW_WIDTH = (int) (400 * Config.CARD_PREVIEW_SCALE);
+		CARD_PREVIEW_HEIGHT = (int) (Config.CARD_PREVIEW_WIDTH * Config.CARD_RATIO);
+		CARD_TRANSLATION_ENABLED = Boolean.parseBoolean(properties.getProperty("card_translation", "true")); // Default to true if not found
+		LARGE_TRANSLATION_TEXT = Boolean.parseBoolean(properties.getProperty("large_translation_text", "false")); // Default to false if not found
+		DECK_BUILD_FROM_COLLECTION = Boolean.parseBoolean(properties.getProperty("deck_build_from_collection", "false")); // Default to false if not found
+		SHOW_OWNED_ONLY = Boolean.parseBoolean(properties.getProperty("show_owned_only", "false")); // Default to false if not found
+		ADVANCED_FILTERING = Boolean.parseBoolean(properties.getProperty("advanced_filtering", "false")); // Default to false if not found
     }
 
     // Save the language setting to the config file

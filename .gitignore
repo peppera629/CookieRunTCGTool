@@ -8,7 +8,6 @@ cookierunTCG/resources/cards_variant
 cookierunTCG/deck/*
 cookierunTCG/deck_image/*
 cookierunTCG/deck_readable/*
-cookierunTCG/config/default_state.txt
 compile.bat
 compile&start.bat
 start.bat

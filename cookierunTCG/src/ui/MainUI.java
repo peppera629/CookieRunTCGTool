@@ -83,9 +83,7 @@ import javax.swing.JButton;
 // FEATURE: Add more views for collection summary in collection mode (overview, by color, by promo set, etc.)
 // FEATURE: Fully implement getTranslationPromo for promo card and promo set descriptions
 // FEATURE: Add "Credits" popup
-// FIX: When comparing decks, categorize cards by positive/negative change
 // FIX: Add auto-resize to deck overview
-// FIX: Pause detection for collection mode variant toggles when typing in search box
 // FIX: Change ways of compiling (JAR, or fix command prompt window not closing)
 // OPTIMIZATION: Reduce memory usage (somehow)
 
