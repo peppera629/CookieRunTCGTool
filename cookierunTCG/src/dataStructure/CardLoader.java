@@ -92,6 +92,7 @@ public class CardLoader {
 				loadPackTranslations(CardUtil.CardPack.get(i), cardList);
 				loadRestrictedCards(CardUtil.CardPack.get(i), cardList);
 				loadVariants(CardUtil.CardPack.get(i), cardList);
+				loadVariantNames(CardUtil.CardPack.get(i), cardList);
 			}
 		}
 	    return cardList;
@@ -109,6 +110,12 @@ public class CardLoader {
 		}
 	}
 	
+	public static void reloadVariantNames(List<Card> cardList) {
+		for (int i=0; i<CardUtil.CardPack.size() ;i++) {
+			loadVariantNames(CardUtil.CardPack.get(i), cardList);
+		}
+	}
+
 	private static void loadPack(String packName, List<Card> cardList) {
 	    try {
 	        File file = new File("resources/card_config/pack/"+packName+".txt");
@@ -358,15 +365,14 @@ public class CardLoader {
 	public static void loadVariants(String packName, List<Card> cardList) {
 		try {
 			File rarityListFile = new File("resources/card_config/rarity.txt");
-			File rarityDescListFile = new File("resources/card_config/rarity_desc.txt");
-			if (rarityListFile.exists() && rarityDescListFile.exists()) {
+			
+			if (rarityListFile.exists()) {
 				BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(rarityListFile), StandardCharsets.UTF_8));
-				BufferedReader inputDesc = new BufferedReader(new InputStreamReader(new FileInputStream(rarityDescListFile), StandardCharsets.UTF_8));
-				String data, dataDesc;
-				while((data = input.readLine()) != null && (dataDesc = inputDesc.readLine()) != null) {
+				
+				String data;
+				while((data = input.readLine()) != null) {
 					if (!data.equals("") && !data.startsWith("//")) {
 						String[] variantData = data.split(",", -1);
-						String[] variantNames = Arrays.asList(dataDesc.split(",", -1)).subList(1, variantData.length).toArray(new String[0]);
 						variantData = Arrays.stream(variantData).filter(Objects::nonNull).filter(s -> !s.trim().isEmpty()).toArray(String[]::new);
 						CardRarity[] variantRarity = new CardRarity[variantData.length - 1];
 						for (int i = 1; i < variantData.length; i++) {
@@ -375,27 +381,68 @@ public class CardLoader {
 							}
 							variantRarity[i - 1] = CardRarity.fromString(variantData[i]);
 						}
-						//String[] variantDescData = dataDesc.split(",", -1);
 						for (Card c : cardList) {
 							if (c.getPack().equals(packName) && c.getId().equals(variantData[0])) {
-								for (int i = 1; i < variantData.length; i++) {
-									if (variantData[i].isEmpty()) {
-										continue;
-									}
-									//System.out.println("Variant for " + c.getId() + ": " + variantRarity[i - 1].getValue() + " - " + variantNames[i - 1]);
-								}
-								c.setVariantInfo(variantRarity, variantNames);
+								c.setVariantTypes(variantRarity);
 							}
 						}
 					}
 				}
 				input.close();
-				inputDesc.close();
 			}
+			
 		} catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void loadVariantNames(String packName, List<Card> cardList) {
+		try {
+			File rarityDescListFile = new File("resources/card_config/rarity_desc.txt");
+			if (rarityDescListFile.exists()) {
+				BufferedReader inputDesc = new BufferedReader(new InputStreamReader(new FileInputStream(rarityDescListFile), StandardCharsets.UTF_8));
+				String dataDesc;
+				while ((dataDesc = inputDesc.readLine()) != null) {
+					if (!dataDesc.equals("") && !dataDesc.startsWith("//")) {
+						String[] variantNames = Arrays.asList(dataDesc.split(",", -1)).toArray(new String[0]);
+						String[] variantNamesLocalized = new String[variantNames.length];
+						for (int i = 1; i < variantNames.length; i++) {
+							if (variantNames[i].isEmpty()) {
+								continue;
+							}
+						}
+						//String[] variantDescData = dataDesc.split(",", -1);
+						for (Card c : cardList) {
+							if (c.getPack().equals(packName) && c.getId().equals(variantNames[0])) {
+								for (int i = 1; i < variantNames.length; i++) {
+									if (!variantNames[i].isEmpty() && variantNames[i] != null) {
+										try {
+											variantNamesLocalized[i - 1] = CardUtil.getTranslationPromo(variantNames[i]);
+										} catch (Exception e) {
+											variantNamesLocalized[i - 1] = variantNames[i];
+										}
+									} else {
+										variantNamesLocalized[i - 1] = "";
+									}
+								}
+								c.setVariantNames(variantNamesLocalized);
+							}
+						}
+					
+					}
+				}
+				inputDesc.close();
+			}
+			
+		} catch (FileNotFoundException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();

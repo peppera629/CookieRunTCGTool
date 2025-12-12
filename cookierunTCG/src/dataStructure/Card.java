@@ -259,8 +259,11 @@ public class Card {
 		_name = name;
 	}
 
-	public void setVariantInfo(CardRarity[] variants, String[] variantNames) {
+	public void setVariantTypes(CardRarity[] variants) {
 		_variants = variants;
+	}
+	
+	public void setVariantNames(String[] variantNames) {
 		_variantNames = variantNames;
 	}
 	

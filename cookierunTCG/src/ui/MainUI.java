@@ -81,7 +81,6 @@ import java.util.Map;
 import javax.swing.JButton;
 
 // FEATURE: Add more views for collection summary in collection mode (overview, by color, by promo set, etc.)
-// FEATURE: Fully implement getTranslationPromo for promo card and promo set descriptions
 // FEATURE: Add "Credits" popup
 // FIX: Add auto-resize to deck overview
 // FIX: Change ways of compiling (JAR, or fix command prompt window not closing)
@@ -1883,6 +1882,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         CardLoader.refreshAllCardNames();
         CardLoader.reloadTranslations(CardList.getInstance().getAllCards());
         CardLoader.reloadCardNames(CardList.getInstance().getAllCards());
+        CardLoader.reloadVariantNames(CardList.getInstance().getAllCards());
 
         sidebarPanel.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()));
         mCardDetailPane.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()-60));
