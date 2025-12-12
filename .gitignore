@@ -1,16 +1,15 @@
 .metadata
 .settings
 cookierunTCG/.settings
-cookierunTCG/bin
-cookierunTCG/bin/ui
-cookierunTCG/bin/dataStructure
-cookierunTCG/bin/util
+*.class
 
 cookierunTCG/resources/cards
 cookierunTCG/resources/cards_variant
 cookierunTCG/deck/*
 cookierunTCG/deck_image/*
 cookierunTCG/deck_readable/*
+cookierunTCG/config/config.txt
+cookierunTCG/config/default_state.txt
 compile.bat
 compile&start.bat
 start.bat
