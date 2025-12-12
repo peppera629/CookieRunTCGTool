@@ -1,11 +1,11 @@
 #Application Configuration
-#Wed Dec 10 23:21:51 CST 2025
-advanced_filtering=true
+#Fri Dec 12 12:48:43 CST 2025
+advanced_filtering=false
 card_icon_scale=1.0
 card_language=zh_TW
 card_preview_scale=1.0
 card_translation=true
-deck_build_from_collection=true
+deck_build_from_collection=false
 language=zh_TW
 large_translation_text=false
 show_owned_only=false

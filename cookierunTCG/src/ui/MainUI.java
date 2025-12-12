@@ -978,25 +978,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         componentFontMap.put(mDeckText, "CRnormal");
         mFileOpPane.add(mDeckText, gbc_panel);
 
-        /*
-        gbc_panel.gridwidth = 1;
-        gbc_panel.weightx = 0.25;
-        gbc_panel.gridy = 1;
-        loadBtn = new JButton(CardUtil.getTranslation("load"));
-        loadBtn.setFont(CRnormal);
-        componentFontMap.put(loadBtn, "CRnormal"); // Store the font type as a String
-        panel.add(loadBtn, gbc_panel);
-        loadBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                mDeck = CardLoader.loadDeck(mDeckText.getText());
-                mDeck.sort();
-                updateDeck();
-                mDefaultState.setDefaultDeckName(mDeckText.getText());
-                mDefaultState.saveDefaultState();
-            }
-        });
-        */
-
         gbc_panel.gridwidth = 1;
         gbc_panel.gridx = 0;
         gbc_panel.gridy = 1;
@@ -1628,6 +1609,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         mDeckPane.revalidate();
         mDeckPane.repaint();
+        if (Config.DECK_BUILD_FROM_COLLECTION) {
+            mCardsPane.revalidate();
+            mCardsPane.repaint();
+        }
         mCardCountTxt.setText(mDeck.getCardCount()-mDeck.getExtraCount()+"/60");
         if ((mDeck.getCardCount()-mDeck.getExtraCount() > 60) || (!mDeck.getLegality()) || (Config.DECK_BUILD_FROM_COLLECTION && !mDeck.getOwnershipLegality().isEmpty())) {
         	mCardCountTxt.setForeground(Color.RED);
