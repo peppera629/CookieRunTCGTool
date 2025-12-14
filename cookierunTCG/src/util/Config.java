@@ -63,6 +63,7 @@ public class Config {
 
 	public static String LANGUAGE; // en or zh_TW
 	public static String CARD_LANGUAGE; // en or zh_TW
+	public static String[] ALL_LANGUAGES = {"en", "zh_TW"};
 	public static String[] FALLBACK_ORDER;
 
 	public static float CARD_RATIO = 1.3859F;

@@ -219,27 +219,31 @@ public class CardLoader {
 
 	private static void loadCardNames(String packName, List<Card> cardList) {
 	    try {
-	        File file = new File("resources/card_config/names/"+Config.LANGUAGE+"/"+packName+".txt");
-			FileInputStream reader = new FileInputStream(file);
-	        BufferedReader input = new BufferedReader(
-	                new InputStreamReader(new FileInputStream(file), "utf-8")); 
-			String data;
-	        while((data= input.readLine())!=null) {
-	            if (!data.equals("") && !data.startsWith("//")) {
-	            	String[] cardData = data.split(",");
-					// For each row: [ID, Name]
-	            	for (Card c : cardList) {
-	            		if (c.getPack().equals(packName) && c.getId().equals(cardData[0])) {
-	            			c.setName(cardData[1]);
-	            			break;
-	            		}
-	            	}
-	            }
-	        }
+			for (String lang : Config.ALL_LANGUAGES) {
+				File file = new File("resources/card_config/names/"+lang+"/"+packName+".txt");
+				FileInputStream reader = new FileInputStream(file);
+				BufferedReader input = new BufferedReader(
+						new InputStreamReader(new FileInputStream(file), "utf-8")); 
+				String data;
+				while((data= input.readLine())!=null) {
+					if (!data.equals("") && !data.startsWith("//")) {
+						String[] cardData = data.split(",");
+						// For each row: [ID, Name]
+						for (Card c : cardList) {
+							if (c.getPack().equals(packName) && c.getId().equals(cardData[0])) {
+								c.addToNameByLang(cardData[1]);
+								if (lang.equals(Config.CARD_LANGUAGE)) {
+									c.setName(cardData[1]);
+								}
+								break;
+							}
+						}
+					}
+				}
 
-			reader.close();
-	        input.close();
-	        
+				reader.close();
+				input.close();
+			}
 		} catch (FileNotFoundException e) {
 			System.out.println("An error occurred.");
 			e.printStackTrace();

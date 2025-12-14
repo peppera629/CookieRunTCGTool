@@ -82,6 +82,7 @@ import javax.swing.JButton;
 
 // FEATURE: Add more views for collection summary in collection mode (overview, by color, by promo set, etc.)
 // FEATURE: Add "Credits" popup
+// TO DO: Update card names for BS9 cards on official release
 // FIX: Add auto-resize to deck overview
 // FIX: Change ways of compiling (JAR, or fix command prompt window not closing)
 // OPTIMIZATION: Reduce memory usage (somehow)

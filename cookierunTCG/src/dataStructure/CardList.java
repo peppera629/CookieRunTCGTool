@@ -139,7 +139,7 @@ public class CardList {
 			skillTypeCorrect = !selectSkillType || skillTypeCorrectCheck;
 			keywordCorrect = !selectKeyword || _search_keyword[c.getKeyword().getValue()];
 			packCorrect = _search_pack_list.size() == 0 || _search_pack_list.contains(c.getPack());
-			nameCorrect = _search_name.equals("") || Normalizer.normalize(c.getName().toLowerCase(), Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").contains(_search_name);
+			nameCorrect = _search_name.equals("") || Normalizer.normalize(String.join(" ", c.getNameByLang()).toLowerCase(), Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").contains(_search_name);
 			hasVariants = !_search_variants || (c.getVariants().length > 1);
 			owned = Collection.getInstance().getCardTotalOwnedCount(c.getId()) > 0;
 			if (forceShowAll) {

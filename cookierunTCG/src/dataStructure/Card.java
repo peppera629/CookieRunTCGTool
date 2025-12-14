@@ -23,6 +23,7 @@ public class Card {
 	private String _pack;
 	private String _id;
 	private String _name;
+	private List<String> _name_by_lang = new ArrayList<String>();
 	private CardColor _color;
 	private CardType _type;
 	private boolean _isFlip;
@@ -164,6 +165,10 @@ public class Card {
 	public String getName() {
 		return _name;
 	}
+
+	public List<String> getNameByLang() {
+		return _name_by_lang;
+	}
 	
 	public CardColor getColor() {
 		return _color;
@@ -259,6 +264,10 @@ public class Card {
 		_name = name;
 	}
 
+	public void addToNameByLang(String name) {
+		_name_by_lang.add(name);
+	}
+
 	public void setVariantTypes(CardRarity[] variants) {
 		_variants = variants;
 	}
@@ -297,6 +306,12 @@ public class Card {
 		_translationAttack = attack;
 		_translationAttackThen = attackThen;
 		_translationFlip = flip;
+	}
+
+	public boolean cardTranslationAvailable() {
+		return !_translationSkillName.equals("") || !_translationSkill.equals("") || !_translationAttackName.equals("")
+				|| !_translationAttackCost.equals("") || !_translationAttack.equals("") || !_translationAttackThen.equals("")
+				|| !_translationFlip.equals("");
 	}
 
 	public String[] getCardTranslation() {
