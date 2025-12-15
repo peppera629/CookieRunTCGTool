@@ -1,0 +1,9 @@
+// Format: ID, Skill Name, Skill Desc., ATK Cost, ATK Name, ATK DMG, Then Effect, FLIP Effect
+P-004;;;[W];;1;;
+P-005;;[On Play] <[Y]> Select up to 1 of your opponent's Cookies. During this turn, that Cookie's HP-attached FLIP effects cannot be activated.;[Y];;1;;
+P-006;;;[W];;1;;
+P-020;;;[G][G][G];;3;;<Discard 1 card.> The Cookie with this card attached for HP gains +1 HP.
+P-021;;;[P][P][P];;3;;<Discard 1 card.> The Cookie with this card attached for HP gains +1 HP.
+P-023;;;[Y];Brave Run;1;;Draw up to 1 card from your deck.
+P-039;The Knight Commander's Lunch Set;[Activate] [Once Per Turn] <[B]> Draw 1 card from your deck. Then, discard 1 card from your hand.;[B][B][B][B];Refreshing Carbonation!;4;;
+P-088;;;[G][G][G];Palace-Awakening Arrow;3;Then, if your support area contains 7 cards or more, set up to 1 card in your support area as active.;

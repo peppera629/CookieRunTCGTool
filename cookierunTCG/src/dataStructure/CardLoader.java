@@ -279,7 +279,7 @@ public class CardLoader {
 				String data;
 				while((data= input.readLine())!=null) {
 					if (!data.equals("") && !data.startsWith("//")) {
-						String[] cardData = data.split(",", -1);
+						String[] cardData = data.split(";", -1);
 						for (int i = 1; i < cardData.length; i++) {
 							cardData[i] = cardData[i].replace("&", "&amp;")
                                          .replace("<", "&lt;")
@@ -306,6 +306,7 @@ public class CardLoader {
 										 .replace("[Your Turn]", iconPathYourTurn)
 										 .replace("【登場時】", iconPathOnPlay)
 										 .replace("[On Play]", iconPathOnPlay)
+										 .replace("\\,", ",")
 										 .replace("\\n", "<br>");
 						}
 						//                0   1            2      3            4            5           6                   7
