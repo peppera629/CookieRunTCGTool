@@ -14,7 +14,9 @@ ST2-013,Cheesecake Cookie
 ST2-014,Custard Cookie III
 ST2-015,Hero Cookie
 ST2-016,Flimsy Screwdriver
+ST2-017,Reverse Timer
 ST2-018,Time Travel Ticket
 ST2-019,Multi-Vitamin Honey Bomb
 ST2-020,Winding Key Shield
 ST2-021,Pretzel Snare
+ST2-022,Time Management Department
