@@ -88,6 +88,6 @@ P-088,Green,Cookie,_,P,C,2,4,T,_
 P-089,Green,Cookie,_,P,B,2,5,_,_
 P-091,Blue,Cookie,_,P,B,2,5,_,_
 P-092,Blue,Cookie,H,P,B,2,3,_,_
-//P-103,Red,Cookie,_,P,C,2,4,O,Arena
-//P-104,Green,Cookie,_,P,C,2,4,P,Arena
-//P-105,Blue,Cookie,_,P,C,2,4,A,Arena
+P-103,Red,Cookie,_,P,C,2,4,O,Arena
+P-104,Green,Cookie,_,P,C,2,4,P,Arena
+P-105,Blue,Cookie,_,P,C,2,4,A,Arena

@@ -59,6 +59,15 @@ public class Config {
         }
     }
 
+	public static int getLangIndex(String lang) {
+		for (int i = 0; i < ALL_LANGUAGES.length; i++) {
+			if (ALL_LANGUAGES[i].equals(lang)) {
+				return i;
+			}
+		}
+		return -1; // Not found
+	}
+
 	public static boolean SHOW_CARD_COUNT = true;
 
 	public static String LANGUAGE; // en or zh_TW

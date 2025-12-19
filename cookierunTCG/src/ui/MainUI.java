@@ -1719,7 +1719,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             cardId.setForeground(Color.BLACK);
         }
 
-        cardName.setText("<html>" + card.getName() + " " + "<img src=\"file:" + new File("resources/icons_rarity/16px/" + card.getRarity().getName() + ".png").getAbsolutePath() + "\">" + "</html>");
+        cardName.setText("<html>" + card.getNameByLang().get(Config.getLangIndex(Config.LANGUAGE)) + " " + "<img src=\"file:" + new File("resources/icons_rarity/16px/" + card.getRarity().getName() + ".png").getAbsolutePath() + "\">" + "</html>");
         if (card.getCardTranslation() != null && Config.CARD_TRANSLATION_ENABLED) {
             cardTranslationSkill.setText("<html>" + card.getCardTranslation()[1] + "</html>");
             if (card.getCardTranslation()[0].isEmpty()) {

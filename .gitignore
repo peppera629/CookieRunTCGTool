@@ -16,3 +16,7 @@ cookierunTCG/run.bat
 cookierunTCG/collection/*
 cookierunTCG/compile&start_new.bat
 cookierunTCG/config/config.txt
+cookierunTCG/jre/*
+cookierunTCG/run_JRE.bat
+cookierunTCG/.classpath
+.vscode/settings.json
