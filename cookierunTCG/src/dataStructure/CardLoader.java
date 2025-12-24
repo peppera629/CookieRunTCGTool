@@ -219,31 +219,39 @@ public class CardLoader {
 
 	private static void loadCardNames(String packName, List<Card> cardList) {
 	    try {
-			for (String lang : Config.ALL_LANGUAGES) {
-				File file = new File("resources/card_config/names/"+lang+"/"+packName+".txt");
-				FileInputStream reader = new FileInputStream(file);
-				BufferedReader input = new BufferedReader(
-						new InputStreamReader(new FileInputStream(file), "utf-8")); 
-				String data;
-				while((data= input.readLine())!=null) {
-					if (!data.equals("") && !data.startsWith("//")) {
-						String[] cardData = data.split(",");
-						// For each row: [ID, Name]
-						for (Card c : cardList) {
-							if (c.getPack().equals(packName) && c.getId().equals(cardData[0])) {
-								c.addToNameByLang(cardData[1]);
-								if (lang.equals(Config.CARD_LANGUAGE)) {
-									c.setName(cardData[1]);
+			File file = new File("resources/card_config/names/"+packName+".txt");
+			FileInputStream reader = new FileInputStream(file);
+			BufferedReader input = new BufferedReader(
+					new InputStreamReader(new FileInputStream(file), "utf-8")); 
+			String data;
+			while((data = input.readLine()) != null) {
+				if (!data.equals("") && !data.startsWith("//")) {
+					String[] cardData = data.split(",");
+					// For each row: [ID, Name (EN), Name (zh_TW, or EN if not available)]
+					for (Card c : cardList) {
+						if (c.getPack().equals(packName) && c.getId().equals(cardData[0])) {
+							for (int i = 1; i <= Config.ALL_LANGUAGES.length ; i++) {
+								
+								// Add to name list: ? if no name, EN by default
+								if (cardData.length == 1) {
+									c.addToNameByLang("?");
+								} else if (i >= cardData.length) {
+									c.addToNameByLang(cardData[1]);
+								} else {
+									c.addToNameByLang(cardData[i]);
 								}
-								break;
+
+								if (Config.ALL_LANGUAGES[i-1].equals(Config.CARD_LANGUAGE)) {
+									c.setName(c.getNameByLang().get(i-1));
+								}
 							}
 						}
 					}
 				}
-
-				reader.close();
-				input.close();
 			}
+
+			reader.close();
+			input.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("An error occurred.");
 			e.printStackTrace();

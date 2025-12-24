@@ -1,0 +1,22 @@
+ST5-001,Madeleine Cookie,瑪德蓮餅乾
+ST5-002,GingerBright,活潑餅乾
+ST5-003,Fig Cookie,無花果餅乾
+ST5-004,Skater Cookie,滑板族餅乾
+ST5-005,Cream Puff Cookie,奶油泡芙餅乾
+ST5-006,String Gummy Cookie,比館軟糖餅乾
+ST5-007,Yoga Cookie,瑜珈餅乾
+ST5-008,Fairy Cookie,妖精餅乾
+ST5-009,GingerBrave,勇敢餅乾
+ST5-010,Carol Cookie,吟遊詩人餅乾
+ST5-011,Tiger Lily Cookie,叢林戰士餅乾
+ST5-012,Clover Cookie,幸運草餅乾
+ST5-013,Pilot Cookie,飛行員餅乾
+ST5-014,Pancake Cookie,鬆餅餅乾
+ST5-015,Rye Cookie,黑麥餅乾
+ST5-016,BONUS Coin,BONUS硬幣
+ST5-017,Violet Dragonspout,紫色龍捲風
+ST5-018,Dragonfly Candy Brooch,蜻蜓糖果胸針
+ST5-019,Pastry Boomerang,可頌迴旋鏢
+ST5-020,Forbidden Grimoire,魔法禁書
+ST5-021,Hidden Warpgate,隱藏的瞬間移動裝置
+ST5-022,Windswept Valley,風之溪谷

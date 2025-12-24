@@ -14,9 +14,9 @@ ST2-013,Yellow,Cookie,_,U,A,2,3,_,_
 ST2-014,Yellow,Cookie,H,U,A,3,3,_,_
 ST2-015,Yellow,Cookie,_,C,A,2,3,T,_
 ST2-016,Yellow,Item,_,U,A,_,,_,_
-ST2-017,Yellow,Item,_,U,A,_,,_,_
+//ST2-017,Yellow,Item,_,U,A,_,,_,_
 ST2-018,Yellow,Item,_,U,A,_,,_,_
 ST2-019,Yellow,Item,_,U,A,_,,_,_
 ST2-020,Yellow,Trap,_,U,A,_,,_,_
 ST2-021,Yellow,Trap,_,U,A,_,,_,_
-ST2-022,Yellow,Trap,_,U,A,_,,_,_
+//ST2-022,Yellow,Stage,_,U,A,_,,_,_

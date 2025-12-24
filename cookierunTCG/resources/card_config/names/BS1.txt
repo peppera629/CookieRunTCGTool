@@ -1,0 +1,78 @@
+BS1-001,Goblin Cookie,哥布林餅乾
+BS1-002,Kumiho Cookie,妖狐餅乾
+BS1-003,Dark Choco Cookie,黑巧克力餅乾
+BS1-004,Lilac Cookie,紫丁香餅乾
+BS1-005,Roll Cake Cookie,蛋糕捲餅乾
+BS1-006,Mala Sauce Cookie,麻辣餅乾
+BS1-007,Melon Bun Cookie,哈密瓜麵包餅乾
+BS1-008,Pomegranate Cookie,石榴餅乾
+BS1-009,Affogato Cookie,阿芙佳朵餅乾
+BS1-010,Devil Cookie,惡魔餅乾
+BS1-011,Cherry Ball Cookie,山櫻桃餅乾
+BS1-012,Wildberry Cookie,野莓餅乾
+BS1-013,GingerBrave,勇敢餅乾
+BS1-014,GingerBrave,勇敢餅乾
+BS1-015,Rose Cookie,玫瑰餅乾
+BS1-016,Choco Ball Cookie,足球巧克力餅乾
+BS1-017,Croissant Cookie,可頌麵包餅乾
+BS1-018,Popcorn Cookie,爆米花餅乾
+BS1-019,Walnut Cookie,核桃餅乾
+BS1-020,Red Pepper Cookie,紅辣椒餅乾
+BS1-021,Whipped Cream Cookie,鮮奶油餅乾
+BS1-022,Giant Cherry Bomb,巨型櫻桃炸彈
+BS1-023,Spicy Power Juice,辣味能量果汁
+BS1-024,Pasta Spring Shoes,義大利麵彈簧鞋
+BS1-025,Pineapple Helmet,鳳梨頭盔
+BS1-026,Desert Oasis,沙漠綠洲
+BS1-027,Ice Juggler Cookie,彩球冰淇淋餅乾
+BS1-028,Latte Cookie,拿鐵餅乾
+BS1-029,Lime Cookie,萊姆餅乾
+BS1-030,Rockstar Cookie,搖滾巨星餅乾
+BS1-031,Marshmallow Cookie,棉花軟糖餅乾
+BS1-032,Banana Cookie,香蕉餅乾
+BS1-033,Cyborg Cookie,賽伯格餅乾
+BS1-034,Sandwich Cookie,三明治餅乾
+BS1-035,Cotton Candy Cookie,棉花糖餅乾
+BS1-036,Snake Fruit Cookie,蛇皮果餅乾
+BS1-037,Timekeeper Cookie,超時空餅乾
+BS1-038,Cinnamon Cookie,肉桂餅乾
+BS1-039,Almond Cookie,杏仁果餅乾
+BS1-040,Earl Grey Cookie,伯爵茶餅乾
+BS1-041,Orange Cookie,柳橙餅乾
+BS1-042,Grapefruit Cookie,葡萄柚餅乾
+BS1-043,Cheesecake Cookie,起司蛋糕餅乾
+BS1-044,Bell Pepper Cookie,甜椒餅乾
+BS1-045,Firecracker Cookie,彩花炮餅乾
+BS1-046,Apple Cookie,青蘋果餅乾
+BS1-047,Pizza Cookie,披薩餅乾
+BS1-048,Jelly Pom-Poms,捲尺糖彩球
+BS1-049,Tropical Slushie,熱帶冰沙
+BS1-050,Broken Signpost,壞掉的路牌
+BS1-051,Super-Vita Jelly Bar,果凍能量棒
+BS1-052,Star Candy Road,星星糖小徑
+BS1-053,Roguefort Cookie,怪盜餅乾
+BS1-054,Blue Lily Cookie,蘭花餅乾
+BS1-055,Red Bean Cookie,紅豆餅乾
+BS1-056,Moon Rabbit Cookie,月兔餅乾
+BS1-057,Bellflower Cookie,沙參花餅乾
+BS1-058,Poison Mushroom Cookie,毒蘑菇餅乾
+BS1-059,Fig Cookie,無花果餅乾
+BS1-060,Butterbear Cookie,奶油熊餅乾
+BS1-061,Peach Cookie,桃子餅乾
+BS1-062,Tea Knight Cookie,錫蘭騎士餅乾
+BS1-063,Prophet Cookie,預言家餅乾
+BS1-064,Ginseng Cookie,人參餅乾
+BS1-065,Plum Cookie,李子餅乾
+BS1-066,Lilybell Cookie,芝草餅乾
+BS1-067,Churro Cookie,吉拿棒餅乾
+BS1-068,Cauliflower Cookie,花椰菜餅乾
+BS1-069,Cookiemals,動物餅乾
+BS1-070,Kiwi Cookie,奇異果餅乾
+BS1-071,Pumpkin Pie Cookie,南瓜派餅乾
+BS1-072,Pudding Cookie,布丁餅乾
+BS1-073,Herb Cookie,藥草餅乾
+BS1-074,Ancient Forest Luckstone,遠古森林的封印石
+BS1-075,Wanderer's Apple Pie,流浪者的蘋果派
+BS1-076,Stinging Nettle,恐怖蕁麻葉
+BS1-077,Tasty First Aid Kit,果醬派急救箱
+BS1-078,Awakening Ancient Forest,重現生機的遠古森林

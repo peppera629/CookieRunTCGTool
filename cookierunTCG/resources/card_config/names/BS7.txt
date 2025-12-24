@@ -1,0 +1,108 @@
+BS7-001,Nutmeg Tiger Cookie,肉蔻虎餅乾
+BS7-002,Red Osmanthus Cookie,丹桂餅乾
+BS7-003,Raspberry Cookie,覆盆莓餅乾
+BS7-004,Mala Sauce Cookie,麻辣餅乾
+BS7-005,Marble Danish Cookie,大理石酥皮麵包餅乾
+BS7-006,Basil Pesto Cookie,羅勒香蒜餅乾
+BS7-007,Street Urchin Cookie,海膽餅乾
+BS7-008,Earl Grey Cookie,伯爵茶餅乾
+BS7-009,Spicy Scovillia Student,辣呼呼的史高維爾利亞學生
+BS7-010,Olive Cookie,橄欖餅乾
+BS7-011,Yoga Cookie,瑜珈餅乾
+BS7-012,Sachertorte Cookie,薩赫蛋糕餅乾
+BS7-013,Chili Pepper Cookie,甜辣醬餅乾
+BS7-014,Capsaicin Cookie,辣椒素餅乾
+BS7-015,Crushed Pepper Cookie,辣椒碎片餅乾
+BS7-016,Cream Unicorn Cookie,奶油獨角獸餅乾
+BS7-017,Tarte Tatin Cookie,反烤蘋果塔餅乾
+BS7-018,Jalapeño Cookie,哈拉帕辣椒餅乾
+BS7-019,Rye Cookie,黑麥餅乾
+BS7-020,Scovilsky Manuscript,史高維爾利斯基的秘笈
+BS7-021,Labyrinth Golem Attack,壓制迷宮糖果泥人
+BS7-022,Scovillia Quarters,史高維爾利亞宿舍
+BS7-023,Honorable Paladin Trainee,孤傲的見習騎士
+BS7-024,Ice Juggler Cookie,彩球冰淇淋餅乾
+BS7-025,Golden Osmanthus Cookie,金桂餅乾
+BS7-026,Twisted Donut Cookie,麻花捲餅乾
+BS7-027,Lemon Cookie,檸檬餅乾
+BS7-028,Lemon Zest Cookie,檸檬皮餅乾
+BS7-029,Madeleine Cookie,瑪德蓮餅乾
+BS7-030,Rainbow Sherbet Cookie,彩虹雪酪餅乾
+BS7-031,Vanilla Sugar Cookie,香草糖餅乾
+BS7-032,Onyx Cream Cookie,黑奶油餅乾
+BS7-033,Candy Drop Cookie,糖果球餅乾
+BS7-034,Serious Paladin Trainee,認真的實習騎士
+BS7-035,Kouign-Amann Cookie,法是焦糖奶油酥餅乾
+BS7-036,Crème Knights Preceptor,鮮奶油騎士校長
+BS7-037,Crème Brûlée Cookie, 焦糖烤布蕾餅乾
+BS7-038,Clotted Cream Cookie,濃縮奶油餅乾
+BS7-039,Financier Cookie,費南雪餅乾
+BS7-040,Whipped Cream Cookie,鮮奶油餅乾
+BS7-041,The Key to Unbreakable Faith,堅定不移的信念之鑰
+BS7-042,Valiant Victor's Salvation,英勇勝者的救援
+BS7-043,Crème Knights' Quarters,鮮奶油騎士宿舍
+BS7-044,Licorice Cookie,甘草餅乾
+BS7-045,Kumiho Cookie,妖狐餅乾
+BS7-046,Green Tea Mousse Cookie,綠茶慕斯餅乾
+BS7-047,Moon Rabbit Cookie,月兔餅乾
+BS7-048,Poison Mushroom Cookie,毒蘑菇餅乾
+BS7-049,Strawberry Crepe Cookie,草莓可麗餅餅乾
+BS7-050,Rockstar Cookie,搖滾巨星餅乾
+BS7-051,Mint Choco Cookie,薄荷巧克力餅乾
+BS7-052,Vampire Cookie,吸血鬼餅乾
+BS7-053,Red Velvet Cookie,紅絲絨蛋糕餅乾
+BS7-054,Black Lemonade Cookie,黑檸檬汽水餅乾
+BS7-055,Shining Glitter Cookie,閃耀之星餅乾
+BS7-056,Sting Durian Cookie,尖刺榴槤餅乾
+BS7-057,Pudding ? la Mode Cookie,布丁百匯餅乾
+BS7-058,Schwarzwälder,查爾斯
+BS7-059,Choco Drizzle Cookie,巧克力淋醬餅乾
+BS7-060,Custard Cookie III,卡士達三士餅乾
+BS7-061,Pancake Cookie,鬆餅餅乾
+BS7-062,Plantain Cookie,大蕉餅乾
+BS7-063,Grand Cookie Games Trophy,餅乾大戰水晶布丁獎盃
+BS7-064,Cookie Windmill,餅乾大風車
+BS7-065,Cookie Games Stadium,餅乾大站競技場
+BS7-066,Princess Cookie,公主餅乾
+BS7-067,Dark Choco Cookie,黑巧克力餅乾
+BS7-068,General Jujube Cookie,紅棗餅乾
+BS7-069,Leek Cookie,大蔥餅乾
+BS7-070,Raspberry Mousse Cookie,覆盆莓慕斯餅乾
+BS7-071,Marbleberry Cookie,大理石漿果餅乾
+BS7-072,Ice Mint Cookie,冰薄荷餅乾
+BS7-073,Knight Cookie,勇士餅乾
+BS7-074,Laurel Cookie,月桂樹餅乾
+BS7-075,Rose Cookie,玫瑰餅乾
+BS7-076,Cherry Cola Cookie,櫻桃可樂餅乾
+BS7-077,Chili Pepper Cookie,甜辣醬餅乾
+BS7-078,Frostrock Cookie,冰岩餅乾
+BS7-079,Cream Soda Cookie,奶油蘇打餅乾
+BS7-080,Peperoncino Cookie,乾辣椒餅乾
+BS7-081,Habanero Cookie,哈瓦那辣椒餅乾
+BS7-082,Red Pepper Cookie,紅辣椒餅乾
+BS7-083,White Choco Cookie,白巧克力餅乾
+BS7-084,The Sunblade,太陽之劍
+BS7-085,A Victory For You,為你奪得勝利
+BS7-086,Temple of the Sun Central Arena,太陽神殿中央競技場
+BS7-087,Berry Parfaedia Student,甜蜜水果帕菲迪亞學生
+BS7-088,Camellia Cookie,山茶花餅乾
+BS7-089,Latte Cookie,拿鐵餅乾
+BS7-090,Black Sapphire Cookie,黑藍寶石餅乾
+BS7-091,Gelato Trio Cookie,三色冰淇淋餅乾
+BS7-092,Citrus Parfaedia Student,清爽水果帕菲迪亞學生
+BS7-093,Cream Puff Cookie,奶油泡芙餅乾
+BS7-094,Tea Knight Cookie,錫蘭騎士餅乾
+BS7-095,Almond Cookie,杏仁果餅乾
+BS7-096,Espresso Cookie,濃縮咖啡餅乾
+BS7-097,Eclair Cookie,閃電泡芙餅乾
+BS7-098,Milk Cookie,牛奶餅乾
+BS7-099,Werewolf Cookie,狼人餅乾
+BS7-100,Witchberry Cookie,小巫莓餅乾
+BS7-101,Purple Yam Cookie,紫心薯餅乾
+BS7-102,Kohlrabi Cookie,紫玉甘藍餅乾
+BS7-103,Parfaedia Principal,帕菲迪亞校長
+BS7-104,Prune Juice Cookie,黑棗汁餅乾
+BS7-105,Golem Core,泥人的心臟
+BS7-106,Securing the First Victory,奪下首勝
+BS7-107,Parfaedia Quarters,帕菲迪亞宿舍
+BS7-108,Arena of Glory,榮耀競技場

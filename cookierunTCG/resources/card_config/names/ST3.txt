@@ -1,0 +1,22 @@
+ST3-001,Muscle Cookie,肌肉餅乾
+ST3-002,Strawberry Crepe Cookie,草莓可麗餅餅乾
+ST3-003,GingerBright,活潑餅乾
+ST3-004,Vampire Cookie,吸血鬼餅乾
+ST3-005,Blackberry Cookie,黑莓餅乾
+ST3-006,Beet Cookie,甜菜餅乾
+ST3-007,Sparkling Cookie,氣泡飲餅乾
+ST3-008,Spinach Cookie,菠菜餅乾
+ST3-009,Avocado Cookie,酪梨餅乾
+ST3-010,Aloe Cookie,蘆薈餅乾
+ST3-011,Onion Cookie,洋蔥餅乾
+ST3-012,GingerBrave,勇敢餅乾
+ST3-013,Knight Cookie,勇士餅乾
+ST3-014,Angel Cookie,天使餅乾
+ST3-015,Chili Pepper Cookie,甜辣醬餅乾
+ST3-016,Ancient Healer's Gaze,古代治療師
+ST3-017,Viney Vines,蛋白霜荊棘
+ST3-018,Parsley Tea of Invigoration,活力香芹茶
+ST3-019,Supreme Whipped Cream,瘋狂攪拌過的鮮奶油
+ST3-020,Divine Light Crystal,聖光屏障
+ST3-021,Breath of the Flute,草笛之律
+ST3-022,Guardian Tree's Blessing,守護樹的恩典

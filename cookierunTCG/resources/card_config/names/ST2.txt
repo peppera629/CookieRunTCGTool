@@ -1,0 +1,22 @@
+ST2-001,Roguefort Cookie,怪盜餅乾
+ST2-002,Strawberry Cookie,草莓餅乾
+ST2-003,Wizard Cookie,魔法師餅乾
+ST2-004,Macaron Cookie,馬卡龍餅乾
+ST2-005,Mustard Cookie,黃芥末餅乾
+ST2-006,GingerBright,活潑餅乾
+ST2-007,Chestnut Cookie,栗子餅乾
+ST2-008,Eclair Cookie,閃電泡芙餅乾
+ST2-009,GingerBrave,勇敢餅乾
+ST2-010,Purple Yam Cookie,紫心薯餅乾
+ST2-011,Cherry Cookie,櫻桃餅乾
+ST2-012,Cheerleader Cookie,啦啦隊餅乾
+ST2-013,Cheesecake Cookie,起司蛋糕餅乾
+ST2-014,Custard Cookie III,卡士達三世餅乾
+ST2-015,Hero Cookie,英雄餅乾
+ST2-016,Flimsy Screwdriver,壞掉的黑糖螺絲起子
+ST2-017,Reverse Timer,倒數計時器
+ST2-018,Time Travel Ticket,時光旅行門票
+ST2-019,Multi-Vitamin Honey Bomb,營養豐富的蜂蜜炸彈
+ST2-020,Winding Key Shield,鋼製齒輪護盾
+ST2-021,Pretzel Snare,椒鹽捲餅陷阱
+ST2-022,Time Management Department,時間效率管理部

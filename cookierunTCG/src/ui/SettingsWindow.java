@@ -30,7 +30,7 @@ public class SettingsWindow implements LanguageChangeListener{
     private JComboBox<String> languageDropdown, cardLanguageDropdown;
     private JButton btnConfirm;
     private JSlider cardPreviewScaleSlider, cardListScaleSlider;
-    private JToggleButton cardTranslationToggle, largeTranslationTextToggle, buildModeToggle, showOwnedOnlyToggle, advFilteringToggle;
+    private JToggleButton cardTranslationToggle, largeTranslationTextToggle, buildModeToggle, showCollectionChangeToggle, showOwnedOnlyToggle, advFilteringToggle;
 
 	public static void addLanguageChangeListener(LanguageChangeListener listener) {
         listeners.add(listener);
@@ -185,6 +185,31 @@ public class SettingsWindow implements LanguageChangeListener{
             }
         });
 
+        // ==== Show Collection Change Toggle ====
+        showCollectionChangeToggle = new JToggleButton();
+        if (Config.SHOW_COLLECTION_CHANGE) {
+            showCollectionChangeToggle.setText(CardUtil.getTranslation("settings.showcollectionchange") + ": " + CardUtil.getTranslation("settings.enabled"));
+            showCollectionChangeToggle.setSelected(true);
+        } else {
+            showCollectionChangeToggle.setText(CardUtil.getTranslation("settings.showcollectionchange") + ": " + CardUtil.getTranslation("settings.disabled"));
+            showCollectionChangeToggle.setSelected(false);
+        }
+        showCollectionChangeToggle.setToolTipText(CardUtil.getTranslation("settings.showcollectionchange.tooltip"));
+        showCollectionChangeToggle.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(showCollectionChangeToggle, "CRnormal");
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        frame.getContentPane().add(showCollectionChangeToggle, gbc);
+        showCollectionChangeToggle.addActionListener(e -> {
+            boolean isSelected = showCollectionChangeToggle.isSelected();
+            Config.SHOW_COLLECTION_CHANGE = isSelected;
+            if (isSelected) {
+                showCollectionChangeToggle.setText(CardUtil.getTranslation("settings.showcollectionchange") + ": " + CardUtil.getTranslation("settings.enabled"));
+            } else {
+                showCollectionChangeToggle.setText(CardUtil.getTranslation("settings.showcollectionchange") + ": " + CardUtil.getTranslation("settings.disabled"));
+            }
+        });
+
         showOwnedOnlyToggle = new JToggleButton();
         if (Config.SHOW_OWNED_ONLY) {
             showOwnedOnlyToggle.setText(CardUtil.getTranslation("settings.showownedonly") + ": " + CardUtil.getTranslation("settings.enabled"));
@@ -196,8 +221,8 @@ public class SettingsWindow implements LanguageChangeListener{
         showOwnedOnlyToggle.setFont(MainUI.CRnormal);
         showOwnedOnlyToggle.setToolTipText(CardUtil.getTranslation("settings.showownedonly.tooltip"));
         MainUI.componentFontMap.put(showOwnedOnlyToggle, "CRnormal");
-        gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridx = 0;
+        gbc.gridy = 5;
         frame.getContentPane().add(showOwnedOnlyToggle, gbc);
         showOwnedOnlyToggle.addActionListener(e -> {
             boolean isSelected = showOwnedOnlyToggle.isSelected();
@@ -218,8 +243,7 @@ public class SettingsWindow implements LanguageChangeListener{
         }
         cardTranslationToggle.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(cardTranslationToggle, "CRnormal");
-        gbc.gridx = 0;
-        gbc.gridwidth = 1;
+        gbc.gridx = 1;
         gbc.gridy = 5;
         frame.getContentPane().add(cardTranslationToggle, gbc);
 
@@ -241,8 +265,8 @@ public class SettingsWindow implements LanguageChangeListener{
         }
         largeTranslationTextToggle.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(largeTranslationTextToggle, "CRnormal");
-        gbc.gridx = 1;
-        gbc.gridy = 5;
+        gbc.gridx = 0;
+        gbc.gridy = 6;
         frame.getContentPane().add(largeTranslationTextToggle, gbc);
         largeTranslationTextToggle.addActionListener(e -> {
             boolean isSelected = largeTranslationTextToggle.isSelected();
@@ -266,8 +290,7 @@ public class SettingsWindow implements LanguageChangeListener{
         }
         advFilteringToggle.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(advFilteringToggle, "CRnormal");
-        gbc.gridx = 0;
-        gbc.gridwidth = 1;
+        gbc.gridx = 1;
         gbc.gridy = 6;
         frame.getContentPane().add(advFilteringToggle, gbc);
         advFilteringToggle.addActionListener(e -> {

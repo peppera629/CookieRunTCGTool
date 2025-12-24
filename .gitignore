@@ -20,3 +20,4 @@ cookierunTCG/jre/*
 cookierunTCG/run_JRE.bat
 cookierunTCG/.classpath
 .vscode/settings.json
+cookierunTCG/bin

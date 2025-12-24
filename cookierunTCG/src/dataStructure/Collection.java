@@ -11,11 +11,13 @@ import util.CardUtil;
 
 public class Collection {
     private Map<String, List<Integer>> collection; // Map of card ID to count
+    private Map<String, Integer> change; // Current collection change compared to last save
     private static Collection instance;
     private static final String COLLECTION_FILE = "collection/collection.txt";
 
     private Collection() {
         collection = new HashMap<>();
+        change = new HashMap<>();
         loadCollection();
     }
 
@@ -28,6 +30,7 @@ public class Collection {
     
     public void loadCollection() {
         collection.clear();
+        change.clear();
         File file = new File(COLLECTION_FILE);
         if (!file.exists()) {
             System.out.println("Collection file not found, starting with empty collection");
@@ -75,6 +78,7 @@ public class Collection {
                 }
             });
             System.out.println("Collection saved to " + COLLECTION_FILE);
+            change.clear(); // Clear the change map after saving
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -98,6 +102,14 @@ public class Collection {
             total += count;
         }
         return total;
+    }
+
+    public int getCardTotalChangeCount(String cardId) {
+        Integer count = change.get(cardId);
+        if (count == null) {
+            return 0;
+        }
+        return count;
     }
 
     public int getCardOwnedCount(String packId, CardUtil.CardRarity rarity, boolean countMode) {
@@ -176,7 +188,15 @@ public class Collection {
         collection.put(cardId, counts);
     }
 
+    public void setCardChangeCount(String cardId, int changeCount) {
+        change.put(cardId, changeCount);
+    }
+
     public Map<String, List<Integer>> getCollection() {
         return collection;
+    }
+
+    public Map<String, Integer> getChange() {
+        return change;
     }
 }

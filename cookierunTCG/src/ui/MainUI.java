@@ -238,6 +238,23 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
         }
 
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "quickedit");
+        actionMap.put("quickedit", new javax.swing.AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ClickableCardPanel.setQuickEditMode(true);
+                scrollCardsPane.setWheelScrollingEnabled(false);
+            }
+        });
+        inputMap.put(KeyStroke.getKeyStroke("released SPACE"), "quickedit_release");
+        actionMap.put("quickedit_release", new javax.swing.AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ClickableCardPanel.setQuickEditMode(false);
+                scrollCardsPane.setWheelScrollingEnabled(true);
+            }
+        });
+
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "search");
         actionMap.put("search", new javax.swing.AbstractAction() {
             @Override
@@ -377,6 +394,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         gbc_buttons.insets = new Insets(3, 3, 3, 3);
         
         button_search = new JButton(CardUtil.getTranslation("search"));
+        button_search.setRequestFocusEnabled(false);
         button_search.setFont(CRnormalLarge);
         componentFontMap.put(button_search, "CRnormalLarge"); // Store the font type as a String
         searchPanelButtons.add(button_search, gbc_buttons);
@@ -392,6 +410,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         gbc_buttons.gridx = 1;
         button_clean = new JButton(CardUtil.getTranslation("clear"));
+        button_clean.setRequestFocusEnabled(false);
         button_clean.setFont(CRnormalLarge);
         componentFontMap.put(button_clean, "CRnormalLarge"); // Store the font type as a String
         searchPanelButtons.add(button_clean, gbc_buttons);
@@ -418,6 +437,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         } else {
             button_collection.setText(CardUtil.getTranslation("collectionedit.enable"));
         }
+        button_collection.setRequestFocusEnabled(false);
         button_collection.setFont(CRnormal);
         componentFontMap.put(button_collection, "CRnormal"); // Store the font type as a String
         searchPanelButtons.add(button_collection, gbc_buttons);
@@ -439,6 +459,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         gbc_buttons.gridwidth = 1;
         gbc_buttons.gridy = 3;
         button_sort = new JButton(CardUtil.getTranslation("sort.settings"));
+        button_sort.setRequestFocusEnabled(false);
         button_sort.setFont(CRnormal);
         componentFontMap.put(button_sort, "CRnormal"); // Store the font type as a String
         searchPanelButtons.add(button_sort, gbc_buttons);
@@ -450,6 +471,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         gbc_buttons.gridx = 1;
         button_settings = new JButton(CardUtil.getTranslation("settings"));
+        button_settings.setRequestFocusEnabled(false);
         button_settings.setFont(CRnormal);
         componentFontMap.put(button_settings, "CRnormal"); // Store the font type as a String
         searchPanelButtons.add(button_settings, gbc_buttons);
@@ -533,6 +555,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         gbc_deckbuttons.gridy = 0;
         gbc_deckbuttons.weightx = 1;
         hideSearchPaneBtn = new JButton();
+        hideSearchPaneBtn.setRequestFocusEnabled(false);
         if (mSearchPaneOuter.isVisible()) {
             hideSearchPaneBtn.setText("<< " + CardUtil.getTranslation("filter"));
         } else {
@@ -559,6 +582,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         gbc_deckbuttons.gridx = 1;
         gbc_deckbuttons.weightx = 10;
         mClearDeckBtn = new JButton(CardUtil.getTranslation("deck.clear"));
+        mClearDeckBtn.setRequestFocusEnabled(false);
         mClearDeckBtn.setFont(CRnormalLarge);
         componentFontMap.put(mClearDeckBtn, "CRnormalLarge"); // Store the font type as a String
         mDeckDetailButtonsPane.add(mClearDeckBtn, gbc_deckbuttons);
@@ -581,6 +605,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         gbc_deckbuttons.gridx = 2;
         gbc_deckbuttons.weightx = 1;
         hidePreviewPaneBtn = new JButton();
+        hidePreviewPaneBtn.setRequestFocusEnabled(false);
         if (sidebarPanel == null || sidebarPanel.isVisible()) {
             hidePreviewPaneBtn.setText(">> " + CardUtil.getTranslation("preview"));
         } else {
@@ -965,6 +990,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         gbc_panel.gridx = 0;
         gbc_panel.gridy = 1;
         saveBtn = new JButton(CardUtil.getTranslation("save"));
+        saveBtn.setRequestFocusEnabled(false);
         saveBtn.setFont(CRnormal);
         componentFontMap.put(saveBtn, "CRnormal"); // Store the font type as a String
         mFileOpPane.add(saveBtn, gbc_panel);
@@ -981,6 +1007,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         gbc_panel.gridx = 1;
         selectBtn = new JButton(CardUtil.getTranslation("select.file"));
+        selectBtn.setRequestFocusEnabled(false);
         selectBtn.setFont(CRnormal);
         componentFontMap.put(selectBtn, "CRnormal"); // Store the font type as a String
         selectBtn.setActionCommand("Select File");
@@ -1022,6 +1049,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         
         gbc_panel.gridx = 2;
         showDeckBtn = new JButton(CardUtil.getTranslation("deck.show"));
+        showDeckBtn.setRequestFocusEnabled(false);
         showDeckBtn.setFont(CRnormal);
         componentFontMap.put(showDeckBtn, "CRnormal"); // Store the font type as a String
         mFileOpPane.add(showDeckBtn, gbc_panel);
@@ -1033,6 +1061,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         gbc_panel.gridx = 3;
         showDeckDifferentialBtn = new JButton(CardUtil.getTranslation("deck.compare"));
+        showDeckDifferentialBtn.setRequestFocusEnabled(false);
         showDeckDifferentialBtn.setFont(CRnormal);
         componentFontMap.put(showDeckDifferentialBtn, "CRnormal"); // Store the font type as a String
         mFileOpPane.add(showDeckDifferentialBtn, gbc_panel);
@@ -1301,11 +1330,13 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mSearchPane.add(quickSelectBtnGroup);
         
         quickSelectBtnST = new JButton(CardUtil.getTranslation("filter.ST"));
+        quickSelectBtnST.setRequestFocusEnabled(false);
         quickSelectBtnST.setFont(CRnormal);
         componentFontMap.put(quickSelectBtnST, "CRnormal");
         quickSelectBtnGroup.add(quickSelectBtnST);
 
         quickSelectBtnBS = new JButton(CardUtil.getTranslation("filter.BS"));
+        quickSelectBtnBS.setRequestFocusEnabled(false);
         quickSelectBtnBS.setFont(CRnormal);
         componentFontMap.put(quickSelectBtnBS, "CRnormal");
         quickSelectBtnGroup.add(quickSelectBtnBS);
@@ -2057,6 +2088,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             // Increment the collection count
             int newCount = collection.getCardOwnedCount(card.getId(), collectionAddVariant) + 1;
             collection.setCardOwnedCount(card.getId(), collectionAddVariant, newCount);
+            collection.setCardChangeCount(card.getId(), (collection.getCardTotalChangeCount(card.getId())+1));
             updateCardListForCollection(); // Refresh the card list to show the updated count
             updateCardOwnedInfoLabel(card);
         }
@@ -2066,6 +2098,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             // Decrement the collection count
             int newCount = collection.getCardOwnedCount(card.getId(), collectionAddVariant) - 1;
             collection.setCardOwnedCount(card.getId(), collectionAddVariant, newCount);
+            if (newCount >= 0) {
+                collection.setCardChangeCount(card.getId(), (collection.getCardTotalChangeCount(card.getId())-1));
+            }
             updateCardListForCollection(); // Refresh the card list to show the updated count
             updateCardOwnedInfoLabel(card);
         }

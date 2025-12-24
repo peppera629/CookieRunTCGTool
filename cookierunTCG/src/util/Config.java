@@ -33,6 +33,7 @@ public class Config {
 		CARD_TRANSLATION_ENABLED = Boolean.parseBoolean(properties.getProperty("card_translation", "true")); // Default to true if not found
 		LARGE_TRANSLATION_TEXT = Boolean.parseBoolean(properties.getProperty("large_translation_text", "false")); // Default to false if not found
 		DECK_BUILD_FROM_COLLECTION = Boolean.parseBoolean(properties.getProperty("deck_build_from_collection", "false")); // Default to false if not found
+		SHOW_COLLECTION_CHANGE = Boolean.parseBoolean(properties.getProperty("show_collection_change", "true")); // Default to true if not found
 		SHOW_OWNED_ONLY = Boolean.parseBoolean(properties.getProperty("show_owned_only", "false")); // Default to false if not found
 		ADVANCED_FILTERING = Boolean.parseBoolean(properties.getProperty("advanced_filtering", "false")); // Default to false if not found
     }
@@ -50,6 +51,7 @@ public class Config {
 		properties.setProperty("card_translation", String.valueOf(CARD_TRANSLATION_ENABLED));
 		properties.setProperty("large_translation_text", String.valueOf(LARGE_TRANSLATION_TEXT));
 		properties.setProperty("deck_build_from_collection", String.valueOf(DECK_BUILD_FROM_COLLECTION));
+		properties.setProperty("show_collection_change", String.valueOf(SHOW_COLLECTION_CHANGE));
 		properties.setProperty("show_owned_only", String.valueOf(SHOW_OWNED_ONLY));
 		properties.setProperty("advanced_filtering", String.valueOf(ADVANCED_FILTERING));
         try (OutputStream output = new FileOutputStream(CONFIG_FILE)) {
@@ -95,6 +97,7 @@ public class Config {
 	public static boolean CARD_TRANSLATION_ENABLED = true;
 	public static boolean LARGE_TRANSLATION_TEXT = false;
 	public static boolean DECK_BUILD_FROM_COLLECTION = false;
+	public static boolean SHOW_COLLECTION_CHANGE = true;
 	public static boolean SHOW_OWNED_ONLY = false;
 	public static boolean ADVANCED_FILTERING = false;
 

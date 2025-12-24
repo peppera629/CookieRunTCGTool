@@ -1,0 +1,125 @@
+BS8-001,Licorice Cookie,甘草餅乾
+BS8-002,Cilantro Cobra Swordsman,香菜蛇劍兵
+BS8-003,Cilantro Cobra Fighter,香菜蛇武鬥家
+BS8-004,Cilantro Cobra Cookie,香菜蛇餅乾
+BS8-005,Avatar of Ruin,吞噬恐懼破壞神
+BS8-006,Nutmeg Tiger Cookie,肉蔻虎餅乾
+BS8-007,Dark Choco Cookie,黑巧克力餅乾
+BS8-008,Poison Mushroom Cookie,毒蘑菇餅乾
+BS8-009,Burning Spice Cookie,烈焰香料餅乾
+BS8-010,Red Velvet Cookie,紅絲絨蛋糕餅乾
+BS8-011,Saffron Buffalo Shaman,番紅花水牛巫師
+BS8-012,Pomegranate Cake Hound,石榴蛋糕犬
+BS8-013,Pomegranate Cake Shaman,石榴蛋糕巫師
+BS8-014,Pomegranate Cookie,石榴餅乾
+BS8-015,Schwarzwälder,查爾斯
+BS8-016,Choco Cake Hound,巧克力蛋糕犬
+BS8-017,Cake Monster Army,蛋糕怪物軍團
+BS8-018,Cake Wolf,蛋糕灰狼
+BS8-019,Cake Hound,蛋糕犬
+BS8-020,Pepper Pangolin Cookie,胡椒穿山甲餅乾
+BS8-021,Soul Jam: Light of Destruction,靈魂果醬: 破壞之光
+BS8-022,Cake Hound's Crown,蛋糕犬的王冠
+BS8-023,Shadow of the Destroyer,毀滅將至
+BS8-024,Land of Fire & Ruin,烈焰與破壞之地
+BS8-025,Tower of Sweet Chaos,混沌的蛋糕塔
+BS8-026,Golden Cheese Cookie,黃金起司餅乾
+BS8-027,Golden Cheese Cookie,黃金起司餅乾
+BS8-028,Manager Cheesebird,副手起司球鳥
+BS8-029,Miner Cheesebird,礦工起司球鳥
+BS8-030,Lassi Guard Kulfi,拉西守護者庫爾菲猴
+BS8-031,Mozzarella Cookie,莫扎瑞拉起司餅乾
+BS8-032,Burnt Cheese Cookie,巴斯克起司餅乾
+BS8-033,Centipede Cookie,蜈蚣餅乾
+BS8-034,Smoked Cheese Cookie,煙燻起司餅乾
+BS8-035,Cinnamon Cookie,肉桂餅乾
+BS8-036,Young Kulfi,小庫爾菲猴
+BS8-037,Squid Ink Cookie,墨魚餅乾
+BS8-038,Olive Cookie,橄欖餅乾
+BS8-039,Shelly,起司漢堡龜
+BS8-040,Cheesecake Cookie,起司蛋糕餅乾
+BS8-041,Elder Kulfi,庫爾菲猴餅乾
+BS8-042,Adventurer Cookie,探險家餅乾
+BS8-043,Fettuccine Cookie,義大利寬麵餅乾
+BS8-044,Pistachio Cookie,開心果餅乾
+BS8-045,Habanero Cookie,哈瓦那辣椒餅乾
+BS8-046,Surprise! Lassi Jar,驚喜的拉西罈
+BS8-047,Puny Strength,微弱的力量
+BS8-048,Kulfi Legends,庫爾菲猴的傳說
+BS8-049,Simmering Lassi Springs,冒泡的拉西泉
+BS8-050,City of Eternal Gold,永恆的黃金城市
+BS8-051,Meat Dumpling King,小籠包天王
+BS8-052,Cloud Haetae Cookie,白雲靈獸餅乾
+BS8-053,Gim Cookie,海苔餅乾
+BS8-054,Leek Cookie,大蔥餅乾
+BS8-055,Bellflower Cookie,沙參花餅乾
+BS8-056,Spicy Dumpling King,辣籠包天王
+BS8-057,Vagabond Cookie,梅雀果餅乾
+BS8-058,Flavorless Cookie,沒有味道的餅乾
+BS8-059,Mystic Flour Cookie,幻彩麵粉餅乾
+BS8-060,Peach Blossom Cookie,桃花餅乾
+BS8-061,Chives Dumpling King,韭菜餃天王
+BS8-062,Shrimp Dumpling King,蝦燒賣天王
+BS8-063,Hydrangea Cookie,繡球花餅乾
+BS8-064,Snake Fruit Cookie,蛇皮果餅乾
+BS8-065,Spinach Cookie,菠菜餅乾
+BS8-066,Almond Cookie,杏仁果餅乾
+BS8-067,Oyster Cookie,牡蠣餅乾
+BS8-068,Yugwa Cookie,米油果餅乾
+BS8-069,Peak of Apathy,虛無吞噬的幻山
+BS8-070,White Ghost Cookie,白帝錦餅乾
+BS8-071,Peach Baos,桃子餡饅頭
+BS8-072,Soul Jam: Light of Apathy,靈魂果醬: 虛無之光
+BS8-073,Noodle Cocoon,素麵繭
+BS8-074,White Flour Fog,麵粉白霧
+BS8-075,The Ivory Pagoda,白麵寺
+BS8-076,Icicle Yeti Cookie,冰錐雪怪餅乾
+BS8-077,Kumiho Cookie,妖狐餅乾
+BS8-078,Snow Sugar Cookie,粉雪餅乾
+BS8-079,Snowflake Cookie,雪花餅乾
+BS8-080,Moon Rabbit Cookie,月兔餅乾
+BS8-081,Strawberry Cream Cookie,草莓鮮奶油餅乾
+BS8-082,Cotton Cookie,棉花餅乾
+BS8-083,Frost Queen Cookie,冰霜女王餅乾
+BS8-084,Sherbet Cookie,雪酪餅乾
+BS8-085,Pinecone Cookie,松果餅乾
+BS8-086,Cream Puff Cookie,奶油泡芙餅乾
+BS8-087,Starfruit Cookie,楊桃餅乾
+BS8-088,Milk Cookie,牛奶餅乾
+BS8-089,Carol Cookie,吟遊詩人餅乾
+BS8-090,Will of Nature,大自然的意念
+BS8-091,Tiger Lily Cookie,叢林戰士餅乾
+BS8-092,Angel Cookie,天使餅乾
+BS8-093,Cocoa Cookie,可可餅乾
+BS8-094,Pancake Cookie,鬆餅餅乾
+BS8-095,Herb Cookie,藥草餅乾
+BS8-096,Warm Wind Flower,溫暖的銀蓮花
+BS8-097,Heartfelt Light,蘊含心意的燈光
+BS8-098,Warmth of the Snowfield,雪原的溫暖
+BS8-099,Frozen Mountain Depths,深邃雪山
+BS8-100,Snowfall Lantern Tree,照亮雪原的燈火聖誕樹
+BS8-101,Dark Cacao Adviser 1,黑可可軍師餅乾1
+BS8-102,Dark Cacao Adviser 2,黑可可軍師餅乾2
+BS8-103,Dark Cacao Cookie,黑可可餅乾
+BS8-104,Dark Cacao Cookie,黑可可餅乾
+BS8-105,Strawberry Cookie,草莓餅乾
+BS8-106,Lilac Cookie,紫丁香餅乾
+BS8-107,Wizard Cookie,魔法師餅乾
+BS8-108,Blackberry Cookie,黑莓餅乾
+BS8-109,Affogato Cookie,阿芙佳朵餅乾
+BS8-110,Affogato Cookie's Disciple,阿芙佳朵餅乾的祭司
+BS8-111,Onion Cookie,洋蔥餅乾
+BS8-112,Espresso Cookie,濃縮咖啡餅乾
+BS8-113,Knight Cookie,勇士餅乾
+BS8-114,Old Milk Villager Cookie,牛奶村的年長餅乾
+BS8-115,Young Milk Villager Cookie,牛奶村的年輕餅乾
+BS8-116,Milk Cookie,牛奶餅乾
+BS8-117,Healer Cookie 1,治癒師餅乾1
+BS8-118,Healer Cookie 2,治癒師餅乾2
+BS8-119,Crunchy Chip Cookie,巧克力脆片餅乾
+BS8-120,Caramel Arrow Cookie,黑糖餅乾
+BS8-121,Black Concoction,黑色湯藥
+BS8-122,Milk Cart,香醇牛奶補給車
+BS8-123,Dark Resolution,黑色決心
+BS8-124,Glorious Return,榮耀歸來
+BS8-125,The Days of Resolution and Dignity,決心和風範兼具的時代
