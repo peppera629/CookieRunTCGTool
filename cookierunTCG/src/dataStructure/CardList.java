@@ -64,7 +64,7 @@ public class CardList {
 	public int getCardCountByCondition(String packId, CardRarity rarity, CardColor color, CardType type) {
 		int total = 0;
 		for (Card c : cardList) {
-			if (((packId == null && packId != "P") || c.getPack().equals(packId)) &&
+			if (((packId == null && !c.getPack().equals("P")) || c.getPack().equals(packId)) &&
 				(rarity == null || (rarity.getValue() >= 6 ? Arrays.asList(c.getVariants()).contains(rarity) : c.getRarity() == rarity)) && // If requested rarity is a Secret Rare, check if it has that rarity
 				(color == null || c.getColor() == color) &&
 				(type == null || c.getType() == type)) {
@@ -76,7 +76,7 @@ public class CardList {
 
 	public List<Card> getOwnedCards() {
 		for (Card c : cardList) {
-			int ownedCount = Collection.getInstance().getCardTotalOwnedCount(c.getId());
+			int ownedCount = Collection.getInstance().getCardTotalOwnedCount(c.getId(), true);
 			if (ownedCount > 0) {
 				ownedList.add(c);
 			}
@@ -141,7 +141,7 @@ public class CardList {
 			packCorrect = _search_pack_list.size() == 0 || _search_pack_list.contains(c.getPack());
 			nameCorrect = _search_name.equals("") || Normalizer.normalize(String.join(" ", c.getNameByLang()).toLowerCase(), Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").contains(_search_name);
 			hasVariants = !_search_variants || (c.getVariants().length > 1);
-			owned = Collection.getInstance().getCardTotalOwnedCount(c.getId()) > 0;
+			owned = Collection.getInstance().getCardTotalOwnedCount(c.getId(), true) > 0;
 			if (forceShowAll) {
 				if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && skillTypeCorrect && keywordCorrect && packCorrect && nameCorrect && hasVariants) {
 					selectList.add(c);

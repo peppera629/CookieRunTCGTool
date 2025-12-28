@@ -80,7 +80,10 @@ import java.util.Map;
 
 import javax.swing.JButton;
 
+// TOP PRIORITY: Implement language-separated collection support (track EN, TC, KR card counts separately)
+// (PROGRESS: modifying methods in Collection.java starting from getCardOwnedCount)
 // FEATURE: Add more views for collection summary in collection mode (overview, by color, by promo set, etc.)
+// FIX: Verify collection summary correctness
 // FEATURE: Add "Credits" popup
 // FEATURE: Add option to allow displaying of variants even when collection mode is off
 // TO DO: Update card names for BS9 cards on official release
@@ -175,7 +178,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JLabel mCardCountTxt, mFlipCountTxt, mExtraCountTxt, mDeckCookieSummaryTxt;
     private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardTranslationSkill, cardTranslationAttackCost;
     private JLabel cardTranslationAttack, cardTranslationAttackIcon, cardTranslationAttackThen, cardTranslationFlip, cardTranslationSkillFlavorText, cardTranslationSkillIcon, cardTranslationAttackFlavorText;
-    private JLabel[] ownedInfoRarityRows, ownedInfoCountRows;
+    private JLabel[] langLabels;
+    private JLabel[] ownedInfoRarityRows;
+    private JLabel[][] ownedInfoCountRows;
     private JSplitPane splitPane;
     private JButton showDeckBtn, showDeckDifferentialBtn;
     private ImageIcon cardIcon;
@@ -184,6 +189,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     public static InputStream fontStream, fontStreamBold;
     public static Map<java.awt.Component, String> componentFontMap = new HashMap<>();
     private int columns = 6, previewHeight, divLoc = 400;
+    private int currentSelectedCardLanguage = 0;
     private static int collectionAddVariant = 0;
     private boolean isCollectionMode = false, deckChanged = false;
     private Collection collection = Collection.getInstance();
@@ -252,6 +258,14 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             public void actionPerformed(ActionEvent e) {
                 ClickableCardPanel.setQuickEditMode(false);
                 scrollCardsPane.setWheelScrollingEnabled(true);
+            }
+        });
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_QUOTE, 0), "langswitch");
+        actionMap.put("langswitch", new javax.swing.AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                currentSelectedCardLanguage = (currentSelectedCardLanguage + 1) % Config.ALL_CARD_LANGUAGES.length;
+                System.out.println("Switched selected language to " + Config.ALL_CARD_LANGUAGES[currentSelectedCardLanguage]);
             }
         });
 
@@ -346,6 +360,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         frame.getContentPane().setLayout(new BorderLayout());
         
         mSearchPaneOuter = new JPanel(new BorderLayout());
+        mSearchPaneOuter.setPreferredSize(new Dimension(350, 200));
         mSearchPane = new ScrollablePanel();
         mSearchPane.setFocusable(true);
         mSearchPane.addMouseListener(new MouseAdapter() {
@@ -846,6 +861,13 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         ownedInfoPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         cardInfo.add(ownedInfoPanel);
 
+        langLabels = new JLabel[Config.ALL_CARD_LANGUAGES.length];
+        for (int i = 0; i < Config.ALL_CARD_LANGUAGES.length; i++) {
+            langLabels[i] = new JLabel("", JLabel.CENTER);
+            langLabels[i].setFont(CRboldSmall);
+            componentFontMap.put(langLabels[i], "CRboldSmall"); // Store the font type
+        }
+
         ownedInfoRarityRows = new JLabel[] {
             new JLabel("", JLabel.LEFT),
             new JLabel("", JLabel.LEFT),
@@ -856,21 +878,27 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             new JLabel("", JLabel.LEFT)
         };
 
-        ownedInfoCountRows = new JLabel[] {
-            new JLabel("", JLabel.RIGHT),
-            new JLabel("", JLabel.RIGHT),
-            new JLabel("", JLabel.RIGHT),
-            new JLabel("", JLabel.RIGHT),
-            new JLabel("", JLabel.RIGHT),
-            new JLabel("", JLabel.RIGHT),
-            new JLabel("", JLabel.RIGHT)
+        ownedInfoCountRows = new JLabel[][] {
+            {new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT)},
+            {new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT)},
+            {new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT)},
+            {new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT)},
+            {new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT)},
+            {new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT)},
+            {new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT)}
         };
 
         GridBagConstraints gbc_owned = new GridBagConstraints();
         gbc_owned.fill = GridBagConstraints.BOTH;
-        gbc_owned.gridx = 0;
+        gbc_owned.gridx = 1;
         gbc_owned.gridy = 0;
+        for (int i = 0; i < Config.ALL_CARD_LANGUAGES.length; i++) {
+            gbc_owned.weightx = 1;
+            ownedInfoPanel.add(langLabels[i], gbc_owned);
+            gbc_owned.gridx++;
+        }
         
+        gbc_owned.gridy = 1;
         for (int i = 0; i < ownedInfoRarityRows.length; i++) {
             gbc_owned.gridx = 0;
             gbc_owned.weightx = 5;
@@ -879,9 +907,12 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             ownedInfoPanel.add(ownedInfoRarityRows[i], gbc_owned);
             gbc_owned.gridx = 1;
             gbc_owned.weightx = 1;
-            ownedInfoCountRows[i].setFont(CRboldEXLarge);
-            componentFontMap.put(ownedInfoCountRows[i], "CRboldEXLarge"); // Store the font type
-            ownedInfoPanel.add(ownedInfoCountRows[i], gbc_owned);
+            for (int j = 0; j < ownedInfoCountRows[i].length; j++) {
+                ownedInfoCountRows[i][j].setFont(CRboldEXLarge);
+                componentFontMap.put(ownedInfoCountRows[i][j], "CRboldEXLarge"); // Store the font type
+                ownedInfoPanel.add(ownedInfoCountRows[i][j], gbc_owned);
+                gbc_owned.gridx++;
+            }
             gbc_owned.gridy++;
         }
 
@@ -1166,16 +1197,23 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         JPanel typeOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
         JPanel typeCheckboxGroup = new JPanel();
-        typeCheckboxGroup.setLayout(new GridLayout(0, 4));
+        typeCheckboxGroup.setLayout(new GridLayout(0, 1));
         typeCheckboxGroup.setBorder(filterBorder);
         typeOuterPanel.add(typeCheckboxGroup);
         mSearchPane.add(typeOuterPanel);
+
+        // Rows: Cookie + Levels, Cookie HP, Flip + Flip Types, [Extra, Item, Trap, Stage]
+        JPanel[] typeCheckboxGroupRows = new JPanel[4];
+        for (int i=0; i<4; i++) {
+        	typeCheckboxGroupRows[i] = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        	typeCheckboxGroup.add(typeCheckboxGroupRows[i]);
+        } 
 
         cb_type_cookie = new JCheckBox(CardUtil.getTranslation("filter.cookie"));
 		cb_type_cookie.setSelected(mDefaultState.getDefaultTypeFlag(0));
         cb_type_cookie.setFont(CRnormal);
         componentFontMap.put(cb_type_cookie, "CRnormal"); // Store the font type as a String
-        typeCheckboxGroup.add(cb_type_cookie);
+        typeCheckboxGroupRows[0].add(cb_type_cookie);
         cb_type_cookie.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(0, cb_type_cookie.isSelected());
@@ -1196,7 +1234,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         	cb_level[i].setSelected(mDefaultState.getDefaultLvFlag(lv));
             cb_level[i].setFont(CRnormal);
             componentFontMap.put(cb_level[i], "CRnormal"); // Store the font type as a String
-            typeCheckboxGroup.add(cb_level[i]);
+            typeCheckboxGroupRows[0].add(cb_level[i]);
             cb_level[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                 	mDefaultState.setDefaultLvFlag(lv, cb_level[id].isSelected());
@@ -1205,12 +1243,35 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             cb_level[i].setEnabled(cb_type_cookie.isSelected());
             
         }
+
+        labelHP = new JLabel("HP:");
+        labelHP.setFont(CRnormal);
+        componentFontMap.put(labelHP, "CRnormal"); // Store the font type as a String
+        typeCheckboxGroupRows[1].add(labelHP);
+
+        cb_HP = new JCheckBox[CardUtil.HP_MAX];
+        for(int i=0; i<CardUtil.HP_MAX; i++) {
+            final int id = i;
+            final int hp = i+1;
+        	cb_HP[i] = new JCheckBox(Integer.toString(hp));
+        	cb_HP[i].setSelected(mDefaultState.getDefaultHPFlag(hp));
+            cb_HP[i].setFont(CRnormal);
+            componentFontMap.put(cb_HP[i], "CRnormal"); // Store the font type as a String
+            typeCheckboxGroupRows[1].add(cb_HP[i]);
+            
+            cb_HP[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                	mDefaultState.setDefaultHPFlag(hp, cb_HP[id].isSelected());
+                }
+            });
+            cb_HP[i].setEnabled(cb_type_cookie.isSelected());
+        }
         
         cb_flip = new JCheckBox(CardUtil.getTranslation("filter.flip"));
         cb_flip.setSelected(mDefaultState.getDefaultFlipFlag());
         cb_flip.setFont(CRnormal);
         componentFontMap.put(cb_flip, "CRnormal"); // Store the font type as a String
-        typeCheckboxGroup.add(cb_flip);
+        typeCheckboxGroupRows[2].add(cb_flip);
         cb_flip.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultFlipFlag(cb_flip.isSelected());
@@ -1229,7 +1290,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         	cb_flipType[i].setSelected(mDefaultState.getDefaultFlipTypeFlag(i));
             cb_flipType[i].setFont(CRnormal);
             componentFontMap.put(cb_flipType[i], "CRnormal"); // Store the font type as a String
-            typeCheckboxGroup.add(cb_flipType[i]);
+            typeCheckboxGroupRows[2].add(cb_flipType[i]);
             cb_flipType[i].setEnabled(cb_flip.isSelected());
             cb_flipType[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1242,7 +1303,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_extra.setSelected(mDefaultState.getDefaultExtraFlag());
         cb_extra.setFont(CRnormal);
         componentFontMap.put(cb_extra, "CRnormal"); // Store the font type as a String
-        typeCheckboxGroup.add(cb_extra);
+        typeCheckboxGroupRows[3].add(cb_extra);
         cb_extra.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultExtraFlag(cb_extra.isSelected());
@@ -1253,7 +1314,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_type_item.setSelected(mDefaultState.getDefaultTypeFlag(1));
         cb_type_item.setFont(CRnormal);
         componentFontMap.put(cb_type_item, "CRnormal"); // Store the font type as a String
-        typeCheckboxGroup.add(cb_type_item);
+        typeCheckboxGroupRows[3].add(cb_type_item);
         cb_type_item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(1, cb_type_item.isSelected());
@@ -1265,7 +1326,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_type_trap.setSelected(mDefaultState.getDefaultTypeFlag(2));
         cb_type_trap.setFont(CRnormal);
         componentFontMap.put(cb_type_trap, "CRnormal"); // Store the font type as a String
-        typeCheckboxGroup.add(cb_type_trap);
+        typeCheckboxGroupRows[3].add(cb_type_trap);
         cb_type_trap.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(2, cb_type_trap.isSelected());
@@ -1277,45 +1338,12 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_type_stage.setSelected(mDefaultState.getDefaultTypeFlag(3));
         cb_type_stage.setFont(CRnormal);
         componentFontMap.put(cb_type_stage, "CRnormal"); // Store the font type as a String
-        typeCheckboxGroup.add(cb_type_stage);
+        typeCheckboxGroupRows[3].add(cb_type_stage);
         cb_type_stage.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(3, cb_type_stage.isSelected());
             }
         });
-
-        // ========================= HP ==================================
-        labelHP = new JLabel("HP", JLabel.LEFT);
-        labelHP.setFont(CRboldEXLargeFilter);
-        componentFontMap.put(labelHP, "CRboldEXLargeFilter"); // Store the font type as a String
-        JPanel HPLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the label
-        HPLabelPanel.add(labelHP);
-        mSearchPane.add(HPLabelPanel);
-
-        JPanel HPOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
-        JPanel HPCheckboxGroup = new JPanel();
-        HPCheckboxGroup.setLayout(new GridLayout(0, 6));
-        HPCheckboxGroup.setBorder(filterBorder);
-        HPOuterPanel.add(HPCheckboxGroup);
-        mSearchPane.add(HPOuterPanel);
-
-        cb_HP = new JCheckBox[CardUtil.HP_MAX];
-        for(int i=0; i<CardUtil.HP_MAX; i++) {
-            final int id = i;
-            final int hp = i+1;
-        	cb_HP[i] = new JCheckBox(Integer.toString(hp));
-        	cb_HP[i].setSelected(mDefaultState.getDefaultHPFlag(hp));
-            cb_HP[i].setFont(CRnormal);
-            componentFontMap.put(cb_HP[i], "CRnormal"); // Store the font type as a String
-            HPCheckboxGroup.add(cb_HP[i]);
-            
-            cb_HP[i].addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                	mDefaultState.setDefaultHPFlag(hp, cb_HP[id].isSelected());
-                }
-            });
-            cb_HP[i].setEnabled(cb_type_cookie.isSelected());
-        }
 
         // ========================= pack ==================================
 
@@ -2027,10 +2055,15 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             splitPane.setResizeWeight(0.0);
             splitPane.setDividerSize(0);
             splitPane.setEnabled(false);
-            
-            for (JLabel label : ownedInfoCountRows) {
-                label.setText("");
-                label.setVisible(true);
+            for (int i = 0; i < langLabels.length; i++) {
+                langLabels[i].setVisible(true);
+            }
+
+            for (JLabel[] labels : ownedInfoCountRows) {
+                for (JLabel label : labels) {
+                    label.setText("");
+                    label.setVisible(true);
+                }
             }
             for (JLabel label : ownedInfoRarityRows) {
                 label.setText("");
@@ -2057,9 +2090,15 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             splitPane.setDividerLocation(divLoc);
 
             collection.saveCollection();
-            for (JLabel label : ownedInfoCountRows) {
+            for (JLabel label : langLabels) {
                 label.setText("");
                 label.setVisible(false);
+            }
+            for (JLabel[] labels : ownedInfoCountRows) {
+                for (JLabel label : labels) {
+                    label.setText("");
+                    label.setVisible(false);
+                }
             }
             for (JLabel label : ownedInfoRarityRows) {
                 label.setText("");
@@ -2086,8 +2125,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         @Override
         public void addCard(Card card) {
             // Increment the collection count
-            int newCount = collection.getCardOwnedCount(card.getId(), collectionAddVariant) + 1;
-            collection.setCardOwnedCount(card.getId(), collectionAddVariant, newCount);
+            int newCount = collection.getCardOwnedCount(currentSelectedCardLanguage, card.getId(), collectionAddVariant) + 1;
+            collection.setCardOwnedCount(currentSelectedCardLanguage, card.getId(), collectionAddVariant, newCount);
             collection.setCardChangeCount(card.getId(), (collection.getCardTotalChangeCount(card.getId())+1));
             updateCardListForCollection(); // Refresh the card list to show the updated count
             updateCardOwnedInfoLabel(card);
@@ -2096,8 +2135,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         @Override
         public void removeCard(Card card) {
             // Decrement the collection count
-            int newCount = collection.getCardOwnedCount(card.getId(), collectionAddVariant) - 1;
-            collection.setCardOwnedCount(card.getId(), collectionAddVariant, newCount);
+            int newCount = collection.getCardOwnedCount(currentSelectedCardLanguage, card.getId(), collectionAddVariant) - 1;
+            collection.setCardOwnedCount(currentSelectedCardLanguage, card.getId(), collectionAddVariant, newCount);
             if (newCount >= 0) {
                 collection.setCardChangeCount(card.getId(), (collection.getCardTotalChangeCount(card.getId())-1));
             }
@@ -2132,6 +2171,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             } else {
                 cardId.setText(card.getId());
                 cardId.setForeground(Color.BLACK);
+            }
+
+            for (int i = 0; i < langLabels.length; i++) {
+                langLabels[i].setText(Config.ALL_CARD_LANGUAGES[i].replace("zh_TW", "TC").toUpperCase());
+                langLabels[i].setVisible(true);
             }
 
             cardName.setText(card.getName());
@@ -2187,24 +2231,26 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             return;
         }
         for (int i = 0; i < 7; i++) {
-            if (i < rarities.length) {
-                StringBuilder ownedInfo = new StringBuilder();
-                int ownedCount = collection.getCardOwnedCount(card.getId(), i);
-                //System.out.println(rarities[i].getName());
-                //System.out.println(ownedCount);
-                ownedInfo.append("<html>");
-                ownedInfo.append("<img src=\"file:" + new File("resources/keyicons/24px/" + i + ".png").getAbsolutePath() + "\">").append("&nbsp;");
-                ownedInfo.append("<img src=\"file:" + new File("resources/icons_rarity/24px/" + rarities[i].getName() + ".png").getAbsolutePath() + "\">");
-                ownedInfo.append("&nbsp;").append(variantNames[i]);
-                if (i < rarities.length - 1) {
-                    ownedInfo.append("<br>");
+            for (int j = 0; j < Config.ALL_CARD_LANGUAGES.length; j++) {
+                if (i < rarities.length) {
+                    StringBuilder ownedInfo = new StringBuilder();
+                    int ownedCount = collection.getCardOwnedCount(j, card.getId(), i);
+                    //System.out.println(rarities[i].getName());
+                    //System.out.println(ownedCount);
+                    ownedInfo.append("<html>");
+                    ownedInfo.append("<img src=\"file:" + new File("resources/keyicons/24px/" + i + ".png").getAbsolutePath() + "\">").append("&nbsp;");
+                    ownedInfo.append("<img src=\"file:" + new File("resources/icons_rarity/24px/" + rarities[i].getName() + ".png").getAbsolutePath() + "\">");
+                    ownedInfo.append("&nbsp;").append(variantNames[i]);
+                    if (i < rarities.length - 1) {
+                        ownedInfo.append("<br>");
+                    }
+                    ownedInfo.append("</html>");
+                    ownedInfoRarityRows[i].setText(ownedInfo.toString());
+                    ownedInfoCountRows[i][j].setText(String.valueOf(ownedCount));
+                } else {
+                    ownedInfoRarityRows[i].setText("");
+                    ownedInfoCountRows[i][j].setText("");
                 }
-                ownedInfo.append("</html>");
-                ownedInfoRarityRows[i].setText(ownedInfo.toString());
-                ownedInfoCountRows[i].setText("×" + String.valueOf(ownedCount));
-            } else {
-                ownedInfoRarityRows[i].setText("");
-                ownedInfoCountRows[i].setText("");
             }
         }
 
@@ -2215,9 +2261,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private void updateCardOwnedInfoHighlight(int variantIndex) {
         for (int i = 0; i < ownedInfoCountRows.length; i++) {
             if (i == variantIndex && variantIndex > 0) {
-                ownedInfoCountRows[i].setForeground(new Color(60,60,255,255));
+                ownedInfoCountRows[i][currentSelectedCardLanguage].setForeground(new Color(60,60,255,255));
             } else {
-                ownedInfoCountRows[i].setForeground(Color.BLACK);
+                ownedInfoCountRows[i][currentSelectedCardLanguage].setForeground(Color.BLACK);
             }
         }
 

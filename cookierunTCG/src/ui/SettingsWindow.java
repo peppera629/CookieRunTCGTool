@@ -26,8 +26,8 @@ public class SettingsWindow implements LanguageChangeListener{
 	DefaultListModel<String> mSortListModel, mNotSortListModel;
 	private static List<LanguageChangeListener> listeners = new ArrayList<>();
     private JLabel settingsLabel;
-    private JLabel languageLabel, cardLanguageLabel;
-    private JComboBox<String> languageDropdown, cardLanguageDropdown;
+    private JLabel languageLabel, cardLanguageLabel, regionLabel;
+    private JComboBox<String> languageDropdown, cardLanguageDropdown, regionDropdown;
     private JButton btnConfirm;
     private JSlider cardPreviewScaleSlider, cardListScaleSlider;
     private JToggleButton cardTranslationToggle, largeTranslationTextToggle, buildModeToggle, showCollectionChangeToggle, showOwnedOnlyToggle, advFilteringToggle;
@@ -107,6 +107,14 @@ public class SettingsWindow implements LanguageChangeListener{
         gbc.gridwidth = 1;
         frame.getContentPane().add(cardLanguageLabel, gbc);
 
+        // ==== Region Label ====
+        regionLabel = new JLabel(CardUtil.getTranslation("settings.region"));
+        regionLabel.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(regionLabel, "CRnormal");
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        frame.getContentPane().add(regionLabel, gbc);
+
         // ==== Language Dropdown ====
         String[] languages = { CardUtil.getTranslation("settings.language.en"), CardUtil.getTranslation("settings.language.zh_TW") };
         languageDropdown = new JComboBox<>(languages);
@@ -123,7 +131,7 @@ public class SettingsWindow implements LanguageChangeListener{
             languageDropdown.setSelectedIndex(1);
         }
         
-        // ==== Language Dropdown ====
+        // ==== Card Language Dropdown ====
         String[] cardlanguages = { CardUtil.getTranslation("settings.cardlanguage.en"), CardUtil.getTranslation("settings.cardlanguage.zh_TW") };
         cardLanguageDropdown = new JComboBox<>(cardlanguages);
         cardLanguageDropdown.setFont(MainUI.CRnormal);
@@ -139,12 +147,37 @@ public class SettingsWindow implements LanguageChangeListener{
             cardLanguageDropdown.setSelectedIndex(1);
         }
 
+        // ==== Region Dropdown ====
+        String[] regions = { "NA", "SEA", "KR", "TW"};
+        regionDropdown = new JComboBox<>(regions);
+        regionDropdown.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(regionDropdown, "CRnormal");
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        frame.getContentPane().add(regionDropdown, gbc);
+
+        // Set the current region as the selected item
+        switch (Config.REGION) {
+            case "NA":
+                regionDropdown.setSelectedIndex(0);
+                break;
+            case "SEA":
+                regionDropdown.setSelectedIndex(1);
+                break;
+            case "KR":
+                regionDropdown.setSelectedIndex(2);
+                break;
+            case "TW":
+                regionDropdown.setSelectedIndex(3);
+                break;
+        }
+
         // ==== Card Preview Scale Label ====
         JLabel cardPreviewScaleLabel = new JLabel(CardUtil.getTranslation("settings.cardpreviewscale"));
         cardPreviewScaleLabel.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(cardPreviewScaleLabel, "CRnormal");
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         frame.getContentPane().add(cardPreviewScaleLabel, gbc);
 
         // ==== Card Preview Scale Slider ====
@@ -157,7 +190,7 @@ public class SettingsWindow implements LanguageChangeListener{
         cardPreviewScaleSlider.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(cardPreviewScaleSlider, "CRnormal");
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         frame.getContentPane().add(cardPreviewScaleSlider, gbc);
 
         // ==== Build From Collection mode toggle ====
@@ -173,7 +206,7 @@ public class SettingsWindow implements LanguageChangeListener{
         buildModeToggle.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(buildModeToggle, "CRnormal");
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         frame.getContentPane().add(buildModeToggle, gbc);
         buildModeToggle.addActionListener(e -> {
             boolean isSelected = buildModeToggle.isSelected();
@@ -198,7 +231,7 @@ public class SettingsWindow implements LanguageChangeListener{
         showCollectionChangeToggle.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(showCollectionChangeToggle, "CRnormal");
         gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         frame.getContentPane().add(showCollectionChangeToggle, gbc);
         showCollectionChangeToggle.addActionListener(e -> {
             boolean isSelected = showCollectionChangeToggle.isSelected();
@@ -222,7 +255,7 @@ public class SettingsWindow implements LanguageChangeListener{
         showOwnedOnlyToggle.setToolTipText(CardUtil.getTranslation("settings.showownedonly.tooltip"));
         MainUI.componentFontMap.put(showOwnedOnlyToggle, "CRnormal");
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         frame.getContentPane().add(showOwnedOnlyToggle, gbc);
         showOwnedOnlyToggle.addActionListener(e -> {
             boolean isSelected = showOwnedOnlyToggle.isSelected();
@@ -244,7 +277,7 @@ public class SettingsWindow implements LanguageChangeListener{
         cardTranslationToggle.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(cardTranslationToggle, "CRnormal");
         gbc.gridx = 1;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         frame.getContentPane().add(cardTranslationToggle, gbc);
 
         cardTranslationToggle.addActionListener(e -> {
@@ -266,7 +299,7 @@ public class SettingsWindow implements LanguageChangeListener{
         largeTranslationTextToggle.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(largeTranslationTextToggle, "CRnormal");
         gbc.gridx = 0;
-        gbc.gridy = 6;
+        gbc.gridy = 7;
         frame.getContentPane().add(largeTranslationTextToggle, gbc);
         largeTranslationTextToggle.addActionListener(e -> {
             boolean isSelected = largeTranslationTextToggle.isSelected();
@@ -291,7 +324,7 @@ public class SettingsWindow implements LanguageChangeListener{
         advFilteringToggle.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(advFilteringToggle, "CRnormal");
         gbc.gridx = 1;
-        gbc.gridy = 6;
+        gbc.gridy = 7;
         frame.getContentPane().add(advFilteringToggle, gbc);
         advFilteringToggle.addActionListener(e -> {
             boolean isSelected = advFilteringToggle.isSelected();
@@ -311,7 +344,7 @@ public class SettingsWindow implements LanguageChangeListener{
         btnConfirm.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(btnConfirm, "CRnormal");
         gbc.gridx = 0;
-        gbc.gridy = 7;
+        gbc.gridy = 8;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         frame.getContentPane().add(btnConfirm, gbc);
@@ -331,6 +364,21 @@ public class SettingsWindow implements LanguageChangeListener{
             } else if (cardSelectedIndex == 1) {
                 Config.CARD_LANGUAGE = "zh_TW";
             }
+            int regionSelectedIndex = regionDropdown.getSelectedIndex();
+            switch (regionSelectedIndex) {
+                case 0:
+                    Config.REGION = "NA";
+                    break;
+                case 1:
+                    Config.REGION = "SEA";
+                    break;
+                case 2:
+                    Config.REGION = "KR";
+                    break;
+                case 3:
+                    Config.REGION = "TW";
+                    break;
+            }
             Config.CARD_PREVIEW_SCALE = cardPreviewScaleSlider.getValue() / 100.0;
             CardUtil.loadLanguage();
             Config.saveConfig();
@@ -349,6 +397,7 @@ public class SettingsWindow implements LanguageChangeListener{
         settingsLabel.setText(CardUtil.getTranslation("settings"));
         languageLabel.setText(CardUtil.getTranslation("settings.language"));
         cardLanguageLabel.setText(CardUtil.getTranslation("settings.cardlanguage"));
+        regionLabel.setText(CardUtil.getTranslation("settings.region"));
         btnConfirm.setText(CardUtil.getTranslation("settings.confirm"));
         languageDropdown.setModel(new DefaultComboBoxModel<>(new String[]{
             CardUtil.getTranslation("settings.language.en"),

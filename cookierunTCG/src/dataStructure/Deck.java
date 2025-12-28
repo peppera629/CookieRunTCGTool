@@ -216,7 +216,7 @@ public class Deck {
 	public List<Card> getOwnershipLegality() {
 		List<Card> invalidCards = new ArrayList<Card>();
 		for (Card card : cardList) {
-			if (card.getCount() > Collection.getInstance().getCardTotalOwnedCount(card.getId())) {
+			if (card.getCount() > Collection.getInstance().getCardTotalOwnedCount(card.getId(), true)) {
 				invalidCards.add(card);
 			}
 		}

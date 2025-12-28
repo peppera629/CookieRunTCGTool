@@ -21,3 +21,5 @@ cookierunTCG/run_JRE.bat
 cookierunTCG/.classpath
 .vscode/settings.json
 cookierunTCG/bin
+cookierunTCG/collection_before20251223.txt
+cookierunTCG/collection.txt

@@ -207,7 +207,7 @@ public class Card {
 	}
 
 	public boolean getOwnershipLegality() {
-		return (Collection.getInstance().getCardTotalOwnedCount(_id) >= _cardCount);
+		return (Collection.getInstance().getCardTotalOwnedCount(_id, true) >= _cardCount);
 	}
 	
 	public boolean isFlip() {

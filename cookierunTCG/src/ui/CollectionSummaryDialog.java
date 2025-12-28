@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -13,6 +14,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import dataStructure.Card;
 import dataStructure.CardList;
 import dataStructure.Collection;
 import util.CardUtil;
@@ -21,7 +23,7 @@ import util.CardUtil;
 
 public class CollectionSummaryDialog {
     private JFrame frame;
-    private int count;
+    private int count, total;
 
     /**
      * Launch the application.
@@ -48,7 +50,63 @@ public class CollectionSummaryDialog {
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setFont(MainUI.CRnormal);
 
-        // By Rarity tab
+        int[] totalOwnedPerPack = new int[CardUtil.CardPack.size()];
+        int[] totalPerPack = new int[CardUtil.CardPack.size()];
+        int[] totalOwnedPerPackSec = new int[CardUtil.CardPack.size()-1];
+        int[] totalPerPackSec = new int[CardUtil.CardPack.size()-1];
+        int[] totalOwnedPerRarity = new int[CardUtil.RARITY_MAX];
+        int[] totalPerRarity = new int[CardUtil.RARITY_MAX];
+        int[] totalOwnedPerColor = new int[CardUtil.COLOR_MAX];
+        int[] totalPerColor = new int[CardUtil.COLOR_MAX];
+        int[] totalOwnedPerType = new int[CardUtil.TYPE_MAX];
+        int[] totalPerType = new int[CardUtil.TYPE_MAX];
+        
+        // Fill in total owned per pack, total per pack
+        for (int i = 0; i < CardUtil.RARITY_MAX; i++) {
+            for (int j = 0; j < CardUtil.CardPack.size()-1; j++) {
+                count = (i == 5 ? totalOwnedPerPack[j] : Collection.getInstance().getCardOwnedCount(-1, CardUtil.CardPack.get(j), CardUtil.CardRarity.fromValue(i), null, null, false));
+                total = (i == 5 ? totalPerPack[j] : CardList.getInstance().getCardCountByCondition(CardUtil.CardPack.get(j), CardUtil.CardRarity.fromValue(i), null, null));
+                
+                if (i != 5) {
+                    totalOwnedPerPack[j] += count;
+                    totalPerPack[j] += total;
+                }
+            }
+        }
+
+        // Fill in total owned per pack (Secret Rare), total per pack (Secret Rare)
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < CardUtil.CardPack.size()-1; j++) {
+                if (CardUtil.CardPack.get(j).contains("ST")) {
+                    continue;
+                }
+                count = (i == 4 ? totalOwnedPerPackSec[j] : Collection.getInstance().getCardOwnedCount(-1, CardUtil.CardPack.get(j), CardUtil.CardRarity.fromValue(6+i), null, null, false));
+                int total = (i == 4 ? totalPerPackSec[j] : CardList.getInstance().getCardCountByCondition(CardUtil.CardPack.get(j), CardUtil.CardRarity.fromValue(6+i), null, null));
+
+                if (i != 4) {
+                    totalOwnedPerPackSec[j] += count;
+                    totalPerPackSec[j] += total;
+                }
+            }
+        }
+
+        // Fill in total owned per rarity, total per rarity
+        for (int i = 0; i < CardUtil.RARITY_MAX; i++) {
+            totalOwnedPerRarity[i] = Collection.getInstance().getCardOwnedCount(-1, null, CardUtil.CardRarity.fromValue(i), null, null, false);
+            totalPerRarity[i] = CardList.getInstance().getCardCountByCondition(null, CardUtil.CardRarity.fromValue(i), null, null);
+        }
+        // Fill in total owned per color, total per color
+        for (int i = 0; i < CardUtil.COLOR_MAX; i++) {
+            totalOwnedPerColor[i] = Collection.getInstance().getCardOwnedCount(-1, null, null, CardUtil.CardColor.fromValue(i), null, false);
+            totalPerColor[i] = CardList.getInstance().getCardCountByCondition(null, null, CardUtil.CardColor.fromValue(i), null);
+        }
+        // Fill in total owned per type, total per type
+        for (int i = 0; i < CardUtil.TYPE_MAX; i++) {
+            totalOwnedPerType[i] = Collection.getInstance().getCardOwnedCount(-1, null, null, null, CardUtil.CardType.values()[i], false);
+            totalPerType[i] = CardList.getInstance().getCardCountByCondition(null, null, null, CardUtil.CardType.values()[i]);
+        }
+
+        // By Rarity tab =============================================
 
         JPanel byRarity = new JPanel();
         byRarity.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
@@ -57,15 +115,18 @@ public class CollectionSummaryDialog {
         GridBagConstraints gbc_byRarity = new GridBagConstraints();
         gbc_byRarity.fill = GridBagConstraints.BOTH;
 
-        int[] totalOwnedPerPack = new int[CardUtil.CardPack.size()];
-        int[] totalPerPack = new int[CardUtil.CardPack.size()];
-
         gbc_byRarity.weightx = 0.5;
         gbc_byRarity.weighty = 1;
         gbc_byRarity.gridx = 0;
         gbc_byRarity.gridy = 1;
-        for (int i = 0; i < CardUtil.CardPack.size(); i++) {
-            JLabel label = new JLabel(CardUtil.CardPack.get(i) + " ", JLabel.RIGHT);
+        
+        for (int i = 0; i < CardUtil.CardPack.size()+1; i++) {
+            JLabel label;
+            if (i == 0) {
+                label = new JLabel("Total ", JLabel.RIGHT);
+            } else {
+                label = new JLabel(CardUtil.CardPack.get(i-1) + " ", JLabel.RIGHT);
+            }
             label.setAlignmentX(Component.RIGHT_ALIGNMENT);
             label.setFont(MainUI.CRnormal);
             byRarity.add(label, gbc_byRarity);
@@ -91,27 +152,55 @@ public class CollectionSummaryDialog {
         byRarity.add(label_total, gbc_byRarity);
         
         gbc_byRarity.gridx = 1;
-
+        gbc_byRarity.gridy = 1;
         for (int i = 0; i < 6; i++) {
             gbc_byRarity.gridy = 1;
-            for (int j = 0; j < CardUtil.CardPack.size()-1; j++) {
-                count = (i == 5 ? totalOwnedPerPack[j] : Collection.getInstance().getCardOwnedCount(CardUtil.CardPack.get(j), CardUtil.CardRarity.fromValue(i), false));
-                int total = (i == 5 ? totalPerPack[j] : CardList.getInstance().getCardCountByCondition(CardUtil.CardPack.get(j), CardUtil.CardRarity.fromValue(i), null, null));
-                
-                if (i != 5) {
-                    totalOwnedPerPack[j] += count;
-                    totalPerPack[j] += total;
+            int totalOwnedPerPackTotal = 0;
+            int totalPerPackTotal = 0;
+            for (int k = 0; k < 5; k++) {
+                if (k != 4) {
+                    totalOwnedPerPackTotal += Collection.getInstance().getCardOwnedCount(-1, null, CardUtil.CardRarity.fromValue(k), null, null, false);
+                    totalPerPackTotal += CardList.getInstance().getCardCountByCondition(null, CardUtil.CardRarity.fromValue(k), null, null);
                 }
-                
-                JLabel label = new JLabel(Integer.toString(count) + " / " + Integer.toString(total), JLabel.CENTER);
+            }
+
+            int countLocal = (i == 5 ? totalOwnedPerPackTotal : Collection.getInstance().getCardOwnedCount(-1, null, CardUtil.CardRarity.fromValue(i), null, null, false));
+            int totalLocal = (i == 5 ? totalPerPackTotal : CardList.getInstance().getCardCountByCondition(null, CardUtil.CardRarity.fromValue(i), null, null));
+            JLabel label = new JLabel(Integer.toString(countLocal) + " / " + Integer.toString(totalLocal), JLabel.CENTER);
+            label.setAlignmentX(Component.CENTER_ALIGNMENT);
+            label.setFont(MainUI.CRboldLarge);
+            label.setOpaque(true);
+            if (totalLocal == 0) {
+                label.setBackground(Color.GRAY);
+                label.setForeground(Color.LIGHT_GRAY);
+            } else {
+                if (countLocal >= totalLocal) {
+                    label.setForeground(new Color(255, 226, 84));
+                    label.setOpaque(true);
+                    label.setBackground(new Color(191, 142, 0));
+                } else {
+                    label.setForeground(Color.BLACK);
+                }
+            }
+            label.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+            byRarity.add(label, gbc_byRarity);
+            gbc_byRarity.gridx++;
+        }
+        gbc_byRarity.gridx = 1;
+        for (int i = 0; i < 6; i++) {
+            gbc_byRarity.gridy = 2;
+            for (int j = 0; j < CardUtil.CardPack.size()-1; j++) {
+                int countLocal = (i == 5 ? totalOwnedPerPack[j] : Collection.getInstance().getCardOwnedCount(-1, CardUtil.CardPack.get(j), CardUtil.CardRarity.fromValue(i), null, null, false));
+                int totalLocal = (i == 5 ? totalPerPack[j] : CardList.getInstance().getCardCountByCondition(CardUtil.CardPack.get(j), CardUtil.CardRarity.fromValue(i), null, null));
+                JLabel label = new JLabel(Integer.toString(countLocal) + " / " + Integer.toString(totalLocal), JLabel.CENTER);
                 label.setAlignmentX(Component.CENTER_ALIGNMENT);
                 label.setFont(MainUI.CRboldLarge);
                 label.setOpaque(true);
-                if (total == 0) {
+                if (totalLocal == 0) {
                     label.setBackground(Color.GRAY);
                     label.setForeground(Color.LIGHT_GRAY);
                 } else {
-                    if (count >= total) {
+                    if (countLocal >= totalLocal) {
                         label.setForeground(new Color(255, 226, 84));
                         label.setOpaque(true);
                         label.setBackground(new Color(191, 142, 0));
@@ -128,7 +217,7 @@ public class CollectionSummaryDialog {
 
         gbc_byRarity.gridx = 1;
         gbc_byRarity.gridwidth = 6;
-        int count = Collection.getInstance().getCardOwnedCount(null, CardUtil.CardRarity.fromValue(5), false);
+        int count = Collection.getInstance().getCardOwnedCount(-1, null, CardUtil.CardRarity.P, null, null, false);
         JLabel label_P = new JLabel(Integer.toString(count), JLabel.CENTER);
         label_P.setAlignmentX(Component.CENTER_ALIGNMENT);
         label_P.setFont(MainUI.CRboldLarge);
@@ -136,7 +225,7 @@ public class CollectionSummaryDialog {
         byRarity.add(label_P, gbc_byRarity);
 
         gbc_byRarity.gridwidth = 6;
-        gbc_byRarity.gridheight = CardUtil.CardPack.size();
+        gbc_byRarity.gridheight = CardUtil.CardPack.size() + 1;
         gbc_byRarity.gridx = 1;
         gbc_byRarity.gridy = 1;
         JPanel tableBorder = new JPanel();
@@ -146,7 +235,7 @@ public class CollectionSummaryDialog {
         byRarity.add(tableBorder, gbc_byRarity);
         byRarity.setComponentZOrder(tableBorder, 0);
 
-        // By Rarity (Secret Rare) tab
+        // By Rarity (Secret Rare) tab ============================
 
         JPanel byRaritySecret = new JPanel();
         byRaritySecret.setLayout(new GridBagLayout());
@@ -154,9 +243,6 @@ public class CollectionSummaryDialog {
         byRaritySecret.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         GridBagConstraints gbc_byRaritySecret = new GridBagConstraints();
         gbc_byRaritySecret.fill = GridBagConstraints.BOTH;
-
-        int[] totalOwnedPerPackSec = new int[CardUtil.CardPack.size()-1];
-        int[] totalPerPackSec = new int[CardUtil.CardPack.size()-1];
 
         gbc_byRaritySecret.weightx = 0.5;
         gbc_byRaritySecret.weighty = 1;
@@ -199,23 +285,19 @@ public class CollectionSummaryDialog {
                 if (CardUtil.CardPack.get(j).contains("ST")) {
                     continue;
                 }
-                count = (i == 4 ? totalOwnedPerPackSec[j] : Collection.getInstance().getCardOwnedCount(CardUtil.CardPack.get(j), CardUtil.CardRarity.fromValue(6+i), false));
-                int total = (i == 4 ? totalPerPackSec[j] : CardList.getInstance().getCardCountByCondition(CardUtil.CardPack.get(j), CardUtil.CardRarity.fromValue(6+i), null, null));
 
-                if (i != 4) {
-                    totalOwnedPerPackSec[j] += count;
-                    totalPerPackSec[j] += total;
-                }
+                int countLocal = (i == 4 ? totalOwnedPerPackSec[j] : Collection.getInstance().getCardOwnedCount(-1, CardUtil.CardPack.get(j), CardUtil.CardRarity.fromValue(i+6), null, null, false));
+                int totalLocal = (i == 4 ? totalPerPackSec[j] : CardList.getInstance().getCardCountByCondition(CardUtil.CardPack.get(j), CardUtil.CardRarity.fromValue(i+6), null, null));
 
-                JLabel label = new JLabel(Integer.toString(count) + " / " + Integer.toString(total), JLabel.CENTER);
+                JLabel label = new JLabel(Integer.toString(countLocal) + " / " + Integer.toString(totalLocal), JLabel.CENTER);
                 label.setAlignmentX(Component.CENTER_ALIGNMENT);
                 label.setFont(MainUI.CRboldLarge);
                 label.setOpaque(true);
-                if (total == 0) {
+                if (totalLocal == 0) {
                     label.setBackground(Color.GRAY);
                     label.setForeground(Color.LIGHT_GRAY);
                 } else {
-                    if (count >= total) {
+                    if (countLocal >= totalLocal) {
                         label.setForeground(new Color(255, 226, 84));
                         label.setOpaque(true);
                         label.setBackground(new Color(191, 142, 0));

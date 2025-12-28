@@ -198,12 +198,12 @@ public class ClickableCardPanel extends JPanel {
 						break;
 					case 2: // Deck Count (with red indication for unowned/insufficient)
 						text = Integer.toString(mCard.getCount());
-						if (mCard.getCount() > Collection.getInstance().getCardTotalOwnedCount(mCard.getId())) {
+						if (mCard.getCount() > Collection.getInstance().getCardTotalOwnedCount(mCard.getId(), true)) {
 							g2d.setColor(new Color(255, 128, 128));
 						}
 						break;
 					case 3: // Collection Count
-						text = Integer.toString(Collection.getInstance().getCardTotalOwnedCount(mCard.getId()));
+						text = Integer.toString(Collection.getInstance().getCardTotalOwnedCount(mCard.getId(), false));
 						collectionChangeText = Integer.toString(collectionChange);
 						if (collectionChange > 0) {
 							collectionChangeText = "+" + collectionChangeText;
@@ -214,8 +214,8 @@ public class ClickableCardPanel extends JPanel {
 						break;
 					case 4: // Both (for "build from collection" mode)
 						text = Integer.toString(mCard.getCount());
-						ownedText = "/" + Integer.toString(Collection.getInstance().getCardTotalOwnedCount(mCard.getId()));
-						if (mCard.getCount() > Collection.getInstance().getCardTotalOwnedCount(mCard.getId())) {
+						ownedText = "/" + Integer.toString(Collection.getInstance().getCardTotalOwnedCount(mCard.getId(), true));
+						if (mCard.getCount() > Collection.getInstance().getCardTotalOwnedCount(mCard.getId(), true)) {
 							g2d.setColor(new Color(255, 128, 128));
 						}
 						break;

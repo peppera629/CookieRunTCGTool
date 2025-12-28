@@ -8,16 +8,28 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import util.CardUtil;
+import util.Config;
 
 public class Collection {
-    private Map<String, List<Integer>> collection; // Map of card ID to count
+    private List<Map<String, List<Integer>>> collection; // Map of card ID to count
     private Map<String, Integer> change; // Current collection change compared to last save
     private static Collection instance;
-    private static final String COLLECTION_FILE = "collection/collection.txt";
+    private static List<String> collection_files;
+    private static final String COLLECTION_FILE_BASE = "collection/collection";
 
     private Collection() {
-        collection = new HashMap<>();
+        collection = new ArrayList<>();
+        collection_files = new ArrayList<>();
         change = new HashMap<>();
+        for (String lang : Config.ALL_CARD_LANGUAGES) {
+            String filePath = COLLECTION_FILE_BASE + "_" + lang + ".txt";
+            collection_files.add(filePath);
+            collection.add(new HashMap<>());
+        }
+        System.out.println("Collection files to load: ");
+        for (String f : collection_files) {
+            System.out.println(f);
+        }
         loadCollection();
     }
 
@@ -31,75 +43,90 @@ public class Collection {
     public void loadCollection() {
         collection.clear();
         change.clear();
-        File file = new File(COLLECTION_FILE);
-        if (!file.exists()) {
-            System.out.println("Collection file not found, starting with empty collection");
-            return; // No collection file found, start with empty collection
-        }
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length == 2) {
-                    String cardId = parts[0].trim();
-                    String[] variantCounts = parts[1].trim().split(";");
-                    List<Integer> counts = new ArrayList<>();
-                    for (String countStr : variantCounts) {
-                        counts.add(Integer.parseInt(countStr.trim()));
-                    }
-                    collection.put(cardId, counts);
-                }
+        for (int i = 0; i < collection_files.size(); i++) {
+            collection.add(new HashMap<>());
+            File file = new File(collection_files.get(i));
+            if (!file.exists()) {
+                System.out.println("Collection file not found, starting with empty collection");
+                return; // No collection file found, start with empty collection
             }
-            System.out.println("Collection loaded from " + COLLECTION_FILE);
-        } catch (IOException e) {
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String line;
+                
+                while ((line = br.readLine()) != null) {
+                    String[] parts = line.split(",");
+                    if (parts.length == 2) {
+                        String cardId = parts[0].trim();
+                        String[] variantCounts = parts[1].trim().split(";");
+                        List<Integer> counts = new ArrayList<>();
+                        for (String countStr : variantCounts) {
+                            counts.add(Integer.parseInt(countStr.trim()));
+                        }
+                        collection.get(i).put(cardId, counts);
+                    }
+                }
+                System.out.println("Collection for language " + Config.ALL_CARD_LANGUAGES[i] + " loaded from " + collection_files.get(i));
+            } catch (IOException e) {
             e.printStackTrace();
+            }
         }
     }
 
     public void saveCollection() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(COLLECTION_FILE))) {
-            collection.entrySet().stream()
-            .sorted(Map.Entry.comparingByKey()) // Sort by card ID (key)
-            .forEach(entry -> {
-                try {
-                    List<Integer> counts = entry.getValue();
-                    StringBuilder countsStr = new StringBuilder();
-                    for (int i = 0; i < counts.size(); i++) {
-                        countsStr.append(counts.get(i));
-                        if (i < counts.size() - 1) {
-                            countsStr.append(";");
+        for (int i = 0; i < collection_files.size(); i++) {
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(collection_files.get(i)))) {
+                collection.get(i).entrySet().stream()
+                .sorted(Map.Entry.comparingByKey()) // Sort by card ID (key)
+                .forEach(entry -> {
+                    try {
+                        List<Integer> counts = entry.getValue();
+                        StringBuilder countsStr = new StringBuilder();
+                        for (int j = 0; j < counts.size(); j++) {
+                            countsStr.append(counts.get(j));
+                            if (j < counts.size() - 1) {
+                                countsStr.append(";");
+                            }
                         }
+                        bw.write(entry.getKey() + "," + countsStr.toString());
+                        bw.newLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    bw.write(entry.getKey() + "," + countsStr.toString());
-                    bw.newLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-            System.out.println("Collection saved to " + COLLECTION_FILE);
-            change.clear(); // Clear the change map after saving
-        } catch (IOException e) {
-            e.printStackTrace();
+                });
+                System.out.println("Collection saved to " + collection_files.get(i));
+                change.clear(); // Clear the change map after saving
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    public int getCardOwnedCount(String cardId, int variantIndex) {
-        List<Integer> counts = collection.get(cardId);
-        if (counts == null || variantIndex < 0 || variantIndex >= counts.size()) {
+    // Get owned count for a specific card variant
+    public int getCardOwnedCount(int langIndex, String cardId, int variantIndex) {
+        try {
+            List<Integer> counts = collection.get(langIndex).get(cardId);
+            if (counts == null || variantIndex < 0 || variantIndex >= counts.size()) {
+                return 0;
+            }
+            return counts.get(variantIndex);
+        } catch (IndexOutOfBoundsException e) {
             return 0;
         }
-        return counts.get(variantIndex);
     }
 
-    public int getCardTotalOwnedCount(String cardId) {
-        List<Integer> counts = collection.get(cardId);
-        if (counts == null) {
-            return 0;
-        }
+    public int getCardTotalOwnedCount(String cardId, boolean legalityConstraint) {
         int total = 0;
-        for (int count : counts) {
-            total += count;
+        for (int langIndex = 0; langIndex < collection.size(); langIndex++) {
+            List<Integer> counts = collection.get(langIndex).get(cardId);
+            if (counts == null) {
+                continue;
+            }
+            
+            for (int count : counts) {
+                if (!legalityConstraint || Arrays.asList(Config.LEGAL_LANGUAGES).contains(Config.ALL_CARD_LANGUAGES[langIndex])) {
+                    total += count;
+                }
+            }
         }
         return total;
     }
@@ -112,14 +139,20 @@ public class Collection {
         return count;
     }
 
-    public int getCardOwnedCount(String packId, CardUtil.CardRarity rarity, boolean countMode) {
+    public int getCardOwnedCount(int langIndex, String packId, CardUtil.CardRarity rarity, CardUtil.CardColor color, CardUtil.CardType type, boolean countMode) {
         int total = 0;
-        for (Map.Entry<String, List<Integer>> entry : collection.entrySet()) {
+        if (langIndex == -1) { // Aggregate across all languages
+            for (int i = 0; i < collection.size(); i++) {
+                total += getCardOwnedCount(i, packId, rarity, color, type, countMode);
+            }
+            return total;
+        }
+        for (Map.Entry<String, List<Integer>> entry : collection.get(langIndex).entrySet()) {
             String cardId = entry.getKey();
             Card card = CardList.getInstance().getCardById(cardId);
             List<CardUtil.CardRarity> variants = Arrays.asList(card.getVariants());
             try {
-                boolean hasSpecifiedVariant = (rarity.getValue() >= 6 && variants.contains(rarity)); // Assumes that a Secret Rare is requested
+                boolean hasSpecifiedVariant = (rarity != null && rarity.getValue() >= 6 && variants.contains(rarity)); // Assumes that a Secret Rare is requested
                 int variantIndex = -1;
                 if (hasSpecifiedVariant) {
                     for (int i = 0; i < variants.size(); i++) {
@@ -134,11 +167,14 @@ public class Collection {
                 }
                 if (card != null && 
                     ((packId == null && card.getPack() != "P") || card.getPack().equals(packId)) &&
-                    (rarity.getValue() >= 6 ? hasSpecifiedVariant : card.getRarity() == rarity)) {
+                    ((rarity == null || (rarity.getValue() >= 6 ? hasSpecifiedVariant : card.getRarity() == rarity))) && 
+                    (color == null || card.getColor() == color) &&
+                    (type == null || card.getType() == type)) {
                     if (countMode) {// countMode: true = num. of copies, false = owned or not
-                        if (hasSpecifiedVariant && variantIndex != -1) {
+                        if (rarity != null && hasSpecifiedVariant && variantIndex != -1) {
                             if (variantIndex >= entry.getValue().size()) {
-                                System.out.println("Index out of bounds for counts list, assuming 0");
+                                continue;
+                                //System.out.println("Index out of bounds for counts list, assuming 0");
                             } else {
                                 total += entry.getValue().get(variantIndex);
                             }
@@ -148,9 +184,10 @@ public class Collection {
                             }
                         }
                     } else {
-                        if (hasSpecifiedVariant && variantIndex != -1) {
+                        if (rarity != null && hasSpecifiedVariant && variantIndex != -1) {
                             if (variantIndex >= entry.getValue().size()) {
-                                System.out.println("Index out of bounds for counts list, assuming 0");
+                                continue;
+                                //System.out.println("Index out of bounds for counts list, assuming 0");
                             } else {
                                 if (entry.getValue().get(variantIndex) > 0) {
                                     total += 1;
@@ -169,14 +206,14 @@ public class Collection {
                     }
                 }
             } catch (NullPointerException e) {
-                // Some parameter is null, skip
+                e.printStackTrace();
             }
         }
         return total;
     }
 
-    public void setCardOwnedCount(String cardId, int variantIndex, int count) {
-        List<Integer> counts = collection.getOrDefault(cardId, new ArrayList<>());
+    public void setCardOwnedCount(int langIndex, String cardId, int variantIndex, int count) {
+        List<Integer> counts = collection.get(langIndex).getOrDefault(cardId, new ArrayList<>());
         while (counts.size() <= variantIndex) {
             counts.add(0); // Initialize missing variants with 0
         }
@@ -185,14 +222,18 @@ public class Collection {
         } else {
             counts.set(variantIndex, count);
         }
-        collection.put(cardId, counts);
+        collection.get(langIndex).put(cardId, counts);
     }
 
     public void setCardChangeCount(String cardId, int changeCount) {
         change.put(cardId, changeCount);
     }
 
-    public Map<String, List<Integer>> getCollection() {
+    public Map<String, List<Integer>> getCollection(int langIndex) {
+        return collection.get(langIndex);
+    }
+
+    public List<Map<String, List<Integer>>> getCollection() {
         return collection;
     }
 

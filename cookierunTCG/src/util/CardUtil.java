@@ -14,6 +14,7 @@ public class CardUtil {
 	public static int HP_MAX = 6;
 	public static int SKILL_TYPE_MAX = 8;
 	public static int KEYWORD_MAX = 5;
+	public static int TYPE_MAX = 4;
 	
 	// For language translation
 	private static ResourceBundle messages, messages_promo;
@@ -78,6 +79,24 @@ public class CardUtil {
 	        return null;
 	    }
 
+		public String getColorCode() {
+	        switch(this){
+		        case Red:
+		        	return "R";
+		        case Yellow:
+		        	return "Y";
+		        case Green:
+		        	return "G";
+		        case Blue:
+		        	return "B";
+		        case Purple:
+		        	return "P";
+				case Colorless:
+		        	return "W";
+	        }
+	        return null;
+	    }
+
 		public String getDisplayName() {
             return CardUtil.getTranslation("color." + this.name().toLowerCase());
         }
@@ -93,7 +112,6 @@ public class CardUtil {
 	    }
 	}
 
-	public static int TYPE_MAX = 4;
 	public enum CardType {
 	    Cookie(0), Item(1), Trap(2), Stage(3);
 	    private final int value;

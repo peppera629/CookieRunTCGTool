@@ -25,6 +25,36 @@ public class Config {
 		}
 		LANGUAGE = properties.getProperty("language", "en"); // Default to "en" if not found
 		CARD_LANGUAGE = properties.getProperty("card_language", "en"); // Default to "en" if not found
+		REGION = properties.getProperty("region", "NA"); // Default to "NA" if not found
+		switch (CARD_LANGUAGE) {
+			case "en":
+				FALLBACK_ORDER = new String[] {"en", "kr", "zh_TW"};
+				break;
+			case "zh_TW":
+				FALLBACK_ORDER = new String[] {"zh_TW", "en", "kr"};
+				break;
+			case "kr":
+				FALLBACK_ORDER = new String[] {"kr", "en", "zh_TW"};
+				break;
+		}
+		switch (REGION) {
+			case "KR":
+				LEGAL_LANGUAGES = new String[] {"kr"};
+				COLLECTION_LANGUAGE_ORDER = new String[] {"kr", "en", "zh_TW"};
+				break;
+			case "TW":
+				LEGAL_LANGUAGES = new String[] {"zh_TW", "en"};
+				COLLECTION_LANGUAGE_ORDER = new String[] {"zh_TW", "en", "kr"};
+				break;
+			case "SEA":
+				LEGAL_LANGUAGES = new String[] {"en"};
+				COLLECTION_LANGUAGE_ORDER = new String[] {"en", "kr", "zh_TW"};
+				break;
+			case "NA":
+				LEGAL_LANGUAGES = new String[] {"en"};
+				COLLECTION_LANGUAGE_ORDER = new String[] {"en", "kr", "zh_TW"};
+				break;
+		}
 		FALLBACK_ORDER = (CARD_LANGUAGE.equals("en")) ? new String[] {"en", "kr", "zh_TW"} : new String[] {"zh_TW", "en", "kr"};
 		CARD_PREVIEW_SCALE = Double.parseDouble(properties.getProperty("card_preview_scale", "1.0")); // Default to 1.0 if not found
 		CARD_ICON_SCALE = Double.parseDouble(properties.getProperty("card_icon_scale", "1.0")); // Default to 1.0 if not found
@@ -43,7 +73,36 @@ public class Config {
         Properties properties = new Properties();
         properties.setProperty("language", LANGUAGE);
         properties.setProperty("card_language", CARD_LANGUAGE);
-		FALLBACK_ORDER = (CARD_LANGUAGE.equals("en")) ? new String[] {"en", "kr", "zh_TW"} : new String[] {"zh_TW", "en", "kr"};
+		properties.setProperty("region", REGION);
+		switch (CARD_LANGUAGE) {
+			case "en":
+				FALLBACK_ORDER = new String[] {"en", "kr", "zh_TW"};
+				break;
+			case "zh_TW":
+				FALLBACK_ORDER = new String[] {"zh_TW", "en", "kr"};
+				break;
+			case "kr":
+				FALLBACK_ORDER = new String[] {"kr", "en", "zh_TW"};
+				break;
+		}
+		switch (REGION) {
+			case "KR":
+				LEGAL_LANGUAGES = new String[] {"kr"};
+				COLLECTION_LANGUAGE_ORDER = new String[] {"kr", "en", "zh_TW"};
+				break;
+			case "TW":
+				LEGAL_LANGUAGES = new String[] {"zh_TW", "en"};
+				COLLECTION_LANGUAGE_ORDER = new String[] {"zh_TW", "en", "kr"};
+				break;
+			case "SEA":
+				LEGAL_LANGUAGES = new String[] {"en"};
+				COLLECTION_LANGUAGE_ORDER = new String[] {"en", "kr", "zh_TW"};
+				break;
+			case "NA":
+				LEGAL_LANGUAGES = new String[] {"en"};
+				COLLECTION_LANGUAGE_ORDER = new String[] {"en", "kr", "zh_TW"};
+				break;
+		}
         properties.setProperty("card_preview_scale", String.valueOf(CARD_PREVIEW_SCALE));
         properties.setProperty("card_icon_scale", String.valueOf(CARD_ICON_SCALE));
 		Config.CARD_PREVIEW_WIDTH = (int) (400 * Config.CARD_PREVIEW_SCALE);
@@ -74,7 +133,11 @@ public class Config {
 
 	public static String LANGUAGE; // en or zh_TW
 	public static String CARD_LANGUAGE; // en or zh_TW
+	public static String REGION; // KR, TW, SEA, NA
 	public static String[] ALL_LANGUAGES = {"en", "zh_TW"};
+	public static String[] ALL_CARD_LANGUAGES = {"en", "zh_TW", "kr"};
+	public static String[] LEGAL_LANGUAGES;
+	public static String[] COLLECTION_LANGUAGE_ORDER;
 	public static String[] FALLBACK_ORDER;
 
 	public static float CARD_RATIO = 1.3859F;
