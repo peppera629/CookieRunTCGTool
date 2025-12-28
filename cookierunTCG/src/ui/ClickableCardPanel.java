@@ -203,7 +203,7 @@ public class ClickableCardPanel extends JPanel {
 						}
 						break;
 					case 3: // Collection Count
-						text = Integer.toString(Collection.getInstance().getCardTotalOwnedCount(mCard.getId(), false));
+						text = Integer.toString(Collection.getInstance().getCardTotalOwnedCount(mCard.getId(), Config.SHOW_ONLY_LEGAL_IN_COLLECTION));
 						collectionChangeText = Integer.toString(collectionChange);
 						if (collectionChange > 0) {
 							collectionChangeText = "+" + collectionChangeText;

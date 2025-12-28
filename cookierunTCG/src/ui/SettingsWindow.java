@@ -30,7 +30,7 @@ public class SettingsWindow implements LanguageChangeListener{
     private JComboBox<String> languageDropdown, cardLanguageDropdown, regionDropdown;
     private JButton btnConfirm;
     private JSlider cardPreviewScaleSlider, cardListScaleSlider;
-    private JToggleButton cardTranslationToggle, largeTranslationTextToggle, buildModeToggle, showCollectionChangeToggle, showOwnedOnlyToggle, advFilteringToggle;
+    private JToggleButton cardTranslationToggle, largeTranslationTextToggle, buildModeToggle, showCollectionChangeToggle, showOwnedOnlyToggle, advFilteringToggle, showOnlyLegalInCollectionToggle;
 
 	public static void addLanguageChangeListener(LanguageChangeListener listener) {
         listeners.add(listener);
@@ -114,6 +114,7 @@ public class SettingsWindow implements LanguageChangeListener{
         gbc.gridx = 0;
         gbc.gridy = 3;
         frame.getContentPane().add(regionLabel, gbc);
+        regionLabel.setToolTipText(CardUtil.getTranslation("settings.region.tooltip"));
 
         // ==== Language Dropdown ====
         String[] languages = { CardUtil.getTranslation("settings.language.en"), CardUtil.getTranslation("settings.language.zh_TW") };
@@ -339,12 +340,38 @@ public class SettingsWindow implements LanguageChangeListener{
         advFilteringToggle.setSelected(Config.ADVANCED_FILTERING);
         advFilteringToggle.setToolTipText(CardUtil.getTranslation("settings.advfiltering.tooltip"));
 
+        // ==== Show Only Legal In Collection Toggle ====
+        showOnlyLegalInCollectionToggle = new JToggleButton();
+        if (Config.SHOW_ONLY_LEGAL_IN_COLLECTION) {
+            showOnlyLegalInCollectionToggle.setText(CardUtil.getTranslation("settings.showonlylegalincollection") + ": " + CardUtil.getTranslation("settings.enabled"));
+        } else {
+            showOnlyLegalInCollectionToggle.setText(CardUtil.getTranslation("settings.showonlylegalincollection") + ": " + CardUtil.getTranslation("settings.disabled"));
+        }
+        showOnlyLegalInCollectionToggle.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(showOnlyLegalInCollectionToggle, "CRnormal");
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        gbc.gridwidth = 2;
+        frame.getContentPane().add(showOnlyLegalInCollectionToggle, gbc);
+        showOnlyLegalInCollectionToggle.addActionListener(e -> {
+            boolean isSelected = showOnlyLegalInCollectionToggle.isSelected();
+            Config.SHOW_ONLY_LEGAL_IN_COLLECTION = isSelected;
+            if (isSelected) {
+                showOnlyLegalInCollectionToggle.setText(CardUtil.getTranslation("settings.showonlylegalincollection") + ": " + CardUtil.getTranslation("settings.enabled"));
+            } else {
+                showOnlyLegalInCollectionToggle.setText(CardUtil.getTranslation("settings.showonlylegalincollection") + ": " + CardUtil.getTranslation("settings.disabled"));
+            }
+        });
+
+        showOnlyLegalInCollectionToggle.setSelected(Config.SHOW_ONLY_LEGAL_IN_COLLECTION);
+        showOnlyLegalInCollectionToggle.setToolTipText(CardUtil.getTranslation("settings.showonlylegalincollection.tooltip"));
+
         // ==== Confirm Button ====
         btnConfirm = new JButton(CardUtil.getTranslation("settings.confirm"));
         btnConfirm.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(btnConfirm, "CRnormal");
         gbc.gridx = 0;
-        gbc.gridy = 8;
+        gbc.gridy = 9;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         frame.getContentPane().add(btnConfirm, gbc);
@@ -398,6 +425,7 @@ public class SettingsWindow implements LanguageChangeListener{
         languageLabel.setText(CardUtil.getTranslation("settings.language"));
         cardLanguageLabel.setText(CardUtil.getTranslation("settings.cardlanguage"));
         regionLabel.setText(CardUtil.getTranslation("settings.region"));
+        showOnlyLegalInCollectionToggle.setText(CardUtil.getTranslation("settings.showonlylegalincollection") + ": " + (Config.SHOW_ONLY_LEGAL_IN_COLLECTION ? CardUtil.getTranslation("settings.enabled") : CardUtil.getTranslation("settings.disabled")));
         btnConfirm.setText(CardUtil.getTranslation("settings.confirm"));
         languageDropdown.setModel(new DefaultComboBoxModel<>(new String[]{
             CardUtil.getTranslation("settings.language.en"),

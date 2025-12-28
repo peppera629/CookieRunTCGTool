@@ -322,11 +322,11 @@ public class CollectionSummaryDialog {
         tableBorder_sec.setLayout(null);
         byRaritySecret.add(tableBorder_sec, gbc_byRaritySecret);
         byRaritySecret.setComponentZOrder(tableBorder_sec, 0);
-
+        /*
         JPanel byPromoSet = new JPanel();
         byPromoSet.setLayout(new GridBagLayout());
         tabbedPane.addTab(CardUtil.getTranslation("collection.summary.promo"), byPromoSet);
-
+         */
         frame.getContentPane().add(tabbedPane);
     }
 }

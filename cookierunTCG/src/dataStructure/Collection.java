@@ -65,7 +65,7 @@ public class Collection {
                         collection.get(i).put(cardId, counts);
                     }
                 }
-                System.out.println("Collection for language " + Config.ALL_CARD_LANGUAGES[i] + " loaded from " + collection_files.get(i));
+                System.out.println("Collection for language " + Config.ALL_CARD_LANGUAGES[Config.COLLECTION_LANGUAGE_INDICES[i]] + " loaded from " + collection_files.get(i));
             } catch (IOException e) {
             e.printStackTrace();
             }
@@ -123,7 +123,7 @@ public class Collection {
             }
             
             for (int count : counts) {
-                if (!legalityConstraint || Arrays.asList(Config.LEGAL_LANGUAGES).contains(Config.ALL_CARD_LANGUAGES[langIndex])) {
+                if (!legalityConstraint || Arrays.asList(Config.LEGAL_LANGUAGES).contains(Config.ALL_CARD_LANGUAGES[Config.COLLECTION_LANGUAGE_INDICES[langIndex]])) {
                     total += count;
                 }
             }

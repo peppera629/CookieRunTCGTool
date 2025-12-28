@@ -80,14 +80,10 @@ import java.util.Map;
 
 import javax.swing.JButton;
 
-// TOP PRIORITY: Implement language-separated collection support (track EN, TC, KR card counts separately)
-// (PROGRESS: modifying methods in Collection.java starting from getCardOwnedCount)
-// FEATURE: Add more views for collection summary in collection mode (overview, by color, by promo set, etc.)
 // FIX: Verify collection summary correctness
+// FIX: Fix settings appearing slightly offscreen when appearing
+// FEATURE: Restrict displayed cards based on language availability or pack release status based on region
 // FEATURE: Add "Credits" popup
-// FEATURE: Add option to allow displaying of variants even when collection mode is off
-// TO DO: Update card names for BS9 cards on official release
-// FIX: Add auto-resize to deck overview
 // FIX: Change ways of compiling (JAR, or fix command prompt window not closing)
 // OPTIMIZATION: Reduce memory usage (somehow)
 
@@ -265,7 +261,19 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             @Override
             public void actionPerformed(ActionEvent e) {
                 currentSelectedCardLanguage = (currentSelectedCardLanguage + 1) % Config.ALL_CARD_LANGUAGES.length;
-                System.out.println("Switched selected language to " + Config.ALL_CARD_LANGUAGES[currentSelectedCardLanguage]);
+                for (int i = 0; i < langLabels.length; i++) {
+                    langLabels[i].setVisible(true);
+                    if (i == currentSelectedCardLanguage) {
+                        langLabels[i].setOpaque(true);
+                        langLabels[i].setBackground(new Color(60,60,255,255));
+                        langLabels[i].setForeground(Color.WHITE);
+                    } else {
+                        langLabels[i].setOpaque(false);
+                        langLabels[i].setBackground(new Color(0,0,0,0));
+                        langLabels[i].setForeground(Color.BLACK);
+                    }
+                }
+                System.out.println("Switched selected language to " + Config.ALL_CARD_LANGUAGES[Config.COLLECTION_LANGUAGE_INDICES[currentSelectedCardLanguage]]);
             }
         });
 
@@ -879,13 +887,13 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         };
 
         ownedInfoCountRows = new JLabel[][] {
-            {new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT)},
-            {new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT)},
-            {new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT)},
-            {new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT)},
-            {new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT)},
-            {new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT)},
-            {new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT), new JLabel("", JLabel.RIGHT)}
+            {new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER)},
+            {new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER)},
+            {new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER)},
+            {new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER)},
+            {new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER)},
+            {new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER)},
+            {new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER), new JLabel("", JLabel.CENTER)}
         };
 
         GridBagConstraints gbc_owned = new GridBagConstraints();
@@ -2056,8 +2064,17 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             splitPane.setDividerSize(0);
             splitPane.setEnabled(false);
             for (int i = 0; i < langLabels.length; i++) {
-                langLabels[i].setVisible(true);
-            }
+                    langLabels[i].setVisible(true);
+                    if (i == currentSelectedCardLanguage) {
+                        langLabels[i].setOpaque(true);
+                        langLabels[i].setBackground(new Color(60,60,255,255));
+                        langLabels[i].setForeground(Color.WHITE);
+                    } else {
+                        langLabels[i].setOpaque(false);
+                        langLabels[i].setBackground(new Color(0,0,0,0));
+                        langLabels[i].setForeground(Color.BLACK);
+                    }
+                }
 
             for (JLabel[] labels : ownedInfoCountRows) {
                 for (JLabel label : labels) {
@@ -2125,8 +2142,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         @Override
         public void addCard(Card card) {
             // Increment the collection count
-            int newCount = collection.getCardOwnedCount(currentSelectedCardLanguage, card.getId(), collectionAddVariant) + 1;
-            collection.setCardOwnedCount(currentSelectedCardLanguage, card.getId(), collectionAddVariant, newCount);
+            int newCount = collection.getCardOwnedCount(Config.COLLECTION_LANGUAGE_INDICES[currentSelectedCardLanguage], card.getId(), collectionAddVariant) + 1;
+            collection.setCardOwnedCount(Config.COLLECTION_LANGUAGE_INDICES[currentSelectedCardLanguage], card.getId(), collectionAddVariant, newCount);
             collection.setCardChangeCount(card.getId(), (collection.getCardTotalChangeCount(card.getId())+1));
             updateCardListForCollection(); // Refresh the card list to show the updated count
             updateCardOwnedInfoLabel(card);
@@ -2135,8 +2152,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         @Override
         public void removeCard(Card card) {
             // Decrement the collection count
-            int newCount = collection.getCardOwnedCount(currentSelectedCardLanguage, card.getId(), collectionAddVariant) - 1;
-            collection.setCardOwnedCount(currentSelectedCardLanguage, card.getId(), collectionAddVariant, newCount);
+            int newCount = collection.getCardOwnedCount(Config.COLLECTION_LANGUAGE_INDICES[currentSelectedCardLanguage], card.getId(), collectionAddVariant) - 1;
+            collection.setCardOwnedCount(Config.COLLECTION_LANGUAGE_INDICES[currentSelectedCardLanguage], card.getId(), collectionAddVariant, newCount);
             if (newCount >= 0) {
                 collection.setCardChangeCount(card.getId(), (collection.getCardTotalChangeCount(card.getId())-1));
             }
@@ -2174,7 +2191,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
 
             for (int i = 0; i < langLabels.length; i++) {
-                langLabels[i].setText(Config.ALL_CARD_LANGUAGES[i].replace("zh_TW", "TC").toUpperCase());
+                langLabels[i].setText(Config.ALL_CARD_LANGUAGES[Config.COLLECTION_LANGUAGE_INDICES[i]].replace("zh_TW", "TC").toUpperCase());
                 langLabels[i].setVisible(true);
             }
 
@@ -2231,10 +2248,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             return;
         }
         for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < Config.ALL_CARD_LANGUAGES.length; j++) {
+            for (int j = 0; j < Config.COLLECTION_LANGUAGE_INDICES.length; j++) {
+                int langIdx = Config.COLLECTION_LANGUAGE_INDICES[j];
                 if (i < rarities.length) {
                     StringBuilder ownedInfo = new StringBuilder();
-                    int ownedCount = collection.getCardOwnedCount(j, card.getId(), i);
+                    int ownedCount = collection.getCardOwnedCount(langIdx, card.getId(), i);
                     //System.out.println(rarities[i].getName());
                     //System.out.println(ownedCount);
                     ownedInfo.append("<html>");

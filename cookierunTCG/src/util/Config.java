@@ -26,6 +26,7 @@ public class Config {
 		LANGUAGE = properties.getProperty("language", "en"); // Default to "en" if not found
 		CARD_LANGUAGE = properties.getProperty("card_language", "en"); // Default to "en" if not found
 		REGION = properties.getProperty("region", "NA"); // Default to "NA" if not found
+		System.out.println("Current region: " + REGION);
 		switch (CARD_LANGUAGE) {
 			case "en":
 				FALLBACK_ORDER = new String[] {"en", "kr", "zh_TW"};
@@ -41,20 +42,25 @@ public class Config {
 			case "KR":
 				LEGAL_LANGUAGES = new String[] {"kr"};
 				COLLECTION_LANGUAGE_ORDER = new String[] {"kr", "en", "zh_TW"};
+				COLLECTION_LANGUAGE_INDICES = new int[] {2, 0, 1};
 				break;
 			case "TW":
 				LEGAL_LANGUAGES = new String[] {"zh_TW", "en"};
 				COLLECTION_LANGUAGE_ORDER = new String[] {"zh_TW", "en", "kr"};
+				COLLECTION_LANGUAGE_INDICES = new int[] {1, 0, 2};
 				break;
 			case "SEA":
 				LEGAL_LANGUAGES = new String[] {"en"};
 				COLLECTION_LANGUAGE_ORDER = new String[] {"en", "kr", "zh_TW"};
+				COLLECTION_LANGUAGE_INDICES = new int[] {0, 2, 1};
 				break;
 			case "NA":
 				LEGAL_LANGUAGES = new String[] {"en"};
 				COLLECTION_LANGUAGE_ORDER = new String[] {"en", "kr", "zh_TW"};
+				COLLECTION_LANGUAGE_INDICES = new int[] {0, 2, 1};
 				break;
 		}
+		System.out.println("Legal card languages: " + String.join(", ", LEGAL_LANGUAGES));
 		FALLBACK_ORDER = (CARD_LANGUAGE.equals("en")) ? new String[] {"en", "kr", "zh_TW"} : new String[] {"zh_TW", "en", "kr"};
 		CARD_PREVIEW_SCALE = Double.parseDouble(properties.getProperty("card_preview_scale", "1.0")); // Default to 1.0 if not found
 		CARD_ICON_SCALE = Double.parseDouble(properties.getProperty("card_icon_scale", "1.0")); // Default to 1.0 if not found
@@ -66,6 +72,7 @@ public class Config {
 		SHOW_COLLECTION_CHANGE = Boolean.parseBoolean(properties.getProperty("show_collection_change", "true")); // Default to true if not found
 		SHOW_OWNED_ONLY = Boolean.parseBoolean(properties.getProperty("show_owned_only", "false")); // Default to false if not found
 		ADVANCED_FILTERING = Boolean.parseBoolean(properties.getProperty("advanced_filtering", "false")); // Default to false if not found
+		SHOW_ONLY_LEGAL_IN_COLLECTION = Boolean.parseBoolean(properties.getProperty("show_only_legal_in_collection", "false")); // Default to false if not found
     }
 
     // Save the language setting to the config file
@@ -89,18 +96,22 @@ public class Config {
 			case "KR":
 				LEGAL_LANGUAGES = new String[] {"kr"};
 				COLLECTION_LANGUAGE_ORDER = new String[] {"kr", "en", "zh_TW"};
+				COLLECTION_LANGUAGE_INDICES = new int[] {2, 0, 1};
 				break;
 			case "TW":
 				LEGAL_LANGUAGES = new String[] {"zh_TW", "en"};
 				COLLECTION_LANGUAGE_ORDER = new String[] {"zh_TW", "en", "kr"};
+				COLLECTION_LANGUAGE_INDICES = new int[] {1, 0, 2};
 				break;
 			case "SEA":
 				LEGAL_LANGUAGES = new String[] {"en"};
 				COLLECTION_LANGUAGE_ORDER = new String[] {"en", "kr", "zh_TW"};
+				COLLECTION_LANGUAGE_INDICES = new int[] {0, 2, 1};
 				break;
 			case "NA":
 				LEGAL_LANGUAGES = new String[] {"en"};
 				COLLECTION_LANGUAGE_ORDER = new String[] {"en", "kr", "zh_TW"};
+				COLLECTION_LANGUAGE_INDICES = new int[] {0, 2, 1};
 				break;
 		}
         properties.setProperty("card_preview_scale", String.valueOf(CARD_PREVIEW_SCALE));
@@ -113,6 +124,7 @@ public class Config {
 		properties.setProperty("show_collection_change", String.valueOf(SHOW_COLLECTION_CHANGE));
 		properties.setProperty("show_owned_only", String.valueOf(SHOW_OWNED_ONLY));
 		properties.setProperty("advanced_filtering", String.valueOf(ADVANCED_FILTERING));
+		properties.setProperty("show_only_legal_in_collection", String.valueOf(SHOW_ONLY_LEGAL_IN_COLLECTION));
         try (OutputStream output = new FileOutputStream(CONFIG_FILE)) {
             properties.store(output, "Application Configuration");
         } catch (IOException e) {
@@ -138,6 +150,7 @@ public class Config {
 	public static String[] ALL_CARD_LANGUAGES = {"en", "zh_TW", "kr"};
 	public static String[] LEGAL_LANGUAGES;
 	public static String[] COLLECTION_LANGUAGE_ORDER;
+	public static int[] COLLECTION_LANGUAGE_INDICES;
 	public static String[] FALLBACK_ORDER;
 
 	public static float CARD_RATIO = 1.3859F;
@@ -161,6 +174,7 @@ public class Config {
 	public static boolean LARGE_TRANSLATION_TEXT = false;
 	public static boolean DECK_BUILD_FROM_COLLECTION = false;
 	public static boolean SHOW_COLLECTION_CHANGE = true;
+	public static boolean SHOW_ONLY_LEGAL_IN_COLLECTION = false;
 	public static boolean SHOW_OWNED_ONLY = false;
 	public static boolean ADVANCED_FILTERING = false;
 
