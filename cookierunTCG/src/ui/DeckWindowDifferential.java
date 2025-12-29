@@ -58,9 +58,6 @@ public class DeckWindowDifferential {
 		mDeck2 = deck2;
 		mDeckName2 = deckName2;
 		mCompareMode = compareMode;
-		if (frame != null) {
-			frame.setTitle((mCompareMode ? mDeckName2 + " -> " + mDeckName1 : mDeckName1 + " -> " + mDeckName2));
-		}
 	}
 
 	/**
@@ -87,9 +84,10 @@ public class DeckWindowDifferential {
 			frame.setVisible(false);
 		}
 		frame = new JFrame();
-		frame.setTitle(mDeckName1 + " -> " + mDeckName2);
+		//frame.setTitle(mDeckName1 + " -> " + mDeckName2);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setTitle((mCompareMode ? mDeckName1 + " -> " + mDeckName2 : mDeckName2 + " -> " + mDeckName1));
 
 
 
@@ -143,7 +141,12 @@ public class DeckWindowDifferential {
 		if (!new File("deck_image").exists()) {
 			new File("deck_image").mkdirs();
 		}
-		File outputFile = new File("deck_image/" + mDeckName1 + "_to_" + mDeckName2 + ".png");
+		File outputFile;
+		if (mCompareMode) {
+			outputFile = new File("deck_image/" + mDeckName1 + "_to_" + mDeckName2 + ".png");
+		} else {
+			outputFile = new File("deck_image/" + mDeckName2 + "_to_" + mDeckName1 + ".png");
+		}
 		try {
 			ImageIO.write(image, "png", outputFile);
 			System.out.println("Deck overview saved to " + outputFile.getAbsolutePath());

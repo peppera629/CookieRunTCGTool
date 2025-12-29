@@ -1113,7 +1113,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 compareModeGroup.add(compareModeFrom);
                 JRadioButton compareModeTo = new JRadioButton(CardUtil.getTranslation("deck.compare.to"));
                 compareModeGroup.add(compareModeTo);
-                compareModeTo.setSelected(true);
+                compareModeFrom.setSelected(true);
                 compareModePanel.add(compareModeFrom);
                 compareModePanel.add(compareModeTo);
                 fileChooser.setAccessory(compareModePanel);

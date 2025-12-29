@@ -209,6 +209,20 @@ public class DefaultState {
 			type[i] = false;
 		}
 		flip = false;
+		extra = false;
+		for (int i = 0; i < rarity.length; i++) {
+			rarity[i] = false;
+		}
+		for (int i = 0; i < lv.length; i++) {
+			lv[i] = false;
+		}
+		for (int i = 0; i < hp.length; i++) {
+			hp[i] = false;
+		}
+		for (int i = 0; i < flipType.length; i++) {
+			flipType[i] = false;
+		}
+		_search_pack_list.clear();
 	}
 
 	public void saveDefaultState() {
