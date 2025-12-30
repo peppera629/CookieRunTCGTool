@@ -3,7 +3,7 @@ ST5-002,GingerBright,活潑餅乾
 ST5-003,Fig Cookie,無花果餅乾
 ST5-004,Skater Cookie,滑板族餅乾
 ST5-005,Cream Puff Cookie,奶油泡芙餅乾
-ST5-006,String Gummy Cookie,比館軟糖餅乾
+ST5-006,String Gummy Cookie,筆管軟糖餅乾
 ST5-007,Yoga Cookie,瑜珈餅乾
 ST5-008,Fairy Cookie,妖精餅乾
 ST5-009,GingerBrave,勇敢餅乾

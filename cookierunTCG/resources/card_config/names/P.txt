@@ -88,6 +88,7 @@ P-088,Wind Archer Cookie,風箭手餅乾
 P-089,GingerBrave,勇敢餅乾
 P-091,DJ Miya,DJ Miya
 P-092,DJ Miya,DJ Miya
+P-092@1,Pudding à la Mode Cookie,布丁百匯餅乾
 P-093,White Peach Cookie,白桃餅乾
 P-094,Lemon Cookie,檸檬餅乾
 P-095,Tiger Lily Cookie,叢林戰士餅乾
@@ -99,5 +100,24 @@ P-100,Icicle Yeti Cookie,冰錐雪怪餅乾
 P-101,Pond Dino Cookie,勿忘草恐龍餅乾
 P-102,Pancake Cookie,鬆餅餅乾
 P-103,Blossom Cookie,花花餅乾
+P-103@1,Choco Drizzle Cookie,巧克力淋醬餅乾
 P-104,Buttercup Cookie,毛毛餅乾
+P-104@1,Green Tea Mousse Cookie,綠茶慕斯餅乾
 P-105,Bubbles Cookie,泡泡餅乾
+P-105@1,Pudding à la Mode Cookie,布丁百匯餅乾
+P-106,Shining Glitter Cookie,閃耀之星餅乾
+P-107,Parfait Cookie,帕菲餅乾
+P-108,Pastel Meringue Cookie,粉彩蛋白霜餅乾
+P-109,Dino-Sour Cookie,恐龍餅乾
+P-110,Sour Belt Cookie,霓虹軟糖餅乾
+P-111,GingerBrave,勇敢餅乾
+P-112,Adventurer Cookie,探險家餅乾
+P-113,Green Tea Mousse Cookie,綠茶慕斯餅乾
+P-114,Shine Muscat Cookie,陽光麝香葡萄餅乾
+P-115,Truffle Cookie,松露餅乾
+P-116,Mustard Cookie,黃芥末醬餅乾
+P-117,Earl Grey Cookie,伯爵茶餅乾
+P-118,Strawberry Stick Cookie,草莓巧克力棒餅乾
+P-119,Cotton Candy Cookie,棉花糖餅乾
+P-120,Chocolate Bonbon Cookie,巧克力球餅乾
+P-121,Currant Cream Cookie,黑醋栗奶油餅乾

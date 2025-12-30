@@ -190,6 +190,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private boolean isCollectionMode = false, deckChanged = false;
     private Collection collection = Collection.getInstance();
     private Card currentCard;
+    private Color highlightColor = new Color(60,60,255,255);
 
     private void initialize() {
         Config.loadConfig();
@@ -265,7 +266,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     langLabels[i].setVisible(true);
                     if (i == currentSelectedCardLanguage) {
                         langLabels[i].setOpaque(true);
-                        langLabels[i].setBackground(new Color(60,60,255,255));
+                        langLabels[i].setBackground(highlightColor);
                         langLabels[i].setForeground(Color.WHITE);
                     } else {
                         langLabels[i].setOpaque(false);
@@ -2067,7 +2068,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     langLabels[i].setVisible(true);
                     if (i == currentSelectedCardLanguage) {
                         langLabels[i].setOpaque(true);
-                        langLabels[i].setBackground(new Color(60,60,255,255));
+                        langLabels[i].setBackground(highlightColor);
                         langLabels[i].setForeground(Color.WHITE);
                     } else {
                         langLabels[i].setOpaque(false);
@@ -2195,7 +2196,19 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 langLabels[i].setVisible(true);
             }
 
-            cardName.setText(card.getName());
+            if (collectionAddVariant != 0 && card.getVariants().length > collectionAddVariant) {
+                List<String> altNamesForVariant = card.getAltNames().get(collectionAddVariant-1);
+                if (altNamesForVariant != null && altNamesForVariant.size() > currentSelectedCardLanguage) {
+                    cardName.setText(altNamesForVariant.get(currentSelectedCardLanguage));
+                    cardName.setForeground(highlightColor);
+                } else {
+                    cardName.setText(card.getName());
+                    cardName.setForeground(Color.BLACK);
+                }
+            } else {
+                cardName.setText(card.getName());
+                cardName.setForeground(Color.BLACK);
+            }
             clearTranslations();
 
             updateCardOwnedInfoLabel(card);
@@ -2279,7 +2292,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private void updateCardOwnedInfoHighlight(int variantIndex) {
         for (int i = 0; i < ownedInfoCountRows.length; i++) {
             if (i == variantIndex && variantIndex > 0) {
-                ownedInfoCountRows[i][currentSelectedCardLanguage].setForeground(new Color(60,60,255,255));
+                ownedInfoCountRows[i][currentSelectedCardLanguage].setForeground(highlightColor);
             } else {
                 ownedInfoCountRows[i][currentSelectedCardLanguage].setForeground(Color.BLACK);
             }
@@ -2303,6 +2316,24 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 }
             }
             cardLabel.setIcon(new ImageIcon(cardIcon.getImage().getScaledInstance((int) (previewHeight / Config.CARD_RATIO), previewHeight, java.awt.Image.SCALE_SMOOTH)));
+            if (currentCard.getAltNames().size() > 0) {
+                if (collectionAddVariant == 0) {
+                    cardName.setText(currentCard.getName());
+                    cardName.setForeground(Color.BLACK);
+                } else {
+                    List<String> altNamesForVariant = currentCard.getAltNames().get(collectionAddVariant-1);
+                    if (altNamesForVariant != null && altNamesForVariant.size() > Config.getLangIndex(Config.LANGUAGE)) {
+                        cardName.setText(altNamesForVariant.get(Config.getLangIndex(Config.LANGUAGE)));
+                        cardName.setForeground(highlightColor);
+                    } else {
+                        cardName.setText(currentCard.getName());
+                        cardName.setForeground(Color.BLACK);
+                    }
+                }
+            } else {
+                cardName.setText(currentCard.getName());
+                cardName.setForeground(Color.BLACK);
+            }
             mCardDetailPane.revalidate();
             mCardDetailPane.repaint();
         }

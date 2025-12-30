@@ -24,6 +24,7 @@ public class Card {
 	private String _id;
 	private String _name;
 	private List<String> _name_by_lang = new ArrayList<String>();
+	private List<List<String>> _alt_names = new ArrayList<List<String>>();
 	private CardColor _color;
 	private CardType _type;
 	private boolean _isFlip;
@@ -169,6 +170,10 @@ public class Card {
 	public List<String> getNameByLang() {
 		return _name_by_lang;
 	}
+
+	public List<List<String>> getAltNames() {
+		return _alt_names;
+	}
 	
 	public CardColor getColor() {
 		return _color;
@@ -262,6 +267,10 @@ public class Card {
 
 	public void setName(String name) {
 		_name = name;
+	}
+
+	public void addAltNames(List<String> altNames) {
+		_alt_names.add(altNames);
 	}
 
 	public void addToNameByLang(String name) {
