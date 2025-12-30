@@ -20,6 +20,10 @@ public class ChoiceDialog {
     private JDialog dialog;
     private int userChoice; // 0 = Yes, 1 = No, 2 = Cancel
 
+    public ChoiceDialog() {
+        
+    }
+
     public int show(String msg) {
         // Create a modal JDialog
         dialog = new JDialog((JFrame) null, CardUtil.getTranslation("dialog.title"), true);

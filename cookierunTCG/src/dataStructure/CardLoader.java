@@ -99,6 +99,9 @@ public class CardLoader {
 	}
 
 	public static void reloadTranslations(List<Card> cardList) {
+		for (Card c : cardList) {
+			c.clearCardTranslation();
+		}
 		for (int i=0; i<CardUtil.CardPack.size() ;i++) {
 			loadPackTranslations(CardUtil.CardPack.get(i), cardList);
 		}
