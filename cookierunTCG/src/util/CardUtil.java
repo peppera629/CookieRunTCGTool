@@ -41,11 +41,17 @@ public class CardUtil {
         if (messages == null) {
             loadLanguage(); // Ensure messages is loaded
         }
+		if (!messages.containsKey(key)) {
+			return "";
+		}
         return messages.getString(key);
     }
 	public static String getTranslationPromo(String key) {
 		if (messages_promo == null) {
 			loadLanguage(); // Ensure messages is loaded
+		}
+		if (!messages_promo.containsKey(key)) {
+			return "";
 		}
 		return messages_promo.getString(key);
 	}

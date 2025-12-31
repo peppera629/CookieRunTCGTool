@@ -32,6 +32,7 @@ public class Card {
 	private boolean _isExtra;
 	private CardRarity _rarity;
 	private CardRarity[] _variants;
+	private List<boolean[]> _availability; // [][0]: EN, [][1]: TW, [][2]: KR, list size = number of variants (inc. base)
 	private String[] _variantNames;
 	private String _mark;
 	private int _lv;
@@ -255,6 +256,37 @@ public class Card {
 	
 	public boolean getImageLoadStatus() {
 		return _isImageLoaded;
+	}
+
+	public List<boolean[]> getAvailabilityArray() {
+		if (_availability == null) {
+			_availability = new ArrayList<boolean[]>();
+		}
+		return _availability;
+	}
+
+	public boolean[] getAvailability(int variantId) {
+		if (_availability == null) {
+			_availability = new ArrayList<boolean[]>();
+			while (_availability.size() < _variants.length + 1) { // Assume all previous variants are available in all languages
+				_availability.add(new boolean[] {true, true, true});
+			}
+			return new boolean[] {true, true, true};
+		}
+		while (_availability.size() <= variantId) { // Assume all previous variants are available in all languages
+			_availability.add(new boolean[] {true, true, true});
+		}
+		return _availability.get(variantId);
+	}
+
+	public void setAvailability(int variantId, boolean[] availability) {
+		if (_availability == null) {
+			_availability = new ArrayList<boolean[]>();
+		}
+		while (_availability.size() <= variantId) { // Assume all previous variants are available in all languages
+			_availability.add(new boolean[] {true, true, true});
+		}
+		_availability.set(variantId, availability);
 	}
 
 	public void setCount(int count) {

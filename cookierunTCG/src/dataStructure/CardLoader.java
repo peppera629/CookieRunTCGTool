@@ -234,13 +234,10 @@ public class CardLoader {
 					// For each row: [ID, Name (EN), Name (zh_TW, or EN if not available)]
 
 					// Is an alt. name
-					System.out.println(cardData[0] + "-" + cardData[0].contains("@"));
 					if (cardData[0].contains("@")) {
 						// Add alternate name
-						System.out.println("Alt name found for ID: " + cardData[0].split("@")[0]);
 						for (Card c : cardList) {
 							if (c.getPack().equals(packName) && c.getId().equals(cardData[0].split("@")[0])) {
-								System.out.println("Found base card for alt name: " + c.getId());
 								List<String> altNames = new ArrayList<String>();
 								for (int i = 1; i <= Config.ALL_LANGUAGES.length ; i++) {
 									// Add to alt name list: ? if no name, EN by default
@@ -253,7 +250,6 @@ public class CardLoader {
 									}
 								}
 								c.addAltNames(altNames);
-								System.out.println("Added alt names for card ID: " + c.getId());
 							}
 						}
 					} else {
@@ -465,11 +461,7 @@ public class CardLoader {
 							if (c.getPack().equals(packName) && c.getId().equals(variantNames[0])) {
 								for (int i = 1; i < variantNames.length; i++) {
 									if (!variantNames[i].isEmpty() && variantNames[i] != null) {
-										try {
-											variantNamesLocalized[i - 1] = CardUtil.getTranslationPromo(variantNames[i]);
-										} catch (Exception e) {
-											variantNamesLocalized[i - 1] = variantNames[i];
-										}
+										variantNamesLocalized[i - 1] = variantNames[i];
 									} else {
 										variantNamesLocalized[i - 1] = "";
 									}
@@ -483,6 +475,120 @@ public class CardLoader {
 				inputDesc.close();
 			}
 			
+		} catch (FileNotFoundException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void loadCardAvailability() {
+	    try {
+	        File file = new File("resources/card_config/availability.txt");
+	        if (file.exists()) {
+				FileInputStream reader = new FileInputStream(file);
+		        BufferedReader input = new BufferedReader(
+		                new InputStreamReader(new FileInputStream(file), "utf-8")); 
+		        String data;
+		        while((data= input.readLine())!=null) {
+		            if (!data.equals("") && !data.startsWith("//")) {
+		            	String[] cardData = data.split(",");
+						// For each row: [ID / Promo Tag / ID & Variant ID, Availability: 3 digits in binary representing EN, TC, KR]
+						if (cardData[0].contains("@")) { // ID & Variant ID
+							String[] idVariant = cardData[0].split("@");
+							String cardId = idVariant[0];
+							int variantId = Integer.parseInt(idVariant[1]);
+							boolean[] availability;
+							if (cardData[1].equals("0")) {
+								availability = new boolean[] {true, true, true};
+							} else {
+								String availabilityStr = String.format("%3s", Integer.toBinaryString(Integer.parseInt(cardData[1]))).replace(' ', '0');
+								availability = new boolean[] {
+									availabilityStr.charAt(0) == '1', // EN
+									availabilityStr.charAt(1) == '1', // TC
+									availabilityStr.charAt(2) == '1'  // KR
+								};
+							}
+							for (Card c : CardList.getInstance().getAllCards()) {
+								if (c.getId().equals(cardId)) {
+									c.setAvailability(variantId, availability);
+									break;
+								}
+							}
+						} else if (cardData[0].contains(".")) { // Promo tag
+							System.out.println("Setting availability for promo tag: " + cardData[0]);
+							boolean[] availability;
+							if (cardData[1].equals("0")) {
+								availability = new boolean[] {true, true, true};
+							} else {
+								String availabilityStr = String.format("%3s", Integer.toBinaryString(Integer.parseInt(cardData[1]))).replace(' ', '0');
+								availability = new boolean[] {
+									availabilityStr.charAt(0) == '1', // EN
+									availabilityStr.charAt(1) == '1', // TC
+									availabilityStr.charAt(2) == '1'  // KR
+								};
+							}
+							for (Card c : CardList.getInstance().getAllCards()) {
+								for (int i = 0 ; i < c.getVariants().length; i++) {
+									//System.out.println(c.getVariantNames()[i]);
+									if (c.getVariantNames()[i].equals(cardData[0])) {
+										c.setAvailability(i, availability);
+										System.out.println("set " + c.getId() + " variant " + i + ": " + cardData[0] + " " + Arrays.toString(availability));
+									}
+								}
+							}
+						} else if (cardData[0].contains("-")) { // Base card only
+							boolean[] availability;
+							if (cardData[1].equals("0")) {
+								availability = new boolean[] {true, true, true};
+							} else {
+								String availabilityStr = String.format("%3s", Integer.toBinaryString(Integer.parseInt(cardData[1]))).replace(' ', '0');
+								availability = new boolean[] {
+									availabilityStr.charAt(0) == '1', // EN
+									availabilityStr.charAt(1) == '1', // TC
+									availabilityStr.charAt(2) == '1'  // KR
+								};
+							}
+							for (Card c : CardList.getInstance().getAllCards()) {
+								if (c.getId().equals(cardData[0])) {
+									c.setAvailability(0, availability);
+								}
+							}
+						} else { // Neither: whole pack
+							boolean[] availability;
+							if (cardData[1].equals("0")) {
+								availability = new boolean[] {true, true, true};
+								System.out.println("All available");
+							} else {
+								String availabilityStr = String.format("%3s", Integer.toBinaryString(Integer.parseInt(cardData[1]))).replace(' ', '0');
+								System.out.println(availabilityStr);
+								availability = new boolean[] {
+									availabilityStr.charAt(0) == '1', // EN
+									availabilityStr.charAt(1) == '1', // TC
+									availabilityStr.charAt(2) == '1'  // KR
+								};
+							}
+							System.out.println("Setting availability for pack: " + cardData[0]);
+							CardList cardListInstance = CardList.getInstance();
+							for (Card c : CardList.getInstance().getAllCards()) {
+								if (c.getPack().equals(cardData[0])) {
+									for (int i = 0 ; i < c.getVariants().length; i++) {
+										c.setAvailability(i, availability);
+										System.out.println("set " + c.getId() + " variant " + i);
+									}
+								}
+							}
+							System.out.println("set complete: " + cardData[0]);
+						}
+		            	//CardList.getInstance().setCardAvailability(cardData[0], Boolean.parseBoolean(cardData[1]));
+		            }
+		        } 
+				reader.close();
+		        input.close();
+	        }
 		} catch (FileNotFoundException e) {
 			System.out.println("An error occurred.");
 			e.printStackTrace();
@@ -538,7 +644,6 @@ public class CardLoader {
 		        String data;
 		        while((data= input.readLine())!=null) {	
 		            if (!data.equals("") && !data.startsWith("//")) {
-						System.out.println("Loading card ID: " + data);
 		            	if (counts.containsKey(data)) {
 		            		counts.put(data, counts.get(data) + 1);
 		            	} else {

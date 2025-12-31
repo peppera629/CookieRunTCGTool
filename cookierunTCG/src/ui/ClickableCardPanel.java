@@ -11,6 +11,7 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -48,6 +49,11 @@ public class ClickableCardPanel extends JPanel {
 		mDifferential = differential;
 		collectionChange = Collection.getInstance().getCardTotalChangeCount(card.getId());
     	mCardIcon = CardLoader.createCardImage(mCard, mCardSize);
+		if (mCardIcon == null) {
+            System.err.println("[ClickableCardPanel] NULL icon for id=" + card.getId()
+                + " (CardUtil.CardBack might be null / init order issue)");
+            mCardIcon = new ImageIcon(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
+        }
 		cardListSize = new Dimension(mCardIcon.getIconWidth(), mCardIcon.getIconHeight());
         setPreferredSize(cardListSize);
 

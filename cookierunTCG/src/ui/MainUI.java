@@ -75,6 +75,7 @@ import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -204,6 +205,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     	mDefaultState = DefaultState.getInstance();
         mDeck = new Deck();
         frame = new JFrame();
+        CardLoader.loadCardAvailability();
     }
 
     private void keyBindingsToggle(boolean enabled) {
@@ -2168,6 +2170,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mCardDetailPane.removeAll();
 
             currentCard = card;
+            System.out.println(Arrays.toString(card.getAvailability(collectionAddVariant)));
+
 
             for (String lang : Config.FALLBACK_ORDER) {
                 if (collectionAddVariant == 0 || collectionAddVariant >= currentCard.getVariants().length) {
@@ -2196,10 +2200,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 langLabels[i].setVisible(true);
             }
 
-            if (collectionAddVariant != 0 && card.getVariants().length > collectionAddVariant) {
-                List<String> altNamesForVariant = card.getAltNames().get(collectionAddVariant-1);
-                if (altNamesForVariant != null && altNamesForVariant.size() > currentSelectedCardLanguage) {
-                    cardName.setText(altNamesForVariant.get(currentSelectedCardLanguage));
+            if (collectionAddVariant != 0 && card.getAltNames().size() > 0) {
+                List<String> altNamesForVariant = card.getAltNames().get(collectionAddVariant-1);;
+                if (altNamesForVariant != null && altNamesForVariant.size() > Config.getLangIndex(Config.LANGUAGE)) {
+                    cardName.setText(altNamesForVariant.get(Config.getLangIndex(Config.LANGUAGE)));
                     cardName.setForeground(highlightColor);
                 } else {
                     cardName.setText(card.getName());
@@ -2271,13 +2275,18 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     ownedInfo.append("<html>");
                     ownedInfo.append("<img src=\"file:" + new File("resources/keyicons/24px/" + i + ".png").getAbsolutePath() + "\">").append("&nbsp;");
                     ownedInfo.append("<img src=\"file:" + new File("resources/icons_rarity/24px/" + rarities[i].getName() + ".png").getAbsolutePath() + "\">");
-                    ownedInfo.append("&nbsp;").append(variantNames[i]);
+                    ownedInfo.append("&nbsp;").append(CardUtil.getTranslationPromo(variantNames[i]));
                     if (i < rarities.length - 1) {
                         ownedInfo.append("<br>");
                     }
                     ownedInfo.append("</html>");
                     ownedInfoRarityRows[i].setText(ownedInfo.toString());
                     ownedInfoCountRows[i][j].setText(String.valueOf(ownedCount));
+                    if (card.getAvailability(i)[langIdx]) {
+                        ownedInfoCountRows[i][j].setForeground(Color.BLACK);
+                    } else {
+                        ownedInfoCountRows[i][j].setForeground(Color.GRAY);
+                    }
                 } else {
                     ownedInfoRarityRows[i].setText("");
                     ownedInfoCountRows[i][j].setText("");
@@ -2294,7 +2303,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             if (i == variantIndex && variantIndex > 0) {
                 ownedInfoCountRows[i][currentSelectedCardLanguage].setForeground(highlightColor);
             } else {
-                ownedInfoCountRows[i][currentSelectedCardLanguage].setForeground(Color.BLACK);
+                if (currentCard.getAvailability(i)[Config.COLLECTION_LANGUAGE_INDICES[currentSelectedCardLanguage]]) {
+                    ownedInfoCountRows[i][currentSelectedCardLanguage].setForeground(Color.BLACK);
+                } else {
+                    ownedInfoCountRows[i][currentSelectedCardLanguage].setForeground(Color.GRAY);
+                }
             }
         }
 
@@ -2306,6 +2319,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         if (isCollectionMode) {
             for (String lang : Config.FALLBACK_ORDER) {
                 if (collectionAddVariant == 0 || collectionAddVariant >= currentCard.getVariants().length) {
+
                     cardIcon = new ImageIcon("resources/cards/" + lang + "/" + currentCard.getPack() + "/" + currentCard.getId() + ".png");
                     
                 } else {
