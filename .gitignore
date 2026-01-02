@@ -23,3 +23,11 @@ cookierunTCG/.classpath
 cookierunTCG/bin
 cookierunTCG/collection_before20251223.txt
 cookierunTCG/collection.txt
+
+
+cookierunTCG/data/cards/*
+cookierunTCG/data/cards_variant/*
+cookierunTCG/userdata/deck/*
+cookierunTCG/userdata/deck_image/*
+cookierunTCG/userdata/deck_readable/*
+cookierunTCG/userdata/collection/*
