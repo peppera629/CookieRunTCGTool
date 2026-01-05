@@ -73,7 +73,7 @@ public class SettingsWindow implements LanguageChangeListener{
 		frame = new JFrame();
         frame.setTitle(CardUtil.getTranslation("settings"));
 		//frame.setSize(650, 450);
-        frame.setLocationRelativeTo(null);
+        frame.setLocation(150, 150);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
