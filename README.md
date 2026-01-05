@@ -1,3 +1,8 @@
+Started as a simple deck builder for the trading card game CookieRun: Braverse, ended up being a general-purpose card collection manager too.
+- Allows for construction of decks and outputting deck overview images
+- Card searching and discovery is possible through advanced filtering (such as by specific conditions like skill type, keywords, etc.)
+- Manage your card collection, right down to the language and variant owned (and there's also an option to build deck from collection, too)
+
 Note: Card images are not included in the source code, nor are any preset deck configurations.
 
 === Version 0.10.0 : 2025-12-03
