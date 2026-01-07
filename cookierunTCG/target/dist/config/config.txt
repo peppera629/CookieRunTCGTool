@@ -1,14 +1,14 @@
 #Application Configuration
-#Fri Jan 02 21:41:29 CST 2026
+#Wed Jan 07 14:58:53 CST 2026
 advanced_filtering=true
 card_icon_scale=1.0
 card_language=en
 card_preview_scale=1.0
 card_translation=true
-deck_build_from_collection=false
+deck_build_from_collection=true
 language=en
 large_translation_text=false
-region=SEA
+region=TW
 show_collection_change=true
-show_only_legal_in_collection=false
+show_only_legal_in_collection=true
 show_owned_only=false

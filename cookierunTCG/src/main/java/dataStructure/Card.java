@@ -38,6 +38,12 @@ public class Card {
 	private String _mark;
 	private int _lv;
 	private int _hp;
+	private int _attackDMG;
+	private int _attackCost;
+	private float _attackEfficiency = 0; // attackDMG / attackCost (0 if attack cost is not available)
+	private int _peakDMG; // "All of your opponent's Cookies receive X damage" count as 2X, self-damage excluded 
+	private int _peakCost; // Cost for best-case scenario damage
+	private float _peakEfficiency = 0; // peakDMG / peakCost (0 if peak cost is not available)
 	private List<SkillType> _skillType;
 	private Keyword _keyword;
 	private int _maxCount;
@@ -213,6 +219,25 @@ public class Card {
 		return _keyword;
 	}
 
+	public int getAttackDMG() {
+		return _attackDMG;
+	}
+	public int getAttackCost() {
+		return _attackCost;
+	}
+	public int getPeakDMG() {
+		return _peakDMG;
+	}
+	public int getPeakCost() {
+		return _peakCost;
+	}
+	public float getAttackEfficiency() {
+		return _attackEfficiency;
+	}
+	public float getPeakEfficiency() {
+		return _peakEfficiency;
+	}
+
 	public boolean getOwnershipLegality() {
 		return (Collection.getInstance().getCardTotalOwnedCount(_id, true) >= _cardCount);
 	}
@@ -316,6 +341,19 @@ public class Card {
 	
 	public void setVariantNames(String[] variantNames) {
 		_variantNames = variantNames;
+	}
+
+	public void setAttackAttributes(int attackCost, int attackDMG, int peakCost, int peakDMG) {
+		_attackCost = attackCost;
+		_attackDMG = attackDMG;
+		_peakCost = peakCost;
+		_peakDMG = peakDMG;
+		if (_attackCost > 0) {
+			_attackEfficiency = Math.round((float)_attackDMG * 100.0f / (float)_attackCost) / 100.0f;
+		}
+		if (_peakCost > 0) {
+			_peakEfficiency = Math.round((float)_peakDMG * 100.0f / (float)_peakCost) / 100.0f;
+		}
 	}
 	
 	public void add() {

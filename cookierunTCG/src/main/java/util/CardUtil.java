@@ -15,6 +15,9 @@ public class CardUtil {
 	public static int SKILL_TYPE_MAX = 8;
 	public static int KEYWORD_MAX = 5;
 	public static int TYPE_MAX = 4;
+	public static int ATTACK_MAX = 5;
+	public static int ATTACK_COST_MAX = 5;
+	public static int PEAK_MAX = 8;
 	
 	// For language translation
 	private static ResourceBundle messages, messages_promo;

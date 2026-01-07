@@ -28,6 +28,10 @@ public class CardList {
 	private boolean _search_hp[];
 	private boolean _search_skill_type[];
 	private boolean _search_keyword[];
+	private boolean _search_attackDMG[];
+	private boolean _search_attackCost[];
+	private boolean _search_peakDMG[];
+	private boolean _search_status[];
 	private String _search_name;
 	private List<String> _search_pack_list;
 	private boolean _search_variants;
@@ -54,6 +58,10 @@ public class CardList {
 		_search_hp = new boolean[CardUtil.HP_MAX + 1];
 		_search_skill_type = new boolean[CardUtil.SKILL_TYPE_MAX];
 		_search_keyword = new boolean[CardUtil.KEYWORD_MAX];
+		_search_attackDMG = new boolean[CardUtil.ATTACK_MAX + 1];
+		_search_attackCost = new boolean[CardUtil.ATTACK_COST_MAX + 1];
+		_search_peakDMG = new boolean[CardUtil.PEAK_MAX + 1];
+		_search_status = new boolean[3];
 		_search_pack_list = new ArrayList<String>();
 	}
 	
@@ -94,8 +102,12 @@ public class CardList {
 		boolean selectRarity = isSelectedRarity();
 		boolean selectSkillType = isSelectedSkillType();
 		boolean selectKeyword = isSelectedKeyword();
+		boolean selectAttackDMG = isSelectedAttackDMG();
+		boolean selectAttackCost = isSelectedAttackCost();
+		boolean selectPeakDMG = isSelectedPeakDMG();
+		boolean selectStatus = isSelectedStatus();
 		
-		if (!selectColor && !selectType && !_search_flip && !_search_extra && !selectRarity && !selectHP && !selectSkillType && !selectKeyword && !_search_variants && _search_name.equals("") && _search_pack_list.size() == 0) {
+		if (!selectColor && !selectType && !_search_flip && !_search_extra && !selectRarity && !selectHP && !selectSkillType && !selectKeyword && !selectAttackDMG && !selectAttackCost && !selectPeakDMG && !selectStatus && !_search_variants && _search_name.equals("") && _search_pack_list.size() == 0) {
 			if (Config.SHOW_OWNED_ONLY && !forceShowAll) {
 				return getOwnedCards();
 			} else {
@@ -116,6 +128,11 @@ public class CardList {
 		boolean nameCorrect;
 		boolean skillTypeCorrect;
 		boolean keywordCorrect;
+		boolean attackDMGCorrect;
+		boolean attackCostCorrect;
+		boolean peakDMGCorrect;
+		boolean statusCorrect;
+		//boolean peakEfficiencyCorrect;
 		boolean owned;
 		//dumpPackList();
 		for (Card c: cardList) {
@@ -139,16 +156,21 @@ public class CardList {
 			}
 			skillTypeCorrect = !selectSkillType || skillTypeCorrectCheck;
 			keywordCorrect = !selectKeyword || _search_keyword[c.getKeyword().getValue()];
+			attackDMGCorrect = !selectAttackDMG || _search_attackDMG[c.getAttackDMG()];
+			attackCostCorrect = !selectAttackCost || _search_attackCost[c.getAttackCost()];
+			peakDMGCorrect = !selectPeakDMG || _search_peakDMG[c.getPeakDMG()];
+			statusCorrect = !selectStatus || (_search_status[0] && c.getMaxCount() == 4) || (_search_status[1] && c.getMaxCount() == 1) || (_search_status[2] && c.getMaxCount() == 0);
 			packCorrect = _search_pack_list.size() == 0 || _search_pack_list.contains(c.getPack());
 			nameCorrect = _search_name.equals("") || Normalizer.normalize(String.join(" ", c.getNameByLang()).toLowerCase(), Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").contains(_search_name);
 			hasVariants = !_search_variants || (c.getVariants().length > 1);
+
 			owned = Collection.getInstance().getCardTotalOwnedCount(c.getId(), true) > 0;
 			if (forceShowAll) {
-				if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && skillTypeCorrect && keywordCorrect && packCorrect && nameCorrect && hasVariants) {
+				if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && skillTypeCorrect && keywordCorrect && attackDMGCorrect && attackCostCorrect && peakDMGCorrect && statusCorrect && packCorrect && nameCorrect && hasVariants) {
 					selectList.add(c);
 				}
 			} else {
-				if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && skillTypeCorrect && keywordCorrect && packCorrect && nameCorrect
+				if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && skillTypeCorrect && keywordCorrect && attackDMGCorrect && attackCostCorrect && peakDMGCorrect && statusCorrect && packCorrect && nameCorrect
 					&& (!Config.SHOW_OWNED_ONLY || owned) && hasVariants) {
 					selectList.add(c);
 				}
@@ -231,6 +253,42 @@ public class CardList {
 		return false;
 	}
 
+	private boolean isSelectedAttackDMG() {
+		for (int i=0; i<CardUtil.ATTACK_MAX+1; i++) {
+			if(_search_attackDMG[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isSelectedAttackCost() {
+		for (int i=0; i<CardUtil.ATTACK_COST_MAX+1; i++) {
+			if(_search_attackCost[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isSelectedPeakDMG() {
+		for (int i=0; i<CardUtil.PEAK_MAX+1; i++) {
+			if(_search_peakDMG[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isSelectedStatus() {
+		for (int i=0; i<3; i++) {
+			if(_search_status[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public void setColor(int id, boolean enabled) {
 		_search_color[id] = enabled;
 	}
@@ -271,6 +329,22 @@ public class CardList {
 		_search_keyword[id] = enabled;
 	}
 
+	public void setAttackDMG(int dmg, boolean enabled) {
+		_search_attackDMG[dmg] = enabled;
+	}
+
+	public void setAttackCost(int cost, boolean enabled) {
+		_search_attackCost[cost] = enabled;
+	}
+
+	public void setPeakDMG(int dmg, boolean enabled) {
+		_search_peakDMG[dmg] = enabled;
+	}
+
+	public void setStatus(int statusIndex, boolean enabled) {
+		_search_status[statusIndex] = enabled;
+	}
+
 	public void setPack(String pack, boolean enabled) {
 		if (enabled && !_search_pack_list.contains(pack)) {
 			_search_pack_list.add(pack);
@@ -291,6 +365,7 @@ public class CardList {
 	public Card getCardById(String id) {
 		return cardList.stream().filter(card -> id.equals(card.getId())).findFirst().orElse(null);
 	}
+	
 
 	public void clearCardListCount() {
 		for (Card card : cardList) {

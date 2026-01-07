@@ -158,12 +158,16 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JCheckBox[] cb_HP;
     private JCheckBox[] cb_skillType;
     private JCheckBox[] cb_keyword;
+    private JCheckBox[] cb_attackDMG;
+    private JCheckBox[] cb_attackCost;
+    private JCheckBox[] cb_peakDMG;
+    private JCheckBox[] cb_status;
     private JCheckBox cb_type_cookie, cb_type_item, cb_type_trap, cb_type_stage;
     private JCheckBox cb_flip, cb_extra, cb_variant;
-    private JLabel labelColor, labelType, labelSeries, labelRarity, labelHP, labelSkillType, labelKeyword;
+    private JLabel labelColor, labelType, labelSeries, labelRarity, labelHP, labelSkillType, labelKeyword, labelAttackAttr, labelAttackDMG, labelAttackCost, labelPeakDMG, labelStatus;
 
     private Deck mDeck;
-    private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane, ownedInfoPanel, keywordLabelPanel, keywordOuterPanel, skillTypeLabelPanel, skillTypeOuterPanel;
+    private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane, ownedInfoPanel, keywordLabelPanel, keywordOuterPanel, skillTypeLabelPanel, skillTypeOuterPanel, attackAttrLabelPanel, attackAttrOuterPanel, attackAttrBasePanel, attackAttrPlusPanel, statusLabelPanel, statusOuterPanel;
     private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup, deckDetailPane, centerPanel;
     private JTextField mDeckText, searchBox;
     private JButton saveBtn, selectBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST;
@@ -1488,6 +1492,123 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             cb_variant.setSelected(false);
         }
 
+        // ========================= attack attribute filtering =========================
+        labelAttackAttr = new JLabel(CardUtil.getTranslation("filter.attackattr"), JLabel.LEFT);
+        labelAttackAttr.setFont(CRboldEXLargeFilter);
+        
+        componentFontMap.put(labelAttackAttr, "CRboldEXLargeFilter"); // Store the font type as a String
+        attackAttrLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the label
+        attackAttrLabelPanel.add(labelAttackAttr);
+        attackAttrLabelPanel.setVisible(Config.ADVANCED_FILTERING);
+        mSearchPane.add(attackAttrLabelPanel);
+
+        attackAttrBasePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
+        attackAttrBasePanel.setVisible(Config.ADVANCED_FILTERING);
+        mSearchPane.add(attackAttrBasePanel);
+
+        attackAttrOuterPanel = new JPanel(); // Wrap the grid
+        attackAttrOuterPanel.setLayout(new GridBagLayout());
+        attackAttrOuterPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        attackAttrOuterPanel.setBorder(filterBorder);
+        attackAttrOuterPanel.setVisible(Config.ADVANCED_FILTERING);
+        GridBagConstraints gbc_attackAttrOuter = new GridBagConstraints();
+        gbc_attackAttrOuter.gridx = 0;
+        gbc_attackAttrOuter.gridy = 0;
+        attackAttrBasePanel.add(attackAttrOuterPanel);
+        JPanel attackCostPanel = new JPanel();
+        attackCostPanel.setLayout(new BoxLayout(attackCostPanel, BoxLayout.Y_AXIS));
+        attackCostPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        attackAttrOuterPanel.add(attackCostPanel, gbc_attackAttrOuter);
+
+        labelAttackCost = new JLabel(CardUtil.getTranslation("filter.attackcost"), JLabel.LEFT);
+        labelAttackCost.setAlignmentX(Component.LEFT_ALIGNMENT);
+        labelAttackCost.setFont(CRnormal);
+        componentFontMap.put(labelAttackCost, "CRnormal"); // Store the font type as a String
+        attackCostPanel.add(labelAttackCost);
+
+        JPanel attackCostCheckboxGroup = new JPanel();
+        attackCostCheckboxGroup.setAlignmentX(Component.LEFT_ALIGNMENT);
+        attackCostCheckboxGroup.setLayout(new GridBagLayout());
+        GridBagConstraints gbc_attackCost = new GridBagConstraints();
+        attackCostPanel.add(attackCostCheckboxGroup);
+        gbc_attackCost.anchor = GridBagConstraints.WEST;
+        gbc_attackCost.gridx = 0;
+        gbc_attackCost.gridy = 0;
+
+        cb_attackCost = new JCheckBox[CardUtil.ATTACK_COST_MAX+1];
+        for(int i=0; i<CardUtil.ATTACK_COST_MAX+1; i++) {
+        	cb_attackCost[i] = new JCheckBox(Integer.toString(i));
+        	//cb.setSelected(mDefaultState.getDefaultAttackAttrFlag(i));
+            cb_attackCost[i].setFont(CRnormal);
+            componentFontMap.put(cb_attackCost[i], "CRnormal"); // Store the font type as a String
+            gbc_attackCost.gridx = i % 6;
+            gbc_attackCost.gridy = i / 6;
+            attackCostCheckboxGroup.add(cb_attackCost[i], gbc_attackCost);
+        }
+        gbc_attackAttrOuter.gridy++;
+        JPanel attackDMGPanel = new JPanel();
+        attackDMGPanel.setLayout(new BoxLayout(attackDMGPanel, BoxLayout.Y_AXIS));
+        attackDMGPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        attackAttrOuterPanel.add(attackDMGPanel, gbc_attackAttrOuter);
+
+        labelAttackDMG = new JLabel(CardUtil.getTranslation("filter.attackdmg"), JLabel.LEFT);
+        labelAttackDMG.setAlignmentX(Component.LEFT_ALIGNMENT);
+        labelAttackDMG.setFont(CRnormal);
+        componentFontMap.put(labelAttackDMG, "CRnormal"); // Store the font type as a String
+        attackDMGPanel.add(labelAttackDMG);
+
+        JPanel attackDMGCheckboxGroup = new JPanel();
+        attackDMGCheckboxGroup.setAlignmentX(Component.LEFT_ALIGNMENT);
+        attackDMGCheckboxGroup.setLayout(new GridBagLayout());
+        GridBagConstraints gbc_attackDMG = new GridBagConstraints();
+        attackDMGPanel.add(attackDMGCheckboxGroup);
+        gbc_attackDMG.anchor = GridBagConstraints.WEST;
+        gbc_attackDMG.gridx = 0;
+        gbc_attackDMG.gridy = 0;
+
+        cb_attackDMG = new JCheckBox[CardUtil.ATTACK_MAX+1];
+        for(int i=0; i<CardUtil.ATTACK_MAX+1; i++) {
+        	cb_attackDMG[i] = new JCheckBox(Integer.toString(i));
+        	//cb.setSelected(mDefaultState.getDefaultAttackAttrFlag(i));
+            cb_attackDMG[i].setFont(CRnormal);
+            componentFontMap.put(cb_attackDMG[i], "CRnormal"); // Store the font type as a String
+            gbc_attackDMG.gridx = i % 6;
+            gbc_attackDMG.gridy = i / 6;
+            attackDMGCheckboxGroup.add(cb_attackDMG[i], gbc_attackDMG);
+        }
+
+        gbc_attackAttrOuter.gridy++;
+        JPanel peakDMGPanel = new JPanel();
+        peakDMGPanel.setLayout(new BoxLayout(peakDMGPanel, BoxLayout.Y_AXIS));
+        peakDMGPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        attackAttrOuterPanel.add(peakDMGPanel, gbc_attackAttrOuter);
+
+        labelPeakDMG = new JLabel(CardUtil.getTranslation("filter.peakdmg"), JLabel.LEFT);
+        labelPeakDMG.setAlignmentX(Component.LEFT_ALIGNMENT);
+        labelPeakDMG.setFont(CRnormal);
+        componentFontMap.put(labelPeakDMG, "CRnormal"); // Store the font type as a String
+        peakDMGPanel.add(labelPeakDMG);
+
+        JPanel peakDMGCheckboxGroup = new JPanel();
+        peakDMGCheckboxGroup.setAlignmentX(Component.LEFT_ALIGNMENT);
+        peakDMGCheckboxGroup.setLayout(new GridBagLayout());
+        GridBagConstraints gbc_peakDMG = new GridBagConstraints();
+        peakDMGPanel.add(peakDMGCheckboxGroup);
+        gbc_peakDMG.anchor = GridBagConstraints.WEST;
+        gbc_peakDMG.gridx = 0;
+        gbc_peakDMG.gridy = 0;
+
+        cb_peakDMG = new JCheckBox[CardUtil.PEAK_MAX+1];
+        for(int i=0; i<CardUtil.PEAK_MAX+1; i++) {
+        	cb_peakDMG[i] = new JCheckBox(Integer.toString(i));
+        	//cb.setSelected(mDefaultState.getDefaultAttackAttrFlag(i));
+            cb_peakDMG[i].setFont(CRnormal);
+            componentFontMap.put(cb_peakDMG[i], "CRnormal"); // Store the font type as a String
+            gbc_peakDMG.gridx = i % 6;
+            gbc_peakDMG.gridy = i / 6;
+            peakDMGCheckboxGroup.add(cb_peakDMG[i], gbc_peakDMG);
+        }
+
         // ========================= skill type filtering =========================
         labelSkillType = new JLabel(CardUtil.getTranslation("filter.skilltype"), JLabel.LEFT);
         labelSkillType.setFont(CRboldEXLargeFilter);
@@ -1540,6 +1661,38 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         keywordLabelPanel.setVisible(Config.ADVANCED_FILTERING);
         keywordOuterPanel.setVisible(Config.ADVANCED_FILTERING);
+
+        // ========================= card legality =========================
+        labelStatus = new JLabel(CardUtil.getTranslation("filter.status"), JLabel.LEFT);
+        labelStatus.setFont(CRboldEXLargeFilter);
+        componentFontMap.put(labelStatus, "CRboldEXLargeFilter"); // Store the font type as a String
+        statusLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the label
+        statusLabelPanel.add(labelStatus);
+        mSearchPane.add(statusLabelPanel);
+
+        statusOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
+        mSearchPane.add(statusOuterPanel);
+        JPanel statusCheckboxGroup = new JPanel(new GridLayout(0, 3));
+        statusCheckboxGroup.setBorder(filterBorder);
+
+        cb_status = new JCheckBox[3];
+        
+        cb_status[0] = new JCheckBox(CardUtil.getTranslation("filter.status.normal"));
+        cb_status[0].setFont(CRnormal);
+        componentFontMap.put(cb_status[0], "CRnormal"); // Store the font type as a String
+        statusCheckboxGroup.add(cb_status[0]);
+        cb_status[1] = new JCheckBox(CardUtil.getTranslation("filter.status.restricted"));
+        cb_status[1].setFont(CRnormal);
+        componentFontMap.put(cb_status[1], "CRnormal"); // Store the font type as a String
+        statusCheckboxGroup.add(cb_status[1]);
+        cb_status[2] = new JCheckBox(CardUtil.getTranslation("filter.status.banned"));
+        cb_status[2].setFont(CRnormal);
+        componentFontMap.put(cb_status[2], "CRnormal"); // Store the font type as a String
+        statusCheckboxGroup.add(cb_status[2]);
+
+        statusOuterPanel.add(statusCheckboxGroup);
+        statusLabelPanel.setVisible(Config.ADVANCED_FILTERING);
+        statusOuterPanel.setVisible(Config.ADVANCED_FILTERING);
     }
 
     private void cleanCheckBox() {
@@ -1588,6 +1741,18 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         for (JCheckBox cb : cb_skillType) {
             cb.setSelected(false);
         }
+        for (JCheckBox cb : cb_attackDMG) {
+            cb.setSelected(false);
+        }
+        for (JCheckBox cb : cb_attackCost) {
+            cb.setSelected(false);
+        }
+        for (JCheckBox cb : cb_peakDMG) {
+            cb.setSelected(false);
+        }
+        for (JCheckBox cb : cb_status) {
+            cb.setSelected(false);
+        }
         searchBox.setText("");
     }
     
@@ -1624,6 +1789,18 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         for (int i=0; i< cb_rarity.length; i++) {
             list.setRarity(i, cb_rarity[i].isSelected());
     	}
+        for (int i=0; i< cb_attackDMG.length; i++) {
+            list.setAttackDMG(i, cb_attackDMG[i].isSelected());
+        }
+        for (int i=0; i< cb_attackCost.length; i++) {
+            list.setAttackCost(i, cb_attackCost[i].isSelected());
+        }
+        for (int i=0; i< cb_peakDMG.length; i++) {
+            list.setPeakDMG(i, cb_peakDMG[i].isSelected());
+        }
+        for (int i=0; i< cb_status.length; i++) {
+            list.setStatus(i, cb_status[i].isSelected());
+        }
         list.setHasVariantsOnly(cb_variant.isSelected());
         list.setSearchTerm(searchBox.getText().trim().equals("Search by Card Name...") ? "" : searchBox.getText().trim());
         
@@ -1777,17 +1954,30 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         
         //System.out.println("cards/"+Config.CARD_LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
         //System.out.println(card.getHP());
-
-        if (card.getMaxCount() == 1) {
-            cardId.setText(card.getId() + " [" + CardUtil.getTranslation("restricted") + "]");
-            cardId.setForeground(new Color(160, 128, 0));
-        } else if (card.getMaxCount() == 0) {
-            cardId.setText(card.getId() + " [" + CardUtil.getTranslation("banned") + "]");
-            cardId.setForeground(new Color(160, 0, 0));
+        if (Config.ADVANCED_FILTERING && card.getPeakEfficiency() > 0) {
+            if (card.getMaxCount() == 1) {
+                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("restricted") + "] (" + card.getPeakEfficiency() + ")");
+                cardId.setForeground(new Color(160, 128, 0));
+            } else if (card.getMaxCount() == 0) {
+                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("banned") + "] (" + card.getPeakEfficiency() + ")");
+                cardId.setForeground(new Color(160, 0, 0));
+            } else {
+                cardId.setText(card.getId() + " (" + card.getPeakEfficiency() + ")");
+                cardId.setForeground(Color.BLACK);
+            }
         } else {
-            cardId.setText(card.getId());
-            cardId.setForeground(Color.BLACK);
+            if (card.getMaxCount() == 1) {
+                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("restricted") + "]");
+                cardId.setForeground(new Color(160, 128, 0));
+            } else if (card.getMaxCount() == 0) {
+                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("banned") + "]");
+                cardId.setForeground(new Color(160, 0, 0));
+            } else {
+                cardId.setText(card.getId());
+                cardId.setForeground(Color.BLACK);
+            }
         }
+        
 
         cardName.setText("<html>" + card.getNameByLang().get(Config.getLangIndex(Config.LANGUAGE)) + " " + "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons_rarity/16px/" + card.getRarity().getName() + ".png").toString()).getAbsolutePath() + "\">" + "</html>");
         if (card.getCardTranslation() != null && Config.CARD_TRANSLATION_ENABLED) {
@@ -1900,7 +2090,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_type_trap.setText(CardUtil.getTranslation("filter.trap"));
         cb_type_stage.setText(CardUtil.getTranslation("filter.stage"));
         cb_variant.setText(CardUtil.getTranslation("rarity.variant"));
-
+        labelAttackAttr.setText(CardUtil.getTranslation("filter.attackattr"));
+        labelAttackDMG.setText(CardUtil.getTranslation("filter.attackdmg"));
+        labelAttackCost.setText(CardUtil.getTranslation("filter.attackcost"));
+        labelPeakDMG.setText(CardUtil.getTranslation("filter.peakdmg"));
 
         // Set visibility depending on advanced filtering option
         cb_variant.setVisible(Config.ADVANCED_FILTERING);
@@ -1908,6 +2101,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         keywordOuterPanel.setVisible(Config.ADVANCED_FILTERING);
         skillTypeLabelPanel.setVisible(Config.ADVANCED_FILTERING);
         skillTypeOuterPanel.setVisible(Config.ADVANCED_FILTERING);
+        attackAttrLabelPanel.setVisible(Config.ADVANCED_FILTERING);
+        attackAttrOuterPanel.setVisible(Config.ADVANCED_FILTERING);
 
         labelRarity.setText(CardUtil.getTranslation("rarity"));
         labelKeyword.setText(CardUtil.getTranslation("filter.keyword"));

@@ -133,9 +133,12 @@ public class CardLoader {
 	        while((data= input.readLine())!=null) {
 	            if (!data.equals("") && !data.startsWith("//")) {
 	            	String[] cardData = data.split(",");
-					//                0   1      2     3                4       5                6      7   8           9
-					// For each row: [ID, Color, Type, FLIP Type/EXTRA, Rarity, Regulation Mark, Level, HP, Skill Type, Keyword]
-					
+					//                0   1      2     3                4       5                6      7   8           9        10		     11           12          13
+					// For each row: [ID, Color, Type, FLIP Type/EXTRA, Rarity, Regulation Mark, Level, HP, Skill Type, Keyword, Attack DMG, Attack Cost, (Peak DMG), (Peak Cost)]
+					// If the Cookie doesn't have a DMG-dealing skill or then effect, Peak DMG = Attack DMG, Peak Cost = Attack Cost
+					// Includes: DMG dealt during the opponent's turn, ATK-increasing skills, HP-trashing skills, HP-stealing skills
+					// Excludes: Self-damage, items, traps, and stages for now
+
 	            	CardColor color = CardColor.Green;
 	            	for (int i=0; i<CardUtil.COLOR_MAX; i++) {
 	            		CardColor c = CardColor.fromValue(i);
@@ -208,7 +211,31 @@ public class CardLoader {
 					// Name will be loaded later
 					//System.out.println(packName);
 	            	Card c = new Card(packName, cardData[0], "", color, type, isFlip, (isFlip ? FlipType.fromString(cardData[3]) : null), cardData[3].equals("EX"), CardUtil.CardRarity.fromString(cardData[4]), cardData[5], level, hp, skillType, keyword);
-	            	cardList.add(c);
+	            	
+					if (cardData.length >10) {
+						int attackDMG = 0;
+						int attackCost = 0;
+						int peakDMG = 0;
+						int peakCost = 0;
+						if (!cardData[10].equals("_" ) && !cardData[11].equals("_")) {
+							attackCost = Integer.parseInt(cardData[10]);
+							attackDMG = Integer.parseInt(cardData[11]);
+							if (cardData.length >12) {
+								if (!cardData[12].equals("_") && !cardData[13].equals("_")) {
+									peakCost = Integer.parseInt(cardData[12]);
+									peakDMG = Integer.parseInt(cardData[13]);
+								} else {
+									peakCost = attackCost;
+									peakDMG = attackDMG;
+								}
+							} else {
+								peakCost = attackCost;
+								peakDMG = attackDMG;
+							}
+						}
+						c.setAttackAttributes(attackCost, attackDMG, peakCost, peakDMG);
+					}
+					cardList.add(c);
 	            }
 	        }
 
