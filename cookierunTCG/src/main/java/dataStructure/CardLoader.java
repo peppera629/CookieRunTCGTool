@@ -10,8 +10,6 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
-import ui.MainUI;
-
 import util.Config;
 import util.UIUtil;
 import util.CardUtil;
@@ -125,7 +123,7 @@ public class CardLoader {
 
 	private static void loadPack(String packName, List<Card> cardList) {
 	    try {
-	        File file = new File(AppPaths.dataDir().resolve("card_config/pack/"+packName+".txt").toString());
+	        File file = new File(AppPaths.dataDir().resolve("card_config/pack/"+packName+".csv").toString());
 			FileInputStream reader = new FileInputStream(file);
 	        BufferedReader input = new BufferedReader(
 	                new InputStreamReader(new FileInputStream(file), "utf-8")); 
@@ -217,23 +215,41 @@ public class CardLoader {
 						int attackCost = 0;
 						int peakDMG = 0;
 						int peakCost = 0;
-						if (!cardData[10].equals("_" ) && !cardData[11].equals("_")) {
+						int avgDMG = 0;
+						int avgCost = 0;
+						if (!cardData[10].equals("_") && !cardData[11].equals("_")) {
 							attackCost = Integer.parseInt(cardData[10]);
 							attackDMG = Integer.parseInt(cardData[11]);
 							if (cardData.length >12) {
 								if (!cardData[12].equals("_") && !cardData[13].equals("_")) {
 									peakCost = Integer.parseInt(cardData[12]);
 									peakDMG = Integer.parseInt(cardData[13]);
+									if (cardData.length > 14) {
+										if (!cardData[14].equals("_") && !cardData[15].equals("_")) {
+											avgCost = Integer.parseInt(cardData[14]);
+											avgDMG = Integer.parseInt(cardData[15]);
+										} else {
+											avgCost = peakCost;
+											avgDMG = peakDMG;
+										}
+									} else {
+										avgCost = peakCost;
+										avgDMG = peakDMG;
+									}
 								} else {
 									peakCost = attackCost;
 									peakDMG = attackDMG;
+									avgCost = attackCost;
+									avgDMG = attackDMG;
 								}
 							} else {
 								peakCost = attackCost;
 								peakDMG = attackDMG;
+								avgCost = attackCost;
+								avgDMG = attackDMG;
 							}
 						}
-						c.setAttackAttributes(attackCost, attackDMG, peakCost, peakDMG);
+						c.setAttackAttributes(attackCost, attackDMG, peakCost, peakDMG, avgCost, avgDMG);
 					}
 					cardList.add(c);
 	            }
@@ -602,7 +618,6 @@ public class CardLoader {
 								};
 							}
 							//System.out.println("Setting availability for pack: " + cardData[0]);
-							CardList cardListInstance = CardList.getInstance();
 							for (Card c : CardList.getInstance().getAllCards()) {
 								if (c.getPack().equals(cardData[0])) {
 									for (int i = 0 ; i < c.getVariants().length; i++) {
@@ -767,7 +782,7 @@ public class CardLoader {
 			try {
 				// Reload the card's data from the appropriate file
 				String packName = card.getPack();
-				File file = new File(AppPaths.dataDir().resolve("card_config/pack/" + Config.LANGUAGE + "/" + packName + ".txt").toString());
+				File file = new File(AppPaths.dataDir().resolve("card_config/pack/" + Config.LANGUAGE + "/" + packName + ".csv").toString());
 				if (file.exists()) {
 					BufferedReader input = new BufferedReader(
 							new InputStreamReader(new FileInputStream(file), "utf-8"));

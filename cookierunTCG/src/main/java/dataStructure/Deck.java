@@ -181,6 +181,24 @@ public class Deck {
 			return count;
     	}
     }
+
+	public int getTargetCardCount(List<Card> cards, boolean includeFlip, boolean includeExtra) {
+    	if (!Config.SHOW_CARD_COUNT) {
+    		return cards.size();
+    	} else {
+    		int count = 0;
+			for (Card card : cards) {
+				if (!includeFlip && card.isFlip()) {
+					continue;
+				}
+				if (!includeExtra && card.isExtra()) {
+					continue;
+				}
+				count += card.getCount();
+			}
+			return count;
+    	}
+    }
     
     public int[] getCookieSummary() {
     	int L0Count = getTargetCardCount(CookieList.get(0));
@@ -189,6 +207,14 @@ public class Deck {
     	int L3Count = getTargetCardCount(CookieList.get(3));
 		return new int[] {(L0Count + L1Count + L2Count + L3Count), L1Count, L2Count, L3Count};
     }
+
+	public int[] getCookieSummary(boolean includeFlip, boolean includeExtra) {
+		int L0Count = getTargetCardCount(CookieList.get(0), includeFlip, includeExtra);
+		int L1Count = getTargetCardCount(CookieList.get(1), includeFlip, includeExtra);
+		int L2Count = getTargetCardCount(CookieList.get(2), includeFlip, includeExtra);
+		int L3Count = getTargetCardCount(CookieList.get(3), includeFlip, includeExtra);
+		return new int[] {(L0Count + L1Count + L2Count + L3Count), L1Count, L2Count, L3Count};
+	}
 
 	public int[] getFlipTypeSummary() {
 		int FlipType0Count = getTargetCardCount(flipTypeList.get(0));

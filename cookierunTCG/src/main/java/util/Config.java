@@ -7,9 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
-import ui.MainUI;
-import util.AppPaths;
-
 public class Config {
 
 	private static final String CONFIG_FILE = AppPaths.configDir().resolve("config.txt").toString();

@@ -62,6 +62,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.io.File;
 import java.io.IOException;
@@ -76,21 +77,22 @@ import java.awt.FlowLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
 
 // FIX: Verify collection summary correctness
-// FIX: Fix settings appearing slightly offscreen when appearing
+// FIX: In deck image, unloaded card images are not loaded
 // FEATURE: Restrict displayed cards based on language availability or pack release status based on region
 // FEATURE: Add "Credits" popup
-// OPTIMIZATION: Reduce memory usage (somehow)
+// FEATURE: Temporarily switch to another card language when the current one isn't available in current region
+// FEATURE: Add options for filtering by Awakening HP bonus (+0, +2)
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
 
     private JFrame frame;
+    public static boolean DEBUG = false;
 
     /**
      * Launch the application.
@@ -167,7 +169,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JLabel labelColor, labelType, labelSeries, labelRarity, labelHP, labelSkillType, labelKeyword, labelAttackAttr, labelAttackDMG, labelAttackCost, labelPeakDMG, labelStatus;
 
     private Deck mDeck;
-    private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane, ownedInfoPanel, keywordLabelPanel, keywordOuterPanel, skillTypeLabelPanel, skillTypeOuterPanel, attackAttrLabelPanel, attackAttrOuterPanel, attackAttrBasePanel, attackAttrPlusPanel, statusLabelPanel, statusOuterPanel;
+    private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane, ownedInfoPanel, keywordLabelPanel, keywordOuterPanel, skillTypeLabelPanel, skillTypeOuterPanel, attackAttrLabelPanel, attackAttrOuterPanel, attackAttrBasePanel, statusLabelPanel, statusOuterPanel;
     private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup, deckDetailPane, centerPanel;
     private JTextField mDeckText, searchBox;
     private JButton saveBtn, selectBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST;
@@ -191,6 +193,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     public static Map<java.awt.Component, String> componentFontMap = new HashMap<>();
     private int columns = 6, previewHeight, divLoc = 400;
     private int currentSelectedCardLanguage = 0;
+    private JPanel mDeckDistributionPane;
+    private JLabel mDeckDistCookie1, mDeckDistCookie2, mDeckDistCookie3, mDeckDistFlipHeal, mDeckDistFlipDraw, mDeckDistFlipSpecial, mDeckDistItem, mDeckDistTrap, mDeckDistStage, mDeckDistEmpty, mDeckDistExtra;
+    private JLabel mDeckDistCookieBorder, mDeckDistFlipBorder, mDeckDistOtherBorder, mDeckDistExtraBorder;
     private static int collectionAddVariant = 0;
     private boolean isCollectionMode = false, deckChanged = false;
     private Collection collection = Collection.getInstance();
@@ -659,14 +664,18 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
         });
 
+        mDeckDistributionPane = new JPanel();
+        mDeckDistributionPane.setLayout(new GridBagLayout());
+        deckDetailPane.add(mDeckDistributionPane, BorderLayout.NORTH);
+
+        updateDeckDistribution();
+
         mTextsPane = new JPanel();
         mTextsPane.setLayout(new GridBagLayout());
         deckDetailPane.add(mTextsPane, BorderLayout.CENTER);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.BOTH;
-
-        
         
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -860,6 +869,23 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cardName = new JLabel("", JLabel.CENTER);
         cardName.setAlignmentX(Component.CENTER_ALIGNMENT);
         cardName.setFont(CRboldLarge);
+        cardName.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1 && DEBUG) {
+                    System.out.println("Attack Attributes:");
+                    System.out.println("ATK DMG: " + currentCard.getAttackDMG());
+                    System.out.println("ATK Cost: " + currentCard.getAttackCost());
+                    System.out.println("ATK Efficiency: " + currentCard.getAttackEfficiency());
+                    System.out.println("Peak DMG: " + currentCard.getPeakDMG());
+                    System.out.println("Peak Cost: " + currentCard.getPeakCost());
+                    System.out.println("Peak Efficiency: " + currentCard.getPeakEfficiency());
+                    System.out.println("AVG DMG: " + currentCard.getAvgDMG());
+                    System.out.println("AVG Cost: " + currentCard.getAvgCost());
+                    System.out.println("AVG Efficiency: " + currentCard.getAvgEfficiency());
+                }
+            }
+        });
         componentFontMap.put(cardName, "CRboldLarge"); // Store the font type as a String
         cardInfo.add(cardId);
         cardInfo.add(cardName);
@@ -1884,6 +1910,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mDeckTrapTxt.setText(String.valueOf(otherSummary[1]));
         mDeckStageTxt.setText(String.valueOf(otherSummary[2]));
 
+        updateDeckDistribution();
+
         CardColor dominantColor = mDeck.getDominantDeckColor();
         switch (dominantColor) {
             case Red:
@@ -1956,13 +1984,13 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         //System.out.println(card.getHP());
         if (Config.ADVANCED_FILTERING && card.getPeakEfficiency() > 0) {
             if (card.getMaxCount() == 1) {
-                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("restricted") + "] (" + card.getPeakEfficiency() + ")");
+                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("restricted") + "] (" + card.getPeakEfficiency() + "/" + card.getAvgEfficiency() + ")");
                 cardId.setForeground(new Color(160, 128, 0));
             } else if (card.getMaxCount() == 0) {
-                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("banned") + "] (" + card.getPeakEfficiency() + ")");
+                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("banned") + "] (" + card.getPeakEfficiency() + "/" + card.getAvgEfficiency() + ")");
                 cardId.setForeground(new Color(160, 0, 0));
             } else {
-                cardId.setText(card.getId() + " (" + card.getPeakEfficiency() + ")");
+                cardId.setText(card.getId() + " (" + card.getPeakEfficiency() + "/" + card.getAvgEfficiency() + ")");
                 cardId.setForeground(Color.BLACK);
             }
         } else {
@@ -2178,6 +2206,148 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cardTranslationFlip.setText(null);
     }
 
+    private void updateDeckDistribution() {
+
+        mDeckDistributionPane.removeAll();
+
+        int cardCount = mDeck.getCardCount();
+        int[] cookieSummary = mDeck.getCookieSummary(false, true);
+        int flipCount = mDeck.getFlipCount();
+        int[] flipTypeSummary = mDeck.getFlipTypeSummary();
+        int[] otherSummary = mDeck.getOtherSummary();
+        int extraCount = mDeck.getExtraCount();
+        
+        GridBagConstraints gbc_deckdist = new GridBagConstraints();
+        //gbc_deckdist.insets = new Insets(5, 5, 5, 5);
+        gbc_deckdist.fill = GridBagConstraints.BOTH;
+        gbc_deckdist.gridy = 0;
+
+        gbc_deckdist.gridx = 0;
+        gbc_deckdist.weightx = cookieSummary[1];
+        if (cookieSummary[1] > 0) {
+            mDeckDistCookie1 = new JLabel(" " + String.valueOf(cookieSummary[1]));
+            mDeckDistCookie1.setFont(CRnormalSmall);
+            mDeckDistCookie1.setOpaque(true);
+            mDeckDistCookie1.setBackground(new Color(135, 223, 255));
+            componentFontMap.put(mDeckDistCookie1, "CRnormalSmall"); // Store the font type as a String
+            mDeckDistributionPane.add(mDeckDistCookie1, gbc_deckdist);
+        }
+
+        gbc_deckdist.gridx = cookieSummary[1];
+        gbc_deckdist.weightx = cookieSummary[2];
+        if (cookieSummary[2] > 0) {
+            mDeckDistCookie2 = new JLabel(" " + String.valueOf(cookieSummary[2]));
+            mDeckDistCookie2.setFont(CRnormalSmall);
+            mDeckDistCookie2.setOpaque(true);
+            mDeckDistCookie2.setBackground(new Color(135, 193, 255));
+            componentFontMap.put(mDeckDistCookie2, "CRnormalSmall"); // Store the font type as a String
+            mDeckDistributionPane.add(mDeckDistCookie2, gbc_deckdist);
+        }
+
+        gbc_deckdist.gridx = cookieSummary[1] + cookieSummary[2];
+        gbc_deckdist.weightx = cookieSummary[3];
+        if (cookieSummary[3] > 0) {
+            mDeckDistCookie3 = new JLabel(" " + String.valueOf(cookieSummary[3]));
+            mDeckDistCookie3.setFont(CRnormalSmall);
+            mDeckDistCookie3.setOpaque(true);
+            mDeckDistCookie3.setBackground(new Color(135, 163, 255));
+            componentFontMap.put(mDeckDistCookie3, "CRnormalSmall"); // Store the font type as a String
+            mDeckDistributionPane.add(mDeckDistCookie3, gbc_deckdist);
+        }
+
+        gbc_deckdist.gridx = cookieSummary[0];
+        gbc_deckdist.weightx = flipTypeSummary[0];
+        if (flipTypeSummary[0] > 0) {
+            mDeckDistFlipHeal = new JLabel(" " + String.valueOf(flipTypeSummary[0]));
+            mDeckDistFlipHeal.setFont(CRnormalSmall);
+            mDeckDistFlipHeal.setOpaque(true);
+            mDeckDistFlipHeal.setBackground(new Color(255, 235, 84));
+            componentFontMap.put(mDeckDistFlipHeal, "CRnormalSmall"); // Store the font type as a String
+            mDeckDistributionPane.add(mDeckDistFlipHeal, gbc_deckdist);
+        } 
+
+        gbc_deckdist.gridx = cookieSummary[0] + flipTypeSummary[0];
+        gbc_deckdist.weightx = flipTypeSummary[1];
+        if(flipTypeSummary[1] > 0) {
+            mDeckDistFlipDraw = new JLabel(" " + String.valueOf(flipTypeSummary[1]));
+            mDeckDistFlipDraw.setFont(CRnormalSmall);
+            mDeckDistFlipDraw.setOpaque(true);
+            mDeckDistFlipDraw.setBackground(new Color(255, 205, 84));
+            componentFontMap.put(mDeckDistFlipDraw, "CRnormalSmall"); // Store the font type as a String
+            mDeckDistributionPane.add(mDeckDistFlipDraw, gbc_deckdist);
+        }
+
+        gbc_deckdist.gridx = cookieSummary[0] + flipTypeSummary[0] + flipTypeSummary[1];
+        gbc_deckdist.weightx = flipTypeSummary[2];
+        if (flipTypeSummary[2] > 0) {
+            mDeckDistFlipSpecial = new JLabel(" " + String.valueOf(flipTypeSummary[2]));
+            mDeckDistFlipSpecial.setFont(CRnormalSmall);
+            mDeckDistFlipSpecial.setOpaque(true);
+            mDeckDistFlipSpecial.setBackground(new Color(255, 175, 84));
+            componentFontMap.put(mDeckDistFlipSpecial, "CRnormalSmall"); // Store the font type as a String
+            mDeckDistributionPane.add(mDeckDistFlipSpecial, gbc_deckdist);
+        }
+
+        gbc_deckdist.gridx = cookieSummary[0] + flipTypeSummary[0] + flipTypeSummary[1] + flipTypeSummary[2];
+        gbc_deckdist.weightx = otherSummary[0];
+        if (otherSummary[0] > 0) {
+            mDeckDistItem = new JLabel(" " + String.valueOf(otherSummary[0]));
+            mDeckDistItem.setFont(CRnormalSmall);
+            mDeckDistItem.setOpaque(true);
+            mDeckDistItem.setBackground(new Color(64, 247, 183));
+            componentFontMap.put(mDeckDistItem, "CRnormalSmall"); // Store the font type as a String
+            mDeckDistributionPane.add(mDeckDistItem, gbc_deckdist);
+        }
+
+        gbc_deckdist.gridx = cookieSummary[0] + flipTypeSummary[0] + flipTypeSummary[1] + flipTypeSummary[2] + otherSummary[0];
+        gbc_deckdist.weightx = otherSummary[1];
+        if (otherSummary[1] > 0) {
+            mDeckDistTrap = new JLabel(" " + String.valueOf(otherSummary[1]));
+            mDeckDistTrap.setFont(CRnormalSmall);
+            mDeckDistTrap.setOpaque(true);
+            mDeckDistTrap.setBackground(new Color(64, 217, 183));
+            componentFontMap.put(mDeckDistTrap, "CRnormalSmall"); // Store the font type as a String
+            mDeckDistributionPane.add(mDeckDistTrap, gbc_deckdist);
+        }
+
+        gbc_deckdist.gridx = cookieSummary[0] + flipTypeSummary[0] + flipTypeSummary[1] + flipTypeSummary[2] + otherSummary[0] + otherSummary[1];
+        gbc_deckdist.weightx = otherSummary[2];
+        if (otherSummary[2] > 0) {
+            mDeckDistStage = new JLabel(" " + String.valueOf(otherSummary[2]));
+            mDeckDistStage.setFont(CRnormalSmall);
+            mDeckDistStage.setOpaque(true);
+            mDeckDistStage.setBackground(new Color(64, 187, 183));
+            componentFontMap.put(mDeckDistStage, "CRnormalSmall"); // Store the font type as a String
+            mDeckDistributionPane.add(mDeckDistStage, gbc_deckdist);
+        }
+        
+        gbc_deckdist.gridx = cookieSummary[0] + flipTypeSummary[0] + flipTypeSummary[1] + flipTypeSummary[2] + otherSummary[0] + otherSummary[1] + otherSummary[2];
+        int emptyCount = 60 - cardCount;
+        gbc_deckdist.weightx = emptyCount;
+        if (emptyCount > 0) {
+            mDeckDistEmpty = new JLabel("");
+            mDeckDistEmpty.setOpaque(true);
+            mDeckDistEmpty.setBackground(new Color(220, 220, 220));
+            mDeckDistributionPane.add(mDeckDistEmpty, gbc_deckdist);
+        }
+
+        /*
+        gbc_deckdist.gridx = cookieSummary[0] + flipTypeSummary[0] + flipTypeSummary[1] + flipTypeSummary[2] + otherSummary[0] + otherSummary[1] + otherSummary[2] + emptyCount;
+        gbc_deckdist.weightx = extraCount;
+        if (extraCount > 0) {
+            mDeckDistExtra = new JLabel(" " + String.valueOf(extraCount));
+            mDeckDistExtra.setFont(CRnormalSmall);
+            mDeckDistExtra.setOpaque(true);
+            mDeckDistExtra.setBackground(new Color(169, 103, 247));
+            componentFontMap.put(mDeckDistExtra, "CRnormalSmall"); // Store the font type as a String
+            mDeckDistributionPane.add(mDeckDistExtra, gbc_deckdist);
+        }
+        */
+
+        mDeckDistributionPane.revalidate();
+        mDeckDistributionPane.repaint();
+    }
+
     private void updateComponents(java.awt.Container container) {
         for (java.awt.Component component : container.getComponents()) {
             if (componentFontMap.containsKey(component)) {
@@ -2254,6 +2424,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
             
             mTextsPane.setVisible(false);
+            mDeckDistributionPane.setVisible(false);
             mDeckPaneLabel.setVisible(false);
             splitPane.setTopComponent(null);
             mCardsPaneLabel.setText(CardUtil.getTranslation("collection"));
@@ -2296,6 +2467,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         } else {
             splitPane.setTopComponent(deckPane);
             mTextsPane.setVisible(true);
+            mDeckDistributionPane.setVisible(true);
             mDeckPaneLabel.setVisible(true);
             mCardsPaneLabel.setText(CardUtil.getTranslation("cardlist"));
             mClearDeckBtn.setText(CardUtil.getTranslation("deck.clear"));

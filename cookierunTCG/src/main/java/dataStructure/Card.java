@@ -41,9 +41,12 @@ public class Card {
 	private int _attackDMG;
 	private int _attackCost;
 	private float _attackEfficiency = 0; // attackDMG / attackCost (0 if attack cost is not available)
-	private int _peakDMG; // "All of your opponent's Cookies receive X damage" count as 2X, self-damage excluded 
+	private int _peakDMG; // Considering all effects, even one-time effects. "All of your opponent's Cookies receive X damage" count as 2X, self-damage excluded 
 	private int _peakCost; // Cost for best-case scenario damage
 	private float _peakEfficiency = 0; // peakDMG / peakCost (0 if peak cost is not available)
+	private int _avgDMG; // Only considering repeatable effects
+	private int _avgCost;
+	private float _avgEfficiency = 0; // avgDMG / avgCost (0 if avg cost is not available)
 	private List<SkillType> _skillType;
 	private Keyword _keyword;
 	private int _maxCount;
@@ -134,13 +137,6 @@ public class Card {
 		} else {
 			return -1;
 		}
-		/*if (getSerialNumber() == card.getSerialNumber()) {
-			return 0;
-		} else if (getSerialNumber() > card.getSerialNumber()) {
-			return 1;
-		} else {
-			return -1;
-		}*/
 	}
 
 	public int getCardDefaultPosition() {
@@ -231,11 +227,20 @@ public class Card {
 	public int getPeakCost() {
 		return _peakCost;
 	}
+	public int getAvgDMG() {
+		return _avgDMG;
+	}
+	public int getAvgCost() {
+		return _avgCost;
+	}
 	public float getAttackEfficiency() {
 		return _attackEfficiency;
 	}
 	public float getPeakEfficiency() {
 		return _peakEfficiency;
+	}
+	public float getAvgEfficiency() {
+		return _avgEfficiency;
 	}
 
 	public boolean getOwnershipLegality() {
@@ -343,16 +348,21 @@ public class Card {
 		_variantNames = variantNames;
 	}
 
-	public void setAttackAttributes(int attackCost, int attackDMG, int peakCost, int peakDMG) {
+	public void setAttackAttributes(int attackCost, int attackDMG, int peakCost, int peakDMG, int avgCost, int avgDMG) {
 		_attackCost = attackCost;
 		_attackDMG = attackDMG;
 		_peakCost = peakCost;
 		_peakDMG = peakDMG;
+		_avgCost = avgCost;
+		_avgDMG = avgDMG;
 		if (_attackCost > 0) {
 			_attackEfficiency = Math.round((float)_attackDMG * 100.0f / (float)_attackCost) / 100.0f;
 		}
 		if (_peakCost > 0) {
 			_peakEfficiency = Math.round((float)_peakDMG * 100.0f / (float)_peakCost) / 100.0f;
+		}
+		if (_avgCost > 0) {
+			_avgEfficiency = Math.round((float)_avgDMG * 100.0f / (float)_avgCost) / 100.0f;
 		}
 	}
 	

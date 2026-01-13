@@ -12,7 +12,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import ui.MainUI;
 import dataStructure.Deck;
 import util.Config;
 import util.UIUtil;
