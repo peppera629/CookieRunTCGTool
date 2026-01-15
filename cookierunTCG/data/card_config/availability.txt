@@ -13,6 +13,9 @@ BS7,0
 BS8,5
 BS9,5
 P,5
+ST6,5
+ST7,5
+ST8,5
 
 // Promo Tag Overrides
 
@@ -53,6 +56,9 @@ promo.serialized.new,5
 promo.cp1,0
 promo.cp2,0
 promo.cp3,0
+promo.cp4,5
+promo.cp5,5
+promo.cp6,5
 
 promo.bonus1,0
 
@@ -117,6 +123,10 @@ tournament.cc2024s.finalist16,0
 tournament.cp,2
 
 // Card & Variant Overrides
+
+ST2-017,1
+ST2-022,1
+
 P-001,0
 P-002,0
 P-003,0

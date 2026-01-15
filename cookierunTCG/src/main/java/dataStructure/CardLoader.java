@@ -450,7 +450,7 @@ public class CardLoader {
 
 	public static void loadVariants(String packName, List<Card> cardList) {
 		try {
-			File rarityListFile = new File(AppPaths.dataDir().resolve("card_config/rarity.txt").toString());
+			File rarityListFile = new File(AppPaths.dataDir().resolve("card_config/rarity.csv").toString());
 			
 			if (rarityListFile.exists()) {
 				BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(rarityListFile), StandardCharsets.UTF_8));
@@ -489,7 +489,7 @@ public class CardLoader {
 
 	public static void loadVariantNames(String packName, List<Card> cardList) {
 		try {
-			File rarityDescListFile = new File(AppPaths.dataDir().resolve("card_config/rarity_desc.txt").toString());
+			File rarityDescListFile = new File(AppPaths.dataDir().resolve("card_config/rarity_desc.csv").toString());
 			if (rarityDescListFile.exists()) {
 				BufferedReader inputDesc = new BufferedReader(new InputStreamReader(new FileInputStream(rarityDescListFile), StandardCharsets.UTF_8));
 				String dataDesc;

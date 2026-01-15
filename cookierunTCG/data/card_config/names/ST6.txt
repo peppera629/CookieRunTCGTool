@@ -1,0 +1,20 @@
+ST6-001,Mala Sauce Cookie
+ST6-002,Fire Spirit Cookie
+ST6-003,Devil Cookie
+ST6-004,Pitaya Dragon Cookie
+ST6-005,Agar Agar Cookie
+ST6-006,Cherry Cookie
+ST6-007,Chili Pepper Cookie
+ST6-008,Candy Apple Cookie
+ST6-009,Capsaicin Cookie
+ST6-010,Peperoncino Cookie
+ST6-011,Habanero Cookie
+ST6-012,Picky Pyro-tiger
+ST6-013,
+ST6-014,Essence of Conflagration
+ST6-015,Fire Spirit Cookie's Staff
+ST6-016,Dragon's Breath
+ST6-017,
+ST6-018,
+ST6-019,
+ST6-020,

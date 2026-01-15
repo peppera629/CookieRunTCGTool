@@ -12,6 +12,7 @@ ui\MainUI$12.class
 ui\MainUI$32.class
 ui\MainUI$35.class
 ui\SortSettingsWindow$ConfigChangedCallback.class
+ui\MainUI$Filter.class
 ui\MainUI$15.class
 ui\MainUI.class
 util\CardUtil$FlipType.class
@@ -60,6 +61,7 @@ ui\MainUI$9.class
 ui\MainUI$26.class
 ui\SettingsWindow.class
 ui\MainUI$CollectionModeCallback.class
+ui\MainUI$39.class
 ui\MainUI$29.class
 ui\SortSettingsWindow$6.class
 ui\MainUI$3.class
