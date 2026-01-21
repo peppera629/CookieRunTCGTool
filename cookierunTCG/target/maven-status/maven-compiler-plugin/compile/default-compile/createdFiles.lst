@@ -1,5 +1,6 @@
 ui\CollectionSummaryDialog.class
 ui\SettingsWindow$1.class
+ui\RandomDrawSim$3.class
 util\DefaultState.class
 ui\ClickableCardPanel$CardListCallBack.class
 ui\ChoiceDialog$1.class
@@ -25,6 +26,7 @@ ui\MainUI$31.class
 ui\SortSettingsWindow.class
 ui\MainUI$4.class
 dataStructure\CardLoader.class
+AppAnchor.class
 ui\ClickableCardPanel$1.class
 module-info.class
 ui\MainUI$24.class
@@ -95,5 +97,4 @@ util\CardUtil$CardType.class
 ui\MainUI$22.class
 ui\MainUI$10.class
 util\CardUtil$SkillType.class
-app\AppAnchor.class
 ui\MainUI$2.class
