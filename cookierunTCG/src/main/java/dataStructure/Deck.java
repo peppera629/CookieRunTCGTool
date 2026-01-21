@@ -5,6 +5,7 @@ import java.util.List;
 
 import util.Config;
 import util.CardUtil.CardColor;
+import util.CardUtil;
 
 public class Deck {
 	private List<Card> cardList;
@@ -17,6 +18,8 @@ public class Deck {
 	private List<Card> StageList;
 	private List<Card> startingHand;
 	private List<Card> tempDeck;
+	private boolean validHand = false;
+	private int mulliganCount = 0;
 	
 	public Deck() {
 		cardList = new ArrayList<Card>();
@@ -53,16 +56,31 @@ public class Deck {
 		}
 	}
 
-	public List<Card> getRandomStartingHand() {
+	public List<Card> getRandomStartingHand(boolean mulligan) {
 		// Returns 6 random cards from the deck, EXTRA excluded
 		if (tempDeck == null) {
 			initializeRandomDrawSim();
 		}
-		java.util.Collections.shuffle(tempDeck);
 		startingHand = new ArrayList<Card>();
-		for (int i = 0 ; i < 6 && i < tempDeck.size() ; i++) {
-			startingHand.add(tempDeck.get(i));
+		validHand = false;
+		if (mulligan) {
+			mulliganCount++;
+			for (int i = (6 * mulliganCount) ; i < (6 * (mulliganCount + 1)) && i < tempDeck.size() ; i++) {
+				Card card = tempDeck.get(i);
+				startingHand.add(card);
+				if (card.getType() == CardUtil.CardType.Cookie) {
+					validHand = true;
+				}
+			}
+		} else {
+			java.util.Collections.shuffle(tempDeck);
+			mulliganCount = 0;
+			validHand = true;
+			for (int i = 0 ; i < 6 && i < tempDeck.size() ; i++) {
+				startingHand.add(tempDeck.get(i));
+			}
 		}
+		
 		return startingHand;
 	}
 	
@@ -315,5 +333,13 @@ public class Deck {
 		}
 
 		return (nonZeroColors == 1 ? CardColor.fromValue(dominantColorIndex) : CardColor.Colorless);
+	}
+
+	public boolean isValidHand() {
+		return validHand;
+	}
+
+	public int getMulliganCount() {
+		return mulliganCount;
 	}
 }
