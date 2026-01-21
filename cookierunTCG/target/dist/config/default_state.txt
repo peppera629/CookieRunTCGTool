@@ -1,5 +1,5 @@
-Green - Standard
-_,_,v,_,_,_
+Yellow - Standard
+_,_,_,_,_,_
 _,_,_,_
 _
 _,_,_

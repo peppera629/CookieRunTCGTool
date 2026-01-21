@@ -101,7 +101,7 @@ public class DeckWindowDifferential {
 	private void updateDeck() {
 		mDeckPane.removeAll();
 
-        UIUtil.showDeck(null, mDeckPane, mDeck1.getAllCards(), mDeck2, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_DECK, 5, mCompareMode);
+        UIUtil.showDeck(null, mDeckPane, mDeck1.getAllCards(), mDeck2, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_DECK, 1.0f, 5, mCompareMode);
 		System.out.println(differentCardCount);
 		int anotherLine = 0;
 		if ((differentCardCount % Config.DW_ROW_SIZE) > 0) {
@@ -177,7 +177,7 @@ public class DeckWindowDifferential {
 		System.out.println("Output height: (" + Config.DW_OUTPUT_HEIGHT + " + 5) * (" + differentCardCount + "/" + Config.DW_ROW_SIZE + ") + " + anotherLine + ") + 20 = " + output_h);
 		mOutputPane.setBounds(w + 100, h + 100, output_w + 10, output_h + 80);
 		
-        UIUtil.showDeck(null, mOutputPane, mDeck1.getAllCards(), mDeck2, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_OUTPUT, 5, mCompareMode);
+        UIUtil.showDeck(null, mOutputPane, mDeck1.getAllCards(), mDeck2, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_OUTPUT, 1.0f, 5, mCompareMode);
 		System.out.println(differentCardCount);
 		mOutputPane.revalidate();
 		mOutputPane.repaint();

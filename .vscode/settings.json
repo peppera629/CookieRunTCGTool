@@ -2,5 +2,6 @@
     "java.project.sourcePaths": ["src", "resources"], // Add any resource folders here
     "java.project.outputPath": "bin",
     "java.dependency.packagePresentation": "hierarchical",
-    "maven.view": "flat"
+    "maven.view": "flat",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

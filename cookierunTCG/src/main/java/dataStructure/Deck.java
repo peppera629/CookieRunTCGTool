@@ -15,6 +15,8 @@ public class Deck {
 	private List<Card> ItemList;
 	private List<Card> TrapList;
 	private List<Card> StageList;
+	private List<Card> startingHand;
+	private List<Card> tempDeck;
 	
 	public Deck() {
 		cardList = new ArrayList<Card>();
@@ -38,6 +40,30 @@ public class Deck {
 
 	public List<Card> getAllCards() {
 		return cardList;
+	}
+
+	public void initializeRandomDrawSim() {
+		tempDeck = new ArrayList<Card>();
+		for (Card card : cardList) {
+			if (!card.isExtra()) {
+				for (int i = 0 ; i < card.getCount() ; i++) {
+					tempDeck.add(card);
+				}
+			}
+		}
+	}
+
+	public List<Card> getRandomStartingHand() {
+		// Returns 6 random cards from the deck, EXTRA excluded
+		if (tempDeck == null) {
+			initializeRandomDrawSim();
+		}
+		java.util.Collections.shuffle(tempDeck);
+		startingHand = new ArrayList<Card>();
+		for (int i = 0 ; i < 6 && i < tempDeck.size() ; i++) {
+			startingHand.add(tempDeck.get(i));
+		}
+		return startingHand;
 	}
 	
 	public boolean addCard(Card card) {
@@ -152,6 +178,7 @@ public class Deck {
 		ItemList.clear();
 		TrapList.clear();
 		StageList.clear();
+		tempDeck = null;
 	}
 
     public void sort() {

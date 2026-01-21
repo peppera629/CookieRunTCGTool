@@ -36,19 +36,21 @@ public class ClickableCardPanel extends JPanel {
     private CardListCallBack mCardListCallBack;
     private int mShowCountMode;
     private int mCardSize;
+	private float mCardSizeModifier = 1.0f;
 	private int mDifferential;
 	private int collectionChange;
 	private Dimension cardListSize;
 	private static boolean quickEditMode = false;
     ImageIcon mCardIcon;
 
-	public ClickableCardPanel(Card card, int showCountMode, int cardSize, int differential) {
+	public ClickableCardPanel(Card card, int showCountMode, int cardSize, float cardSizeModifier, int differential) {
         mCard = card;
 		mShowCountMode = showCountMode;
 		mCardSize = cardSize;
+		mCardSizeModifier = cardSizeModifier;
 		mDifferential = differential;
 		collectionChange = Collection.getInstance().getCardTotalChangeCount(card.getId());
-    	mCardIcon = CardLoader.createCardImage(mCard, mCardSize);
+    	mCardIcon = CardLoader.createCardImage(mCard, mCardSize, mCardSizeModifier);
 		if (mCardIcon == null) {
             System.err.println("[ClickableCardPanel] NULL icon for id=" + card.getId()
                 + " (CardUtil.CardBack might be null / init order issue)");
@@ -62,11 +64,11 @@ public class ClickableCardPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     if (mCardListCallBack != null) {
-                    	mCardListCallBack.addCard(card);
+                    	mCardListCallBack.addCard(mCard);
                     }
                 } else if (e.getButton() == MouseEvent.BUTTON3) {
                     if (mCardListCallBack != null) {
-                    	mCardListCallBack.removeCard(card);
+                    	mCardListCallBack.removeCard(mCard);
                     }
                 }
             }
@@ -319,7 +321,7 @@ public class ClickableCardPanel extends JPanel {
     }
     
     public void updateImage() {
-    	mCardIcon = CardLoader.createCardImage(mCard, mCardSize);
+    	mCardIcon = CardLoader.createCardImage(mCard, mCardSize, mCardSizeModifier);
 		repaint();
     }
 

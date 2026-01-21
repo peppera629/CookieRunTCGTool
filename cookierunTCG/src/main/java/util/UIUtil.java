@@ -25,7 +25,7 @@ public class UIUtil {
 	public static final int CARD_SIZE_DECK = 1;
 	public static final int CARD_SIZE_OUTPUT = 2;
 	public static final int CARD_SIZE_FULL = 3;
-	public static void showDeck(CardListCallBack callback, JPanel panel, List<Card> cardList, Map<String, Integer> counts2, int minSize, int rowSize, int cardSize, int showCountMode, boolean compareMode) {
+	public static void showDeck(CardListCallBack callback, JPanel panel, List<Card> cardList, Map<String, Integer> counts2, int minSize, int rowSize, int cardSize, float cardSizeModifier, int showCountMode, boolean compareMode) {
 		// showCountMode: 0 = None (false, false), 1 and 2 = Deck Count (true, false), 3 = Collection Count (true, true),
 		// 4 = Both (for "build from collection" mode), 5 = Differential Mode (what cards to change from one deck to another)
 		panel.removeAll();
@@ -90,7 +90,7 @@ public class UIUtil {
 
 				System.out.println(cardInstance.getImageLoadStatus());
 
-                ClickableCardPanel cardPanel = new ClickableCardPanel(cardInstance, showCountMode, cardSize, differential);
+                ClickableCardPanel cardPanel = new ClickableCardPanel(cardInstance, showCountMode, cardSize, cardSizeModifier, differential);
                 
 				if (differential > 0) {
 					positiveChange.add(cardPanel);
@@ -111,7 +111,7 @@ public class UIUtil {
 		} else {
 			for (Card card : cardList) {
 				ClickableCardPanel cardPanel;
-				cardPanel = new ClickableCardPanel(card, showCountMode, cardSize, 0);
+				cardPanel = new ClickableCardPanel(card, showCountMode, cardSize, cardSizeModifier, 0);
 				if(callback != null) {
 					cardPanel.addClickListener(callback);
 				}

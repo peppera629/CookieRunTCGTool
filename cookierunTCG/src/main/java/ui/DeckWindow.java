@@ -114,7 +114,7 @@ public class DeckWindow {
 	private void updateDeck() {
 		mDeckPane.removeAll();
 
-        UIUtil.showDeck(null, mDeckPane, mDeck.getAllCards(), null, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_DECK, 1, false);
+        UIUtil.showDeck(null, mDeckPane, mDeck.getAllCards(), null, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_DECK, 1.0f, 1, false);
 
 		mDeckPane.revalidate();
 		mDeckPane.repaint();
@@ -162,7 +162,7 @@ public class DeckWindow {
 
 		mOutputPane.removeAll();
 		
-        UIUtil.showDeck(null, mOutputPane, mDeck.getAllCards(), null, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_OUTPUT, 1, false);
+        UIUtil.showDeck(null, mOutputPane, mDeck.getAllCards(), null, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_OUTPUT, 1.0f, 1, false);
 
 		mOutputPane.revalidate();
 		mOutputPane.repaint();

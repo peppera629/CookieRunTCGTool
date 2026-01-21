@@ -131,6 +131,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         loadFont();
 		deckWindow = new DeckWindow();
         deckDifferentialWindow = new DeckWindowDifferential();
+        randomDrawSimWindow = new RandomDrawSim();
         settingsWindow = new SettingsWindow();
 		sortSettingsWindow = new SortSettingsWindow();
 		sortSettingsWindow.setConfigChangedCallback(this);
@@ -145,6 +146,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
 	private DeckWindow deckWindow;
     private DeckWindowDifferential deckDifferentialWindow;
+    private RandomDrawSim randomDrawSimWindow;
     private SettingsWindow settingsWindow;
 	private SortSettingsWindow sortSettingsWindow;
     private DefaultState mDefaultState;
@@ -175,7 +177,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup, deckDetailPane, centerPanel;
     private JTextField mDeckText, searchBox;
     private JButton saveBtn, selectBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST;
-    private JButton mClearDeckBtn, button_search, button_clean, button_sort, button_settings;
+    private JButton mClearDeckBtn, mRandomDrawSimBtn, button_search, button_clean, button_sort, button_settings;
     private JToggleButton button_collection;
     private JLabel mCardCountHintTxt, mFlipCountHintTxt, mExtraCountHintTxt, mDeckCookieSummaryHintTxt, 
         mLevelCountTxt, mFlipTypeCountTxt, cardLabel, filterResults, labelSearch;
@@ -625,7 +627,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         });
 
         gbc_deckbuttons.gridx = 1;
-        gbc_deckbuttons.weightx = 10;
+        gbc_deckbuttons.weightx = 5;
         mClearDeckBtn = new JButton(CardUtil.getTranslation("deck.clear"));
         mClearDeckBtn.setRequestFocusEnabled(false);
         mClearDeckBtn.setFont(CRnormalLarge);
@@ -648,6 +650,19 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         });
 
         gbc_deckbuttons.gridx = 2;
+        gbc_deckbuttons.weightx = 5;
+        mRandomDrawSimBtn = new JButton(CardUtil.getTranslation("deck.drawsim"));
+        mRandomDrawSimBtn.setRequestFocusEnabled(false);
+        mRandomDrawSimBtn.setFont(CRnormalLarge);
+        componentFontMap.put(mRandomDrawSimBtn, "CRnormalLarge"); // Store the font type as a String
+        mDeckDetailButtonsPane.add(mRandomDrawSimBtn, gbc_deckbuttons);
+        mRandomDrawSimBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                randomDrawSimWindow.show(mDeck, mDeckText.getText());
+            }
+        });
+
+        gbc_deckbuttons.gridx = 3;
         gbc_deckbuttons.weightx = 1;
         hidePreviewPaneBtn = new JButton();
         hidePreviewPaneBtn.setRequestFocusEnabled(false);
@@ -1800,7 +1815,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     	
         mCardsPane.removeAll();
         List<Card> currentList = list.getSelectCards(false);
-        UIUtil.showDeck(this, mCardsPane, currentList, null, 13, columns, UIUtil.CARD_SIZE_SMALL, (isCollectionMode ? 3 : (Config.DECK_BUILD_FROM_COLLECTION ? 4 : 0)), false);
+        UIUtil.showDeck(this, mCardsPane, currentList, null, 13, columns, UIUtil.CARD_SIZE_SMALL, 1.0f, (isCollectionMode ? 3 : (Config.DECK_BUILD_FROM_COLLECTION ? 4 : 0)), false);
         if (currentList.size() == 0) {
             filterResults.setText(CardUtil.getTranslation("displaycount.empty"));
             filterResults.setForeground(Color.RED);
@@ -1815,7 +1830,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     
     private void updateDeck() {
         mDeckPane.removeAll();
-        UIUtil.showDeck(this, mDeckPane, mDeck.getAllCards(), null, 18, columns, UIUtil.CARD_SIZE_SMALL, (Config.DECK_BUILD_FROM_COLLECTION ? 4 : 1), false);
+        UIUtil.showDeck(this, mDeckPane, mDeck.getAllCards(), null, 18, columns, UIUtil.CARD_SIZE_SMALL, 1.0f, (Config.DECK_BUILD_FROM_COLLECTION ? 4 : 1), false);
 
         mDeckPane.revalidate();
         mDeckPane.repaint();
@@ -2055,6 +2070,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mDeckPaneLabel.setText(CardUtil.getTranslation("deck"));
         mCardsPaneLabel.setText(CardUtil.getTranslation("cardlist"));
         mClearDeckBtn.setText(CardUtil.getTranslation("deck.clear"));
+        mRandomDrawSimBtn.setText(CardUtil.getTranslation("deck.drawsim"));
         mCardCountHintTxt.setText(CardUtil.getTranslation("deck.cards"));
         mFlipCountHintTxt.setText(CardUtil.getTranslation("deck.flip"));
         mExtraCountHintTxt.setText(CardUtil.getTranslation("deck.extra"));
@@ -2429,7 +2445,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             if (splitPane.getTopComponent() != null) {
                 divLoc = splitPane.getDividerLocation();
             }
-            
+            mRandomDrawSimBtn.setVisible(false);
             mTextsPane.setVisible(false);
             mDeckDistributionPane.setVisible(false);
             mDeckPaneLabel.setVisible(false);
@@ -2461,6 +2477,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             });
         } else {
             splitPane.setTopComponent(deckPane);
+            mRandomDrawSimBtn.setVisible(true);
             mTextsPane.setVisible(true);
             mDeckDistributionPane.setVisible(true);
             mDeckPaneLabel.setVisible(true);
@@ -2770,7 +2787,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         CardList list = CardList.getInstance();
         List<Card> filteredCards = list.getSelectCards(true); // Ignore ownership for collection mode view
 
-        UIUtil.showDeck(new CollectionModeCallback(), mCardsPane, filteredCards, null, 13, columns, UIUtil.CARD_SIZE_SMALL, 3, false);
+        UIUtil.showDeck(new CollectionModeCallback(), mCardsPane, filteredCards, null, 13, columns, UIUtil.CARD_SIZE_SMALL, 1.0f, 3, false);
         
         for (Card card : filteredCards) {
             for (ClickableCardPanel panel : card.getPanels()) {

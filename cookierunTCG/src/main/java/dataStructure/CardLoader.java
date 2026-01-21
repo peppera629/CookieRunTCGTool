@@ -760,14 +760,14 @@ public class CardLoader {
 		}
 	}
 	
-	public static ImageIcon createCardImage(Card card, int cardSize) {
+	public static ImageIcon createCardImage(Card card, int cardSize, float cardSizeModifier) {
 		switch (cardSize) {
 			case UIUtil.CARD_SIZE_SMALL:
 				return card.getcardIcon();
 			case UIUtil.CARD_SIZE_DECK:
-				return card.getResizedCardImage(Config.DW_CARD_WIDTH, Config.DW_CARD_HEIGHT);
+				return card.getResizedCardImage((int)(Config.DW_CARD_WIDTH * cardSizeModifier), (int)(Config.DW_CARD_HEIGHT * cardSizeModifier));
 			case UIUtil.CARD_SIZE_OUTPUT:
-				return card.getResizedCardImage(Config.DW_OUTPUT_WIDTH, Config.DW_OUTPUT_HEIGHT);
+				return card.getResizedCardImage((int)(Config.DW_OUTPUT_WIDTH * cardSizeModifier), (int)(Config.DW_OUTPUT_HEIGHT * cardSizeModifier));
 			default:
 				return card.getOriginalSizeImage();
 		}

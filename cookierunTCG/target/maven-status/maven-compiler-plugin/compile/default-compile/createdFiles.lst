@@ -47,6 +47,7 @@ ui\MainUI$5.class
 ui\MainUI$30.class
 ui\MainUI$13.class
 dataStructure\Card.class
+ui\RandomDrawSim.class
 ui\MainUI$6.class
 ui\CollectionSummaryDialog$1.class
 ui\Dialog$1.class
@@ -65,6 +66,8 @@ ui\MainUI$39.class
 ui\MainUI$29.class
 ui\SortSettingsWindow$6.class
 ui\MainUI$3.class
+ui\RandomDrawSim$2.class
+ui\MainUI$40.class
 ui\MainUI$18.class
 ui\MainUI$20.class
 ui\DeckWindowDifferential.class
@@ -87,6 +90,7 @@ ui\SortSettingsWindow$1.class
 dataStructure\Deck.class
 ui\DeckWindowDifferential$2.class
 ui\MainUI$17.class
+ui\RandomDrawSim$1.class
 util\CardUtil$CardType.class
 ui\MainUI$22.class
 ui\MainUI$10.class
