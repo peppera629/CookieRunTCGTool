@@ -1,1 +1,0 @@
-mvn clean package && java -jar "Cookie Run Braverse Deck Builder.jar"
