@@ -1,5 +1,5 @@
-Purple - Dark Cacao
-_,_,_,_,_,_
+Green - Standard
+_,_,v,_,_,_
 _,_,_,_
 _
 _,_,_

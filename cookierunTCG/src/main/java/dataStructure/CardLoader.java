@@ -743,7 +743,7 @@ public class CardLoader {
 			for (Card c : cardList) {
 				fw.write("["+c.getId()+"] "+c.getName());
 				if (c.getCount() > 1) {
-					fw.write("  x "+c.getCount()+"\n");
+					fw.write(" ×"+c.getCount()+"\n");
 				} else {
 					fw.write("\n");
 				}
@@ -751,7 +751,7 @@ public class CardLoader {
 			if (lastCardCount == 1) {
 				fw.write("\n");
 			} else if (lastCardCount > 1) {
-				fw.write("  x "+lastCardCount+"\n");
+				fw.write(" ×"+lastCardCount+"\n");
 			}
 	        fw.flush();
 	        fw.close();

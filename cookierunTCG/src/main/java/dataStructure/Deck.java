@@ -9,7 +9,7 @@ import util.CardUtil.CardColor;
 public class Deck {
 	private List<Card> cardList;
 	private List<Card> flipList;
-	private List<Card> extraList;
+	private List<List<Card>> extraList;
 	private List<List<Card>> CookieList;
 	private List<List<Card>> flipTypeList;
 	private List<Card> ItemList;
@@ -19,12 +19,15 @@ public class Deck {
 	public Deck() {
 		cardList = new ArrayList<Card>();
 		flipList = new ArrayList<Card>();
-		flipTypeList = new ArrayList<>();
-		extraList = new ArrayList<Card>();
 		CookieList = new ArrayList<>();
 		for(int i=0;i<=3;i++) {
 			CookieList.add(new ArrayList<Card>());
 		}
+		extraList = new ArrayList<>();
+		for(int i=0;i<=3;i++) {
+			extraList.add(new ArrayList<Card>());
+		}
+		flipTypeList = new ArrayList<>();
 		for(int i=0;i<=2;i++) {
 			flipTypeList.add(new ArrayList<Card>());
 		}
@@ -76,7 +79,7 @@ public class Deck {
 					}
 				}
 				if(card.isExtra()) {
-					extraList.add(card);
+					extraList.get(card.getLv()).add(card);
 				}
 				CookieList.get(card.getLv()).add(card);
 				break;
@@ -117,7 +120,7 @@ public class Deck {
 					}
 				}
 				if(card.isExtra()) {
-					extraList.remove(card);
+					extraList.get(card.getLv()).remove(card);
 				}
 				CookieList.get(card.getLv()).remove(card);
 				break;
@@ -140,7 +143,9 @@ public class Deck {
 		for(int i=0;i<=2;i++) {
 			flipTypeList.get(i).clear();
 		}
-		extraList.clear();
+		for(int i=0;i<=3;i++) {
+			extraList.get(i).clear();
+		}
 		for(int i=0;i<=3;i++) {
 			CookieList.get(i).clear();
 		}
@@ -166,9 +171,14 @@ public class Deck {
     	return getTargetCardCount(flipList);
     }
 
+	/*
 	public int getExtraCount() {
-		return getTargetCardCount(extraList);
-	}
+		int count = 0;
+		for (List<Card> cards : extraList) {
+			count += getTargetCardCount(cards);
+		}
+		return count;
+	} */
     
     public int getTargetCardCount(List<Card> cards) {
     	if (!Config.SHOW_CARD_COUNT) {
@@ -213,6 +223,14 @@ public class Deck {
 		int L1Count = getTargetCardCount(CookieList.get(1), includeFlip, includeExtra);
 		int L2Count = getTargetCardCount(CookieList.get(2), includeFlip, includeExtra);
 		int L3Count = getTargetCardCount(CookieList.get(3), includeFlip, includeExtra);
+		return new int[] {(L0Count + L1Count + L2Count + L3Count), L1Count, L2Count, L3Count};
+	}
+
+	public int[] getExtraSummary() {
+		int L0Count = getTargetCardCount(extraList.get(0));
+		int L1Count = getTargetCardCount(extraList.get(1));
+		int L2Count = getTargetCardCount(extraList.get(2));
+		int L3Count = getTargetCardCount(extraList.get(3));
 		return new int[] {(L0Count + L1Count + L2Count + L3Count), L1Count, L2Count, L3Count};
 	}
 
