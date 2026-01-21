@@ -1636,6 +1636,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         attackAttrOuterPanel.add(avgDMGPanel, gbc_attackAttrOuter);
 
         labelAvgDMG = new JLabel(CardUtil.getTranslation("filter.avgdmg"), JLabel.LEFT);
+        labelAvgDMG.setToolTipText(CardUtil.getTranslation("filter.avgdmg.tooltip"));
         labelAvgDMG.setAlignmentX(Component.LEFT_ALIGNMENT);
         labelAvgDMG.setFont(CRnormal);
         componentFontMap.put(labelAvgDMG, "CRnormal"); // Store the font type as a String
@@ -1667,6 +1668,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         attackAttrOuterPanel.add(peakDMGPanel, gbc_attackAttrOuter);
 
         labelPeakDMG = new JLabel(CardUtil.getTranslation("filter.peakdmg"), JLabel.LEFT);
+        labelPeakDMG.setToolTipText(CardUtil.getTranslation("filter.peakdmg.tooltip"));
         labelPeakDMG.setAlignmentX(Component.LEFT_ALIGNMENT);
         labelPeakDMG.setFont(CRnormal);
         componentFontMap.put(labelPeakDMG, "CRnormal"); // Store the font type as a String
@@ -2140,7 +2142,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         labelAttackAttr.setText(CardUtil.getTranslation("filter.attackattr"));
         labelAttackDMG.setText(CardUtil.getTranslation("filter.attackdmg"));
         labelAttackCost.setText(CardUtil.getTranslation("filter.attackcost"));
+        labelAvgDMG.setText(CardUtil.getTranslation("filter.avgdmg"));
+        labelAvgDMG.setToolTipText(CardUtil.getTranslation("filter.avgdmg.tooltip"));
         labelPeakDMG.setText(CardUtil.getTranslation("filter.peakdmg"));
+        labelPeakDMG.setToolTipText(CardUtil.getTranslation("filter.peakdmg.tooltip"));
         labelStatus.setText(CardUtil.getTranslation("filter.status"));
         cb_status[0].setText(CardUtil.getTranslation("filter.status.normal"));
         cb_status[1].setText(CardUtil.getTranslation("filter.status.restricted"));
