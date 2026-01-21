@@ -165,12 +165,13 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JCheckBox[] cb_keyword;
     private JCheckBox[] cb_attackDMG;
     private JCheckBox[] cb_attackCost;
+    private JCheckBox[] cb_avgDMG;
     private JCheckBox[] cb_peakDMG;
     private JCheckBox[] cb_status;
     private JCheckBox cb_type_cookie, cb_type_item, cb_type_trap, cb_type_stage;
     private JCheckBox cb_flip, cb_extra, cb_variant;
     private final Filter filter = new Filter(); 
-    private JLabel labelColor, labelType, labelSeries, labelRarity, labelHP, labelSkillType, labelKeyword, labelAttackAttr, labelAttackDMG, labelAttackCost, labelPeakDMG, labelStatus;
+    private JLabel labelColor, labelType, labelSeries, labelRarity, labelHP, labelSkillType, labelKeyword, labelAttackAttr, labelAttackDMG, labelAttackCost, labelAvgDMG, labelPeakDMG, labelStatus;
 
     private Deck mDeck;
     private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane, ownedInfoPanel, keywordLabelPanel, keywordOuterPanel, skillTypeLabelPanel, skillTypeOuterPanel, attackAttrLabelPanel, attackAttrOuterPanel, attackAttrBasePanel, statusLabelPanel, statusOuterPanel;
@@ -1629,6 +1630,37 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         }
 
         gbc_attackAttrOuter.gridy++;
+        JPanel avgDMGPanel = new JPanel();
+        avgDMGPanel.setLayout(new BoxLayout(avgDMGPanel, BoxLayout.Y_AXIS));
+        avgDMGPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        attackAttrOuterPanel.add(avgDMGPanel, gbc_attackAttrOuter);
+
+        labelAvgDMG = new JLabel(CardUtil.getTranslation("filter.avgdmg"), JLabel.LEFT);
+        labelAvgDMG.setAlignmentX(Component.LEFT_ALIGNMENT);
+        labelAvgDMG.setFont(CRnormal);
+        componentFontMap.put(labelAvgDMG, "CRnormal"); // Store the font type as a String
+        avgDMGPanel.add(labelAvgDMG);
+        JPanel avgDMGCheckboxGroup = new JPanel();
+        avgDMGCheckboxGroup.setAlignmentX(Component.LEFT_ALIGNMENT);
+        avgDMGCheckboxGroup.setLayout(new GridBagLayout());
+        GridBagConstraints gbc_avgDMG = new GridBagConstraints();
+        avgDMGPanel.add(avgDMGCheckboxGroup);
+        gbc_avgDMG.anchor = GridBagConstraints.WEST;
+        gbc_avgDMG.gridx = 0;
+        gbc_avgDMG.gridy = 0;
+
+        cb_avgDMG = new JCheckBox[CardUtil.PEAK_MAX+1];
+        for(int i=0; i<CardUtil.PEAK_MAX+1; i++) {
+        	cb_avgDMG[i] = new JCheckBox(Integer.toString(i));
+        	//cb.setSelected(mDefaultState.getDefaultAttackAttrFlag(i));
+            cb_avgDMG[i].setFont(CRnormal);
+            componentFontMap.put(cb_avgDMG[i], "CRnormal"); // Store the font type as a String
+            gbc_avgDMG.gridx = i % 6;
+            gbc_avgDMG.gridy = i / 6;
+            avgDMGCheckboxGroup.add(cb_avgDMG[i], gbc_avgDMG);
+        }
+
+        gbc_attackAttrOuter.gridy++;
         JPanel peakDMGPanel = new JPanel();
         peakDMGPanel.setLayout(new BoxLayout(peakDMGPanel, BoxLayout.Y_AXIS));
         peakDMGPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -1796,6 +1828,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             cb.setSelected(false);
         }
         for (JCheckBox cb : cb_attackCost) {
+            cb.setSelected(false);
+        }
+        for (JCheckBox cb : cb_avgDMG) {
             cb.setSelected(false);
         }
         for (JCheckBox cb : cb_peakDMG) {
@@ -2633,6 +2668,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         public boolean[] keyword = new boolean[CardUtil.KEYWORD_MAX];
         public boolean[] attackDMG = new boolean[CardUtil.ATTACK_MAX + 1];
         public boolean[] attackCost = new boolean[CardUtil.ATTACK_COST_MAX + 1];
+        public boolean[] avgDMG = new boolean[CardUtil.PEAK_MAX + 1];
         public boolean[] peakDMG = new boolean[CardUtil.PEAK_MAX + 1];
         public boolean[] status = new boolean[3];
         public List<String> series = new ArrayList<>();
@@ -2672,6 +2708,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
             for (int i=0; i< cb_attackCost.length; i++) {
                 this.attackCost[i] = cb_attackCost[i].isSelected();
+            }
+            for (int i=0; i< cb_avgDMG.length; i++) {
+                this.avgDMG[i] = cb_avgDMG[i].isSelected();
             }
             for (int i=0; i< cb_peakDMG.length; i++) {
                 this.peakDMG[i] = cb_peakDMG[i].isSelected();
@@ -2722,6 +2761,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             for (int i=0; i<this.attackCost.length; i++) {
                 this.attackCost[i] = false;
             }
+            for (int i=0; i<this.avgDMG.length; i++) {
+                this.avgDMG[i] = false;
+            }
             for (int i=0; i<this.peakDMG.length; i++) {
                 this.peakDMG[i] = false;
             }
@@ -2768,6 +2810,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
             for (int i=0; i< cb_attackCost.length; i++) {
                 list.setAttackCost(i, this.attackCost[i]);
+            }
+            for (int i=0; i< cb_avgDMG.length; i++) {
+                list.setAvgDMG(i, this.avgDMG[i]);
             }
             for (int i=0; i< cb_peakDMG.length; i++) {
                 list.setPeakDMG(i, this.peakDMG[i]);
