@@ -15,6 +15,7 @@ cookierunTCG/config/default_state.txt
 cookierunTCG/run.bat
 cookierunTCG/collection/*
 cookierunTCG/compile&start_new.bat
+cookierunTCG/compile&run.bat
 cookierunTCG/config/config.txt
 cookierunTCG/jre/*
 cookierunTCG/run_JRE.bat
