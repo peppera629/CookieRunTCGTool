@@ -1,6 +1,5 @@
 ui\CollectionSummaryDialog.class
 ui\SettingsWindow$1.class
-ui\RandomDrawSim$3.class
 util\DefaultState.class
 ui\ClickableCardPanel$CardListCallBack.class
 ui\ChoiceDialog$1.class
