@@ -90,19 +90,22 @@ public class RandomDrawSim {
 		JPanel drawSimButtons = new JPanel();
 		drawSimButtons.setBounds(0, h, w - 10, 30);
 		frame.getContentPane().add(drawSimButtons);
-		drawSimButtons.setLayout(new GridLayout(1, 2, 0, 0));
+		drawSimButtons.setLayout(new GridLayout(1, 1, 0, 0));
 
 		redrawButton = new JButton(CardUtil.getTranslation("deck.redraw"));
 		redrawButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				updateStartingHand(false);
-				mulliganButton.setText(CardUtil.getTranslation("deck.mulligan") + " (#1)");
-				mulliganButton.setEnabled(true);
+				//mulliganButton.setText(CardUtil.getTranslation("deck.mulligan") + " (#1)");
+				//mulliganButton.setEnabled(true);
 			}
 		});
 		redrawButton.setFont(MainUI.CRbold);
 		drawSimButtons.add(redrawButton);
 		
+		// This has the wrong logic, disabled for now (not that it's needed)
+		// Can be repurposed to make a "draw 1 card" function though (make it possible to stack card panels first instead of it being in a grid)
+		/* 
 		mulliganButton = new JButton(CardUtil.getTranslation("deck.mulligan") + " (#" + (mDeck.getMulliganCount() + 1) + ")");
 		mulliganButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -118,6 +121,7 @@ public class RandomDrawSim {
 		});
 		mulliganButton.setFont(MainUI.CRbold);
 		drawSimButtons.add(mulliganButton);
+		 */
 	}
 
 	private void updateStartingHand(boolean mulligan) {
