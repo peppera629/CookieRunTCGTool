@@ -26,6 +26,7 @@ public class CardList {
 	private boolean _search_extra;
 	private boolean _search_rarity[];
 	private boolean _search_hp[];
+	private boolean _search_awaken_hp[];
 	private boolean _search_skill_type[];
 	private boolean _search_keyword[];
 	private boolean _search_attackDMG[];
@@ -57,6 +58,7 @@ public class CardList {
 		_search_rarity = new boolean[CardUtil.RARITY_MAX];
 		_search_variants = false;
 		_search_hp = new boolean[CardUtil.HP_MAX + 1];
+		_search_awaken_hp = new boolean[CardUtil.AWAKEN_HP.size()];
 		_search_skill_type = new boolean[CardUtil.SKILL_TYPE_MAX];
 		_search_keyword = new boolean[CardUtil.KEYWORD_MAX];
 		_search_attackDMG = new boolean[CardUtil.ATTACK_MAX + 1];
@@ -101,6 +103,7 @@ public class CardList {
 		boolean selectLv = isSelectedLv();
 		boolean selectFlipType = isSelectedFlipType();
 		boolean selectHP = isSelectedHP();
+		boolean selectAwakenHP = isSelectedAwakenHP();
 		boolean selectRarity = isSelectedRarity();
 		boolean selectSkillType = isSelectedSkillType();
 		boolean selectKeyword = isSelectedKeyword();
@@ -110,7 +113,7 @@ public class CardList {
 		boolean selectPeakDMG = isSelectedPeakDMG();
 		boolean selectStatus = isSelectedStatus();
 		
-		if (!selectColor && !selectType && !_search_flip && !_search_extra && !selectRarity && !selectHP && !selectSkillType && !selectKeyword && !selectAttackDMG && !selectAttackCost && !selectAvgDMG && !selectPeakDMG && !selectStatus && !_search_variants && _search_name.equals("") && _search_pack_list.size() == 0) {
+		if (!selectColor && !selectType && !_search_flip && !_search_extra && !selectRarity && !selectHP && !selectAwakenHP && !selectSkillType && !selectKeyword && !selectAttackDMG && !selectAttackCost && !selectAvgDMG && !selectPeakDMG && !selectStatus && !_search_variants && _search_name.equals("") && _search_pack_list.size() == 0) {
 			if (Config.SHOW_OWNED_ONLY && !forceShowAll) {
 				return getOwnedCards();
 			} else {
@@ -127,6 +130,7 @@ public class CardList {
 		boolean rarityCorrect;
 		boolean lvCorrect;
 		boolean hpCorrect;
+		boolean awakenHPCorrect;
 		boolean packCorrect;
 		boolean nameCorrect;
 		boolean skillTypeCorrect;
@@ -145,8 +149,16 @@ public class CardList {
 			// Lv. and HP conditions: if Cookie type is not selected, ignore Lv. and HP conditions
 			lvCorrect = !selectLv || !_search_type[CardType.Cookie.getValue()]
 					|| c.getType() != CardType.Cookie || _search_lv[c.getLv()];
-			hpCorrect = !selectHP || !_search_type[CardType.Cookie.getValue()]
+			hpCorrect = (!selectHP && !selectAwakenHP) || !_search_type[CardType.Cookie.getValue()]
 					|| c.getType() != CardType.Cookie || _search_hp[c.getHP()];
+			int awakenHPIndex = CardUtil.AWAKEN_HP.indexOf(c.getHP());
+			if (!c.isAwaken()) {
+				awakenHPCorrect = false;
+			} else {
+				awakenHPCorrect = (!selectHP && !selectAwakenHP) || !_search_type[CardType.Cookie.getValue()]
+					|| c.getType() != CardType.Cookie || _search_awaken_hp[awakenHPIndex];
+
+			}
 			flipCorrect = !_search_flip || c.isFlip();
 			flipTypeCorrect = !selectFlipType || !_search_flip || !c.isFlip() || _search_flip_type[c.getFlipType().getValue()];
 			extraCorrect = !_search_extra || c.isExtra();
@@ -171,11 +183,11 @@ public class CardList {
 
 			owned = Collection.getInstance().getCardTotalOwnedCount(c.getId(), true) > 0;
 			if (forceShowAll) {
-				if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && skillTypeCorrect && keywordCorrect && attackDMGCorrect && attackCostCorrect && avgDMGCorrect && peakDMGCorrect && statusCorrect && packCorrect && nameCorrect && hasVariants) {
+				if (colorCorrect && lvCorrect && (hpCorrect || awakenHPCorrect) && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && skillTypeCorrect && keywordCorrect && attackDMGCorrect && attackCostCorrect && avgDMGCorrect && peakDMGCorrect && statusCorrect && packCorrect && nameCorrect && hasVariants) {
 					selectList.add(c);
 				}
 			} else {
-				if (colorCorrect && lvCorrect && hpCorrect && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && skillTypeCorrect && keywordCorrect && attackDMGCorrect && attackCostCorrect && avgDMGCorrect && peakDMGCorrect && statusCorrect && packCorrect && nameCorrect
+				if (colorCorrect && lvCorrect && (hpCorrect || awakenHPCorrect) && typeCorrect && flipCorrect && flipTypeCorrect && extraCorrect && rarityCorrect && skillTypeCorrect && keywordCorrect && attackDMGCorrect && attackCostCorrect && avgDMGCorrect && peakDMGCorrect && statusCorrect && packCorrect && nameCorrect
 					&& (!Config.SHOW_OWNED_ONLY || owned) && hasVariants) {
 					selectList.add(c);
 				}
@@ -225,6 +237,15 @@ public class CardList {
 	private boolean isSelectedHP() {
 		for (int i=1; i<CardUtil.HP_MAX+1; i++) {
 			if(_search_hp[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isSelectedAwakenHP() {
+		for (int i=0; i<CardUtil.AWAKEN_HP.size(); i++) {
+			if(_search_awaken_hp[i]) {
 				return true;
 			}
 		}
@@ -333,6 +354,10 @@ public class CardList {
 
 	public void setHP(int hp, boolean enabled) {
 		_search_hp[hp] = enabled;
+	}
+
+	public void setHPAwaken(int index, boolean enabled) {
+		_search_awaken_hp[index] = enabled;
 	}
 
 	public void setSkillType(int id, boolean enabled) {

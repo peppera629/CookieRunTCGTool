@@ -19,6 +19,7 @@ util\CardUtil$FlipType.class
 dataStructure\Deck$1.class
 ui\MainUI$38.class
 util\UIUtil.class
+ui\MainUI$41.class
 util\CardUtil$Keyword.class
 ui\ChoiceDialog$2.class
 ui\MainUI$31.class

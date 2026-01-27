@@ -22,6 +22,7 @@ public class DefaultState {
 	public boolean[] flipType;
 	public boolean[] lv;
 	public boolean[] hp;
+	public boolean[] hp_awaken;
 	public boolean[] rarity;
 	public boolean flip, extra;
 	private static DefaultState instance;
@@ -44,6 +45,7 @@ public class DefaultState {
 		rarity = new boolean[CardUtil.RARITY_MAX];
 		lv = new boolean[CardUtil.LEVEL_MAX + 1];
 		hp = new boolean[CardUtil.HP_MAX + 1];
+		hp_awaken = new boolean[CardUtil.AWAKEN_HP.size()];
 		_search_pack_list = new ArrayList<String>();
 	}
 
@@ -154,6 +156,18 @@ public class DefaultState {
 				}
 			}
 
+			// Awakened HP checkbox status
+			if ((data = input.readLine()) != null) {
+				String[] flags = data.split(",");
+				for (int i = 0; i < flags.length; i++) {
+					if (hp_awaken.length > i) {
+						if (flags[i].equals("v")) {
+							hp_awaken[i] = true;
+						}
+					}
+				}
+			}
+
 			// Sort order
 			if ((data = input.readLine()) != null) {
 				String[] flags = data.split(",");
@@ -187,6 +201,9 @@ public class DefaultState {
 			for (int i = 0; i < hp.length; i++) {
 				hp[i] = false;
 			}
+			for (int i = 0; i < hp_awaken.length; i++) {
+				hp_awaken[i] = false;
+			}
 			for (int i = 0; i < flipType.length; i++) {
 				flipType[i] = false;
 			}
@@ -218,6 +235,9 @@ public class DefaultState {
 		}
 		for (int i = 0; i < hp.length; i++) {
 			hp[i] = false;
+		}
+		for (int i = 0; i < hp_awaken.length; i++) {
+			hp_awaken[i] = false;
 		}
 		for (int i = 0; i < flipType.length; i++) {
 			flipType[i] = false;
@@ -285,6 +305,18 @@ public class DefaultState {
 				}
 			}
 			fw.write("\n");
+
+			// Awakened HP
+			for (int i = 0; i < hp_awaken.length; i++) {
+				if (i > 0) {
+					fw.write(",");
+				}
+				if (hp_awaken[i]) {
+					fw.write("v");
+				} else {
+					fw.write("_");
+				}
+			}
 
 			// pack
 			int count = 0;
@@ -356,6 +388,10 @@ public class DefaultState {
 		return hp[i];
 	}
 
+	public boolean getDefaultHPAwakenFlag(int i) {
+		return hp_awaken[i];
+	}
+
 	public boolean getDefaultLvFlag(int i) {
 		return lv[i];
 	}
@@ -386,6 +422,10 @@ public class DefaultState {
 
 	public void setDefaultHPFlag(int i, boolean selected) {
 		hp[i] = selected;
+	}
+
+	public void setDefaultHPAwakenFlag(int i, boolean selected) {
+		hp_awaken[i] = selected;
 	}
 
 	public void setDefaultFlipFlag(boolean selected) {

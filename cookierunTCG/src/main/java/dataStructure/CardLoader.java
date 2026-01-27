@@ -138,6 +138,7 @@ public class CardLoader {
 					// Excludes: Self-damage, items, traps, and stages for now
 
 	            	CardColor color = CardColor.Green;
+					boolean isAwaken = false;
 	            	for (int i=0; i<CardUtil.COLOR_MAX; i++) {
 	            		CardColor c = CardColor.fromValue(i);
 	            		if (cardData[1].equals(c.getName())) {
@@ -157,7 +158,11 @@ public class CardLoader {
 							}
 							if (cardData.length >7) {
 								// Awaken HP bonus is kept for later use
-								cardData[7] = cardData[7].replace("+", "");
+								if (cardData[7].contains("+")) {
+									cardData[7] = cardData[7].replace("+", "");
+									isAwaken = true;
+								}
+								
 								if (!cardData[7].equals("_")) {
 									hp = Integer.parseInt(cardData[7]);
 								}
@@ -208,7 +213,7 @@ public class CardLoader {
 
 					// Name will be loaded later
 					//System.out.println(packName);
-	            	Card c = new Card(packName, cardData[0], "", color, type, isFlip, (isFlip ? FlipType.fromString(cardData[3]) : null), cardData[3].equals("EX"), CardUtil.CardRarity.fromString(cardData[4]), cardData[5], level, hp, skillType, keyword);
+	            	Card c = new Card(packName, cardData[0], "", color, type, isFlip, (isFlip ? FlipType.fromString(cardData[3]) : null), cardData[3].equals("EX"), isAwaken, CardUtil.CardRarity.fromString(cardData[4]), cardData[5], level, hp, skillType, keyword);
 	            	
 					if (cardData.length >10) {
 						int attackDMG = 0;

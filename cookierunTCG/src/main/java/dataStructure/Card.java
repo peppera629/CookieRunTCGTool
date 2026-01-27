@@ -31,6 +31,7 @@ public class Card {
 	private boolean _isFlip;
 	private FlipType _flipType;
 	private boolean _isExtra;
+	private boolean _isAwaken;
 	private CardRarity _rarity;
 	private CardRarity[] _variants;
 	private List<boolean[]> _availability; // [][0]: EN, [][1]: TW, [][2]: KR, list size = number of variants (inc. base)
@@ -65,7 +66,7 @@ public class Card {
 	private String _translationFlip = "";
 	
 	public Card(String pack, String id, String name, CardColor color, CardType type,
-			boolean flip, FlipType flipType, boolean extra, CardRarity rarity, String mark, int lv, int hp, List<SkillType> skillType, Keyword keyword) {
+			boolean flip, FlipType flipType, boolean extra, boolean awaken, CardRarity rarity, String mark, int lv, int hp, List<SkillType> skillType, Keyword keyword) {
 		_PanelList = new ArrayList<ClickableCardPanel>();
 		_serial_number = SERIAL_NUMBER++;
 		_pack = pack;
@@ -76,6 +77,7 @@ public class Card {
 		_isFlip = flip;
 		_flipType = flipType;
 		_isExtra = extra;
+		_isAwaken = awaken;
 		_rarity = rarity;
 		_mark = mark; // Currently unused
 		_lv = lv;
@@ -257,6 +259,10 @@ public class Card {
 
 	public boolean isExtra() {
 		return _isExtra;
+	}
+	
+	public boolean isAwaken() {
+		return _isAwaken;
 	}
 
 	public ImageIcon getcardIcon() {

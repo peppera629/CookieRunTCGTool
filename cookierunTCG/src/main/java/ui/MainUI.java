@@ -85,10 +85,10 @@ import javax.swing.JButton;
 
 // FIX: Verify collection summary correctness
 // FIX: In deck image, unloaded card images are not loaded
-// FEATURE: Restrict displayed cards based on language availability or pack release status based on region
 // FIX: Variant highlight does not always work correctly (such as switching language when selecting variant)
+// FEATURE: Restrict displayed cards based on language availability or pack release status based on region
 // FEATURE: Add "Credits" popup
-// FEATURE: Add options for filtering by Awakening HP bonus (+0, +2)
+// MAJOR FEATURE: Add custom UI for loading/saving decks and allow tree structure for deck files, don't use file chooser anymore
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
 
@@ -161,6 +161,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JCheckBox[] cb_pack;
     private JCheckBox[] cb_rarity;
     private JCheckBox[] cb_HP;
+    private JCheckBox[] cb_HPAwaken;
     private JCheckBox[] cb_skillType;
     private JCheckBox[] cb_keyword;
     private JCheckBox[] cb_attackDMG;
@@ -171,7 +172,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JCheckBox cb_type_cookie, cb_type_item, cb_type_trap, cb_type_stage;
     private JCheckBox cb_flip, cb_extra, cb_variant;
     private final Filter filter = new Filter(); 
-    private JLabel labelColor, labelType, labelSeries, labelRarity, labelHP, labelSkillType, labelKeyword, labelAttackAttr, labelAttackDMG, labelAttackCost, labelAvgDMG, labelPeakDMG, labelStatus;
+    private JLabel labelColor, labelType, labelSeries, labelRarity, labelHP, labelHPAwaken, labelSkillType, labelKeyword, labelAttackAttr, labelAttackDMG, labelAttackCost, labelAvgDMG, labelPeakDMG, labelStatus;
 
     private Deck mDeck;
     private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane, ownedInfoPanel, keywordLabelPanel, keywordOuterPanel, skillTypeLabelPanel, skillTypeOuterPanel, attackAttrLabelPanel, attackAttrOuterPanel, attackAttrBasePanel, statusLabelPanel, statusOuterPanel;
@@ -1264,16 +1265,21 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         JPanel typeOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
         JPanel typeCheckboxGroup = new JPanel();
-        typeCheckboxGroup.setLayout(new GridLayout(0, 1));
+        typeCheckboxGroup.setLayout(new GridBagLayout());
         typeCheckboxGroup.setBorder(filterBorder);
         typeOuterPanel.add(typeCheckboxGroup);
         mSearchPane.add(typeOuterPanel);
 
+        GridBagConstraints gbc_type = new GridBagConstraints();
+        gbc_type.anchor = GridBagConstraints.WEST;
+        gbc_type.gridx = 0;
+
         // Rows: Cookie + Levels, Cookie HP, Flip + Flip Types, [Extra, Item, Trap, Stage]
         JPanel[] typeCheckboxGroupRows = new JPanel[4];
         for (int i=0; i<4; i++) {
+            gbc_type.gridy = i;
         	typeCheckboxGroupRows[i] = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        	typeCheckboxGroup.add(typeCheckboxGroupRows[i]);
+        	typeCheckboxGroup.add(typeCheckboxGroupRows[i], gbc_type);
         } 
 
         cb_type_cookie = new JCheckBox(CardUtil.getTranslation("filter.cookie"));
@@ -1286,8 +1292,12 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             	mDefaultState.setDefaultTypeFlag(0, cb_type_cookie.isSelected());
             	for (JCheckBox cb : cb_level) {
             		cb.setEnabled(cb_type_cookie.isSelected());
+
             	}
                 for (JCheckBox cb : cb_HP) {
+                    cb.setEnabled(cb_type_cookie.isSelected());
+                }
+                for (JCheckBox cb : cb_HPAwaken) {
                     cb.setEnabled(cb_type_cookie.isSelected());
                 }
             }
@@ -1311,10 +1321,16 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             
         }
 
+        JPanel hpCheckboxGroups = new JPanel(new GridLayout(0, 1));
+        typeCheckboxGroupRows[1].add(hpCheckboxGroups);
+
+        JPanel hpPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        hpCheckboxGroups.add(hpPanel);
+
         labelHP = new JLabel("HP:");
         labelHP.setFont(CRnormal);
         componentFontMap.put(labelHP, "CRnormal"); // Store the font type as a String
-        typeCheckboxGroupRows[1].add(labelHP);
+        hpPanel.add(labelHP);
 
         cb_HP = new JCheckBox[CardUtil.HP_MAX];
         for(int i=0; i<CardUtil.HP_MAX; i++) {
@@ -1324,7 +1340,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         	cb_HP[i].setSelected(mDefaultState.getDefaultHPFlag(hp));
             cb_HP[i].setFont(CRnormal);
             componentFontMap.put(cb_HP[i], "CRnormal"); // Store the font type as a String
-            typeCheckboxGroupRows[1].add(cb_HP[i]);
+            hpPanel.add(cb_HP[i]);
             
             cb_HP[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1332,6 +1348,31 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 }
             });
             cb_HP[i].setEnabled(cb_type_cookie.isSelected());
+        }
+
+        JPanel hpAwakenPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        hpCheckboxGroups.add(hpAwakenPanel);
+
+        labelHPAwaken = new JLabel("HP+:");
+        labelHPAwaken.setFont(CRnormal);
+        componentFontMap.put(labelHPAwaken, "CRnormal"); // Store the font type as a String
+        hpAwakenPanel.add(labelHPAwaken);
+
+        cb_HPAwaken = new JCheckBox[CardUtil.AWAKEN_HP.size()];
+        for(int i=0; i<CardUtil.AWAKEN_HP.size(); i++) {
+            final int id = i;
+        	cb_HPAwaken[i] = new JCheckBox("+" + Integer.toString(CardUtil.AWAKEN_HP.get(i)));
+        	cb_HPAwaken[i].setSelected(mDefaultState.getDefaultHPAwakenFlag(i));
+            cb_HPAwaken[i].setFont(CRnormal);
+            componentFontMap.put(cb_HPAwaken[i], "CRnormal"); // Store the font type as a String
+            hpAwakenPanel.add(cb_HPAwaken[i]);
+            
+            cb_HPAwaken[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                	mDefaultState.setDefaultHPAwakenFlag(id, cb_HPAwaken[id].isSelected());
+                }
+            });
+            cb_HPAwaken[i].setEnabled(cb_type_cookie.isSelected());
         }
         
         cb_flip = new JCheckBox(CardUtil.getTranslation("filter.flip"));
@@ -1801,6 +1842,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         	cb.setSelected(false);
         }
 
+        for (JCheckBox cb : cb_HPAwaken) {
+            cb.setSelected(false);
+        }
+
     	cb_flip.setSelected(false);
 
         for (JCheckBox cb : cb_pack) {
@@ -1815,6 +1860,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             cb.setEnabled(cb_type_cookie.isSelected());
         }
         for (JCheckBox cb : cb_HP) {
+            cb.setEnabled(cb_type_cookie.isSelected());
+        }
+        for (JCheckBox cb : cb_HPAwaken) {
             cb.setEnabled(cb_type_cookie.isSelected());
         }
         for (JCheckBox cb : cb_flipType) {
@@ -2669,6 +2717,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         public boolean[] rarity = new boolean[CardUtil.RARITY_MAX];
         public boolean variants = false;
         public boolean[] hp = new boolean[CardUtil.HP_MAX + 1];
+        public boolean[] hpAwaken = new boolean[CardUtil.AWAKEN_HP.size()];
         public boolean[] skillType = new boolean[CardUtil.SKILL_TYPE_MAX];
         public boolean[] keyword = new boolean[CardUtil.KEYWORD_MAX];
         public boolean[] attackDMG = new boolean[CardUtil.ATTACK_MAX + 1];
@@ -2701,6 +2750,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             this.variants = cb_variant.isSelected();
             for (int i=0; i< cb_HP.length; i++) {
                 this.hp[i] = cb_HP[i].isSelected();
+            }
+            for (int i=0; i< cb_HPAwaken.length; i++) {
+                this.hpAwaken[i] = cb_HPAwaken[i].isSelected();
             }
             for (int i=0; i< cb_skillType.length; i++) {
                 this.skillType[i] = cb_skillType[i].isSelected();
@@ -2754,6 +2806,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             for (int i=0; i<this.hp.length; i++) {
                 this.hp[i] = false;
             }
+            for (int i=0; i<this.hpAwaken.length; i++) {
+                this.hpAwaken[i] = false;
+            }
             for (int i=0; i<this.skillType.length; i++) {
                 this.skillType[i] = false;
             }
@@ -2792,6 +2847,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
             for (int i=0; i< cb_HP.length; i++) {
                 list.setHP(i+1, this.hp[i]);
+            }
+            for (int i=0; i< cb_HPAwaken.length; i++) {
+                list.setHPAwaken(i, this.hpAwaken[i]);
             }
             for (int i=0; i< cb_skillType.length; i++) {
                 list.setSkillType(i, this.skillType[i]);
