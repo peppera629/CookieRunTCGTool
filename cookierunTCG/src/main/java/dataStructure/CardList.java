@@ -36,7 +36,8 @@ public class CardList {
 	private boolean _search_status[];
 	private String _search_name;
 	private List<String> _search_pack_list;
-	private boolean _search_variants;
+	private boolean _search_variants_sec;
+	private boolean _search_variants_promo;
 	public boolean hasVariants;
 	public static CardList getInstance() {
 		if (instance == null) {
@@ -56,7 +57,8 @@ public class CardList {
 		_search_flip_type = new boolean[3];
 		_search_extra = false;
 		_search_rarity = new boolean[CardUtil.RARITY_MAX];
-		_search_variants = false;
+		_search_variants_sec = false;
+		_search_variants_promo = false;
 		_search_hp = new boolean[CardUtil.HP_MAX + 1];
 		_search_awaken_hp = new boolean[CardUtil.AWAKEN_HP.size()];
 		_search_skill_type = new boolean[CardUtil.SKILL_TYPE_MAX];
@@ -113,7 +115,7 @@ public class CardList {
 		boolean selectPeakDMG = isSelectedPeakDMG();
 		boolean selectStatus = isSelectedStatus();
 		
-		if (!selectColor && !selectType && !_search_flip && !_search_extra && !selectRarity && !selectHP && !selectAwakenHP && !selectSkillType && !selectKeyword && !selectAttackDMG && !selectAttackCost && !selectAvgDMG && !selectPeakDMG && !selectStatus && !_search_variants && _search_name.equals("") && _search_pack_list.size() == 0) {
+		if (!selectColor && !selectType && !_search_flip && !_search_extra && !selectRarity && !selectHP && !selectAwakenHP && !selectSkillType && !selectKeyword && !selectAttackDMG && !selectAttackCost && !selectAvgDMG && !selectPeakDMG && !selectStatus && !_search_variants_sec && !_search_variants_promo && _search_name.equals("") && _search_pack_list.size() == 0) {
 			if (Config.SHOW_OWNED_ONLY && !forceShowAll) {
 				return getOwnedCards();
 			} else {
@@ -179,7 +181,9 @@ public class CardList {
 			statusCorrect = !selectStatus || (_search_status[0] && c.getMaxCount() == 4) || (_search_status[1] && c.getMaxCount() == 1) || (_search_status[2] && c.getMaxCount() == 0);
 			packCorrect = _search_pack_list.size() == 0 || _search_pack_list.contains(c.getPack());
 			nameCorrect = _search_name.equals("") || Normalizer.normalize(String.join(" ", c.getNameByLang()).toLowerCase(), Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").contains(_search_name);
-			hasVariants = !_search_variants || (c.getVariants().length > 1);
+			hasVariants = (!_search_variants_sec && !_search_variants_promo)
+					|| (c.getVariants().length > 1 && (_search_variants_sec && (Arrays.asList(c.getVariants()).contains(CardRarity.SEC) || Arrays.asList(c.getVariants()).contains(CardRarity.SSR) || Arrays.asList(c.getVariants()).contains(CardRarity.SUR) || Arrays.asList(c.getVariants()).contains(CardRarity.EXR)) 
+					|| _search_variants_promo && Arrays.asList(c.getVariants()).contains(CardRarity.P)));
 
 			owned = Collection.getInstance().getCardTotalOwnedCount(c.getId(), true) > 0;
 			if (forceShowAll) {
@@ -397,8 +401,12 @@ public class CardList {
 		}
 	}
 
-	public void setHasVariantsOnly(boolean enabled) {
-		_search_variants = enabled;
+	public void setHasSecretOnly(boolean enabled) {
+		_search_variants_sec = enabled;
+	}
+
+	public void setHasPromoVariantOnly(boolean enabled) {
+		_search_variants_promo = enabled;
 	}
 
 	public void setSearchTerm(String term) {

@@ -76,6 +76,22 @@ tournament.stage.new.runnerup,5
 tournament.stage.finalist,0
 tournament.stage.new.finalist,5
 
+tournament.bl2026s4,5
+tournament.bl2026s4f.champion,5
+tournament.bl2026s4f.runnerup,5
+tournament.bl2026s4f.finalist,5
+tournament.bl2026s3,5
+tournament.bl2026s3f.champion,5
+tournament.bl2026s3f.runnerup,5
+tournament.bl2026s3f.finalist,5
+tournament.bl2026s2,5
+tournament.bl2026s2f.champion,5
+tournament.bl2026s2f.runnerup,5
+tournament.bl2026s2f.finalist,5
+tournament.bl2026s1,5
+tournament.bl2026s1f.champion,5
+tournament.bl2026s1f.runnerup,5
+tournament.bl2026s1f.finalist,5
 tournament.bl2025s4,5
 tournament.bl2025s4f.champion,5
 tournament.bl2025s4f.runnerup,5
