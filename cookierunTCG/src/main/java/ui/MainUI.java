@@ -9,6 +9,10 @@ import javax.swing.JLabel;
 
 import java.awt.BorderLayout;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import java.awt.Dimension;
@@ -43,6 +47,7 @@ import java.util.List;
 
 import ui.ClickableCardPanel.CardListCallBack;
 import ui.SortSettingsWindow.ConfigChangedCallback;
+import ui.FilePicker;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardRarity;
 import util.CardUtil.CardType;
@@ -90,7 +95,6 @@ import javax.swing.JButton;
 // FIX: Variant highlight does not always work correctly (such as showing another card while holding down variant key can cause unavailable language to be selected)
 // FEATURE: Restrict displayed cards based on language availability or pack release status based on region
 // FEATURE: Add "Credits" popup
-// MAJOR FEATURE: Add custom UI for loading/saving decks and allow tree structure for deck files, don't use file chooser anymore
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
 
@@ -184,8 +188,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private Deck mDeck;
     private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane, ownedInfoPanel, keywordLabelPanel, keywordOuterPanel, skillTypeLabelPanel, skillTypeOuterPanel, attackAttrLabelPanel, attackAttrOuterPanel, attackAttrBasePanel, statusLabelPanel, statusOuterPanel;
     private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup, deckDetailPane, centerPanel;
-    private JTextField mDeckText, searchBox;
-    private JButton saveBtn, selectBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST;
+    private JLabel mDeckText;
+    private JTextField searchBox;
+    private JButton saveBtn, saveAsBtn, selectBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST;
     private JButton mClearDeckBtn, mRandomDrawSimBtn, button_search, button_clean, button_sort, button_settings;
     private JToggleButton button_collection;
     private JLabel mCardCountHintTxt, mFlipCountHintTxt, mExtraCountHintTxt, mDeckCookieSummaryHintTxt, 
@@ -215,6 +220,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private Collection collection = Collection.getInstance();
     private Card currentCard;
     private Color highlightColor = new Color(60,60,255,255);
+    private String currentDeckDirectory;
 
     private void initialize() {
         Config.loadConfig();
@@ -433,8 +439,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     int result = dialog.show(CardUtil.getTranslation("confirmation"));
                     System.out.println(result);
                     if (result == 0) {
-                        CardLoader.saveDeck(mDeckText.getText(), mDeck);
+                        CardLoader.saveDeck(currentDeckDirectory, mDeckText.getText(), mDeck);
                         mDefaultState.setDefaultDeckName(mDeckText.getText());
+                        mDefaultState.setDefaultDeckPath(AppPaths.userDataDir().resolve("deck").relativize(Paths.get(currentDeckDirectory)).toString());
                         mDefaultState.saveDefaultState();
                         System.exit(0);
                     } else if (result == 1) {
@@ -449,7 +456,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         
         mSearchPaneOuter = new JPanel(new BorderLayout());
         mSearchPaneOuter.setPreferredSize(new Dimension(Math.max((int) (125 + 225 * Config.UI_SCALE), (int) (350 * Config.UI_SCALE)), (int) (200 * Config.UI_SCALE)));
-        System.out.println(Config.UI_SCALE);
+        //System.out.println(Config.UI_SCALE);
         mSearchPane = new ScrollablePanel();
         mSearchPane.setFocusable(true);
         mSearchPane.addMouseListener(new MouseAdapter() {
@@ -650,7 +657,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, deckPane, cardListPane);
         splitPane.setDividerLocation(300);
         splitPane.setResizeWeight(0.5);
-        splitPane.setDividerSize(8);
+        splitPane.setDividerSize(16);
         splitPane.setContinuousLayout(true);
         splitPane.setOneTouchExpandable(true);
         centerPanel.add(splitPane, BorderLayout.CENTER);
@@ -1142,18 +1149,18 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         GridBagConstraints gbc_panel = new GridBagConstraints();
         gbc_panel.fill = GridBagConstraints.BOTH;
         gbc_panel.gridx = 0;
-        gbc_panel.gridwidth = 4;
+        gbc_panel.gridwidth = 3;
         gbc_panel.gridy = 0;
-        mDeckText = new JTextField();
-        mDeckText.setText(mDefaultState.getDeckDefaultName());
+        mDeckText = new JLabel();
+        mDeckText.setText(mDefaultState.getDefaultDeckName());
         mDeckText.setFont(CRnormal);
         mDeckText.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, CRnormal.getSize()+11));
         componentFontMap.put(mDeckText, "CRnormal");
         mFileOpPane.add(mDeckText, gbc_panel);
 
         gbc_panel.gridwidth = 1;
-        gbc_panel.gridx = 0;
-        gbc_panel.gridy = 1;
+        gbc_panel.gridx = 3;
+        gbc_panel.gridy = 0;
         saveBtn = new JButton(CardUtil.getTranslation("save"));
         saveBtn.setRequestFocusEnabled(false);
         saveBtn.setFont(CRnormal);
@@ -1161,8 +1168,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mFileOpPane.add(saveBtn, gbc_panel);
         saveBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                CardLoader.saveDeck(mDeckText.getText(), mDeck);
+                CardLoader.saveDeck(currentDeckDirectory, mDeckText.getText(), mDeck);
                 mDefaultState.setDefaultDeckName(mDeckText.getText());
+                mDefaultState.setDefaultDeckPath(AppPaths.userDataDir().resolve("deck").relativize(Paths.get(currentDeckDirectory)).toString());
                 mDefaultState.saveDefaultState();
                 Dialog dialog = new Dialog();
                 deckChanged = false;
@@ -1170,42 +1178,69 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
         });
 
+        gbc_panel.gridwidth = 1;
+        gbc_panel.gridx = 0;
+        gbc_panel.gridy = 1;
+        saveAsBtn = new JButton(CardUtil.getTranslation("saveas"));
+        saveAsBtn.setRequestFocusEnabled(false);
+        saveAsBtn.setFont(CRnormalSmall);
+        componentFontMap.put(saveAsBtn, "CRnormalSmall"); // Store the font type as a String
+        mFileOpPane.add(saveAsBtn, gbc_panel);
+        saveAsBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                FilePicker filePicker = new FilePicker();
+                String pickedDirectory = filePicker.show("save");
+                if (pickedDirectory != null) {
+                    CardLoader.saveDeck(pickedDirectory, pickedDirectory.substring(pickedDirectory.lastIndexOf(File.separator) + 1), mDeck);
+                    mDeckText.setText(pickedDirectory.substring(pickedDirectory.lastIndexOf(File.separator) + 1, pickedDirectory.length() - 4));
+                    mDefaultState.setDefaultDeckName(mDeckText.getText());
+                    mDefaultState.setDefaultDeckPath(AppPaths.userDataDir().resolve("deck").relativize(Paths.get(pickedDirectory)).toString());
+                    mDefaultState.saveDefaultState();
+                    Dialog dialog = new Dialog();
+                    deckChanged = false;
+                    dialog.show(CardUtil.getTranslation("deck.saved"));
+                }
+            }
+        });
+
         gbc_panel.gridx = 1;
         selectBtn = new JButton(CardUtil.getTranslation("select.file"));
         selectBtn.setRequestFocusEnabled(false);
-        selectBtn.setFont(CRnormal);
-        componentFontMap.put(selectBtn, "CRnormal"); // Store the font type as a String
+        selectBtn.setFont(CRnormalSmall);
+        componentFontMap.put(selectBtn, "CRnormalSmall"); // Store the font type as a String
         selectBtn.setActionCommand("Select File");
         mFileOpPane.add(selectBtn, gbc_panel);
         selectBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setCurrentDirectory(new File(AppPaths.userDataDir().resolve("deck").toString()));
-				int returnValue = fileChooser.showOpenDialog(null);
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
+				FilePicker filePicker = new FilePicker();
+                String pickedDirectory = filePicker.show("load");
+				if (pickedDirectory != null) {
                     if (deckChanged) {
                         ChoiceDialog dialog = new ChoiceDialog();
                         int result = dialog.show(CardUtil.getTranslation("confirmation"));
                         System.out.println(result);
                         if (result == 0) {
-                            CardLoader.saveDeck(mDeckText.getText(), mDeck);
+                            CardLoader.saveDeck(currentDeckDirectory, mDeckText.getText(), mDeck);
                             mDefaultState.setDefaultDeckName(mDeckText.getText());
+                            mDefaultState.setDefaultDeckPath(AppPaths.userDataDir().resolve("deck").relativize(Paths.get(currentDeckDirectory)).toString());
                             mDefaultState.saveDefaultState();
                         } else if (result == 2) {
                             return; // Cancel the file selection
                         }
                     }
-                    File selectedFile = fileChooser.getSelectedFile();
-                    String filename = selectedFile.getName();
-                    //System.out.println(selectedFile.getName());
+                    File selectedFile = new File(pickedDirectory);
+                    String filename = pickedDirectory.substring(pickedDirectory.lastIndexOf(File.separator) + 1);
+                    System.out.println(filename);
                     mDeckText.setText(filename.substring(0, filename.length() - 4));
                     mDeck.clear();
                     CardList.getInstance().clearCardListCount();
-                    mDeck = CardLoader.loadDeck(mDeckText.getText());
+                    currentDeckDirectory = pickedDirectory;
+                    mDeck = CardLoader.loadDeck(pickedDirectory, filename.substring(0, filename.length() - 4));
                     mDeck.sort();
                     updateDeck();
                     CardList.getInstance().updateAllCardPanels();
                     mDefaultState.setDefaultDeckName(mDeckText.getText());
+                    mDefaultState.setDefaultDeckPath(AppPaths.userDataDir().resolve("deck").relativize(selectedFile.toPath()).toString());
                     mDefaultState.saveDefaultState();
                     deckChanged = false;
 				} 
@@ -1215,8 +1250,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         gbc_panel.gridx = 2;
         showDeckBtn = new JButton(CardUtil.getTranslation("deck.show"));
         showDeckBtn.setRequestFocusEnabled(false);
-        showDeckBtn.setFont(CRnormal);
-        componentFontMap.put(showDeckBtn, "CRnormal"); // Store the font type as a String
+        showDeckBtn.setFont(CRnormalSmall);
+        componentFontMap.put(showDeckBtn, "CRnormalSmall"); // Store the font type as a String
         mFileOpPane.add(showDeckBtn, gbc_panel);
         showDeckBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -1227,39 +1262,29 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         gbc_panel.gridx = 3;
         showDeckDifferentialBtn = new JButton(CardUtil.getTranslation("deck.compare"));
         showDeckDifferentialBtn.setRequestFocusEnabled(false);
-        showDeckDifferentialBtn.setFont(CRnormal);
-        componentFontMap.put(showDeckDifferentialBtn, "CRnormal"); // Store the font type as a String
+        showDeckDifferentialBtn.setFont(CRnormalSmall);
+        componentFontMap.put(showDeckDifferentialBtn, "CRnormalSmall"); // Store the font type as a String
         mFileOpPane.add(showDeckDifferentialBtn, gbc_panel);
         showDeckDifferentialBtn.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-				JFileChooser fileChooser = new JFileChooser();
-                JPanel compareModePanel = new JPanel(new GridLayout(0, 1));
-                ButtonGroup compareModeGroup = new ButtonGroup();
-                JRadioButton compareModeFrom = new JRadioButton(CardUtil.getTranslation("deck.compare.from"));
-                compareModeGroup.add(compareModeFrom);
-                JRadioButton compareModeTo = new JRadioButton(CardUtil.getTranslation("deck.compare.to"));
-                compareModeGroup.add(compareModeTo);
-                compareModeFrom.setSelected(true);
-                compareModePanel.add(compareModeFrom);
-                compareModePanel.add(compareModeTo);
-                fileChooser.setAccessory(compareModePanel);
-				fileChooser.setCurrentDirectory(new File(AppPaths.userDataDir().resolve("deck").toString()));
-				int returnValue = fileChooser.showOpenDialog(null);
-				if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    boolean compareMode = compareModeTo.isSelected();
-                    File selectedFile = fileChooser.getSelectedFile();
-                    String filename = selectedFile.getName();
+                FilePicker filePicker = new FilePicker();
+                String[] pickedDirectory = filePicker.showForCompare();
+				if (pickedDirectory != null) {
+                    boolean compareMode = pickedDirectory[1].equals("to");
+                    File selectedFile = new File(pickedDirectory[0]);
+                    String filename = pickedDirectory[0].substring(pickedDirectory[0].lastIndexOf(File.separator) + 1);
                     Map<String, Integer> mDeck2 = CardLoader.loadDeckTemp(filename.substring(0, filename.length() - 4));
                     deckDifferentialWindow.show(mDeck, mDeckText.getText(), mDeck2, filename.substring(0, filename.length() - 4), compareMode);
-				} 
+				}
             }
         });
 
         frame.getContentPane().add(sidebarPanel, BorderLayout.EAST);
 
         updateCardList();
-        
-        mDeck = CardLoader.loadDeck(mDeckText.getText());
+        currentDeckDirectory = AppPaths.userDataDir().resolve("deck").resolve(mDefaultState.getDefaultDeckPath()).toString();
+        System.out.println("Loading deck from: " + currentDeckDirectory);
+        mDeck = CardLoader.loadDeck(currentDeckDirectory, mDeckText.getText());
         mDeck.sort();
         updateDeck();
     }
@@ -2246,6 +2271,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mDeckStageHintTxt.setText(CardUtil.getTranslation("deck.stages"));
         //loadBtn.setText(CardUtil.getTranslation("load"));
         saveBtn.setText(CardUtil.getTranslation("save"));
+        saveAsBtn.setText(CardUtil.getTranslation("saveas"));
         selectBtn.setText(CardUtil.getTranslation("select.file"));
         showDeckBtn.setText(CardUtil.getTranslation("deck.show"));
         quickSelectBtnBS.setText(CardUtil.getTranslation("filter.BS"));

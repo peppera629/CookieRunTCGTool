@@ -649,11 +649,12 @@ public class CardLoader {
 		}
 	}
 
-	public static Deck loadDeck(String deckName) {
+	public static Deck loadDeck(String deckDirectory, String deckName) {
 		Deck deck = new Deck();
 		CardList cardList = CardList.getInstance();
 	    try {
-	        File file = new File(AppPaths.userDataDir().resolve("deck/"+deckName+".txt").toString());
+	        File file = new File(deckDirectory);
+			System.out.println("Loading deck from: " + file.getAbsolutePath());
 	        if (file.exists()) {
 				FileInputStream reader = new FileInputStream(file);
 		        BufferedReader input = new BufferedReader(
@@ -715,13 +716,13 @@ public class CardLoader {
 	    return counts;
 	}
 	
-	public static void saveDeck(String deckName, Deck deck) {
+	public static void saveDeck(String deckDirectory, String deckName, Deck deck) {
 		FileWriter fw;
 		try {
 			if (!new File(AppPaths.userDataDir().resolve("deck").toString()).exists()) {
 				new File(AppPaths.userDataDir().resolve("deck").toString()).mkdirs();
 			}
-			fw = new FileWriter(AppPaths.userDataDir().resolve("deck/"+deckName+".txt").toString());
+			fw = new FileWriter((deckDirectory).toString());
 			List<Card> cardList = deck.getAllCards();
 			for (Card c : cardList) {
 				for(int i=0; i<c.getCount(); i++) {
@@ -733,10 +734,10 @@ public class CardLoader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		saveReadableDeck(deckName, deck);
+		//saveReadableDeck(deckName, deck);
 	}
 	
-	public static void saveReadableDeck(String deckName, Deck deck) {
+	public static String saveReadableDeck(String deckName, Deck deck) {
 		FileWriter fw;
 		try {
 			if (!new File(AppPaths.userDataDir().resolve("deck_readable").toString()).exists()) {
@@ -760,9 +761,11 @@ public class CardLoader {
 			}
 	        fw.flush();
 	        fw.close();
+	        return AppPaths.userDataDir().resolve("deck_readable/"+deckName+".txt").toString();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	public static ImageIcon createCardImage(Card card, int cardSize, float cardSizeModifier) {
