@@ -20,7 +20,7 @@
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.4.2</version>
         <configuration>
-          <outputDirectory>${project.basedir}</outputDirectory>
+          <outputDirectory>${project.basedir}/bin</outputDirectory>
           <finalName>deckBuilder</finalName>
           <archive>
             <manifest>

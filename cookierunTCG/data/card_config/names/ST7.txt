@@ -13,8 +13,8 @@ ST7-012,Churro Cookie
 ST7-013,Miraculous Nutrient Ampoule
 ST7-014,Essence of Rejuvenation
 ST7-015,Budding Future
-ST7-016,
-ST7-017,
-ST7-018,
-ST7-019,
-ST7-020,
+ST7-016,Tightly Tied Vine
+ST7-017,Vined Cavern
+ST7-018,Millennial Tree Cookie's Gift
+ST7-019,Millennial Jade Deer's Wrath
+ST7-020,Forest of Life

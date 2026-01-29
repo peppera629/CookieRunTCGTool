@@ -115,6 +115,7 @@ public class FilePicker {
         fileList.setFont(MainUI.CRnormal);
 		MainUI.componentFontMap.put(fileList, "CRnormal");
         fileList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        fileList.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         fileList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent e) {
@@ -132,6 +133,7 @@ public class FilePicker {
             }
         });
         JScrollPane scrollableFileList = new JScrollPane(fileList);
+        
         window.add(scrollableFileList, BorderLayout.CENTER);
 
         JPanel masterPanel = new JPanel(new GridLayout(0, 1));
@@ -161,7 +163,7 @@ public class FilePicker {
         fileNamePanel.add(fileNameLabel);
         fileName = new JTextField();
         fileName.setFont(MainUI.CRnormal);
-        fileName.setPreferredSize(new Dimension(300, 30));
+        fileName.setPreferredSize(new Dimension(400, 30));
 		MainUI.componentFontMap.put(fileName, "CRnormal");
         fileNamePanel.add(fileName);
         buttonPanel.add(fileNamePanel);
@@ -186,6 +188,7 @@ public class FilePicker {
 
     private void reloadFileList(String directoryPath) {
         fileListModel.clear();
+        int folderPointer = 0;
         File dir = new File(directoryPath);
         if (!currentDirectory.equals(defaultDirectory)) {
             fileListModel.addElement("..");
@@ -195,7 +198,8 @@ public class FilePicker {
                 if (file.isFile() && file.getName().toLowerCase().endsWith(".txt")) {
                     fileListModel.addElement(file.getName().substring(0, file.getName().length() - 4));
                 } else if (file.isDirectory()) {
-                    fileListModel.addElement("// " + file.getName());
+                    fileListModel.add(folderPointer, "// " + file.getName());
+                    folderPointer++;
                 }
             }
         }

@@ -10,11 +10,11 @@ ST8-009,Cucumber Cookie
 ST8-010,Cookiemals
 ST8-011,Kiwi Cookie
 ST8-012,Windcatcher
-ST8-013,
+ST8-013,Windgrass
 ST8-014,Cape of the Vanquisher
-ST8-015,
-ST8-016,
-ST8-017,
-ST8-018,
-ST8-019,
-ST8-020,
+ST8-015,Essence of the Tempest
+ST8-016,Wind's Grace Earrings
+ST8-017,Hindering Darkness
+ST8-018,Piercing Arrow of Purity
+ST8-019,Bad Omen
+ST8-020,Dark Enchantress Laboratory
