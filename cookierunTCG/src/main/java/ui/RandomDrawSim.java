@@ -79,7 +79,7 @@ public class RandomDrawSim {
 		w = (int)(Config.DW_CARD_WIDTH * 1.5f + 5) * 6 + 20;
 		h = (int)(Config.DW_CARD_HEIGHT * 1.5f + 5);
 
-		frame.setSize(w + 10, h + 80);
+		frame.setSize(w + 10, h + 70);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -88,7 +88,7 @@ public class RandomDrawSim {
 		frame.getContentPane().add(randomDrawPane);
 
 		JPanel drawSimButtons = new JPanel();
-		drawSimButtons.setBounds(0, h, w - 10, 30);
+		drawSimButtons.setBounds(2, h, w - 10, 30);
 		frame.getContentPane().add(drawSimButtons);
 		drawSimButtons.setLayout(new GridLayout(1, 1, 0, 0));
 

@@ -1,5 +1,7 @@
 package ui;
 
+import dataStructure.CardLoader;
+
 import java.awt.EventQueue;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -67,7 +69,7 @@ public class DeckWindow {
 	 */
 	private JPanel mDeckPane;
 	private JPanel mOutputPane;
-	private JButton btnNewButton;
+	private JButton buttonExportReadable, buttonExport;
 	private int w = 670;
 	private int h = 550;
 
@@ -99,15 +101,27 @@ public class DeckWindow {
 
 		frame.getContentPane().add(scrollDeckPane);
 
-		btnNewButton = new JButton(CardUtil.getTranslation("deck.export"));
-		btnNewButton.addActionListener(new ActionListener() {
+		buttonExportReadable = new JButton(CardUtil.getTranslation("deck.exportreadable"));
+		buttonExportReadable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String outputPath = CardLoader.saveReadableDeck(mDeckName, mDeck);
+				Dialog dialog = new Dialog();
+				dialog.show(CardUtil.getTranslation("deck.readabledecksaved") + outputPath);
+			}
+		});
+		buttonExportReadable.setBounds(7, h, w / 2 - 10, 30);
+		buttonExportReadable.setFont(MainUI.CRbold);
+		frame.getContentPane().add(buttonExportReadable);
+
+		buttonExport = new JButton(CardUtil.getTranslation("deck.export"));
+		buttonExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				outputImage();
 			}
 		});
-		btnNewButton.setBounds(4, h, w - 15, 30);
-		btnNewButton.setFont(MainUI.CRbold);
-		frame.getContentPane().add(btnNewButton);
+		buttonExport.setBounds(w / 2 - 3, h, w / 2 - 10, 30);
+		buttonExport.setFont(MainUI.CRbold);
+		frame.getContentPane().add(buttonExport);
 		createOutputWindow();
 	}
 

@@ -5,7 +5,7 @@
 
   <groupId>local</groupId>
   <artifactId>cookierunTCG</artifactId>
-  <version>0.16.1</version>
+  <version>0.17.0</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -20,7 +20,7 @@
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.4.2</version>
         <configuration>
-          <outputDirectory>${project.basedir}/bin</outputDirectory>
+          <outputDirectory>${project.basedir}</outputDirectory>
           <finalName>deckBuilder</finalName>
           <archive>
             <manifest>

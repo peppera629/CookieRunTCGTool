@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 public class DefaultState {
 	static final String CONFIG_PATH = AppPaths.configDir().resolve("default_state.txt").toString();
 	public String DeckName = "NewDeck";
+	public String DeckPath = "";
 	public boolean[] color;
 	public boolean[] type;
 	public boolean[] flipType;
@@ -63,6 +64,11 @@ public class DefaultState {
 			FileInputStream reader = new FileInputStream(file);
 			BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"));
 			String data;
+
+			// Last loaded deck path
+			if ((data = input.readLine()) != null) {
+				DeckPath = data;
+			}
 
 			// Last loaded deck name
 			if ((data = input.readLine()) != null) {
@@ -249,6 +255,7 @@ public class DefaultState {
 		FileWriter fw;
 		try {
 			fw = new FileWriter(CONFIG_PATH);
+			fw.write(DeckPath + "\n");
 			fw.write(DeckName + "\n");
 
 			for (int i = 0; i < color.length; i++) {
@@ -356,7 +363,11 @@ public class DefaultState {
 		}
 	}
 
-	public String getDeckDefaultName() {
+	public String getDefaultDeckPath() {
+		return DeckPath;
+	}
+
+	public String getDefaultDeckName() {
 		return DeckName;
 	}
 
@@ -398,6 +409,10 @@ public class DefaultState {
 
 	public boolean getDefaultPackFlag(String pack) {
 		return _search_pack_list.contains(pack);
+	}
+
+	public void setDefaultDeckPath(String path) {
+		DeckPath = path;
 	}
 
 	public void setDefaultDeckName(String name) {

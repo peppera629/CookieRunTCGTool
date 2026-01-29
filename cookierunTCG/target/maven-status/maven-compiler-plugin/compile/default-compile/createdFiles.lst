@@ -1,5 +1,7 @@
 ui\CollectionSummaryDialog.class
+ui\FilePicker$2.class
 ui\SettingsWindow$1.class
+ui\FilePicker$5.class
 util\DefaultState.class
 ui\ClickableCardPanel$CardListCallBack.class
 ui\ChoiceDialog$1.class
@@ -13,6 +15,7 @@ ui\MainUI$32.class
 ui\MainUI$35.class
 ui\SortSettingsWindow$ConfigChangedCallback.class
 ui\MainUI$Filter.class
+ui\DeckWindow$3.class
 ui\MainUI$15.class
 ui\MainUI.class
 util\CardUtil$FlipType.class
@@ -26,6 +29,7 @@ ui\MainUI$31.class
 ui\SortSettingsWindow.class
 ui\MainUI$4.class
 dataStructure\CardLoader.class
+ui\FilePicker$3.class
 ui\ClickableCardPanel$1.class
 module-info.class
 ui\MainUI$24.class
@@ -55,6 +59,7 @@ ui\CollectionSummaryDialog$1.class
 ui\Dialog$1.class
 ui\MainUI$33.class
 ui\MainUI$23.class
+ui\MainUI$43.class
 util\Constant.class
 ui\MainUI$36.class
 ui\DeckWindow$1.class
@@ -67,7 +72,10 @@ ui\MainUI$CollectionModeCallback.class
 ui\MainUI$39.class
 ui\MainUI$29.class
 ui\SortSettingsWindow$6.class
+ui\FilePicker$4.class
+ui\FilePicker.class
 ui\MainUI$3.class
+ui\FilePicker$1.class
 ui\RandomDrawSim$2.class
 ui\MainUI$40.class
 ui\MainUI$18.class
@@ -99,3 +107,4 @@ ui\MainUI$10.class
 util\CardUtil$SkillType.class
 app\AppAnchor.class
 ui\MainUI$2.class
+ui\FilePicker$6.class

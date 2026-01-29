@@ -108,7 +108,7 @@ public class DeckWindowDifferential {
 			anotherLine++;
 		}
 		w = (Config.DW_CARD_WIDTH + 5) * Config.DW_ROW_SIZE + 20;
-		h = (Config.DW_CARD_HEIGHT + 5) * ((differentCardCount / Config.DW_ROW_SIZE) + anotherLine) + 20;
+		h = (Config.DW_CARD_HEIGHT + 5) * ((differentCardCount / Config.DW_ROW_SIZE) + anotherLine) + 30;
 		frame.setSize(w + 16, Math.min(h, 900) + 48);
 
 		visibleComponents = new JPanel();
@@ -125,7 +125,7 @@ public class DeckWindowDifferential {
 				outputImage();
 			}
 		});
-		btnNewButton.setBounds(4, h, w - 15, 30);
+		btnNewButton.setBounds(4, h+10, w - 15, 30);
 		btnNewButton.setFont(MainUI.CRbold);
 		
 	}
