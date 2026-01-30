@@ -152,6 +152,7 @@ public class Config {
 	public static String REGION; // KR, TW, SEA, NA
 	public static String[] ALL_LANGUAGES = {"en", "zh_TW"};
 	public static String[] ALL_CARD_LANGUAGES = {"en", "zh_TW", "kr"};
+	public static String[] REGIONS = {"NA", "SEA", "KR", "TW"};
 	public static String[] LEGAL_LANGUAGES;
 	public static String[] COLLECTION_LANGUAGE_ORDER;
 	public static int[] COLLECTION_LANGUAGE_INDICES;

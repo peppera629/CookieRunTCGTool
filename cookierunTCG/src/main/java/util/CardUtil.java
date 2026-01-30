@@ -3,6 +3,9 @@ package util;
 import java.util.List;
 
 import javax.swing.ImageIcon;
+import java.util.HashMap;
+import java.util.Map;
+import java.awt.Color;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -89,7 +92,7 @@ public class CardUtil {
 	        return null;
 	    }
 
-		public String getColorCode() {
+		public String getColorShort() {
 	        switch(this){
 		        case Red:
 		        	return "R";
@@ -106,6 +109,42 @@ public class CardUtil {
 	        }
 	        return null;
 	    }
+
+		public Color getAccentColor() {
+			switch (this) {
+				case Red:
+					return new Color(215, 14, 26);
+				case Yellow:
+					return new Color(254, 220, 0);
+				case Green:
+					return new Color(0, 139, 64);
+				case Blue:
+					return new Color(0, 134, 207);
+				case Purple:
+					return new Color(89, 32, 133);
+				case Colorless:
+					return new Color(226, 224, 226);
+			}
+			return null;
+		}
+
+		public Color getForegroundColor() {
+			switch(this) {
+				case Yellow:
+					return Color.BLACK;
+				case Colorless:
+					return Color.BLACK;
+				case Red:
+					return Color.WHITE;
+				case Green:
+					return Color.WHITE;
+				case Blue:
+					return Color.WHITE;
+				case Purple:
+					return Color.WHITE;
+			}
+			return null;
+		}
 
 		public String getDisplayName() {
             return CardUtil.getTranslation("color." + this.name().toLowerCase());
@@ -274,4 +313,5 @@ public class CardUtil {
 	
 	
 	public static List<String> CardPack;
+	public static Map<String, Map<String, Boolean>> CardPackAvailability = new HashMap<>();
 }

@@ -1580,7 +1580,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         	final int id = i;
         	cb_pack[i] = new JCheckBox(CardUtil.CardPack.get(i).replace("_", ""));
         	cb_pack[i].setSelected(mDefaultState.getDefaultPackFlag(CardUtil.CardPack.get(i)));
-            cb_pack[i].setEnabled(!CardUtil.CardPack.get(i).endsWith("_"));
+            if (!CardUtil.CardPackAvailability.get(CardUtil.CardPack.get(i)).get(Config.REGION)) {
+                cb_pack[i].setEnabled(false);
+                cb_pack[i].setSelected(false);
+            }
+            System.out.println("Pack " + CardUtil.CardPack.get(i) + CardUtil.CardPackAvailability.get(CardUtil.CardPack.get(i)).get(Config.REGION));
             cb_pack[i].setFont(CRnormal);
             componentFontMap.put(cb_pack[i], "CRnormal"); // Store the font type as a String
             packCheckboxGroup.add(cb_pack[i]);
@@ -1596,14 +1600,14 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             public void actionPerformed(ActionEvent e) {
                 boolean quickSelectMode = false;
                 for (JCheckBox cb : cb_pack) {
-                    if (cb.getText().contains("BS") && !cb.isSelected()) {
+                    if (cb.getText().contains("BS") && !cb.isSelected() && cb.isEnabled()) {
                         quickSelectMode = true;
                         break;
                     }
                 }
 
                 for (JCheckBox cb : cb_pack) {
-                    if (cb.getText().contains("BS")) {
+                    if (cb.getText().contains("BS") && cb.isEnabled()) {
                         cb.setSelected(quickSelectMode);
                         mDefaultState.setDefaultPackFlag(cb.getText(), quickSelectMode);
                     }
@@ -1613,16 +1617,16 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         quickSelectBtnST.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                boolean quickSelectMode = false;
+                boolean quickSelectMode = false; // All selected, disable all
                 for (JCheckBox cb : cb_pack) {
-                    if (cb.getText().contains("ST") && !cb.isSelected()) {
-                        quickSelectMode = true;
+                    if (cb.getText().contains("ST") && !cb.isSelected() && cb.isEnabled()) {
+                        quickSelectMode = true; // At least one is unselected, enable all
                         break;
                     }
                 }
 
                 for (JCheckBox cb : cb_pack) {
-                    if (cb.getText().contains("ST")) {
+                    if (cb.getText().contains("ST") && cb.isEnabled()) {
                         cb.setSelected(quickSelectMode);
                         mDefaultState.setDefaultPackFlag(cb.getText(), quickSelectMode);
                     }
@@ -2086,32 +2090,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         updateDeckDistribution();
 
         CardColor dominantColor = mDeck.getDominantDeckColor();
-        switch (dominantColor) {
-            case Red:
-                mDeckPaneLabel.setBackground(new Color(215, 14, 26));
-                mDeckPaneLabel.setForeground(Color.WHITE);
-                break;
-            case Yellow:
-                mDeckPaneLabel.setBackground(new Color(254, 220, 0));
-                mDeckPaneLabel.setForeground(Color.BLACK);
-                break;
-            case Green:
-                mDeckPaneLabel.setBackground(new Color(0, 139, 64));
-                mDeckPaneLabel.setForeground(Color.WHITE);
-                break;
-            case Blue:
-                mDeckPaneLabel.setBackground(new Color(0, 134, 207));
-                mDeckPaneLabel.setForeground(Color.WHITE);
-                break;
-            case Purple:
-                mDeckPaneLabel.setBackground(new Color(89, 32, 133));
-                mDeckPaneLabel.setForeground(Color.WHITE);
-                break;
-            default:
-                mDeckPaneLabel.setBackground(new Color(226, 224, 226));
-                mDeckPaneLabel.setForeground(Color.BLACK);
-                break;
-        }
+        mDeckPaneLabel.setBackground(dominantColor.getAccentColor());
+        mDeckPaneLabel.setForeground(dominantColor.getForegroundColor());
     }
 
     @Override
@@ -2250,6 +2230,13 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         button_collection.setSelected(false);
         button_collection.setText(CardUtil.getTranslation("collectionedit.enable"));
 
+        for(int i=0; i<CardUtil.CardPack.size(); i++) {
+        	if (!CardUtil.CardPackAvailability.get(CardUtil.CardPack.get(i)).get(Config.REGION)) {
+                cb_pack[i].setEnabled(false);
+                cb_pack[i].setSelected(false);
+            }
+        }
+
         // Update all components with the new translations
         frame.setTitle(CardUtil.getTranslation("app.title") + " v." + Constant.VERSION);
         searchBox.setText("");
@@ -2362,7 +2349,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         CardLoader.refreshAllCardNames();
         CardLoader.reloadTranslations(CardList.getInstance().getAllCards());
         CardLoader.reloadCardNames(CardList.getInstance().getAllCards());
-        CardLoader.reloadVariantNames(CardList.getInstance().getAllCards());
+        CardLoader.reloadVariants(CardList.getInstance().getAllCards());
 
         sidebarPanel.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()));
         mCardDetailPane.setPreferredSize(new Dimension(Config.CARD_PREVIEW_WIDTH, (int) frame.getBounds().getHeight()-60));

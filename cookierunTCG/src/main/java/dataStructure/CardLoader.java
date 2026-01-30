@@ -66,8 +66,14 @@ public class CardLoader {
 		        String data;
 		        while((data= input.readLine())!=null) {
 		            if (!data.equals("") && !data.startsWith("//")) {
+						String[] packData = data.split(",");
 						System.out.println("Loading pack: " + data);
-		            	CardUtil.CardPack.add(data);
+		            	CardUtil.CardPack.add(packData[0]);
+						CardUtil.CardPackAvailability.put(packData[0], new HashMap<String, Boolean>());
+						CardUtil.CardPackAvailability.get(packData[0]).put("KR", packData[1].contains("K"));
+						CardUtil.CardPackAvailability.get(packData[0]).put("TW", packData[1].contains("A"));
+						CardUtil.CardPackAvailability.get(packData[0]).put("SEA", packData[1].contains("A"));
+						CardUtil.CardPackAvailability.get(packData[0]).put("NA", packData[1].contains("N"));
 		            }
 		        } 
 				reader.close();
@@ -94,7 +100,7 @@ public class CardLoader {
 				loadPackTranslations(CardUtil.CardPack.get(i), cardList);
 				loadRestrictedCards(CardUtil.CardPack.get(i), cardList);
 				loadVariants(CardUtil.CardPack.get(i), cardList);
-				loadVariantNames(CardUtil.CardPack.get(i), cardList);
+				//loadVariantNames(CardUtil.CardPack.get(i), cardList);
 			}
 		}
 	    return cardList;
@@ -115,9 +121,9 @@ public class CardLoader {
 		}
 	}
 	
-	public static void reloadVariantNames(List<Card> cardList) {
+	public static void reloadVariants(List<Card> cardList) {
 		for (int i=0; i<CardUtil.CardPack.size() ;i++) {
-			loadVariantNames(CardUtil.CardPack.get(i), cardList);
+			loadVariants(CardUtil.CardPack.get(i), cardList);
 		}
 	}
 
@@ -463,18 +469,43 @@ public class CardLoader {
 				String data;
 				while((data = input.readLine()) != null) {
 					if (!data.equals("") && !data.startsWith("//")) {
-						String[] variantData = data.split(",", -1);
-						variantData = Arrays.stream(variantData).filter(Objects::nonNull).filter(s -> !s.trim().isEmpty()).toArray(String[]::new);
-						CardRarity[] variantRarity = new CardRarity[variantData.length - 1];
-						for (int i = 1; i < variantData.length; i++) {
+						List<String> variantDataListForm = new ArrayList<>(Arrays.asList(data.split(",", -1)));
+						int currIdx = variantDataListForm.size() - 1;
+						while (variantDataListForm.get(currIdx).isEmpty()) {
+							variantDataListForm.remove(currIdx);
+							currIdx--;
+						}
+						if (currIdx % 2 == 1) { // Extra empty space was removed (in the case of last variant not having a name)
+							variantDataListForm.add("");
+						}
+						String[] variantData = variantDataListForm.toArray(new String[0]);
+						CardRarity[] variantRarity = new CardRarity[(int) variantData.length / 2];
+						String[] variantNames = new String[(int) variantData.length / 2];
+						String[] variantNamesLocalized = new String[variantNames.length];
+						for (int i = 1; i < variantData.length; i = i + 2) {
 							if (variantData[i].isEmpty()) {
 								continue;
 							}
-							variantRarity[i - 1] = CardRarity.fromString(variantData[i]);
+							variantRarity[(int) (i / 2)] = CardRarity.fromString(variantData[i]);
+							if (i >= variantData.length - 1) {
+								variantNames[(int) (i / 2)] = "";
+							} else {
+								variantNames[(int) (i / 2)] = variantData[i + 1];
+							}
 						}
 						for (Card c : cardList) {
 							if (c.getPack().equals(packName) && c.getId().equals(variantData[0])) {
+
 								c.setVariantTypes(variantRarity);
+								for (int i = 0; i < variantNames.length; i++) {
+									System.out.println("Processing card " + c.getId() + " variant " + i);
+									if (!variantNames[i].isEmpty() && variantNames[i] != null) {
+										variantNamesLocalized[i] = variantNames[i];
+									} else {
+										variantNamesLocalized[i] = "";
+									}
+								}
+								c.setVariantNames(variantNamesLocalized);
 							}
 						}
 					}
@@ -491,7 +522,7 @@ public class CardLoader {
 			e.printStackTrace();
 		}
 	}
-
+	/* 
 	public static void loadVariantNames(String packName, List<Card> cardList) {
 		try {
 			File rarityDescListFile = new File(AppPaths.dataDir().resolve("card_config/rarity_desc.csv").toString());
@@ -535,6 +566,7 @@ public class CardLoader {
 			e.printStackTrace();
 		}
 	}
+	*/
 
 	public static void loadCardAvailability() {
 	    try {
@@ -584,7 +616,6 @@ public class CardLoader {
 							}
 							for (Card c : CardList.getInstance().getAllCards()) {
 								for (int i = 0 ; i < c.getVariants().length; i++) {
-									//System.out.println(c.getVariantNames()[i]);
 									if (c.getVariantNames()[i].equals(cardData[0])) {
 										c.setAvailability(i, availability);
 										//System.out.println("set " + c.getId() + " variant " + i + ": " + cardData[0] + " " + Arrays.toString(availability));

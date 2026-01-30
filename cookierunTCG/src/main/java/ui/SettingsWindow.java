@@ -149,8 +149,7 @@ public class SettingsWindow implements LanguageChangeListener{
         }
 
         // ==== Region Dropdown ====
-        String[] regions = { "NA", "SEA", "KR", "TW"};
-        regionDropdown = new JComboBox<>(regions);
+        regionDropdown = new JComboBox<>(Config.REGIONS);
         regionDropdown.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(regionDropdown, "CRnormal");
         gbc.gridx = 1;

@@ -18,6 +18,9 @@ import javax.swing.JTextField;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.BorderFactory;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 import util.CardUtil;
 import util.AppPaths;
@@ -68,9 +71,15 @@ public class FilePicker {
             }
         });
         JScrollPane scrollableFileList = new JScrollPane(fileList);
+        scrollableFileList.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         window.add(scrollableFileList, BorderLayout.CENTER);
 
-        JPanel buttonPanel = new JPanel(new GridLayout(1, 0));
+        JPanel buttonPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.gridwidth = 3;
         JPanel fileNamePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel fileNameLabel = new JLabel(CardUtil.getTranslation("filename") + ": ");
         fileNameLabel.setFont(MainUI.CRnormal);
@@ -81,8 +90,10 @@ public class FilePicker {
         fileName.setPreferredSize(new Dimension(300, 30));
 		MainUI.componentFontMap.put(fileName, "CRnormal");
         fileNamePanel.add(fileName);
-        buttonPanel.add(fileNamePanel);
+        buttonPanel.add(fileNamePanel, gbc);
 
+        gbc.gridx = 3;
+        gbc.gridwidth = 1;
         JButton confirmButton = new JButton(CardUtil.getTranslation(mode));
         confirmButton.setFont(MainUI.CRnormal);
         MainUI.componentFontMap.put(confirmButton, "CRnormal");
@@ -95,7 +106,7 @@ public class FilePicker {
                 }
             }
         });
-        buttonPanel.add(confirmButton);
+        buttonPanel.add(confirmButton, gbc);
         window.add(buttonPanel, BorderLayout.SOUTH);
         window.setLocationRelativeTo(null);
         window.setVisible(true);
@@ -115,7 +126,7 @@ public class FilePicker {
         fileList.setFont(MainUI.CRnormal);
 		MainUI.componentFontMap.put(fileList, "CRnormal");
         fileList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        fileList.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
         fileList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent e) {
@@ -133,6 +144,7 @@ public class FilePicker {
             }
         });
         JScrollPane scrollableFileList = new JScrollPane(fileList);
+        scrollableFileList.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         
         window.add(scrollableFileList, BorderLayout.CENTER);
 
@@ -155,7 +167,13 @@ public class FilePicker {
         compareModePanel.add(compareModeTo);
         masterPanel.add(compareModePanel);
 
-        JPanel buttonPanel = new JPanel(new GridLayout(1, 0));
+        JPanel buttonPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.gridwidth = 3;
+
         JPanel fileNamePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel fileNameLabel = new JLabel(CardUtil.getTranslation("filename") + ": ");
         fileNameLabel.setFont(MainUI.CRnormal);
@@ -166,7 +184,10 @@ public class FilePicker {
         fileName.setPreferredSize(new Dimension(400, 30));
 		MainUI.componentFontMap.put(fileName, "CRnormal");
         fileNamePanel.add(fileName);
-        buttonPanel.add(fileNamePanel);
+        buttonPanel.add(fileNamePanel, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridwidth = 1;
 
         JButton confirmButton = new JButton(CardUtil.getTranslation("compare"));
         confirmButton.setFont(MainUI.CRnormal);
@@ -176,7 +197,7 @@ public class FilePicker {
                 confirmSelection(fileList.getSelectedValue());
             }
         });
-        buttonPanel.add(confirmButton);
+        buttonPanel.add(confirmButton, gbc);
         masterPanel.add(buttonPanel);
         window.add(masterPanel, BorderLayout.SOUTH);
         window.setLocationRelativeTo(null);
