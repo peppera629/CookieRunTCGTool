@@ -72,7 +72,7 @@ public class Card {
 		_pack = pack;
 		_id = id;
 		_name = name;
-		_color = color; // In order: 0 red, 1 yellow, 2 green, 3 blue, 4 purple, 5 colorless
+		_color = color; // In order: 0 red, 1 yellow, 2 green, 3 blue, 4 purple, 5 pure
 		_type = type; // In order: 0 Cookie, 1 Item, 2 Trap, 3 Stage
 		_isFlip = flip;
 		_flipType = flipType;

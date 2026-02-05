@@ -88,6 +88,7 @@ dataStructure\Collection.class
 ui\MainUI$8.class
 ui\SortSettingsWindow$2.class
 util\VariantChangeListener.class
+ui\FilePicker$7.class
 ui\Dialog.class
 ui\MainUI$11.class
 ui\MainUI$34.class

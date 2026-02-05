@@ -254,6 +254,16 @@ public class Deck {
 			return count;
     	}
     }
+
+	public int getCardCountByKeyword(Keyword keyword) {
+		int count = 0;
+		for (Card card : cardList) {
+			if (card.getKeyword() == keyword) {
+				count += card.getCount();
+			}
+		}
+		return count;
+	}
     
     public int[] getCookieSummary() {
     	int L0Count = getTargetCardCount(CookieList.get(0));
@@ -325,14 +335,14 @@ public class Deck {
 		}
 		int dominantColorIndex = 0;
 		int maxCount = 0;
-		for (int i=0; i<colorCount.length-1; i++) { // Excluding colorless
+		for (int i=0; i<colorCount.length-1; i++) { // Excluding pure
 			if (colorCount[i] > maxCount) {
 				maxCount = colorCount[i];
 				dominantColorIndex = i;
 			}
 		}
 
-		return (nonZeroColors == 1 ? CardColor.fromValue(dominantColorIndex) : CardColor.Colorless);
+		return (nonZeroColors >= 1 ? CardColor.fromValue(dominantColorIndex) : CardColor.Pure);
 	}
 
 	public boolean isValidHand() {

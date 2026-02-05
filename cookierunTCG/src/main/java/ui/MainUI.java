@@ -162,6 +162,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private boolean globalKeyBindings = true;
     private KeyEventDispatcher keyEventDispatcher;
     private boolean quickEdit = false;
+    private boolean attackAttrShown = false;
     
     //search panel
     private JPanel mSearchPaneOuter, sidebarPanel;
@@ -197,7 +198,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mLevelCountTxt, mFlipTypeCountTxt, cardLabel, filterResults, labelSearch;
     private JLabel mDeckItemHintTxt, mDeckTrapHintTxt, mDeckStageHintTxt, mDeckPaneLabel, mCardsPaneLabel;
     private JLabel mCardCountTxt, mFlipCountTxt, mExtraCountTxt, mDeckCookieSummaryTxt;
-    private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardTranslationSkill, cardTranslationAttackCost;
+    private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardAttackAttr, cardTranslationSkill, cardTranslationAttackCost;
     private JLabel cardTranslationAttack, cardTranslationAttackIcon, cardTranslationAttackThen, cardTranslationFlip, cardTranslationSkillFlavorText, cardTranslationSkillIcon, cardTranslationAttackFlavorText;
     private JLabel[] langLabels;
     private JLabel[] ownedInfoRarityRows;
@@ -972,23 +973,24 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cardName.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1 && DEBUG) {
-                    System.out.println("Attack Attributes:");
-                    System.out.println("ATK DMG: " + currentCard.getAttackDMG());
-                    System.out.println("ATK Cost: " + currentCard.getAttackCost());
-                    System.out.println("ATK Efficiency: " + currentCard.getAttackEfficiency());
-                    System.out.println("Peak DMG: " + currentCard.getPeakDMG());
-                    System.out.println("Peak Cost: " + currentCard.getPeakCost());
-                    System.out.println("Peak Efficiency: " + currentCard.getPeakEfficiency());
-                    System.out.println("AVG DMG: " + currentCard.getAvgDMG());
-                    System.out.println("AVG Cost: " + currentCard.getAvgCost());
-                    System.out.println("AVG Efficiency: " + currentCard.getAvgEfficiency());
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    if (!isCollectionMode) {
+                        attackAttrShown = !attackAttrShown;
+                        cardAttackAttr.setVisible(attackAttrShown);
+                    }
                 }
             }
         });
         componentFontMap.put(cardName, "CRboldLarge"); // Store the font type as a String
+        cardAttackAttr = new JLabel("", JLabel.CENTER);
+        cardAttackAttr.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cardAttackAttr.setVisible(attackAttrShown);
+        cardAttackAttr.setFont(CRboldLarge);
+        componentFontMap.put(cardAttackAttr, "CRboldLarge"); // Store the font type as a String
+
         cardInfo.add(cardId);
         cardInfo.add(cardName);
+        cardInfo.add(cardAttackAttr);
 
         // ==== Card Preview
         mCardDetailPane = new JPanel();
@@ -2135,15 +2137,15 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         
         //System.out.println("cards/"+Config.CARD_LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
         //System.out.println(card.getHP());
-        if (Config.ADVANCED_FILTERING && card.getPeakEfficiency() > 0) {
+        if (Config.ADVANCED_FILTERING) {
             if (card.getMaxCount() == 1) {
-                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("restricted") + "] (" + card.getPeakEfficiency() + "/" + card.getAvgEfficiency() + ")");
+                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("restricted") + "]");
                 cardId.setForeground(new Color(160, 128, 0));
             } else if (card.getMaxCount() == 0) {
-                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("banned") + "] (" + card.getPeakEfficiency() + "/" + card.getAvgEfficiency() + ")");
+                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("banned") + "]");
                 cardId.setForeground(new Color(160, 0, 0));
             } else {
-                cardId.setText(card.getId() + " (" + card.getPeakEfficiency() + "/" + card.getAvgEfficiency() + ")");
+                cardId.setText(card.getId());
                 cardId.setForeground(Color.BLACK);
             }
         } else {
@@ -2158,7 +2160,14 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 cardId.setForeground(Color.BLACK);
             }
         }
-        
+
+        if (card.getAttackDMG() > 0) {
+            cardAttackAttr.setText("<html><img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/24px/ATK.png").toString()).getAbsolutePath() + "\">&nbsp;" + card.getAttackDMG() +
+            "&nbsp;<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/24px/avgDMG.png").toString()).getAbsolutePath() + "\">&nbsp;" + card.getAvgDMG() +
+            "&nbsp;<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/24px/peakDMG.png").toString()).getAbsolutePath() + "\">&nbsp;" + card.getPeakDMG() + "</html>");
+        } else {
+            cardAttackAttr.setText("");
+        }
 
         cardName.setText("<html>" + card.getNameByLang().get(Config.getLangIndex(Config.LANGUAGE)) + " " + "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons_rarity/16px/" + card.getRarity().getName() + ".png").toString()).getAbsolutePath() + "\">" + "</html>");
         if (card.getCardTranslation() != null && Config.CARD_TRANSLATION_ENABLED) {
@@ -2269,7 +2278,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_color[2].setText(CardUtil.CardColor.Green.getDisplayName());
         cb_color[3].setText(CardUtil.CardColor.Blue.getDisplayName());
         cb_color[4].setText(CardUtil.CardColor.Purple.getDisplayName());
-        cb_color[5].setText(CardUtil.CardColor.Colorless.getDisplayName());
+        cb_color[5].setText(CardUtil.CardColor.Pure.getDisplayName());
         labelType.setText(CardUtil.getTranslation("type"));
         cb_type_cookie.setText(CardUtil.getTranslation("filter.cookie"));
         cb_flip.setText(CardUtil.getTranslation("filter.flip"));
@@ -2335,6 +2344,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         cardId.setText(null);
         cardName.setText(null);
+        cardAttackAttr.setText(null);
 
         updateComponents(frame.getContentPane());
         mCardDetailPane.removeAll();
@@ -2630,6 +2640,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 divLoc = splitPane.getDividerLocation();
             }
             mRandomDrawSimBtn.setVisible(false);
+            cardAttackAttr.setText("");
+            cardAttackAttr.setVisible(false);
             mTextsPane.setVisible(false);
             mDeckDistributionPane.setVisible(false);
             mDeckPaneLabel.setVisible(false);
@@ -2663,6 +2675,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         } else {
             splitPane.setTopComponent(deckPane);
             mRandomDrawSimBtn.setVisible(true);
+            cardAttackAttr.setVisible(true);
             mTextsPane.setVisible(true);
             mDeckDistributionPane.setVisible(true);
             mDeckPaneLabel.setVisible(true);

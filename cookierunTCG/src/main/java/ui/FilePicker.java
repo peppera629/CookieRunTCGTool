@@ -21,10 +21,25 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.HashMap;
+import java.util.Map;
 
+import dataStructure.Deck;
+import dataStructure.CardLoader;
+import dataStructure.Card;
+import dataStructure.CardList;
 import util.CardUtil;
 import util.AppPaths;
 import util.Config;
+import util.CardUtil.CardColor;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 import java.io.File;
 
@@ -37,11 +52,20 @@ public class FilePicker {
     private JDialog window;
     private DefaultListModel<String> fileListModel = new DefaultListModel<>();
     private JList<String> fileList;
+    private Map<String, CardUtil.CardColor> colorMap = new HashMap<>();
+    private Map<String, String> formattedTextMap = new HashMap<>(); // Stores unformatted text / formatted for display in JList
     private JTextField fileName;
     private String defaultDirectory = AppPaths.userDataDir().resolve("deck").toString();
     private String currentDirectory = AppPaths.userDataDir().resolve("deck").toString();
     private String finalSelectedFile = null;
     private String mode;
+
+    private String iconPathR = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/16px/R.png").toString()).getAbsolutePath() + "\">";
+	private String iconPathY = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/16px/Y.png").toString()).getAbsolutePath() + "\">";
+	private String iconPathG = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/16px/G.png").toString()).getAbsolutePath() + "\">";
+	private String iconPathB = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/16px/B.png").toString()).getAbsolutePath() + "\">";
+	private String iconPathP = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/16px/P.png").toString()).getAbsolutePath() + "\">";
+	private String iconPathW = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/16px/W.png").toString()).getAbsolutePath() + "\">";
 
     public String show(String mode) { // Mode can be "save", "load"
         this.mode = mode;
@@ -57,7 +81,7 @@ public class FilePicker {
         fileList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent e) {
-                String selectedFile = fileList.getSelectedValue();
+                String selectedFile = formattedTextMap.get(fileList.getSelectedValue());
                 if (selectedFile != null && !selectedFile.startsWith("// ")) {
                     fileName.setText(selectedFile);
                 }
@@ -66,7 +90,7 @@ public class FilePicker {
         fileList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    confirmSelection(fileList.getSelectedValue().replace("// ", ""));
+                    confirmSelection(formattedTextMap.get(fileList.getSelectedValue()).replace("// ", ""));
                 }
             }
         });
@@ -100,7 +124,7 @@ public class FilePicker {
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (mode.equals("load")) {
-                    confirmSelection(fileList.getSelectedValue());
+                    confirmSelection(formattedTextMap.get(fileList.getSelectedValue()));
                 } else if (mode.equals("save")) {
                     confirmSelection(fileName.getText());
                 }
@@ -130,7 +154,7 @@ public class FilePicker {
         fileList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent e) {
-                String selectedFile = fileList.getSelectedValue();
+                String selectedFile = formattedTextMap.get(fileList.getSelectedValue());
                 if (selectedFile != null && !selectedFile.startsWith("// ")) {
                     fileName.setText(selectedFile);
                 }
@@ -139,7 +163,7 @@ public class FilePicker {
         fileList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    confirmSelection(fileList.getSelectedValue().replace("// ", ""));
+                    confirmSelection(formattedTextMap.get(fileList.getSelectedValue()).replace("// ", ""));
                 }
             }
         });
@@ -194,7 +218,7 @@ public class FilePicker {
         MainUI.componentFontMap.put(confirmButton, "CRnormal");
         confirmButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                confirmSelection(fileList.getSelectedValue());
+                confirmSelection(formattedTextMap.get(fileList.getSelectedValue()));
             }
         });
         buttonPanel.add(confirmButton, gbc);
@@ -209,17 +233,89 @@ public class FilePicker {
 
     private void reloadFileList(String directoryPath) {
         fileListModel.clear();
+        colorMap.clear();
         int folderPointer = 0;
         File dir = new File(directoryPath);
         if (!currentDirectory.equals(defaultDirectory)) {
             fileListModel.addElement("..");
+            formattedTextMap.put("..", "..");
         }
         if (dir.exists() && dir.isDirectory()) {
             for (File file : dir.listFiles()) {
                 if (file.isFile() && file.getName().toLowerCase().endsWith(".txt")) {
-                    fileListModel.addElement(file.getName().substring(0, file.getName().length() - 4));
+                    String actualFileName = file.getName().substring(0, file.getName().length() - 4);
+                    String formattedFileName = "";
+
+                    int[] colorCount = new int[CardColor.values().length];
+                    int nonZeroColors = 0;
+                    int maxCount = 0;
+                    int dominantColorIndex = 0;
+                    try {
+                        FileInputStream reader = new FileInputStream(file);
+                        BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8")); 
+                        String data;
+                        while((data = input.readLine()) != null) {	
+                            if (!data.equals("") && !data.startsWith("//")) {
+                                Card card = CardList.getInstance().getCardById(data);
+                                if (card != null && card.getColor() != CardColor.Pure) {
+                                    colorCount[card.getColor().getValue()] += 1;
+                                }
+                            }
+                        } 
+                        reader.close();
+                        input.close();
+
+                        for (int i=0; i<colorCount.length-1; i++) {
+                            if (colorCount[i] > 0) {
+                                nonZeroColors++;
+                            }
+                        }
+
+                        for (int i=0; i<colorCount.length-1; i++) { // Excluding pure
+                            if (colorCount[i] > maxCount) {
+                                maxCount = colorCount[i];
+                                dominantColorIndex = i;
+                            }
+                        }
+                    } catch (FileNotFoundException e) {
+                        System.out.println("An error occurred.");
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    CardColor dominantColor = (nonZeroColors >= 1 ? CardColor.fromValue(dominantColorIndex) : CardColor.Pure);
+
+                    colorMap.put(actualFileName, dominantColor);
+                    switch (dominantColor) {
+                        case Red:
+                            formattedFileName = "<html>" + iconPathR + "&nbsp;" + actualFileName + "</html>";
+                            break;
+                        case Yellow:
+                            formattedFileName = "<html>" + iconPathY + "&nbsp;" + actualFileName + "</html>";
+                            break;
+                        case Green:
+                            formattedFileName = "<html>" + iconPathG + "&nbsp;" + actualFileName + "</html>";
+                            break;
+                        case Blue:
+                            formattedFileName = "<html>" + iconPathB + "&nbsp;" + actualFileName + "</html>";
+                            break;
+                        case Purple:
+                            formattedFileName = "<html>" + iconPathP + "&nbsp;" + actualFileName + "</html>";
+                            break;
+                        case Pure:
+                            formattedFileName = "<html>" + iconPathW + "&nbsp;" + actualFileName + "</html>";
+                            break;
+                        default:
+                            break;
+                    }
+                    fileListModel.addElement(formattedFileName);
+                    formattedTextMap.put(formattedFileName, actualFileName);
                 } else if (file.isDirectory()) {
                     fileListModel.add(folderPointer, "// " + file.getName());
+                    formattedTextMap.put("// " + file.getName(), file.getName());
                     folderPointer++;
                 }
             }

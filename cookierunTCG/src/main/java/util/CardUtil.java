@@ -64,7 +64,7 @@ public class CardUtil {
 	}
 
 	public enum CardColor {
-	    Red(0), Yellow(1), Green(2), Blue(3), Purple(4), Colorless(5);
+	    Red(0), Yellow(1), Green(2), Blue(3), Purple(4), Pure(5);
 	    public final int value;
 	    private CardColor(int value) {
 	        this.value = value;
@@ -86,8 +86,8 @@ public class CardUtil {
 		        	return "Blue";
 		        case Purple:
 		        	return "Purple";
-				case Colorless:
-		        	return "Colorless";
+				case Pure:
+		        	return "Pure";
 	        }
 	        return null;
 	    }
@@ -104,7 +104,7 @@ public class CardUtil {
 		        	return "B";
 		        case Purple:
 		        	return "P";
-				case Colorless:
+				case Pure:
 		        	return "W";
 	        }
 	        return null;
@@ -122,7 +122,7 @@ public class CardUtil {
 					return new Color(0, 134, 207);
 				case Purple:
 					return new Color(89, 32, 133);
-				case Colorless:
+				case Pure:
 					return new Color(226, 224, 226);
 			}
 			return null;
@@ -132,7 +132,7 @@ public class CardUtil {
 			switch(this) {
 				case Yellow:
 					return Color.BLACK;
-				case Colorless:
+				case Pure:
 					return Color.BLACK;
 				case Red:
 					return Color.WHITE;
