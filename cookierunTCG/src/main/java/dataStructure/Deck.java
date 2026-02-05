@@ -255,7 +255,7 @@ public class Deck {
     	}
     }
 
-	public int getCardCountByKeyword(Keyword keyword) {
+	public int getCardCountByKeyword(CardUtil.Keyword keyword) {
 		int count = 0;
 		for (Card card : cardList) {
 			if (card.getKeyword() == keyword) {
