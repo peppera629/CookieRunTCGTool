@@ -42,6 +42,8 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -241,7 +243,27 @@ public class FilePicker {
             formattedTextMap.put("..", "..");
         }
         if (dir.exists() && dir.isDirectory()) {
-            for (File file : dir.listFiles()) {
+            File[] files = dir.listFiles();
+            if (files != null && files.length > 0) {
+                Arrays.sort(files, new Comparator<File>() {
+                    @Override
+                    public int compare(File f1, File f2) {
+                        try {
+                            String name1 = f1.getName().substring(0, f1.getName().lastIndexOf('.')).toLowerCase();
+                            String name2 = f2.getName().substring(0, f2.getName().lastIndexOf('.')).toLowerCase();
+
+                            int numbering1 = Integer.parseInt(name1.replaceAll("\\D+", ""));
+                            int numbering2 = Integer.parseInt(name2.replaceAll("\\D+", ""));
+
+                            return Integer.compare(numbering1, numbering2);
+                        } catch (Exception e) {
+                            return f1.getName().compareToIgnoreCase(f2.getName());
+                        }
+                    }
+                });
+            }
+
+            for (File file : files) {
                 if (file.isFile() && file.getName().toLowerCase().endsWith(".txt")) {
                     String actualFileName = file.getName().substring(0, file.getName().length() - 4);
                     String formattedFileName = "";

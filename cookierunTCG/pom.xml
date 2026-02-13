@@ -5,7 +5,7 @@
 
   <groupId>local</groupId>
   <artifactId>cookierunTCG</artifactId>
-  <version>0.17.0</version>
+  <version>0.18.0</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -14,6 +14,9 @@
   </properties>
 
   <build>
+
+    <finalName>deckBuilder</finalName>
+
     <plugins>
       <!-- Build a thin JAR (exclude big assets) -->
       <plugin>
@@ -21,7 +24,7 @@
         <version>3.4.2</version>
         <configuration>
           <outputDirectory>${project.basedir}/bin</outputDirectory>
-          <finalName>deckBuilder</finalName>
+          
           <archive>
             <manifest>
               <mainClass>ui.MainUI</mainClass>

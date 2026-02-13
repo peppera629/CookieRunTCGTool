@@ -121,3 +121,5 @@ P-118,Strawberry Stick Cookie,草莓巧克力棒餅乾
 P-119,Cotton Candy Cookie,棉花糖餅乾
 P-120,Chocolate Bonbon Cookie,巧克力球餅乾
 P-121,Currant Cream Cookie,黑醋栗奶油餅乾
+P-123,Sorbet Shark Cookie,雪酪鯊魚餅乾
+P-124,Milky Way Cookie,銀河餅乾

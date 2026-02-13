@@ -247,15 +247,15 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         
         // Key bindings for changing variants in collection mode
         for (int i = 1; i <= 9; i++) { // (I would do anything to replace typing out every function manually)
-            final int variant = i;
+            final int variant = i - 1; // key 1 for base, key 2 for variant 1, ...
             String key = Integer.toString(i);
             if (!enabled) {
                 inputMap.remove(KeyStroke.getKeyStroke(key));
-                inputMap.remove(KeyStroke.getKeyStroke("released " + key));
+                //inputMap.remove(KeyStroke.getKeyStroke("released " + key));
                 actionMap.remove("variant" + key);
             } else {
                 inputMap.put(KeyStroke.getKeyStroke(key), "variant" + key);
-                inputMap.put(KeyStroke.getKeyStroke("released " + key), "variant0");
+                //inputMap.put(KeyStroke.getKeyStroke("released " + key), "variant0");
                 actionMap.put("variant" + key, new javax.swing.AbstractAction() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -274,6 +274,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
         }
 
+        /*
         actionMap.put("variant0", new javax.swing.AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -287,7 +288,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 updateCardPreview();
             }
         });
-
+        */
         inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), "quickedit");
         actionMap.put("quickedit", new javax.swing.AbstractAction() {
             @Override
@@ -1193,6 +1194,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 FilePicker filePicker = new FilePicker();
                 String pickedDirectory = filePicker.show("save");
                 if (pickedDirectory != null) {
+                    currentDeckDirectory = pickedDirectory;
                     CardLoader.saveDeck(pickedDirectory, pickedDirectory.substring(pickedDirectory.lastIndexOf(File.separator) + 1), mDeck);
                     mDeckText.setText(pickedDirectory.substring(pickedDirectory.lastIndexOf(File.separator) + 1, pickedDirectory.length() - 4));
                     mDefaultState.setDefaultDeckName(mDeckText.getText());
@@ -3081,7 +3083,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     //System.out.println(rarities[i].getName());
                     //System.out.println(ownedCount);
                     ownedInfo.append("<html>");
-                    ownedInfo.append("<img src=\"file:" + new File(AppPaths.dataDir().resolve("keyicons/24px/" + i + ".png").toString()).getAbsolutePath() + "\">").append("&nbsp;");
+                    ownedInfo.append("<img src=\"file:" + new File(AppPaths.dataDir().resolve("keyicons/24px/" + (i + 1) + ".png").toString()).getAbsolutePath() + "\">").append("&nbsp;");
                     ownedInfo.append("<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons_rarity/24px/" + rarities[i].getName() + ".png").toString()).getAbsolutePath() + "\">");
                     ownedInfo.append("&nbsp;").append(CardUtil.getTranslationPromo(variantNames[i]));
                     if (i < rarities.length - 1) {

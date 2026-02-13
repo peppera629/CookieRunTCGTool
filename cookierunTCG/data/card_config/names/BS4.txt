@@ -68,7 +68,7 @@ BS4-067,Gold Citrine Cookie,金黃水晶餅乾
 BS4-068,Aquamarine Cookie,海藍寶石餅乾
 BS4-069,Lobster Cookie,龍蝦餅乾
 BS4-070,Lord Oyster,牡蠣爵士
-BS4-071,Mocha Ray Cookie,摩卡魟魚
+BS4-071,Mocha Ray Cookie,摩卡魟魚餅乾
 BS4-072,Mystic Opal Cookie,幻彩歐珀餅乾
 BS4-073,Sea Fairy Cookie,海妖精餅乾
 BS4-074,Peppermint Cookie,薄荷糖餅乾

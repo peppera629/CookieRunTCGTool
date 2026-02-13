@@ -1,20 +1,22 @@
-// Availability: K - South Korea, A - Asia, N - North America
+// Availability: K - South Korea; A - Asia; N - North America
 
-BS1,KAN
-BS2,KAN
-BS3,KAN
-BS4,KAN
-BS5,KAN
-BS6,KAN
-BS7,KAN
-BS8,KA
-BS9,KA
-ST1,KAN
-ST2,KAN
-ST3,KAN
-ST4,KAN
-ST5,KAN
-ST6,KA
-ST7,KA
-ST8,KA
-P,KAN
+BS1;KAN;Brave Beginning;最初的勇敢冒險
+BS2;KAN;Next Universe;下一個奇幻宇宙
+BS3;KAN;Age of Heroes and Kingdoms;英雄與王國的時代
+BS4;KAN;Cookies of Legend;大自然的守護者
+BS5;KAN;Awakening, Dragon's Wrath;覺醒！龍之怒
+BS6;KAN;Operation Timeguard;扭轉時空大作戰！
+BS7;KAN;Arena of Glory;榮耀競技場
+BS8;KA;Land of Fire & Ruin, Realm of Apathy
+BS9;KA;A Game of Truth and Deceit
+ST1;KAN;Starter Deck - Red;起始套組 - 豔陽之吻
+ST2;KAN;Starter Deck - Yellow;起始套組 - 電光石火
+ST3;KAN;Starter Deck - Green;起始套組 - 原初之力
+ST4;KAN;Starter Deck - Blue;起始套組 - 全知之思
+ST5;KAN;Starter Deck - Purple;起始套組 - 幻境之靈
+ST6;KA;Starter Deck - Flames of Immortality
+ST7;KA;Starter Deck - Tree of Life
+ST8;KA;Starter Deck - Guardian Winds
+ST9;KA;Starter Deck - Seas of Fate
+ST10;KA;Starter Deck - Glorious Moonlight
+P;KAN;Promotion Cards;活動特典卡

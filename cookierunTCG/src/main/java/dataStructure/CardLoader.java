@@ -66,14 +66,15 @@ public class CardLoader {
 		        String data;
 		        while((data= input.readLine())!=null) {
 		            if (!data.equals("") && !data.startsWith("//")) {
-						String[] packData = data.split(",");
-						System.out.println("Loading pack: " + data);
-		            	CardUtil.CardPack.add(packData[0]);
+						String[] packData = data.split(";");
+						// Pack data: 0-Pack ID, 1-Pack availability, 2-English set name, 3-Chinese set name
+						CardUtil.CardPack.add(packData[0]);
 						CardUtil.CardPackAvailability.put(packData[0], new HashMap<String, Boolean>());
 						CardUtil.CardPackAvailability.get(packData[0]).put("KR", packData[1].contains("K"));
 						CardUtil.CardPackAvailability.get(packData[0]).put("TW", packData[1].contains("A"));
 						CardUtil.CardPackAvailability.get(packData[0]).put("SEA", packData[1].contains("A"));
 						CardUtil.CardPackAvailability.get(packData[0]).put("NA", packData[1].contains("N"));
+
 		            }
 		        } 
 				reader.close();

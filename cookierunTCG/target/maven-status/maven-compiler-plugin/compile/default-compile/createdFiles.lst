@@ -1,4 +1,5 @@
 ui\CollectionSummaryDialog.class
+ui\FilePicker$8.class
 ui\FilePicker$2.class
 ui\SettingsWindow$1.class
 ui\FilePicker$5.class
@@ -38,7 +39,6 @@ ui\MainUI$14.class
 ui\MainUI$19.class
 ui\MainUI$37.class
 util\AppPaths.class
-ui\MainUI$42.class
 ui\DeckWindow.class
 dataStructure\CardLoader$cardImageLoadTask.class
 ui\MainUI$25.class

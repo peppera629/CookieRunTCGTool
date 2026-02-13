@@ -158,19 +158,13 @@ public class ClickableCardPanel extends JPanel {
 				int boxHeight = mCardIcon.getIconWidth()/3;
 				int boxX = getWidth() - boxWidth;
 				int boxY = getHeight() - boxHeight;
-				Color boxColor = new Color(64, 64, 64, 192); // Default: translucent gray
+				Color boxColor;
 
 				int changeBoxWidth = boxWidth;
 				int changeBoxHeight = boxHeight/2;
 				int changeBoxX = getWidth() - changeBoxWidth;
 				int changeBoxY = boxY - changeBoxHeight;
 				Color changeBoxColor = new Color(64, 64, 64, 192); // Default: translucent gray
-
-				if (mCard.getMaxCount() == 0) { // Banned card
-					boxColor = new Color(160, 0, 0, 192); // Translucent red
-				} else if (mCard.getMaxCount() == 1) { // Restricted card
-					boxColor = new Color(160, 128, 0, 192); // Translucent yellow
-				}
 
 				if (collectionChange > 0) {
 					changeBoxColor = new Color(0, 160, 0, 192); // Translucent green
@@ -179,11 +173,25 @@ public class ClickableCardPanel extends JPanel {
 				}
 				
 				GradientPaint extraGradient = new GradientPaint(boxX, boxY, new Color(80, 140, 241, 192), boxX + boxWidth, boxY + boxHeight, new Color(180, 60, 206, 192));
+				GradientPaint extraGradientRestricted = new GradientPaint(boxX, boxY, new Color(239, 226, 81, 192), boxX + boxWidth, boxY + boxHeight, new Color(204, 113, 61, 192));
+				GradientPaint extraGradientBanned = new GradientPaint(boxX, boxY, new Color(239, 94, 81, 192), boxX + boxWidth, boxY + boxHeight, new Color(204, 61, 113, 192));
 
 				if (mCard.isExtra()) {
-					g2d.setPaint(extraGradient);
+					if (mCard.getMaxCount() == 0) { // Banned card
+						g2d.setPaint(extraGradientBanned); // Translucent red
+					} else if (mCard.getMaxCount() == 1) { // Restricted card
+						g2d.setPaint(extraGradientRestricted); // Translucent yellow
+					} else {
+						g2d.setPaint(extraGradient); // Default: translucent gray
+					}
 				} else {
-					g2d.setColor(boxColor);
+					if (mCard.getMaxCount() == 0) { // Banned card
+						g2d.setColor(new Color(160, 0, 0, 192)); // Translucent red
+					} else if (mCard.getMaxCount() == 1) { // Restricted card
+						g2d.setColor(new Color(160, 128, 0, 192)); // Translucent yellow
+					} else {
+						g2d.setColor(new Color(64, 64, 64, 192)); // Default: translucent gray
+					}
 				}
 				g2d.fillRect(boxX, boxY, boxWidth, boxHeight);
 
@@ -222,7 +230,12 @@ public class ClickableCardPanel extends JPanel {
 						break;
 					case 4: // Both (for "build from collection" mode)
 						text = Integer.toString(mCard.getCount());
-						ownedText = "/" + Integer.toString(Collection.getInstance().getCardTotalOwnedCount(mCard.getId(), true));
+						if (Collection.getInstance().getCardTotalOwnedCount(mCard.getId(), true) > 4) {
+							//ownedText = "/4+";
+							ownedText = "/" + Integer.toString(Collection.getInstance().getCardTotalOwnedCount(mCard.getId(), true));
+						} else {
+							ownedText = "/" + Integer.toString(Collection.getInstance().getCardTotalOwnedCount(mCard.getId(), true));
+						}
 						if (mCard.getCount() > Collection.getInstance().getCardTotalOwnedCount(mCard.getId(), true)) {
 							g2d.setColor(new Color(255, 128, 128));
 						}

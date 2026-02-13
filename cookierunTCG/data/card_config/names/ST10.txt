@@ -1,20 +1,20 @@
-ST10-001
-ST10-002
-ST10-003
-ST10-004
-ST10-005
-ST10-006
-ST10-007
-ST10-008
-ST10-009
-ST10-010
-ST10-011
-ST10-012
-ST10-013
-ST10-014
-ST10-015
-ST10-016
-ST10-017
-ST10-018
-ST10-019
-ST10-020
+ST10-001,Dreamweaver Cookie,引夢者餅乾
+ST10-002,Moonlight Cookie,月光魔法師餅乾
+ST10-003,Poison Mushroom Cookie,毒蘑菇餅乾
+ST10-004,Wizard Cookie,魔法師餅乾
+ST10-005,Dreamcatcher,星光捕夢網
+ST10-006,Blueberry Pie Cookie,藍莓派餅乾
+ST10-007,Sugar Glass Cookie,糖玻璃餅乾
+ST10-008,Stardust Cookie,星塵餅乾
+ST10-009,Space Doughnut,宇宙甜甜圈
+ST10-010,Prophet Cookie,預言家餅乾
+ST10-011,Cream Unicorn Cookie,奶油獨角獸餅乾
+ST10-012,Taurus Cookie,金牛座餅乾
+ST10-013,
+ST10-014,
+ST10-015,
+ST10-016,
+ST10-017,
+ST10-018,
+ST10-019,
+ST10-020,
