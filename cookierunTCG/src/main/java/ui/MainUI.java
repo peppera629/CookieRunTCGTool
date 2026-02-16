@@ -100,6 +100,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
     private JFrame frame;
     public static boolean DEBUG = false;
+    // Secret features:
+    // 1. Highlight translation-available cards
+    public static boolean[] secretFeatures = {false};
 
     /**
      * Launch the application.
@@ -333,6 +336,19 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
         });
 
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_T, 0), "secFeature0");
+        actionMap.put("secFeature0", new javax.swing.AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                secretFeatures[0] = !secretFeatures[0];
+                ClickableCardPanel.setHighlightTranslationAvailable(secretFeatures[0]);
+                CardList.getInstance().updateAllCardPanels();
+                mCardsPane.revalidate();
+                mCardsPane.repaint();
+                mDeckPane.revalidate();
+                mDeckPane.repaint();
+            }
+        });
     }
 
     private void enableKeyOverrides() {

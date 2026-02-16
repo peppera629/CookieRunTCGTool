@@ -39,6 +39,7 @@ ui\MainUI$14.class
 ui\MainUI$19.class
 ui\MainUI$37.class
 util\AppPaths.class
+ui\MainUI$42.class
 ui\DeckWindow.class
 dataStructure\CardLoader$cardImageLoadTask.class
 ui\MainUI$25.class

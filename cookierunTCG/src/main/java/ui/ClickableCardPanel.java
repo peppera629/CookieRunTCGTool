@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.image.BufferedImage;
+import java.awt.AlphaComposite;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -41,6 +42,7 @@ public class ClickableCardPanel extends JPanel {
 	private int collectionChange;
 	private Dimension cardListSize;
 	private static boolean quickEditMode = false;
+	private static boolean highlightTranslationAvailable = false;
     ImageIcon mCardIcon;
 
 	public ClickableCardPanel(Card card, int showCountMode, int cardSize, float cardSizeModifier, int differential) {
@@ -133,6 +135,10 @@ public class ClickableCardPanel extends JPanel {
         quickEditMode = enabled;
     }
 
+	public static void setHighlightTranslationAvailable(boolean enabled) {
+		highlightTranslationAvailable = enabled;
+	}
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -140,12 +146,26 @@ public class ClickableCardPanel extends JPanel {
 		if (g == null) {
         	return; // Skip painting if Graphics is null
     	}
+
+		Graphics2D g2d = (Graphics2D) g.create();
         
         // 繪製卡片的 ImageIcon
-		mCardIcon.paintIcon(this, g, 0, 0);
+		if (highlightTranslationAvailable) {
+			boolean translationAvailable = false;
+			for (String str : mCard.getCardTranslation()) {
+				if (!str.equals("")) {
+					translationAvailable = true;
+				}
+			}
+			if (!translationAvailable) {
+				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+			} else {
+				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+			}
+		}
+		mCardIcon.paintIcon(this, g2d, 0, 0);
 
         if(mShowCountMode != 0) {
-	        Graphics2D g2d = (Graphics2D) g.create();
 			try {
 				g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
 				g2d.setRenderingHint(java.awt.RenderingHints.KEY_TEXT_ANTIALIASING, java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -288,7 +308,6 @@ public class ClickableCardPanel extends JPanel {
 				g2d.dispose();
 			}
         } else {
-			Graphics2D g2d = (Graphics2D) g.create();
 			try {
 				g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
 				g2d.setRenderingHint(java.awt.RenderingHints.KEY_TEXT_ANTIALIASING, java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON);

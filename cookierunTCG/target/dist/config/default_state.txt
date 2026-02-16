@@ -1,10 +1,10 @@
-Starter Decks\Starter Deck 9 - Seas of Fate.txt
-Starter Deck 9 - Seas of Fate
+Yellow - Standard.txt
+Yellow - Standard
 _,_,_,_,_,_
 _,_,_,_
 _
 _,_,_
 _,_,_,_,_,_
-_,_ST10
+_,__,_
 _,_,_,_,_,_
 2,3,1,4,5
