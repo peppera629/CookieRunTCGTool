@@ -90,8 +90,6 @@ import java.util.Map;
 
 import javax.swing.JButton;
 
-// FIX: Verify collection summary correctness
-// FIX: In deck image, unloaded card images are not loaded
 // FIX: Variant highlight does not always work correctly (such as showing another card while holding down variant key can cause unavailable language to be selected)
 // FEATURE: Restrict displayed cards based on language availability or pack release status based on region
 // FEATURE: Add "Credits" popup
@@ -239,7 +237,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     	mDefaultState = DefaultState.getInstance();
         mDeck = new Deck();
         frame = new JFrame();
+        
         CardLoader.loadCardAvailability();
+        CardLoader.preloadCardThumbnails(CardList.getInstance().getAllCards(), false);
     }
 
     private void keyBindingsToggle(boolean enabled) {
@@ -1575,19 +1575,19 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         JPanel quickSelectBtnGroup = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         mSearchPane.add(quickSelectBtnGroup);
-        
-        quickSelectBtnST = new JButton(CardUtil.getTranslation("filter.ST"));
-        quickSelectBtnST.setRequestFocusEnabled(false);
-        quickSelectBtnST.setFont(CRnormal);
-        componentFontMap.put(quickSelectBtnST, "CRnormal");
-        quickSelectBtnGroup.add(quickSelectBtnST);
 
         quickSelectBtnBS = new JButton(CardUtil.getTranslation("filter.BS"));
         quickSelectBtnBS.setRequestFocusEnabled(false);
         quickSelectBtnBS.setFont(CRnormal);
         componentFontMap.put(quickSelectBtnBS, "CRnormal");
         quickSelectBtnGroup.add(quickSelectBtnBS);
-
+        
+        quickSelectBtnST = new JButton(CardUtil.getTranslation("filter.ST"));
+        quickSelectBtnST.setRequestFocusEnabled(false);
+        quickSelectBtnST.setFont(CRnormal);
+        componentFontMap.put(quickSelectBtnST, "CRnormal");
+        quickSelectBtnGroup.add(quickSelectBtnST);
+        
         JPanel packOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
         JPanel packCheckboxGroup = new JPanel();
         packCheckboxGroup.setLayout(new GridLayout(0, 5));

@@ -14,6 +14,7 @@ import util.AppPaths;
 public class Collection {
     private List<Map<String, List<Integer>>> collection; // Map of card ID to count
     private Map<String, Integer> change; // Current collection change compared to last save
+    private Map<String, Boolean> countedCards = new HashMap<>();
     private static Collection instance;
     private static List<String> collection_files;
     private static final String COLLECTION_FILE_BASE = AppPaths.userDataDir().resolve("collection/collection").toString();
@@ -146,10 +147,11 @@ public class Collection {
     public int getCardOwnedCount(int langIndex, String packId, CardUtil.CardRarity rarity, CardUtil.CardColor color, CardUtil.CardType type, boolean countMode) {
         int total = 0;
         if (langIndex == -1) { // Aggregate across all languages
+            countedCards.clear(); 
             for (int i = 0; i < collection.size(); i++) {
-                total += getCardOwnedCount(i, packId, rarity, color, type, countMode);
+                getCardOwnedCount(i, packId, rarity, color, type, countMode);
             }
-            return total;
+            return countedCards.size();
         }
         for (Map.Entry<String, List<Integer>> entry : collection.get(langIndex).entrySet()) {
             String cardId = entry.getKey();
@@ -195,6 +197,11 @@ public class Collection {
                             } else {
                                 if (entry.getValue().get(variantIndex) > 0) {
                                     total += 1;
+                                    if (countedCards.getOrDefault(cardId, false)) {
+                                        continue;
+                                    } else {
+                                        countedCards.put(cardId, true);
+                                    }
                                 }
                             }
                         } else {
@@ -205,7 +212,14 @@ public class Collection {
                                     break;
                                 }
                             }
-                            total += (owned ? 1 : 0);
+                            if (owned) {
+                                total += 1;
+                                if (countedCards.getOrDefault(cardId, false)) {
+                                    continue;
+                                } else {
+                                    countedCards.put(cardId, true);
+                                }
+                            }
                         }
                     }
                 }

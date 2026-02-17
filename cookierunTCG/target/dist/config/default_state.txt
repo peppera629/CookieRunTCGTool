@@ -1,10 +1,10 @@
-Yellow - Standard.txt
-Yellow - Standard
+Red - Hollyberry Meta (for battle with Cake Hound).txt
+Red - Hollyberry Meta (for battle with Cake Hound)
 _,_,_,_,_,_
 _,_,_,_
 _
 _,_,_
 _,_,_,_,_,_
-_,__,_
+_,_
 _,_,_,_,_,_
 2,3,1,4,5

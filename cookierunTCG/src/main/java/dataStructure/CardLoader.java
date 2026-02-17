@@ -10,6 +10,9 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 import util.Config;
 import util.UIUtil;
 import util.CardUtil;
@@ -54,6 +57,28 @@ public class CardLoader {
         	_card.createCardLabel();
         }
     }
+
+	public static void preloadCardThumbnails(List<Card> cardList, boolean wait) {
+		List<Future<?>> futures = new ArrayList<>();
+
+		for (Card c : cardList) {
+			if (c == null) continue;
+			futures.add(cardImageLoadExecutor.submit(new cardImageLoadTask(c)));
+		}
+
+		if (!wait) return;
+
+		for (Future<?> future : futures) {
+			try {
+				future.get();
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+				return;
+			} catch (ExecutionException e) {
+				e.getCause().printStackTrace();
+			}
+		}
+	}
 
 	public static void loadAllPacks() {
 		CardUtil.CardPack = new ArrayList<String>();
