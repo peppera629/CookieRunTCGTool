@@ -93,6 +93,7 @@ import javax.swing.JButton;
 // FIX: Variant highlight does not always work correctly (such as showing another card while holding down variant key can cause unavailable language to be selected)
 // FEATURE: Restrict displayed cards based on language availability or pack release status based on region
 // FEATURE: Add "Credits" popup
+// FEATURE: Online saving (Google Drive) for decks and/or collection
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
 
@@ -340,13 +341,15 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         actionMap.put("secFeature0", new javax.swing.AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                secretFeatures[0] = !secretFeatures[0];
-                ClickableCardPanel.setHighlightTranslationAvailable(secretFeatures[0]);
-                CardList.getInstance().updateAllCardPanels();
-                mCardsPane.revalidate();
-                mCardsPane.repaint();
-                mDeckPane.revalidate();
-                mDeckPane.repaint();
+                if (!searchBox.isFocusOwner()) {
+                    secretFeatures[0] = !secretFeatures[0];
+                    ClickableCardPanel.setHighlightTranslationAvailable(secretFeatures[0]);
+                    CardList.getInstance().updateAllCardPanels();
+                    mCardsPane.revalidate();
+                    mCardsPane.repaint();
+                    mDeckPane.revalidate();
+                    mDeckPane.repaint();
+                }
             }
         });
     }
