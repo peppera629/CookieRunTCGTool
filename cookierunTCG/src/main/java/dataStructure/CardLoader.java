@@ -228,6 +228,9 @@ public class CardLoader {
 								skillType.add(SkillType.OnPlay);
 							}
 							if (cardData[8].contains("A")) {
+								skillType.add(SkillType.ActivateOncePerTurn);
+							}
+							if (cardData[8].contains("a")) {
 								skillType.add(SkillType.Activate);
 							}
 							if (cardData[8].contains("B")) {

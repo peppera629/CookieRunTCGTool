@@ -42,7 +42,7 @@ BS6-041,Yellow,Item,_,U,B,_,_,_,_,,,,,,
 BS6-042,Yellow,Trap,_,U,B,_,_,_,_,,,,,,
 BS6-043,Yellow,Stage,_,U,B,_,_,_,_,,,,,,
 BS6-044,Green,Cookie,_,SR,B,1,2,T,_,2,1,2,3,,
-BS6-045,Green,Cookie,_,U,B,1,2,A,_,2,1,3,2,2,1
+BS6-045,Green,Cookie,_,U,B,1,2,a,_,2,1,3,2,2,1
 BS6-046,Green,Cookie,H,C,B,2,2,_,_,2,2,,,,
 BS6-047,Green,Cookie,_,C,B,2,2,P,_,3,1,3,4,,
 BS6-048,Green,Cookie,_,R,B,1,3,P,_,3,2,,,,
@@ -54,7 +54,7 @@ BS6-053,Green,Cookie,_,C,B,1,3,T,_,2,1,,,,
 BS6-054,Green,Cookie,_,U,B,2,2,_,_,2,3,,,,
 BS6-055,Green,Cookie,_,C,B,2,4,PY,_,3,2,,,,
 BS6-056,Green,Cookie,D,C,B,1,1,_,_,1,1,,,,
-BS6-057,Green,Cookie,_,R,B,1,3,A,_,2,1,,,,
+BS6-057,Green,Cookie,_,R,B,1,3,a,_,2,1,,,,
 BS6-058,Green,Cookie,_,C,B,3,5,O,_,2,1,2,5,2,1
 BS6-059,Green,Cookie,_,C,B,2,3,T,_,2,1,,,,
 BS6-060,Green,Cookie,_,C,B,3,4,T,_,2,3,,,,

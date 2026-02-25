@@ -91,7 +91,7 @@ import java.util.Map;
 import javax.swing.JButton;
 
 // FIX: Variant highlight does not always work correctly (such as showing another card while holding down variant key can cause unavailable language to be selected)
-// FEATURE: Restrict displayed cards based on language availability or pack release status based on region
+// FIX: Exiting collection mode with alt. name displayed causes card name to stay blue
 // FEATURE: Add "Credits" popup
 // FEATURE: Online saving (Google Drive) for decks and/or collection
 
@@ -193,7 +193,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup, deckDetailPane, centerPanel;
     private JLabel mDeckText;
     private JTextField searchBox;
-    private JButton saveBtn, saveAsBtn, selectBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST;
+    private JButton saveBtn, saveAsBtn, selectBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST, quickSelectBtnSkillType;
     private JButton mClearDeckBtn, mRandomDrawSimBtn, button_search, button_clean, button_sort, button_settings;
     private JToggleButton button_collection;
     private JLabel mCardCountHintTxt, mFlipCountHintTxt, mExtraCountHintTxt, mDeckCookieSummaryHintTxt, 
@@ -1874,10 +1874,19 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         skillTypeLabelPanel.add(labelSkillType);
         mSearchPane.add(skillTypeLabelPanel);
 
+        JPanel skillTypeBtnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        mSearchPane.add(skillTypeBtnPanel);
+
         skillTypeOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
         mSearchPane.add(skillTypeOuterPanel);
         JPanel skillTypeCheckboxGroup = new JPanel(new GridLayout(0, 1));
         skillTypeCheckboxGroup.setBorder(filterBorder);
+
+        quickSelectBtnSkillType = new JButton(CardUtil.getTranslation("filter.skilltypetoggle"));
+        quickSelectBtnSkillType.setRequestFocusEnabled(false);
+        quickSelectBtnSkillType.setFont(CRnormal);
+        componentFontMap.put(quickSelectBtnSkillType, "CRnormal");
+        skillTypeBtnPanel.add(quickSelectBtnSkillType);
 
         cb_skillType = new JCheckBox[CardUtil.SKILL_TYPE_MAX];
         
@@ -1891,6 +1900,24 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         skillTypeOuterPanel.add(skillTypeCheckboxGroup);
         skillTypeLabelPanel.setVisible(Config.ADVANCED_FILTERING);
         skillTypeOuterPanel.setVisible(Config.ADVANCED_FILTERING);
+
+        quickSelectBtnSkillType.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                boolean quickSelectMode = false; // All selected, disable all
+                for (JCheckBox cb : cb_skillType) {
+                    if (!cb.isSelected() && cb.isEnabled()) {
+                        quickSelectMode = true; // At least one is unselected, enable all
+                        break;
+                    }
+                }
+
+                for (JCheckBox cb : cb_skillType) {
+                    if (cb.isEnabled()) {
+                        cb.setSelected(quickSelectMode);
+                    }
+                }
+            }
+        });
 
         // ========================= keyword filtering =========================
         labelKeyword = new JLabel(CardUtil.getTranslation("filter.keyword"), JLabel.LEFT);
@@ -2056,10 +2083,20 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mCardsPane.repaint();
         }
         mCardCountTxt.setText(mDeck.getCardCount()-mDeck.getExtraSummary()[0]+"/60");
-        if ((mDeck.getCardCount()-mDeck.getExtraSummary()[0] > 60) || (!mDeck.getLegality()) || (Config.DECK_BUILD_FROM_COLLECTION && !mDeck.getOwnershipLegality().isEmpty())) {
+
+        boolean allReleased = true;
+        for (Card card : mDeck.getAllCards()) {
+            if (!CardUtil.CardPackAvailability.get(card.getPack()).get(Config.REGION)) {
+                allReleased = false;
+                break;
+            }
+        }
+
+        if ((mDeck.getCardCount()-mDeck.getExtraSummary()[0] > 60) || (!mDeck.getLegality()) || (Config.DECK_BUILD_FROM_COLLECTION && !mDeck.getOwnershipLegality().isEmpty()) || !allReleased) {
         	mCardCountTxt.setForeground(Color.RED);
             String invalidReasonString = ((mDeck.getCardCount()-mDeck.getExtraSummary()[0] > 60) ? CardUtil.getTranslation("warning.overlimit") : "");
             invalidReasonString = invalidReasonString + (!mDeck.getLegality() ? ((invalidReasonString.isEmpty()) ? CardUtil.getTranslation("warning.bannedoverlimit") : "<br>" + CardUtil.getTranslation("warning.bannedoverlimit")) : "");
+            invalidReasonString = invalidReasonString + (!allReleased ? ((invalidReasonString.isEmpty()) ? CardUtil.getTranslation("warning.unreleased") : "<br>" + CardUtil.getTranslation("warning.unreleased")) : "");
             if (Config.DECK_BUILD_FROM_COLLECTION && !mDeck.getOwnershipLegality().isEmpty()) {
                 invalidReasonString = invalidReasonString + ((invalidReasonString.isEmpty()) ? CardUtil.getTranslation("warning.collectionoverlimit") : "<br>" + CardUtil.getTranslation("warning.collectionoverlimit"));
                 for (Card entry : mDeck.getOwnershipLegality()) {
@@ -2264,6 +2301,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         	if (!CardUtil.CardPackAvailability.get(CardUtil.CardPack.get(i)).get(Config.REGION)) {
                 cb_pack[i].setEnabled(false);
                 cb_pack[i].setSelected(false);
+            } else {
+                cb_pack[i].setEnabled(true);
             }
         }
 
@@ -2293,6 +2332,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         showDeckBtn.setText(CardUtil.getTranslation("deck.show"));
         quickSelectBtnBS.setText(CardUtil.getTranslation("filter.BS"));
         quickSelectBtnST.setText(CardUtil.getTranslation("filter.ST"));
+        quickSelectBtnSkillType.setText(CardUtil.getTranslation("filter.skilltypetoggle"));
         labelColor.setText(CardUtil.getTranslation("color"));
         cb_color[0].setText(CardUtil.CardColor.Red.getDisplayName());
         cb_color[1].setText(CardUtil.CardColor.Yellow.getDisplayName());

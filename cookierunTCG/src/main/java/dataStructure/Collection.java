@@ -15,6 +15,7 @@ public class Collection {
     private List<Map<String, List<Integer>>> collection; // Map of card ID to count
     private Map<String, Integer> change; // Current collection change compared to last save
     private Map<String, Boolean> countedCards = new HashMap<>();
+    private int currentPackCompletionStatus;
     private static Collection instance;
     private static List<String> collection_files;
     private static final String COLLECTION_FILE_BASE = AppPaths.userDataDir().resolve("collection/collection").toString();
@@ -228,6 +229,52 @@ public class Collection {
             }
         }
         return total;
+    }
+
+    public int getPackCompletion(int langIndex, String packId) { // Incomplete for now
+        if (langIndex == -1) {
+            List<Integer> completionStatusList = new ArrayList<>();
+            for (int i = 0; i < collection.size(); i++) {
+                int status = getPackCompletion(i, packId);
+                completionStatusList.add(status);
+            }
+            for (int i = 0; i < completionStatusList.size(); i++) {
+                System.out.println("Pack completion status for language " + Config.ALL_CARD_LANGUAGES[Config.COLLECTION_LANGUAGE_INDICES[i]] + ": " + completionStatusList.get(i));
+            }
+            return completionStatusList.stream().max(Integer::compareTo).orElse(0);
+        }
+        currentPackCompletionStatus = 3; // 0 = Incomplete, 1 = Complete, 2 = Master Set, 3 = Grandmaster Set
+        int cardTally = 0;
+        for (Map.Entry<String, List<Integer>> entry : collection.get(langIndex).entrySet()) {
+            String cardId = entry.getKey();
+            Card card = CardList.getInstance().getCardById(cardId);
+            System.out.println(card.getName());
+            if (card != null && ((packId == null && card.getPack() != "P") || card.getPack().equals(packId))) {
+                cardTally++;
+                if (card.getCount() > 0) {
+                    boolean masterEligible = false;
+                    boolean grandmasterEligible = false;
+                    List<Integer> counts = entry.getValue();
+                    for (int i = 0; i < counts.size(); i++) {
+                        int count = counts.get(i);
+                        if (count <= 0) {
+                            if (card.getVariants()[i].getValue() == 5) { // Promo (only invalidates Grandmaster completion)
+                                currentPackCompletionStatus = Math.min(currentPackCompletionStatus, 2); // Downgrade to at most Master Set
+                                System.out.println(card.getName() + " - 2");
+                            } else {
+                                currentPackCompletionStatus = Math.min(currentPackCompletionStatus, 1); // Downgrade to at most Complete
+                                System.out.println(card.getName() + " - 1");
+                            }
+                        }
+                    }
+                } else {
+                    currentPackCompletionStatus = 0; // Incomplete
+                    System.out.println(card.getName() + " - 0");
+                    break;
+                }
+            }
+        }
+        return ((cardTally == 0) ? 0 : currentPackCompletionStatus);
     }
 
     public void setCardOwnedCount(int langIndex, String cardId, int variantIndex, int count) {

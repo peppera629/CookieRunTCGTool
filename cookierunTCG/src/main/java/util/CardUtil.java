@@ -15,7 +15,7 @@ public class CardUtil {
 	public static int COLOR_MAX = 6;
 	public static int RARITY_MAX = 6;
 	public static int HP_MAX = 6;
-	public static int SKILL_TYPE_MAX = 8;
+	public static int SKILL_TYPE_MAX = 9;
 	public static int KEYWORD_MAX = 5;
 	public static int TYPE_MAX = 4;
 	public static int ATTACK_MAX = 5;
@@ -283,8 +283,8 @@ public class CardUtil {
 	}
 
 	public enum SkillType {
-		// Represented in the card data as: _, P, O, A, B, Y
-		None(0), Passive(1), PassiveOwnTurn(2), OnPlay(3), OnPlayOwnTurn(4), Activate(5), Blocker(6), ThenEffect(7);
+		// Represented in the card data as: _, P, PY, O, OY, A, a, B, Y
+		None(0), Passive(1), PassiveOwnTurn(2), OnPlay(3), OnPlayOwnTurn(4), Activate(5), ActivateOncePerTurn(6), Blocker(7), ThenEffect(8);
 		private final int value;
 
 		private SkillType(int value) {

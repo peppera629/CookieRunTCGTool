@@ -22,6 +22,7 @@ import javax.swing.SwingUtilities;
 import dataStructure.Card;
 import dataStructure.CardLoader;
 import dataStructure.Collection;
+import util.CardUtil;
 
 import util.Config;
 
@@ -161,6 +162,12 @@ public class ClickableCardPanel extends JPanel {
 				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
 			} else {
 				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+			}
+		} else {
+			if (CardUtil.CardPackAvailability.get(mCard.getPack()).get(Config.REGION)) {
+				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+			} else {
+				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
 			}
 		}
 		mCardIcon.paintIcon(this, g2d, 0, 0);

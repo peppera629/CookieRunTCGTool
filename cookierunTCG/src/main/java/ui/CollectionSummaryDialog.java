@@ -125,6 +125,7 @@ public class CollectionSummaryDialog {
                 label = new JLabel("Total ", JLabel.RIGHT);
             } else {
                 label = new JLabel(CardUtil.CardPack.get(i-1) + " ", JLabel.RIGHT);
+                //System.out.println(CardUtil.CardPack.get(i-1) + " - " + Collection.getInstance().getPackCompletion(0, CardUtil.CardPack.get(i-1)));
             }
             label.setAlignmentX(Component.RIGHT_ALIGNMENT);
             label.setFont(MainUI.CRnormal);

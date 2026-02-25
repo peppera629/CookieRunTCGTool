@@ -7,3 +7,4 @@ P-021;;;[P][P][P];;3;;<Discard 1 card.> The Cookie with this card attached for H
 P-023;;;[Y];Brave Run;1;;Draw up to 1 card from your deck.
 P-039;The Knight Commander's Lunch Set;[Activate] [Once Per Turn] <[B]> Draw 1 card from your deck. Then, discard 1 card from your hand.;[B][B][B][B];Refreshing Carbonation!;4;;
 P-088;;;[G][G][G];Palace-Awakening Arrow;3;Then, if your support area contains 7 cards or more, set up to 1 card in your support area as active.;
+P-122;;<[R][Y][G][B][P]> Place in your stage area.\n[Activate] <Place this card in the trash.> Play up to 1 LV.3 Cookie from your trash. If you do, draw up to 5 cards from your deck.;;;;;
