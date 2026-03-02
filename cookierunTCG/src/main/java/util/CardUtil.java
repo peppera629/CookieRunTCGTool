@@ -21,7 +21,7 @@ public class CardUtil {
 	public static int ATTACK_MAX = 5;
 	public static int ATTACK_COST_MAX = 5;
 	public static int PEAK_MAX = 8;
-	public static List<Integer> AWAKEN_HP = List.of(0, 2);
+	public static List<Integer> AWAKEN_HP = List.of(0, 1, 2);
 	
 	// For language translation
 	private static ResourceBundle messages, messages_promo;
