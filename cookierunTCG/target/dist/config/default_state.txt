@@ -1,10 +1,10 @@
-Yellow - Standard.txt
-Yellow - Standard
+Green - Wind Archer.txt
+Green - Wind Archer
 _,_,_,_,_,_
 _,_,_,_
 _
 _,_,_
 _,_,_,_,_,_
-_,_,__,_,__,_,__,_,__,_,__,_,__,_,__,_,__,_,_,BS8,BS9
+_,_,_
 _,_,_,_,_,_
 2,3,1,4,5,6

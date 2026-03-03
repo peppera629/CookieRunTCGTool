@@ -219,7 +219,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JLabel mDeckDistCookie1, mDeckDistCookie2, mDeckDistCookie3, mDeckDistFlipHeal, mDeckDistFlipDraw, mDeckDistFlipSpecial, mDeckDistItem, mDeckDistTrap, mDeckDistStage, mDeckDistEmpty, mDeckDistExtra1, mDeckDistExtra2, mDeckDistExtra3;
     private JLabel mDeckDistCookieBorder, mDeckDistFlipBorder, mDeckDistOtherBorder, mDeckDistExtraBorder;
     private static int collectionAddVariant = 0;
-    private boolean isCollectionMode = false, deckChanged = false;
+    private static boolean isCollectionMode = false, deckChanged = false;
     private Collection collection = Collection.getInstance();
     private Card currentCard;
     private Color highlightColor = new Color(60,60,255,255);
@@ -3237,5 +3237,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mCardDetailPane.revalidate();
             mCardDetailPane.repaint();
         }
+    }
+
+    public static boolean isCollectionMode() {
+        return isCollectionMode;
     }
 }

@@ -22,6 +22,7 @@ import javax.swing.SwingUtilities;
 import dataStructure.Card;
 import dataStructure.CardLoader;
 import dataStructure.Collection;
+import ui.MainUI;
 import util.CardUtil;
 
 import util.Config;
@@ -39,6 +40,7 @@ public class ClickableCardPanel extends JPanel {
     private int mShowCountMode;
     private int mCardSize;
 	private float mCardSizeModifier = 1.0f;
+	private float hiddenCardOpacity = 0.5f;
 	private int mDifferential;
 	private int collectionChange;
 	private Dimension cardListSize;
@@ -151,7 +153,13 @@ public class ClickableCardPanel extends JPanel {
 		Graphics2D g2d = (Graphics2D) g.create();
         
         // 繪製卡片的 ImageIcon
-		if (highlightTranslationAvailable) {
+		if (MainUI.isCollectionMode()) {
+			if (!CardUtil.CardPackAvailability.get(mCard.getPack()).get(Config.REGION) || Collection.getInstance().getCardTotalOwnedCount(mCard.getId(), true) == 0) {
+				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, hiddenCardOpacity));
+			} else {
+				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+			}
+		} else if (highlightTranslationAvailable) {
 			boolean translationAvailable = false;
 			for (String str : mCard.getCardTranslation()) {
 				if (!str.equals("")) {
@@ -159,7 +167,7 @@ public class ClickableCardPanel extends JPanel {
 				}
 			}
 			if (!translationAvailable) {
-				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, hiddenCardOpacity));
 			} else {
 				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 			}
@@ -167,10 +175,11 @@ public class ClickableCardPanel extends JPanel {
 			if (CardUtil.CardPackAvailability.get(mCard.getPack()).get(Config.REGION)) {
 				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 			} else {
-				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+				g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, hiddenCardOpacity));
 			}
 		}
 		mCardIcon.paintIcon(this, g2d, 0, 0);
+		g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
 
         if(mShowCountMode != 0) {
 			try {
