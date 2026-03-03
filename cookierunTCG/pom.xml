@@ -9,8 +9,9 @@
   <packaging>jar</packaging>
 
   <properties>
-    <maven.compiler.release>17</maven.compiler.release>
+    <maven.compiler.release>21</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javafx.version>21.0.5</javafx.version>
   </properties>
 
   <build>
@@ -18,6 +19,16 @@
     <finalName>deckBuilder</finalName>
 
     <plugins>
+
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <configuration>
+            <mainClass>ui.MainUI</mainClass>
+        </configuration>
+    </plugin>
+
       <!-- Build a thin JAR (exclude big assets) -->
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
@@ -80,12 +91,21 @@
 
   <dependencies>
   
-
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx</artifactId>
-      <version>25-ea+21</version>
+      <version>${javafx.version}</version>
       <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>${javafx.version}</version>
     </dependency>
 
   </dependencies>

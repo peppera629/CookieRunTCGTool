@@ -182,6 +182,8 @@ public class DefaultState {
 				Config.CARD_SORT_ORDER_EXTRA = Integer.valueOf(flags[2]);
 				Config.CARD_SORT_ORDER_LEVEL = Integer.valueOf(flags[3]);
 				Config.CARD_SORT_ORDER_COLOR = Integer.valueOf(flags[4]);
+				Config.CARD_SORT_ORDER_RARITY = Integer.valueOf(flags[5]);
+
 			}
 			
 			input.close();
@@ -354,7 +356,8 @@ public class DefaultState {
 			fw.write(Config.CARD_SORT_ORDER_FLIP+",");
 			fw.write(Config.CARD_SORT_ORDER_EXTRA+",");
 			fw.write(Config.CARD_SORT_ORDER_LEVEL+",");
-			fw.write(Config.CARD_SORT_ORDER_COLOR+"\n");
+			fw.write(Config.CARD_SORT_ORDER_COLOR+",");
+			fw.write(Config.CARD_SORT_ORDER_RARITY+"\n");
 			
 			fw.flush();
 			fw.close();
@@ -472,6 +475,8 @@ public class DefaultState {
         System.out.println("CARD_SORT_ORDER_EXTRA = "+Config.CARD_SORT_ORDER_EXTRA);
         System.out.println("CARD_SORT_ORDER_LEVEL = "+Config.CARD_SORT_ORDER_LEVEL);
         System.out.println("CARD_SORT_ORDER_COLOR = "+Config.CARD_SORT_ORDER_COLOR);
+        System.out.println("CARD_SORT_ORDER_RARITY = "+Config.CARD_SORT_ORDER_RARITY);
+		
         System.out.println("");
 		for(int i = 1; i <= 6; i++) {
 			if(Config.CARD_SORT_ORDER_TYPE == i) {
@@ -498,6 +503,10 @@ public class DefaultState {
 				currentPosition -= Config.CARD_SORT_SIZE_COLOR;
 				Config.CARD_SORT_VALUE_COLOR = 2 << currentPosition;
 		        System.out.println("CARD_SORT_VALUE_COLOR = "+Config.CARD_SORT_VALUE_COLOR);
+			} else if(Config.CARD_SORT_ORDER_RARITY == i) {
+				currentPosition -= Config.CARD_SORT_SIZE_RARITY;
+				Config.CARD_SORT_VALUE_RARITY = 2 << currentPosition;
+		        System.out.println("CARD_SORT_VALUE_RARITY = "+Config.CARD_SORT_VALUE_RARITY);
 			}
 		}
 
@@ -515,6 +524,9 @@ public class DefaultState {
 		}
 		if(Config.CARD_SORT_ORDER_COLOR == 0) {
 			Config.CARD_SORT_VALUE_COLOR = 0;
+		}
+		if(Config.CARD_SORT_ORDER_RARITY == 0) {
+			Config.CARD_SORT_VALUE_RARITY = 0;
 		}
 	}
 }

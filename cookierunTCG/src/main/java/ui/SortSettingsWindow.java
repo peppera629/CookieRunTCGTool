@@ -68,9 +68,12 @@ public class SortSettingsWindow implements util.LanguageChangeListener {
 		        	if (Config.CARD_SORT_ORDER_COLOR == 0) {
 		        		mUnsortedListModel.addElement(CardUtil.getTranslation("sort.name.color"));
 		        	}
+		        	if (Config.CARD_SORT_ORDER_RARITY == 0) {
+		        		mUnsortedListModel.addElement(CardUtil.getTranslation("sort.name.rarity"));
+		        	}
 		        	
 		        	int id = 0;
-			        for (int i=1; i<6; i++) {
+			        for (int i=1; i<7; i++) {
 			        	if (Config.CARD_SORT_ORDER_TYPE == i) {
 			        		mSortedListModel.add(id++, CardUtil.getTranslation("sort.name.type"));
 			        	} else if (Config.CARD_SORT_ORDER_FLIP == i) {
@@ -81,6 +84,8 @@ public class SortSettingsWindow implements util.LanguageChangeListener {
 			        		mSortedListModel.add(id++, CardUtil.getTranslation("sort.name.level"));
 			        	} else if (Config.CARD_SORT_ORDER_COLOR == i) {
 			        		mSortedListModel.add(id++, CardUtil.getTranslation("sort.name.color"));
+			        	} else if (Config.CARD_SORT_ORDER_RARITY == i) {
+			        		mSortedListModel.add(id++, CardUtil.getTranslation("sort.name.rarity"));
 			        	}
 			        }
 					frame.setVisible(true);
@@ -259,6 +264,9 @@ public class SortSettingsWindow implements util.LanguageChangeListener {
 
 			} else if (s.equals(CardUtil.getTranslation("sort.name.color"))) {
 				Config.CARD_SORT_ORDER_COLOR = i + 1;
+				
+			} else if (s.equals(CardUtil.getTranslation("sort.name.rarity"))) {
+				Config.CARD_SORT_ORDER_RARITY = i + 1;
 			}
 		}
 
@@ -281,6 +289,9 @@ public class SortSettingsWindow implements util.LanguageChangeListener {
 
 			} else if(s.equals(CardUtil.getTranslation("sort.name.color"))) {
 				Config.CARD_SORT_ORDER_COLOR = 0;
+
+			} else if(s.equals(CardUtil.getTranslation("sort.name.rarity"))) {
+				Config.CARD_SORT_ORDER_RARITY = 0;
 			}
 		}
 	}

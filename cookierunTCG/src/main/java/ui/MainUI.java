@@ -4,8 +4,7 @@ import util.Config;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+
 
 import java.awt.BorderLayout;
 
@@ -29,19 +28,20 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.KeyStroke;
-
-import dataStructure.Card;
-import dataStructure.CardList;
-import dataStructure.CardLoader;
-import dataStructure.Deck;
-import dataStructure.Collection;
-
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.border.Border;
+
+import dataStructure.Card;
+import dataStructure.CardList;
+import dataStructure.CardLoader;
+import dataStructure.Deck;
+import dataStructure.Collection;
 
 import java.util.List;
 
@@ -321,7 +321,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 }
                 updateLangLabels();
                 updateCardOwnedInfoHighlight(collectionAddVariant);
-                System.out.println("Switched selected language to " + Config.ALL_CARD_LANGUAGES[Config.COLLECTION_LANGUAGE_INDICES[currentSelectedCardLanguage]]);
+                //System.out.println("Switched selected language to " + Config.ALL_CARD_LANGUAGES[Config.COLLECTION_LANGUAGE_INDICES[currentSelectedCardLanguage]]);
             }
         });
 
@@ -458,7 +458,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 if (deckChanged) {
                     ChoiceDialog dialog = new ChoiceDialog();
                     int result = dialog.show(CardUtil.getTranslation("confirmation"));
-                    System.out.println(result);
+                    //System.out.println(result);
                     if (result == 0) {
                         CardLoader.saveDeck(currentDeckDirectory, mDeckText.getText(), mDeck);
                         mDefaultState.setDefaultDeckName(mDeckText.getText());
@@ -1241,7 +1241,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     if (deckChanged) {
                         ChoiceDialog dialog = new ChoiceDialog();
                         int result = dialog.show(CardUtil.getTranslation("confirmation"));
-                        System.out.println(result);
+                        //System.out.println(result);
                         if (result == 0) {
                             CardLoader.saveDeck(currentDeckDirectory, mDeckText.getText(), mDeck);
                             mDefaultState.setDefaultDeckName(mDeckText.getText());
@@ -1253,7 +1253,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     }
                     File selectedFile = new File(pickedDirectory);
                     String filename = pickedDirectory.substring(pickedDirectory.lastIndexOf(File.separator) + 1);
-                    System.out.println(filename);
+                    //System.out.println(filename);
                     mDeckText.setText(filename.substring(0, filename.length() - 4));
                     mDeck.clear();
                     CardList.getInstance().clearCardListCount();
@@ -1306,7 +1306,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         updateCardList();
         currentDeckDirectory = AppPaths.userDataDir().resolve("deck").resolve(mDefaultState.getDefaultDeckPath()).toString();
-        System.out.println("Loading deck from: " + currentDeckDirectory);
+        //System.out.println("Loading deck from: " + currentDeckDirectory);
         mDeck = CardLoader.loadDeck(currentDeckDirectory, mDeckText.getText());
         mDeck.sort();
         updateDeck();
@@ -1607,7 +1607,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 cb_pack[i].setEnabled(false);
                 cb_pack[i].setSelected(false);
             }
-            System.out.println("Pack " + CardUtil.CardPack.get(i) + CardUtil.CardPackAvailability.get(CardUtil.CardPack.get(i)).get(Config.REGION));
+            //System.out.println("Pack " + CardUtil.CardPack.get(i) + CardUtil.CardPackAvailability.get(CardUtil.CardPack.get(i)).get(Config.REGION));
             cb_pack[i].setFont(CRnormal);
             componentFontMap.put(cb_pack[i], "CRnormal"); // Store the font type as a String
             packCheckboxGroup.add(cb_pack[i]);

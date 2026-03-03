@@ -184,27 +184,31 @@ public class Config {
 	public static boolean ADVANCED_FILTERING = false;
 
 	// ========================= sort config ========================
-	public static final String SORT_NAME_TYPE = "卡片類型"; 
+	public static final String SORT_NAME_TYPE = "類型"; 
 	public static final String SORT_NAME_FLIP = "是否為FLIP"; 
 	public static final String SORT_NAME_EXTRA = "是否為EXTRA";
-	public static final String SORT_NAME_LEVEL = "卡片等級"; 
-	public static final String SORT_NAME_COLOR = "卡片顏色"; 
+	public static final String SORT_NAME_LEVEL = "等級"; 
+	public static final String SORT_NAME_COLOR = "顏色"; 
+	public static final String SORT_NAME_RARITY = "稀有度"; 
 	
-	public static final int CARD_SORT_SIZE_TYPE = 3;
-	public static final int CARD_SORT_SIZE_FLIP = 1;
-	public static final int CARD_SORT_SIZE_EXTRA = 1;
-	public static final int CARD_SORT_SIZE_LEVEL = 2;
-	public static final int CARD_SORT_SIZE_COLOR = 3;
+	public static final int CARD_SORT_SIZE_TYPE = 2; // 4 types <= 2^2
+	public static final int CARD_SORT_SIZE_FLIP = 1; // Flip or not <= 2
+	public static final int CARD_SORT_SIZE_EXTRA = 1; // Extra or not <= 2
+	public static final int CARD_SORT_SIZE_LEVEL = 2; // 3 levels <= 2^2
+	public static final int CARD_SORT_SIZE_COLOR = 3; // 6 colors <= 2^3
+	public static final int CARD_SORT_SIZE_RARITY = 3; // 6 rarities in main deck <= 2^3
 
-	public static int CARD_SORT_VALUE_EXTRA = 2 << 29;
+	public static int CARD_SORT_VALUE_EXTRA = 2 << 28;
 	public static int CARD_SORT_VALUE_TYPE = 2 << 26;
 	public static int CARD_SORT_VALUE_FLIP = 2 << 25;
 	public static int CARD_SORT_VALUE_LEVEL = 2 << 23;
 	public static int CARD_SORT_VALUE_COLOR = 2 << 20;
+	public static int CARD_SORT_VALUE_RARITY = 2 << 17;
 	
 	public static int CARD_SORT_ORDER_TYPE = 2;
 	public static int CARD_SORT_ORDER_FLIP = 3;
 	public static int CARD_SORT_ORDER_EXTRA = 1;
 	public static int CARD_SORT_ORDER_LEVEL = 4;
 	public static int CARD_SORT_ORDER_COLOR = 5;
+	public static int CARD_SORT_ORDER_RARITY = 6;
 }

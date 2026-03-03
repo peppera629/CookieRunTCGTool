@@ -93,6 +93,7 @@ public class Card {
 				+ (_isExtra ? 0 : Config.CARD_SORT_VALUE_EXTRA) // Extra first
 				+ lv_weight * Config.CARD_SORT_VALUE_LEVEL // Level descending
 				+ (CardUtil.COLOR_MAX - _color.getValue()) * Config.CARD_SORT_VALUE_COLOR // Color descending 
+				+ (CardUtil.RARITY_MAX - _rarity.getValue()) * Config.CARD_SORT_VALUE_RARITY // Rarity descending
 				;
 //		dump();
 
@@ -152,6 +153,7 @@ public class Card {
 				+ (_isExtra ? 0 : Config.CARD_SORT_VALUE_EXTRA)
 				+ lv_weight * Config.CARD_SORT_VALUE_LEVEL
 				+ (CardUtil.COLOR_MAX - _color.getValue()) * Config.CARD_SORT_VALUE_COLOR 
+				+ (CardUtil.RARITY_MAX - _rarity.getValue()) * Config.CARD_SORT_VALUE_RARITY // Rarity descending
 				;
 		// dump();
 		return _position;
