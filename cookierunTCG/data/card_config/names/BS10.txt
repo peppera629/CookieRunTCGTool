@@ -1,0 +1,123 @@
+BS10-001,Princess Cookie
+BS10-002,Grandberry Merchant
+BS10-003,Raspberry Mousse Cookie
+BS10-004,Bumbleberry Cookie
+BS10-005,Cherry Blossom Cookie
+BS10-006,Blueberry Cookie
+BS10-007,Jungleberry Cookie
+BS10-008,Cherry Cookie
+BS10-009,Cranberry Cookie
+BS10-010,Tarte Tatin Cookie
+BS10-011,Royal Berry Cookie
+BS10-012,Devil Cookie
+BS10-013,Towards the Heart of Paradise
+BS10-014,Facing the Past
+BS10-015,Shattered Shield
+BS10-016,Luscious Garden Heart Berry
+BS10-017,Jam Jar Lid Shield
+BS10-018,Light of True Passion
+BS10-019,Vibrant Hollyberry Palace
+BS10-020,Tiger Lily Cookie
+BS10-021,Hollyberry Cookie
+BS10-022,Raspberry Cookie
+BS10-023,Wildberry Cookie
+BS10-024,Hollyberry Cookie
+BS10-025,Carrot Cookie
+BS10-026,Mango Cookie
+BS10-027,Banana Cookie
+BS10-028,Fairy Cookie
+BS10-029,Milk Cookie
+BS10-030,Jelly Cup Cookie
+BS10-031,Cannoli Cookie
+BS10-032,Pancake Cookie
+BS10-033,Apple Cookie
+BS10-034,Unhappy Cookie
+BS10-035,Ginseng Cookie
+BS10-036,Adventurer Cookie
+BS10-037,Sugar Bowl Flower
+BS10-038,Passion Meets Sloth
+BS10-039,Inescapable Sweetness
+BS10-040,Sugar Paradise
+BS10-041,Mysterious Jewelry Box
+BS10-042,Cookie Stuck in Jam
+BS10-043,Cream Ferret Cookie
+BS10-044,Angel Cookie
+BS10-045,Soul Jam: Light of Sloth
+BS10-046,Sugarfly Cookie
+BS10-047,Pavlova Cookie
+BS10-048,Warden of the Heart
+BS10-049,Eternal Sugar Cookie
+BS10-050,Gim Cookie
+BS10-051,Nougat Cookie
+BS10-052,Beet Cookie
+BS10-053,Shine Muscat Cookie
+BS10-054,Avocado Cookie
+BS10-055,Espresso Cookie
+BS10-056,Lilybell Cookie
+BS10-057,Churro Cookie
+BS10-058,Clover Cookie
+BS10-059,Yeast Spore
+BS10-060,Silver Tree Knight Cookie
+BS10-061,Carameleon Cookie
+BS10-062,Freedom Blooms Again
+BS10-063,Collapsing Floor
+BS10-064,Burning Dough
+BS10-065,Faerie Glass Coffin
+BS10-066,Silverbell Stump
+BS10-067,Mossy Silver Bridge
+BS10-068,A Single Lily
+BS10-069,White Lily Cookie
+BS10-070,Silverbell Cookie
+BS10-071,Mercurial Knight Cookie
+BS10-072,Elder Faerie Cookie
+BS10-073,White Lily Cookie
+BS10-074,Candy Diver Cookie
+BS10-075,Peppermint Cookie
+BS10-076,Gumball Cookie
+BS10-077,Sorbet Shark Cookie
+BS10-078,Soda Cookie
+BS10-079,Eggnog Cookie
+BS10-080,Squid Ink Cookie
+BS10-081,Cappuccino Cookie
+BS10-082,Captain Caviar Cookie
+BS10-083,Pirate Cookie
+BS10-084,Plum Cookie
+BS10-085,Chili Pepper Cookie
+BS10-086,Sudden Weather Change
+BS10-087,Strange Sea Soda Islands
+BS10-088,Butterfly Lantern
+BS10-089,Something Horrifying
+BS10-090,Clashing Leaders
+BS10-091,HMS Custard III
+BS10-092,Kulfi Red Bean Delight
+BS10-093,Orange Cookie
+BS10-094,Custard Cookie III
+BS10-095,Lime Cookie
+BS10-096,Grapefruit Cookie
+BS10-097,Manju Cookie
+BS10-098,Jagae Cookie
+BS10-099,Apprentice Priest
+BS10-100,Blackberry Cookie
+BS10-101,Onion Cookie
+BS10-102,Alchemist Cookie
+BS10-103,Purple Yam Cookie
+BS10-104,Crowberry Cookie
+BS10-105,Truffle Cookie
+BS10-106,Pumpkin Pie Cookie
+BS10-107,White Ghost Cookie
+BS10-108,Black Garlic Cookie
+BS10-109,Licorice Cookie
+BS10-110,Candlelight Cookie
+BS10-111,Banner of the Forsaken Oath
+BS10-112,Knight's Somber Lantern
+BS10-113,Spirit-cutting Sword
+BS10-114,Silver Fork Judgment
+BS10-115,Catacombs of Silence
+BS10-116,Seal Tree of the Fallen Emissaries
+BS10-117,Seaweed Cookie
+BS10-118,Pastry Cookie
+BS10-119,Soul Jam: Light of Silence
+BS10-120,Salt Cellar Cookie
+BS10-121,Charcoal Cookie
+BS10-122,Silent Salt Cookie
+BS10-123,Spectral Warmaster

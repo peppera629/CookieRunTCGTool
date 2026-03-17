@@ -10,11 +10,11 @@ ST10-009,Space Doughnut,宇宙甜甜圈
 ST10-010,Prophet Cookie,預言家餅乾
 ST10-011,Cream Unicorn Cookie,奶油獨角獸餅乾
 ST10-012,Taurus Cookie,金牛座餅乾
-ST10-013,
-ST10-014,
-ST10-015,
-ST10-016,
-ST10-017,
-ST10-018,
-ST10-019,
-ST10-020,
+ST10-013,Little Star
+ST10-014,Lunar Compendium
+ST10-015,Essence of Moonlight
+ST10-016,Delicate Glass Flower
+ST10-017,Inside the Clock Tower
+ST10-018,Reunion of Star and Moon
+ST10-019,Sleeping Moon
+ST10-020,Wizard Archives

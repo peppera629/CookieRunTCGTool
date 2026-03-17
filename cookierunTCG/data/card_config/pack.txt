@@ -9,6 +9,7 @@ BS6;KAN;Operation Timeguard;扭轉時空大作戰！
 BS7;KAN;Arena of Glory;榮耀競技場
 BS8;KA;Land of Fire & Ruin, Realm of Apathy
 BS9;KA;A Game of Truth and Deceit
+BS10;KA;Paradise of Passion & Sloth / Catacombs of Silence
 ST1;KAN;Starter Deck - Red;起始套組 - 豔陽之吻
 ST2;KAN;Starter Deck - Yellow;起始套組 - 電光石火
 ST3;KAN;Starter Deck - Green;起始套組 - 原初之力

@@ -1,10 +1,10 @@
-Green - Wind Archer.txt
-Green - Wind Archer
+Red - Cake Hound.txt
+Red - Cake Hound
 _,_,_,_,_,_
 _,_,_,_
 _
 _,_,_
 _,_,_,_,_,_
-_,_,_
+_,_,_BS10
 _,_,_,_,_,_
 2,3,1,4,5,6
