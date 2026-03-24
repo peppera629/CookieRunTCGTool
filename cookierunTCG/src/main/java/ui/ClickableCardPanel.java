@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.awt.AlphaComposite;
 
 import javax.swing.ImageIcon;
@@ -19,12 +20,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+import java.awt.Image;
+import java.awt.datatransfer.*;
+import java.awt.Toolkit;
+
 import dataStructure.Card;
 import dataStructure.CardLoader;
 import dataStructure.Collection;
-import ui.MainUI;
 import util.CardUtil;
-
 import util.Config;
 
 public class ClickableCardPanel extends JPanel {
@@ -71,6 +74,12 @@ public class ClickableCardPanel extends JPanel {
                     if (mCardListCallBack != null) {
                     	mCardListCallBack.addCard(mCard);
                     }
+				} else if (e.getButton() == MouseEvent.BUTTON2) {
+					Image image = MainUI.getPreviewCardImage();
+					if (image != null) {
+						Transferable cardImage = new ImageTransferable(image);
+						Toolkit.getDefaultToolkit().getSystemClipboard().setContents(cardImage, null);
+					}
                 } else if (e.getButton() == MouseEvent.BUTTON3) {
                     if (mCardListCallBack != null) {
                     	mCardListCallBack.removeCard(mCard);
@@ -386,5 +395,31 @@ public class ClickableCardPanel extends JPanel {
     public void repaintImage() {
     	updateImage();
 		System.out.println("========== updateImage "+mCard.getName()+" =============");
+    }
+
+	public class ImageTransferable implements Transferable {
+        private final Image image;
+
+        public ImageTransferable(Image image) {
+            this.image = image;
+        }
+
+        @Override
+        public DataFlavor[] getTransferDataFlavors() {
+            return new DataFlavor[]{DataFlavor.imageFlavor};
+        }
+
+        @Override
+        public boolean isDataFlavorSupported(DataFlavor flavor) {
+            return DataFlavor.imageFlavor.equals(flavor);
+        }
+
+        @Override
+        public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+            if (isDataFlavorSupported(flavor)) {
+                return image;
+            }
+            throw new UnsupportedFlavorException(flavor);
+        }
     }
 }

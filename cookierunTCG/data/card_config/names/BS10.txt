@@ -31,7 +31,7 @@ BS10-030,Jelly Cup Cookie
 BS10-031,Cannoli Cookie
 BS10-032,Pancake Cookie
 BS10-033,Apple Cookie
-BS10-034,Unhappy Cookie
+BS10-034,Overjoyed Cookie
 BS10-035,Ginseng Cookie
 BS10-036,Adventurer Cookie
 BS10-037,Sugar Bowl Flower

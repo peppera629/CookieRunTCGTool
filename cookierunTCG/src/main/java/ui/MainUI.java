@@ -1,16 +1,12 @@
 package ui;
-
 import util.Config;
-
 import java.awt.EventQueue;
-
-
-
 import java.awt.BorderLayout;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.awt.datatransfer.*;
 
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
@@ -60,6 +56,7 @@ import util.LanguageChangeListener;
 import util.UIUtil;
 import util.ScrollablePanel;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -207,7 +204,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JLabel[][] ownedInfoCountRows;
     private JSplitPane splitPane;
     private JButton showDeckBtn, showDeckDifferentialBtn;
-    private ImageIcon cardIcon;
+    private static ImageIcon cardIcon;
     private JScrollPane scrollDeckPane, scrollCardsPane, scrollSearchPane;
     public static Font CRnormal, CRbold, CRnormalLarge, CRnormalSmall, CRnormalEXLarge, CRboldLarge, CRboldSmall, CRboldEXLarge, CRtranslation, CRtranslationBold, CRboldEXLargeFilter;
     public static InputStream fontStream, fontStreamBold;
@@ -352,6 +349,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 }
             }
         });
+    }
+
+    public static Image getPreviewCardImage() {
+        return cardIcon != null ? cardIcon.getImage() : null;
     }
 
     private void enableKeyOverrides() {
@@ -2276,7 +2277,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         Image image = cardIcon.getImage().getScaledInstance((int) (previewHeight / Config.CARD_RATIO), previewHeight, java.awt.Image.SCALE_SMOOTH);
         cardIcon = new ImageIcon(image);
-        JLabel cardLabel = new JLabel(cardIcon);
+        cardLabel = new JLabel(cardIcon);
         mCardDetailPane.add(cardLabel, BorderLayout.CENTER);
         mCardDetailPane.revalidate();
         mCardDetailPane.repaint();

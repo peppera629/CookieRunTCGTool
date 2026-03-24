@@ -13,6 +13,7 @@ ui\MainUI$7.class
 util\CardUtil$CardColor.class
 ui\MainUI$12.class
 ui\MainUI$32.class
+ui\ControlHintDialog$2.class
 ui\MainUI$35.class
 ui\SortSettingsWindow$ConfigChangedCallback.class
 ui\MainUI$Filter.class
@@ -45,6 +46,7 @@ dataStructure\CardLoader$cardImageLoadTask.class
 ui\MainUI$25.class
 ui\ChoiceDialog.class
 ui\ClickableCardPanel$2.class
+ui\FilePicker$9.class
 ui\SortSettingsWindow$4.class
 util\Config.class
 util\LanguageChangeListener.class
@@ -71,6 +73,7 @@ ui\MainUI$26.class
 ui\SettingsWindow.class
 ui\MainUI$CollectionModeCallback.class
 ui\MainUI$39.class
+ui\ControlHintDialog$1.class
 ui\MainUI$29.class
 ui\SortSettingsWindow$6.class
 ui\FilePicker$4.class
@@ -83,6 +86,7 @@ ui\MainUI$18.class
 ui\MainUI$20.class
 ui\DeckWindowDifferential.class
 ui\MainUI$28.class
+ui\ControlHintDialog.class
 util\CardUtil$CardRarity.class
 util\CardUtil.class
 ui\MainUI$21.class
@@ -94,6 +98,8 @@ ui\FilePicker$7.class
 ui\Dialog.class
 ui\MainUI$11.class
 ui\MainUI$34.class
+ui\ClickableCardPanel$ImageTransferable.class
+ui\MainUI$44.class
 ui\DeckWindowDifferential$1.class
 ui\MainUI$1.class
 util\ScrollablePanel.class

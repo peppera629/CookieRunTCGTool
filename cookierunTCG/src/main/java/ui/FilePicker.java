@@ -21,6 +21,7 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Desktop;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -133,6 +134,23 @@ public class FilePicker {
             }
         });
         buttonPanel.add(confirmButton, gbc);
+
+        gbc.gridx = 4;
+        gbc.gridwidth = 1;
+        JButton openInExplorerButton = new JButton(CardUtil.getTranslation("explorer"));
+        openInExplorerButton.setFont(MainUI.CRnormal);
+        MainUI.componentFontMap.put(openInExplorerButton, "CRnormal");
+        openInExplorerButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Desktop.getDesktop().open(new File(currentDirectory));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        buttonPanel.add(openInExplorerButton, gbc);
+
         window.add(buttonPanel, BorderLayout.SOUTH);
         window.setLocationRelativeTo(null);
         window.setVisible(true);

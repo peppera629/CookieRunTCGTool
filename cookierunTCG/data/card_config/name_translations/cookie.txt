@@ -1,0 +1,461 @@
+Abalone Cookie,鮑魚餅乾
+Adventurer Cookie,探險家餅乾
+Affogato Cookie's Disciple,阿芙佳朵餅乾的祭司
+Affogato Cookie,阿芙佳朵餅乾
+Agar Agar Cookie,洋菜餅乾
+Alchemist Cookie,煉金術師餅乾
+Almond Cookie,杏仁果餅乾
+Aloe Cookie,蘆薈餅乾
+Amber Sugar Cookie,琥珀糖餅乾
+Ananas Dragon Cookie,鳳梨龍族餅乾
+Angel Cookie,天使餅乾
+Animatronic of Deceit,
+Apple Cookie,青蘋果餅乾
+Apple Faerie Cookie,青蘋果妖精餅乾
+Apprentice Priest,
+Aquamarine Cookie,海藍寶石餅乾
+Artichoke Cookie,洋薊餅乾
+Avatar of Ruin,吞噬恐懼破壞神
+Avocado Cookie,酪梨餅乾
+Baby Cream Sheep,
+Baguette Cookie,長棍麵包餅乾
+Banana Cookie,香蕉餅乾
+Basil Pesto Cookie,羅勒香蒜餅乾
+Beet Cookie,甜菜餅乾
+Bell Pepper Cookie,甜椒餅乾
+Bellflower Cookie,沙參花餅乾
+Berry Parfaedia Student,甜蜜水果帕菲迪亞學生
+Birthday Cake Cookie,生日蛋糕餅乾
+Biscuit Giraffe,餅乾長頸鹿
+Black & White Cake Hound,飢腸轆轆黑白蛋糕犬
+Black Garlic Cookie,黑蒜頭餅乾
+Black Lemonade Cookie,黑檸檬汽水餅乾
+Black Pearl Cookie,黑珍珠餅乾
+Black Raisin Cookie,黑葡萄乾餅乾
+Black Sapphire Cookie,黑藍寶石餅乾
+Blackberry Cookie,黑莓餅乾
+Blossom Cookie,花花餅乾
+Blue Lily Cookie,蘭花餅乾
+Blue Slushy Cookie,蘇打冰沙餅乾
+Blue Whale Cookie,藍鯨餅乾
+Blueberry Cookie,藍莓餅乾
+Blueberry Pie Cookie,藍莓派餅乾
+Bookseller,
+Bubbles Cookie,泡泡餅乾
+Bumbleberry Cookie,綜合莓果餅乾
+Burning Spice Cookie,烈焰香料餅乾
+Burnt Cheese Cookie,巴斯克起司餅乾
+Butter Pretzel Cookie,奶油麵包餅乾
+Butter Roll Cookie,奶油捲麵包餅乾
+Butter Squid Cookie,奶油烤魷魚餅乾
+Butterbear Cookie,奶油熊餅乾
+Buttercream Choco Cookie,奶油巧克力餅乾
+Buttercup Cookie,毛毛餅乾
+Cake Hound,蛋糕犬
+Cake Monster Army,蛋糕怪物軍團
+Cake Wolf,蛋糕灰狼
+Camellia Cookie,山茶花餅乾
+Candlelight Cookie,蜜蠟餅乾
+Candy Apple Cookie,蘋果糖餅乾
+Candy Corn Cookie,玉米糖餅乾
+Candy Diver Cookie,口香糖球潛水員餅乾
+Candy Drop Cookie,糖果球餅乾
+Cannoli Cookie,卡諾里捲餅乾
+Cappuccino Cookie,卡布奇諾餅乾
+Capricious Wizard,
+Capsaicin Cookie,辣椒素餅乾
+Captain Caviar Cookie,艦長魚子醬餅乾
+Captain Ice Cookie,冰雪艦長餅乾
+Caramel Arrow Cookie,黑糖餅乾
+Caramel Choux Cookie,焦糖泡芙餅乾
+Caramel Choux Cookie,聖多諾黑餅乾
+Carameleon Cookie,焦糖變色龍餅乾
+Carol Cookie,吟遊詩人餅乾
+Carrot Cookie,紅蘿蔔餅乾
+Cauliflower Cookie,花椰菜餅乾
+Centipede Cookie,蜈蚣餅乾
+Chamomile Cookie,洋甘菊餅乾
+Charcoal Cookie,木炭餅乾
+Cheerleader Cookie,啦啦隊餅乾
+Cheesecake Cookie,起司蛋糕餅乾
+Cherry Ball Cookie,山櫻桃餅乾
+Cherry Blossom Cookie,櫻花餅乾
+Cherry Cola Cookie,櫻桃可樂餅乾
+Cherry Cookie,櫻桃餅乾
+Chess Choco Cookie,西洋棋巧克力餅乾
+Chess Piece GingerBrave,
+Chess Piece Strawberry Cookie,
+Chess Piece Wizard Cookie,
+Chestnut Cookie,栗子餅乾
+Chili Pepper Cookie,甜辣醬餅乾
+Chili Pepper Cookie,辣椒餅乾
+Chives Dumpling King,韭菜餃天王
+Choco Ball Cookie,足球巧克力餅乾
+Choco Bar Cookie,巧克力棒餅乾
+Choco Cake Hound,巧克力蛋糕犬
+Choco Cup Cookie,巧克力杯子蛋糕餅乾
+Choco Drizzle Cookie,巧克力淋醬餅乾
+Chocolate Bonbon Cookie,巧克力球餅乾
+Churro Cookie,吉拿棒餅乾
+Cilantro Cobra Cookie,香菜蛇餅乾
+Cilantro Cobra Fighter,香菜蛇武鬥家
+Cilantro Cobra Swordsman,香菜蛇劍兵
+Cinnamon Cookie,肉桂餅乾
+Citrus Parfaedia Student,清爽水果帕菲迪亞學生
+Clotted Cream Cookie,濃縮奶油餅乾
+Cloud Deity Cookie,雲神餅乾
+Cloud Haetae Cookie,白雲靈獸餅乾
+Clover Cookie,幸運草餅乾
+Clown Faerie Cookie 1,
+Clown Faerie Cookie 2,
+Clown Faerie Cookie 3,
+Cocoa Cookie,可可餅乾
+Coffee Candy Cookie,咖啡糖餅乾
+Coffee Cookie,咖啡餅乾
+Cookiemals,動物餅乾
+Cotton Candy Cookie,棉花糖餅乾
+Cotton Cookie,棉花餅乾
+Cranberry Cookie,蔓越莓餅乾
+Cream Ferret Cookie,鮮奶油貂餅乾
+Cream Puff Cookie,奶油泡芙餅乾
+Cream Soda Cookie,奶油蘇打餅乾
+Cream Unicorn Cookie,奶油獨角獸
+Cream Unicorn Cookie,奶油獨角獸餅乾
+Crimson Coral Cookie,緋紅珊瑚餅乾
+Croissant Cookie,可頌麵包餅乾
+Crowberry Cookie,烏莓餅乾
+Crunchy Chip Cookie,巧克力脆片餅乾
+Crushed Pepper Cookie,辣椒碎片餅乾
+Crème Brûlée Cookie, 焦糖烤布蕾餅乾
+Crème Brûlée Cookie,焦糖烤布蕾餅乾
+Crème Knights Preceptor,鮮奶油騎士校長
+Cucumber Cookie,小黃瓜餅乾
+Currant Cream Cookie,黑醋栗奶油餅乾
+Custard Cookie III,卡士達三世餅乾
+Custard Cookie,卡士達餅乾
+Cyborg Cookie,賽伯格餅乾
+DJ Cookie,DJ餅乾
+DJ Miya,DJ Miya
+Dark Cacao Adviser 1,黑可可軍師餅乾1
+Dark Cacao Adviser 2,黑可可軍師餅乾2
+Dark Cacao Cookie,黑可可餅乾
+Dark Choco Cookie,黑巧克力餅乾
+Dark Fondue Cookie,黑巧克力醬餅乾
+Devil Cookie,惡魔餅乾
+Dino-Sour Cookie,恐龍餅乾
+Dr. Wasabi Cookie,芥末博士餅乾
+Dreamcatcher,星光捕夢網
+Dreamweaver Cookie,引夢者餅乾
+Dumpling Cake Hound,肉包蛋糕犬
+Durian Cookie,榴槤餅乾
+Earl Grey Cookie,伯爵茶餅乾
+Eclair Cookie,閃電泡芙餅乾
+Eggnog Cookie,甜蛋飲餅乾
+Elder Faerie Cookie,妖精王餅乾
+Elder Kulfi,庫爾菲猴餅乾
+Espresso Cookie,濃縮咖啡餅乾
+Eternal Sugar Cookie,永恆糖餅乾
+Everything Pie Cookie,雜燴烤派餅乾
+Faerie Cookie 1,
+Faerie Cookie 2,
+Faerie Cookie 3,
+Fairy Cookie,妖精餅乾
+Fettuccine Cake Hound,義大利寬麵蛋糕犬
+Fettuccine Cookie,義大利寬麵餅乾
+Fig Cookie,無花果餅乾
+Financier Cookie,費南雪餅乾
+Fire Spirit Cookie,火精靈餅乾
+Firecracker Cookie,彩花炮餅乾
+Flaming Hot Wing,燃燒的麻辣雞
+Flat Tofu Cookie,豆皮餅乾
+Flavorless Cookie,沒有味道的餅乾
+Fortune Teller Cookie,
+Frilled Jellyfish Cookie,蕾絲水母餅乾
+Frost Queen Cookie,冰霜女王餅乾
+Frostrock Cookie,冰岩餅乾
+Gelato Trio Cookie,三色冰淇淋餅乾
+General Jujube Cookie,紅棗餅乾
+Gim Cookie,海苔餅乾
+GingerBrave & Mumu,勇敢餅乾&MOOMOOSSI
+GingerBrave,勇敢餅乾
+GingerBright,活潑餅乾
+Ginseng Cookie,人參餅乾
+Goblin Cookie,哥布林餅乾
+Gold Citrine Cookie,金黃水晶餅乾
+Golden Cheese Cookie,黃金起司餅乾
+Golden Osmanthus Cookie,金桂餅乾
+Grand Champion Cup,Grand Champion Cup
+Grand Madeleine Cookie,大瑪德蓮餅乾
+Grandberry Merchant,
+Grapefruit Cookie,葡萄柚餅乾
+Green Tea Mousse Cookie,綠茶慕斯餅乾
+Greenbell Cookie,白玉草餅乾
+Gumball Cookie,泡泡糖餅乾
+Habanero Cookie,哈瓦那辣椒餅乾
+Half-Avocado Cookie,半顆酪梨餅乾
+Healer Cookie 1,治癒師餅乾1
+Healer Cookie 2,治癒師餅乾2
+Herb Cookie,藥草餅乾
+Hero Cookie,英雄餅乾
+High Priest Cheesenbird,神官起司球鳥
+Hollyberry Cookie,聖莓果餅乾
+Honorable Paladin Trainee,孤傲的見習騎士
+Hot Scovillia Student,熱血的史高維爾利亞學生
+Hydrangea Cookie,繡球花餅乾
+Ice Candy Cookie,涼糖餅乾
+Ice Juggler Cookie,彩球冰淇淋餅乾
+Ice Mint Cookie,冰薄荷餅乾
+Icicle Yeti Cookie,冰錐雪怪餅乾
+Ion Cookie Robot,離子餅乾機器人
+Jagae Cookie,彩貝餅乾
+Jalapeño Cookie,哈拉帕辣椒餅乾
+Jelly Cup Cookie,蒟蒻凍餅乾
+Jelly Froggy,果凍蛙
+Jungleberry Cookie,叢林莓果餅乾
+Kiwi Cookie,奇異果餅乾
+Knight Cookie,勇士餅乾
+Kohlrabi Cookie,紫玉甘藍餅乾
+Kouign-Amann Cookie,法式焦糖奶油酥餅乾
+Kumiho Cookie,妖狐餅乾
+Langue de Chat Cookie,蘭朵夏餅乾
+Lassi Guard Kulfi,拉西守護者庫爾菲猴
+Latte Cookie,拿鐵餅乾
+Laurel Cookie,月桂樹餅乾
+Leek Cookie,大蔥餅乾
+Lemon Cookie,檸檬餅乾
+Lemon Thyme Cookie,檸檬百里香餅乾
+Lemon Zest Cookie,檸檬皮餅乾
+Licorice Cookie,甘草餅乾
+Lil Pepper Cookie,小辣椒餅乾
+Lilac Cookie,紫丁香餅乾
+Lilybell Cookie,芝草餅乾
+Lime Cookie,萊姆餅乾
+Linzer Cookie,果醬夾心餅乾
+Lobster Cookie,龍蝦餅乾
+Lollipop Cookie,棒棒糖餅乾
+Longan Dragon Cookie,龍眼龍族餅乾
+Lord Oyster,牡蠣爵士
+Lotus Dragon Cookie,百蓮龍族餅乾
+Lotus Root Cookie,蓮藕餅乾
+Lychee Dragon Cookie,荔枝龍族餅乾
+Macaron Cookie,馬卡龍餅乾
+Madeleine Cookie,瑪德蓮餅乾
+Mala Sauce Cookie,麻辣餅乾
+Manager Cheesebird,副手起司球鳥
+Mango Cookie,芒果餅乾
+Mango Tribe Chieftain,芒果族長餅乾
+Mangosteen Cookie,山竹餅乾
+Manju Cookie,甜饅頭餅乾
+Maple Taffy Cookie,楓糖太妃糖餅乾
+Marble Bread Cookie,大理石吐司餅乾
+Marble Danish Cookie,大理石酥皮麵包餅乾
+Marbleberry Cookie,大理石漿果餅乾
+Marshmallow Cookie,棉花軟糖餅乾
+Marzipan Cookie 2,扁桃仁膏餅乾2
+Marzipan Cookie 3,扁桃仁膏餅乾3
+Marzipan Cookie 4,扁桃仁膏餅乾4
+Marzipan Cookie,扁桃仁膏餅乾
+Matcha Cookie,抹茶餅乾
+Meat Dumpling King,小籠包天王
+Melon Bun Cookie,哈密瓜麵包餅乾
+Melted Choco Cookie,熔岩巧克力餅乾
+Mercurial Knight Cookie,水銀騎士餅乾
+Milk Cookie,牛奶餅乾
+Milky Way Cookie,銀河餅乾
+Millennial Jade Deer,翠玉千年鹿
+Millennial Tree Cookie,千年古樹餅乾
+Miner Cheesebird,礦工起司球鳥
+Mint Choco Cookie,薄荷巧克力餅乾
+Mint Wafer Cookie,薄荷夾心酥餅乾
+Mocha Ray Cookie,摩卡魟魚餅乾
+Moon Rabbit Cookie,月兔餅乾
+Moonlight Cookie,月光魔法師餅乾
+Mozzarella Cookie,莫札瑞拉起司餅乾
+Muscle Cookie,肌肉餅乾
+Mustard Cookie,黃芥末餅乾
+Mystic Flour Cookie,幻彩麵粉餅乾
+Mystic Opal Cookie,幻彩歐珀餅乾
+Ninja Cookie,忍者餅乾
+Nosy Wizard,
+Nougat Cookie,牛軋糖餅乾
+Nutmeg Tiger Cookie,肉蔻虎餅乾
+Okchun Cookie,玉春糖餅乾
+Old Milk Villager Cookie,牛奶村的年長餅乾
+Olive Cookie,橄欖餅乾
+Onion Cookie,洋蔥餅乾
+Onyx Cream Cookie,黑奶油餅乾
+Orange Cookie,柳橙餅乾
+Oyster Cookie,牡蠣餅乾
+Pancake Cookie,鬆餅餅乾
+Parfaedia Principal,帕菲迪亞校長
+Parfait Cookie,帕菲餅乾
+Pastel Meringue Cookie,粉彩蛋白霜餅乾
+Pastry Cookie,千層酥餅乾
+Pavlova Cookie,帕夫洛娃蛋糕餅乾
+Peach Blossom Cookie,桃花餅乾
+Peach Cookie,桃子餅乾
+Peak of Apathy,虛無吞噬的幻山
+Peeled Carrot Cookie,去皮胡蘿蔔餅乾
+Peperoncino Cookie,乾辣椒餅乾
+Pepper Pangolin Cookie,胡椒穿山甲餅乾
+Peppercorn Cookie,胡椒餅乾
+Peppermint Cookie,薄荷糖餅乾
+Peppernut Cookie,胡椒雪球餅乾
+Picky Pyro-tiger,烈火虎
+Pilot Cookie,飛行員餅乾
+Pinecone Cookie,松果餅乾
+Pink Choco Cookie,粉紅巧克力餅乾
+Pirate Cookie,海盜餅乾
+Pistachio Cookie,開心果餅乾
+Pitaya Dragon Cookie,火龍果龍族餅乾
+Pizza Cookie,披薩餅乾
+Plain Yogurt Cookie,原味優格餅乾
+Plantain Cookie,大蕉餅乾
+Plum Cookie,李子餅乾
+Poison Mushroom Cookie,毒蘑菇餅乾
+Pomegranate Cake Hound,石榴蛋糕犬
+Pomegranate Cake Shaman,石榴蛋糕巫師
+Pomegranate Cookie,石榴餅乾
+Pond Dino Cookie,勿忘草恐龍餅乾
+Popcorn Cookie,爆米花餅乾
+Popping Candy Cookie,跳跳糖餅乾
+Potato Cookie,馬鈴薯餅乾
+Princess Cookie,公主餅乾
+Prophet Cookie,預言家餅乾
+Prune Juice Cookie,黑棗汁餅乾
+Pudding Cookie,布丁餅乾
+Pudding à la Mode Cookie,布丁百匯餅乾
+Pumpkin Cookie,南瓜餅乾
+Pumpkin Pie Cookie,南瓜派餅乾
+Pure Vanilla Cookie,純香草餅乾
+Purple Yam Cookie,紫心薯餅乾
+Radish Cookie,紅玉蘿蔔餅乾
+Rain Deity Cookie,雨神餅乾
+Rainbow Sherbet Cookie,彩虹雪酪餅乾
+Rambutan Cookie,紅毛丹餅乾
+Raspberry Cookie,覆盆莓餅乾
+Raspberry Mousse Cookie,覆盆莓慕斯餅乾
+Rebel Cookie,義賊餅乾
+Red Bean Cookie,紅豆餅乾
+Red Osmanthus Cookie,丹桂餅乾
+Red Panna Cotta Cookie,赤紅奶凍餅乾
+Red Pepper Cookie,紅辣椒餅乾
+Red Velvet Cookie,紅絲絨蛋糕餅乾
+Ring Candy Cookie,鑽石糖餅乾
+Rockstar Cookie,搖滾巨星餅乾
+Roguefort Cookie,怪盜餅乾
+Roll Cake Cookie,蛋糕捲餅乾
+Rose Cookie,玫瑰餅乾
+Rosemary Cookie,迷迭香餅乾
+Royal Berry Cookie,皇家莓果餅乾
+Royal Margarine Cookie,皇家人造奶油餅乾
+Rye Cookie,黑麥餅乾
+S'more Cookie,棉花糖脆餅餅乾
+Sachertorte Cookie,薩赫蛋糕餅乾
+Saffron Buffalo Shaman,番紅花水牛巫師
+Salt Cellar Cookie,鹽罐餅乾
+Salt Cookie,玫瑰鹽餅乾
+Sandwich Cookie,三明治餅乾
+Sauna Egg Cookie,烤雞蛋餅乾
+Schneeball Cookie,糖霜雪球餅乾
+Schwarzwälder,查爾斯
+Scorpion Cookie,蠍子餅乾
+Scovillia Headmaster,史高維爾利亞校長
+Scovillia Student Fan,受人尊崇的史高維爾利亞學生
+Sea Fairy Cookie,海妖精餅乾
+Seaweed Cookie,海帶餅乾
+Serious Paladin Trainee,認真的實習騎士
+Shadow Milk Cookie,黑影牛奶餅乾
+Shelly,起司漢堡龜
+Sherbet Cookie,雪酪餅乾
+Shine Muscat Cookie,陽光麝香葡萄餅乾
+Shining Glitter Cookie,閃耀之星餅乾
+Shrimp Dumpling King,蝦燒賣天王
+Silent Salt Cookie,寧靜鹽餅乾
+Silver Tree Knight Cookie,
+Silverbell Cookie,風鈴草餅乾
+Skater Cookie,滑板族餅乾
+Skating Queen Cookie,溜冰女王餅乾
+Smoked Cheese Cookie,煙燻起司餅乾
+Snake Fruit Cookie,蛇皮果餅乾
+Snapdragon Cookie,花小龍餅乾
+Snow Crystal Cookie,冰晶餅乾
+Snow Sugar Cookie,粉雪餅乾
+Snowflake Cookie,雪花餅乾
+Soda Cookie,汽水餅乾
+Sorbet Shark Cookie,雪酪鯊魚餅乾
+Sour Belt Cookie,霓虹軟糖餅乾
+Space Doughnut,宇宙甜甜圈
+Sparkling Cookie,氣泡飲餅乾
+Spectral Warmaster,怨靈指揮官
+Spicy Dumpling King,辣籠包天王
+Spicy Scovillia Student,辣呼呼的史高維爾利亞學生
+Spinach Cookie,菠菜餅乾
+Squid Ink Cookie,墨魚餅乾
+Star Coral Cookie,星珊瑚餅乾
+Starch Noodle Cookie,圓粉條餅乾
+Stardust Cookie,星塵餅乾
+Starfruit Cookie,楊桃餅乾
+Sting Durian Cookie,尖刺榴槤餅乾
+Stollen Cookie,史多倫麵包餅乾
+Stormbringer Cookie,雷神武將餅乾
+Strawberry Cookie,草莓餅乾
+Strawberry Cream Cookie,草莓鮮奶油餅乾
+Strawberry Crepe Cookie,草莓可麗餅餅乾
+Strawberry Shortcake Cookie,草莓奶油蛋糕餅乾
+Strawberry Stick Cookie,草莓巧克力棒餅乾
+Street Urchin Cookie,海膽餅乾
+String Gummy Cookie,筆管軟糖餅乾
+Sugar Glass Cookie,糖玻璃餅乾
+Sugar Globe Cookie,雪花糖球餅乾
+Sugar Gnome,糖糖地精
+Sugar Swan Cookie,白糖天鵝餅乾
+Sugarfly Cookie,糖蝶餅乾
+TBD Delivery Cookie,時間管理局快遞員餅乾
+TBD Mender Cookie,時間管理局技師餅乾
+TBD Office Clerk Cookie,時間管理局職員餅乾
+Tangerine Tanghulu Cookie,橘子糖葫蘆餅乾
+Tarte Tatin Cookie,反烤蘋果塔餅乾
+Taurus Cookie,金牛座餅乾
+Tea Knight Cookie,錫蘭騎士餅乾
+Tiger Lily Cookie,叢林戰士餅乾
+Timekeeper Cookie,超時空餅乾
+Tiny Cake Hound,小小蛋糕犬
+Tiramisu Cookie,提拉米蘇餅乾
+Toothpaste Cookie,巧克力牙膏餅乾
+Towerkeeper Cookie,
+Tropical Pop Cake Hound,熱帶蛋糕犬
+Truffle Cookie,松露餅乾
+Truthless Recluse,
+Twisted Donut Cookie,麻花捲餅乾
+Twizzly Gummy Cookie,扭扭糖餅乾
+Overjoyed Cookie,
+Vagabond Cookie,梅雀果餅乾
+Vampire Cookie,吸血鬼餅乾
+Vanilla Sugar Cookie,香草糖餅乾
+Walnut Cookie,核桃餅乾
+Warden of the Heart,心臟門衛
+Wave Drop,海浪滴露
+Werewolf Cookie,狼人餅乾
+Whipped Cream Cookie,鮮奶油餅乾
+White Choco Cookie,白巧克力餅乾
+White Ghost Cookie,白帝錦餅乾
+White Lily Cookie,聖百合餅乾
+White Peach Cookie,白桃餅乾
+White Pearl Cookie,白珍珠餅乾
+Wild Strawberry Cookie,野草莓餅乾
+Wildberry Cookie,野莓餅乾
+Will of Nature,大自然的意念
+Wind Archer Cookie,風箭手餅乾
+Wind Deity Cookie,風神餅乾
+Windcatcher,風車小草
+Witchberry Cookie,小巫莓餅乾
+Wizard Cookie,魔法師餅乾
+Yeast Spore,
+Yoga Cookie,瑜珈餅乾
+Yogurt Cream Cookie,優格鮮奶油餅乾
+Young Kulfi,小庫爾菲猴
+Young Milk Villager Cookie,牛奶村的年輕餅乾
+Young Shepherd Cookie,
+Yugwa Cookie,米油果餅乾
+Zombie Cookie,殭屍餅乾

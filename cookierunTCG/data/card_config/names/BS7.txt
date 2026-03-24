@@ -54,7 +54,7 @@ BS7-053,Red Velvet Cookie,紅絲絨蛋糕餅乾
 BS7-054,Black Lemonade Cookie,黑檸檬汽水餅乾
 BS7-055,Shining Glitter Cookie,閃耀之星餅乾
 BS7-056,Sting Durian Cookie,尖刺榴槤餅乾
-BS7-057,Pudding ? la Mode Cookie,布丁百匯餅乾
+BS7-057,Pudding à la Mode Cookie,布丁百匯餅乾
 BS7-058,Schwarzwälder,查爾斯
 BS7-059,Choco Drizzle Cookie,巧克力淋醬餅乾
 BS7-060,Custard Cookie III,卡士達三士餅乾
