@@ -32,6 +32,7 @@ ui\SortSettingsWindow.class
 ui\MainUI$4.class
 dataStructure\CardLoader.class
 ui\FilePicker$3.class
+AppAnchor.class
 ui\ClickableCardPanel$1.class
 module-info.class
 ui\MainUI$24.class
@@ -99,7 +100,6 @@ ui\Dialog.class
 ui\MainUI$11.class
 ui\MainUI$34.class
 ui\ClickableCardPanel$ImageTransferable.class
-ui\MainUI$44.class
 ui\DeckWindowDifferential$1.class
 ui\MainUI$1.class
 util\ScrollablePanel.class

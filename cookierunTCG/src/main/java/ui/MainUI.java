@@ -220,6 +220,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private Collection collection = Collection.getInstance();
     private Card currentCard;
     private Color highlightColor = new Color(60,60,255,255);
+    private Color extraColor = new Color(110, 36, 133, 255);
     private String currentDeckDirectory;
 
     private void initialize() {
@@ -2229,6 +2230,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         }
 
         cardName.setText("<html>" + card.getNameByLang().get(Config.getLangIndex(Config.LANGUAGE)) + " " + "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons_rarity/16px/" + card.getRarity().getName() + ".png").toString()).getAbsolutePath() + "\">" + "</html>");
+        if (card.isExtra()) {
+            cardName.setForeground(extraColor);
+        } else {
+            cardName.setForeground(Color.BLACK);
+        }
         if (card.getCardTranslation() != null && Config.CARD_TRANSLATION_ENABLED) {
             cardTranslationSkill.setText("<html>" + card.getCardTranslation()[1] + "</html>");
             if (card.getCardTranslation()[0].isEmpty()) {
