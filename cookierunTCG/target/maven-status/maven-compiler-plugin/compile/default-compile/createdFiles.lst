@@ -32,7 +32,6 @@ ui\SortSettingsWindow.class
 ui\MainUI$4.class
 dataStructure\CardLoader.class
 ui\FilePicker$3.class
-AppAnchor.class
 ui\ClickableCardPanel$1.class
 module-info.class
 ui\MainUI$24.class

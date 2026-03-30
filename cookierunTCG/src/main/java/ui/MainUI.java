@@ -90,7 +90,7 @@ import javax.swing.JButton;
 // FIX: Variant highlight does not always work correctly (such as showing another card while holding down variant key can cause unavailable language to be selected)
 // FIX: Exiting collection mode with alt. name displayed causes card name to stay blue
 // FEATURE: Add "Credits" popup
-// FEATURE: Online saving (Google Drive) for decks and/or collection
+// FEATURE: Add undo/redo/undo all
 
 public class MainUI implements CardListCallBack, ConfigChangedCallback, LanguageChangeListener {
 
@@ -1595,7 +1595,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         
         JPanel packOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
         JPanel packCheckboxGroup = new JPanel();
-        packCheckboxGroup.setLayout(new GridLayout(0, 5));
+        packCheckboxGroup.setLayout(new GridLayout(0, 4));
         packCheckboxGroup.setBorder(filterBorder);
         packOuterPanel.add(packCheckboxGroup);
         mSearchPane.add(packOuterPanel);
