@@ -41,6 +41,8 @@ public class CardLoader {
 	private static String iconPathActivate, iconPathYourTurn, iconPathOncePerTurn, iconPathOnPlay;
 	private static String iconPathBlocker, iconPathEquip, iconPathExtra, iconPathAwaken, iconPathFlip;
 
+	private static Map<String, String> nameTranslationMap = loadNameTranslationMap();
+
 	public static void loadCardImage(Card card) {
 		cardImageLoadExecutor.submit(new cardImageLoadTask(card));
 	}
@@ -309,55 +311,48 @@ public class CardLoader {
 	}
 
 	private static void loadCardNames(String packName, List<Card> cardList) {
+		
 	    try {
 			File file = new File(AppPaths.dataDir().resolve("card_config/names/"+packName+".txt").toString());
 			FileInputStream reader = new FileInputStream(file);
-			BufferedReader input = new BufferedReader(
-					new InputStreamReader(new FileInputStream(file), "utf-8")); 
+			BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8")); 
 			String data;
 			while((data = input.readLine()) != null) {
 				if (!data.equals("") && !data.startsWith("//")) {
 					String[] cardData = data.split(",");
-					// For each row: [ID, Name (EN), Name (zh_TW, or EN if not available)]
+					if (cardData.length == 0) {
+						continue;
+					}
+
+					String enName = (cardData.length > 1 && !cardData[1].isEmpty()) ? cardData[1] : "?"; // Get name or default to "?"
+                    String zhName = nameTranslationMap.getOrDefault(enName, enName); // Gets translation from EN name or default to EN name itself
 
 					// Is an alt. name
 					if (cardData[0].contains("@")) {
 						// Add alternate name
 						for (Card c : cardList) {
 							if (c.getPack().equals(packName) && c.getId().equals(cardData[0].split("@")[0])) {
-								List<String> altNames = new ArrayList<String>();
-								for (int i = 1; i <= Config.ALL_LANGUAGES.length ; i++) {
-									// Add to alt name list: ? if no name, EN by default
-									if (cardData.length == 1) {
-										altNames.add("?");
-									} else if (i >= cardData.length) {
-										altNames.add(cardData[1]);
-									} else {
-										altNames.add(cardData[i]);
-									}
-								}
-								c.addAltNames(altNames);
+								List<String> altNames = new ArrayList<>();
+                                for (String lang : Config.ALL_LANGUAGES) {
+                                    altNames.add(getLocalizedName(lang, enName, zhName));
+                                }
+                                c.addAltNames(altNames);
+                                break;
 							}
 						}
 					} else {
 						// Is not an alt. name
 						for (Card c : cardList) {
 							if (c.getPack().equals(packName) && c.getId().equals(cardData[0])) {
-								for (int i = 1; i <= Config.ALL_LANGUAGES.length ; i++) {
-									
-									// Add to name list: ? if no name, EN by default
-									if (cardData.length == 1) {
-										c.addToNameByLang("?");
-									} else if (i >= cardData.length) {
-										c.addToNameByLang(cardData[1]);
-									} else {
-										c.addToNameByLang(cardData[i]);
-									}
+								for (int i = 0; i < Config.ALL_LANGUAGES.length; i++) {
+                                    String localizedName = getLocalizedName(Config.ALL_LANGUAGES[i], enName, zhName);
+                                    c.addToNameByLang(localizedName);
 
-									if (Config.ALL_LANGUAGES[i-1].equals(Config.CARD_LANGUAGE)) {
-										c.setName(c.getNameByLang().get(i-1));
-									}
-								}
+                                    if (Config.ALL_LANGUAGES[i].equals(Config.CARD_LANGUAGE)) {
+                                        c.setName(localizedName);
+                                    }
+                                }
+                                break;
 							}
 						}
 					}
@@ -375,6 +370,49 @@ public class CardLoader {
 			e.printStackTrace();
 		}
 	}
+
+	private static Map<String,String> loadNameTranslationMap() {
+		Map<String, String> nameTranslationMap = new HashMap<>();
+        File translationFile = new File(AppPaths.dataDir().resolve("card_config/name_translations.txt").toString());
+
+        if (!translationFile.exists()) {
+            return nameTranslationMap;
+        }
+
+        try (BufferedReader input = new BufferedReader(
+                new InputStreamReader(new FileInputStream(translationFile), StandardCharsets.UTF_8))) {
+            String data;
+            while ((data = input.readLine()) != null) {
+                if (data.isEmpty() || data.startsWith("//")) {
+                    continue;
+                }
+
+                // Format: English name,Chinese name
+                String[] parts = data.split(",", 2);
+
+                if (parts.length < 2) {
+                    continue;
+                }
+
+                String enName = parts[0].trim();
+                String zhName = parts[1].trim();
+                if (!enName.isEmpty()) {
+                    nameTranslationMap.put(enName, zhName);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return nameTranslationMap;
+	}
+
+	private static String getLocalizedName(String language, String enName, String zhName) {
+        if (language.equalsIgnoreCase("zh_TW")) {
+            return (zhName == null || zhName.isEmpty()) ? enName : zhName;
+        }
+        return enName;
+    }
 
 	private static void loadPackTranslations(String packName, List<Card> cardList) {
 		iconPathR = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "R.png").toString()).getAbsolutePath() + "\">";

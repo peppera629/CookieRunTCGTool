@@ -11,7 +11,7 @@ ST9-010,Parfait Cookie,帕菲餅乾
 ST9-011,Frilled Jellyfish Cookie,蕾絲水母餅乾
 ST9-012,White Pearl Cookie,白珍珠餅乾
 ST9-013,Shimmering Moonlit Coral
-ST9-014,Iridescent Pearl
+ST9-014,Glittering Pearl Shell
 ST9-015,Essence of the Ocean
 ST9-016,Bubble Wave Shell
 ST9-017,Revelation of the Seas
