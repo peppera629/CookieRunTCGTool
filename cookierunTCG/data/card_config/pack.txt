@@ -7,17 +7,18 @@ BS4;KAN;Cookies of Legend;大自然的守護者
 BS5;KAN;Awakening, Dragon's Wrath;覺醒！龍之怒
 BS6;KAN;Operation Timeguard;扭轉時空大作戰！
 BS7;KAN;Arena of Glory;榮耀競技場
-BS8;KA;Land of Fire & Ruin, Realm of Apathy
-BS9;KA;A Game of Truth and Deceit
-BS10;KA;Paradise of Passion & Sloth / Catacombs of Silence
+BS8;KAN;Land of Fire & Ruin, Realm of Apathy;毀滅將至/白色虛無
+BS9;KAN;A Game of Truth and Deceit;真理與謊言的遊戲
+BS10;KA;Paradise of Passion & Sloth / Catacombs of Silence;甜蜜的怠惰歸宿/沒入沉默之下的信念
+// BS11;KA;The Dark Enchantress War;暗黑魔女之戰
 ST1;KAN;Starter Deck - Red;起始套組 - 豔陽之吻
 ST2;KAN;Starter Deck - Yellow;起始套組 - 電光石火
 ST3;KAN;Starter Deck - Green;起始套組 - 原初之力
 ST4;KAN;Starter Deck - Blue;起始套組 - 全知之思
 ST5;KAN;Starter Deck - Purple;起始套組 - 幻境之靈
-ST6;KA;Starter Deck - Flames of Immortality
-ST7;KA;Starter Deck - Tree of Life
-ST8;KA;Starter Deck - Guardian Winds
-ST9;KA;Starter Deck - Seas of Fate
-ST10;KA;Starter Deck - Glorious Moonlight
+ST6;KA;Starter Deck - Flames of Immortality;起始套組 - 永生之火
+ST7;KA;Starter Deck - Tree of Life;起始套組 - 生命之樹
+ST8;KA;Starter Deck - Guardian Winds;起始套組 - 守護之風
+ST9;KA;Starter Deck - Seas of Fate;起始套組 - 命運之海
+ST10;KA;Starter Deck - Glorious Moonlight;起始套組 - 閃耀月光
 P;KAN;Promotion Cards;活動特典卡

@@ -31,6 +31,8 @@ promo.dsg,1
 promo.ppg,5
 promo.sb1,1
 promo.sb2,1
+promo.legacy,1
+promo.legacy.champion,1
 
 promo.bs1,0
 promo.bs2,0
@@ -96,6 +98,10 @@ tournament.bl2025s3,0
 tournament.bl2025s3f.champion,0
 tournament.bl2025s3f.runnerup,0
 tournament.bl2025s3f.finalist,0
+tournament.wcs2526,1
+tournament.wcs2526.champion,1
+tournament.wcs2526.runnerup,1
+tournament.wcs2526.finalist,1
 tournament.bl2025s2,3
 tournament.bl2025s2f.champion,3
 tournament.bl2025s2f.runnerup,3
