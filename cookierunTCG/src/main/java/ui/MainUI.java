@@ -99,7 +99,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     public static boolean DEBUG = false;
     // Secret features:
     // 1. Highlight translation-available cards
-    public static boolean[] secretFeatures = {false};
+    // 2. Tournament mode in normal mode (after searching, if there's only 1 card after filtering, show that card immediately)
+    public static boolean[] secretFeatures = {false, false};
 
     /**
      * Launch the application.
@@ -348,9 +349,32 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     mCardsPane.repaint();
                     mDeckPane.revalidate();
                     mDeckPane.repaint();
+                    updateTitle();
                 }
             }
         });
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, 0), "secFeature1");
+        actionMap.put("secFeature1", new javax.swing.AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!searchBox.isFocusOwner()) {
+                    secretFeatures[1] = !secretFeatures[1];
+                    updateTitle();
+                }
+            }
+        });
+    }
+
+    private void updateTitle() {
+        String title = CardUtil.getTranslation("app.title") + " v." + Constant.VERSION;
+        if (secretFeatures[0]) {
+            title += " [TH]";
+        }
+        if (secretFeatures[1]) {
+            title += " [TM]";
+        }
+        frame.setTitle(title);
     }
 
     public static Image getPreviewCardImage() {
@@ -2070,6 +2094,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             filterResults.setText(String.format(CardUtil.getTranslation("displaycount"), currentList.size()));
             filterResults.setForeground(Color.BLACK);
         }
+
+        if (secretFeatures[1] && currentList.size() == 1) {
+            Card singleCard = currentList.get(0);
+            showCard(singleCard);
+        }
         
         mCardsPane.revalidate();
         mCardsPane.repaint();
@@ -2299,6 +2328,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     @Override
     public void onLanguageChange() {
         isCollectionMode = false;
+
+        for (int i=0; i<secretFeatures.length; i++) {
+            secretFeatures[i] = false;
+        }
+        updateTitle();
         
         // Reload fonts and translations
         loadFont();
