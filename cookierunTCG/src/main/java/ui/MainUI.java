@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.Normalizer;
 import java.awt.datatransfer.*;
 
 import javax.swing.ActionMap;
