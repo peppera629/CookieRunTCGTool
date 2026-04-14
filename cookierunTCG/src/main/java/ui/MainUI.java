@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.Normalizer;
 import java.awt.datatransfer.*;
 
 import javax.swing.ActionMap;
@@ -98,7 +99,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     public static boolean DEBUG = false;
     // Secret features:
     // 1. Highlight translation-available cards
-    public static boolean[] secretFeatures = {false};
+    // 2. Tournament mode in normal mode (after searching, if there's only 1 card after filtering, show that card immediately)
+    public static boolean[] secretFeatures = {false, false};
 
     /**
      * Launch the application.
@@ -162,6 +164,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private KeyEventDispatcher keyEventDispatcher;
     private boolean quickEdit = false;
     private boolean attackAttrShown = false;
+    private int[] collectionChange = new int[2]; // positive, negative
     
     //search panel
     private JPanel mSearchPaneOuter, sidebarPanel;
@@ -188,7 +191,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private Deck mDeck;
     private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane, ownedInfoPanel, keywordLabelPanel, keywordOuterPanel, skillTypeLabelPanel, skillTypeOuterPanel, attackAttrLabelPanel, attackAttrOuterPanel, attackAttrBasePanel, statusLabelPanel, statusOuterPanel;
     private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup, deckDetailPane, centerPanel;
-    private JLabel mDeckText;
+    private JLabel mDeckText, mCollectionChange;
     private JTextField searchBox;
     private JButton saveBtn, saveAsBtn, selectBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST, quickSelectBtnSkillType;
     private JButton mClearDeckBtn, mRandomDrawSimBtn, button_search, button_clean, button_sort, button_settings;
@@ -347,9 +350,32 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     mCardsPane.repaint();
                     mDeckPane.revalidate();
                     mDeckPane.repaint();
+                    updateTitle();
                 }
             }
         });
+
+        inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, 0), "secFeature1");
+        actionMap.put("secFeature1", new javax.swing.AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!searchBox.isFocusOwner()) {
+                    secretFeatures[1] = !secretFeatures[1];
+                    updateTitle();
+                }
+            }
+        });
+    }
+
+    private void updateTitle() {
+        String title = CardUtil.getTranslation("app.title") + " v." + Constant.VERSION;
+        if (secretFeatures[0]) {
+            title += " [TH]";
+        }
+        if (secretFeatures[1]) {
+            title += " [TM]";
+        }
+        frame.setTitle(title);
     }
 
     public static Image getPreviewCardImage() {
@@ -698,7 +724,20 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         gbc_deckbuttons.gridx = 0;
         gbc_deckbuttons.gridy = 0;
+        gbc_deckbuttons.gridwidth = 4;
+        mCollectionChange = new JLabel("", JLabel.CENTER);
+        collectionChange = collection.getTotalCollectionChange();
+        mCollectionChange.setText(CardUtil.getTranslation("collection.change") + " +" + collectionChange[0] + " -" + collectionChange[1]);
+        mCollectionChange.setAlignmentX(Component.CENTER_ALIGNMENT);
+        mCollectionChange.setFont(CRnormal);
+        mCollectionChange.setVisible(false);
+        componentFontMap.put(mCollectionChange, "CRnormal");
+        mDeckDetailButtonsPane.add(mCollectionChange, gbc_deckbuttons);
+
+        gbc_deckbuttons.gridx = 0;
+        gbc_deckbuttons.gridy = 1;
         gbc_deckbuttons.weightx = 1;
+        gbc_deckbuttons.gridwidth = 1;
         hideSearchPaneBtn = new JButton();
         hideSearchPaneBtn.setRequestFocusEnabled(false);
         if (mSearchPaneOuter.isVisible()) {
@@ -2069,6 +2108,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             filterResults.setText(String.format(CardUtil.getTranslation("displaycount"), currentList.size()));
             filterResults.setForeground(Color.BLACK);
         }
+
+        if (secretFeatures[1] && currentList.size() == 1) {
+            Card singleCard = currentList.get(0);
+            showCard(singleCard);
+        }
         
         mCardsPane.revalidate();
         mCardsPane.repaint();
@@ -2298,6 +2342,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     @Override
     public void onLanguageChange() {
         isCollectionMode = false;
+
+        for (int i=0; i<secretFeatures.length; i++) {
+            secretFeatures[i] = false;
+        }
+        updateTitle();
         
         // Reload fonts and translations
         loadFont();
@@ -2370,6 +2419,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_status[0].setText(CardUtil.getTranslation("filter.status.normal"));
         cb_status[1].setText(CardUtil.getTranslation("filter.status.restricted"));
         cb_status[2].setText(CardUtil.getTranslation("filter.status.banned"));
+        mCollectionChange.setText(CardUtil.getTranslation("collection.change") + " +" + collectionChange[0] + " -" + collectionChange[1]);
 
         // Set visibility depending on advanced filtering option
         cb_variant_sec.setVisible(Config.ADVANCED_FILTERING);
@@ -2707,6 +2757,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             if (splitPane.getTopComponent() != null) {
                 divLoc = splitPane.getDividerLocation();
             }
+            mCollectionChange.setVisible(true);
             mRandomDrawSimBtn.setVisible(false);
             cardAttackAttr.setText("");
             cardAttackAttr.setVisible(false);
@@ -2741,6 +2792,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 splitPane.repaint();
             });
         } else {
+            mCollectionChange.setVisible(false);
+            collectionChange = new int[]{0, 0};
             splitPane.setTopComponent(deckPane);
             mRandomDrawSimBtn.setVisible(true);
             cardAttackAttr.setVisible(true);
@@ -2807,6 +2860,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 collectionAddVariant = prevVariant;
                 prevVariant = null;
             }
+            collectionChange = collection.getTotalCollectionChange();
+            mCollectionChange.setText(CardUtil.getTranslation("collection.change") + " +" + collectionChange[0] + " -" + collectionChange[1]);
         }
 
         @Override
@@ -2829,6 +2884,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 collectionAddVariant = prevVariant;
                 prevVariant = null;
             }
+            collectionChange = collection.getTotalCollectionChange();
+            mCollectionChange.setText(CardUtil.getTranslation("collection.change") + " +" + collectionChange[0] + " -" + collectionChange[1]);
         }
 
         @Override

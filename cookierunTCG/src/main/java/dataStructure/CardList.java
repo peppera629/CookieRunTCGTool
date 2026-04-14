@@ -152,7 +152,7 @@ public class CardList {
 			lvCorrect = !selectLv || !_search_type[CardType.Cookie.getValue()]
 					|| c.getType() != CardType.Cookie || _search_lv[c.getLv()];
 			hpCorrect = (!selectHP && !selectAwakenHP) || !_search_type[CardType.Cookie.getValue()]
-					|| c.getType() != CardType.Cookie || _search_hp[c.getHP()];
+					|| c.getType() != CardType.Cookie || (_search_hp[c.getHP()] && !c.isAwaken());
 			int awakenHPIndex = CardUtil.AWAKEN_HP.indexOf(c.getHP());
 			if (!c.isAwaken()) {
 				awakenHPCorrect = false;
@@ -180,7 +180,7 @@ public class CardList {
 			peakDMGCorrect = !selectPeakDMG || _search_peakDMG[c.getPeakDMG()];
 			statusCorrect = !selectStatus || (_search_status[0] && c.getMaxCount() == 4) || (_search_status[1] && c.getMaxCount() == 1) || (_search_status[2] && c.getMaxCount() == 0);
 			packCorrect = _search_pack_list.size() == 0 || _search_pack_list.contains(c.getPack());
-			nameCorrect = _search_name.equals("") || Normalizer.normalize(String.join(" ", c.getNameByLang()).toLowerCase(), Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").contains(_search_name);
+			nameCorrect = _search_name.equals("") || Normalizer.normalize(String.join(" ", c.getNameByLang()).toLowerCase() + " " + c.getId().toLowerCase(), Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "").contains(_search_name);
 			hasVariants = (!_search_variants_sec && !_search_variants_promo)
 					|| (c.getVariants().length > 1 && (_search_variants_sec && (Arrays.asList(c.getVariants()).contains(CardRarity.SEC) || Arrays.asList(c.getVariants()).contains(CardRarity.SSR) || Arrays.asList(c.getVariants()).contains(CardRarity.SUR) || Arrays.asList(c.getVariants()).contains(CardRarity.EXR)) 
 					|| _search_variants_promo && Arrays.asList(c.getVariants()).contains(CardRarity.P)));

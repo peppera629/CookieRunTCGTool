@@ -145,6 +145,19 @@ public class Collection {
         return count;
     }
 
+    public int[] getTotalCollectionChange() {
+        int positiveChange = 0;
+        int negativeChange = 0;
+        for (Integer changeCount : change.values()) {
+            if (changeCount > 0) {
+                positiveChange += changeCount;
+            } else {
+                negativeChange += changeCount;
+            }
+        }
+        return new int[]{positiveChange, negativeChange};
+    }
+
     public int getCardOwnedCount(int langIndex, String packId, CardUtil.CardRarity rarity, CardUtil.CardColor color, CardUtil.CardType type, boolean countMode) {
         int total = 0;
         if (langIndex == -1) { // Aggregate across all languages
