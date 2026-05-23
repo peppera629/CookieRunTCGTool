@@ -25,11 +25,11 @@ public class Deck {
 		cardList = new ArrayList<Card>();
 		flipList = new ArrayList<Card>();
 		CookieList = new ArrayList<>();
-		for(int i=0;i<=3;i++) {
+		for(int i=0;i<=CardUtil.LEVEL_MAX;i++) {
 			CookieList.add(new ArrayList<Card>());
 		}
 		extraList = new ArrayList<>();
-		for(int i=0;i<=3;i++) {
+		for(int i=0;i<=CardUtil.LEVEL_MAX;i++) {
 			extraList.add(new ArrayList<Card>());
 		}
 		flipTypeList = new ArrayList<>();
@@ -187,10 +187,10 @@ public class Deck {
 		for(int i=0;i<=2;i++) {
 			flipTypeList.get(i).clear();
 		}
-		for(int i=0;i<=3;i++) {
+		for(int i=0;i<=CardUtil.LEVEL_MAX;i++) {
 			extraList.get(i).clear();
 		}
-		for(int i=0;i<=3;i++) {
+		for(int i=0;i<=CardUtil.LEVEL_MAX;i++) {
 			CookieList.get(i).clear();
 		}
 		ItemList.clear();
@@ -270,7 +270,9 @@ public class Deck {
     	int L1Count = getTargetCardCount(CookieList.get(1));
     	int L2Count = getTargetCardCount(CookieList.get(2));
     	int L3Count = getTargetCardCount(CookieList.get(3));
-		return new int[] {(L0Count + L1Count + L2Count + L3Count), L1Count, L2Count, L3Count};
+		int L4Count = getTargetCardCount(CookieList.get(4));
+		int L5Count = getTargetCardCount(CookieList.get(5));
+		return new int[] {(L0Count + L1Count + L2Count + L3Count + L4Count + L5Count), L1Count, L2Count, L3Count, L4Count, L5Count};
     }
 
 	public int[] getCookieSummary(boolean includeFlip, boolean includeExtra) {
@@ -278,7 +280,9 @@ public class Deck {
 		int L1Count = getTargetCardCount(CookieList.get(1), includeFlip, includeExtra);
 		int L2Count = getTargetCardCount(CookieList.get(2), includeFlip, includeExtra);
 		int L3Count = getTargetCardCount(CookieList.get(3), includeFlip, includeExtra);
-		return new int[] {(L0Count + L1Count + L2Count + L3Count), L1Count, L2Count, L3Count};
+		int L4Count = getTargetCardCount(CookieList.get(4), includeFlip, includeExtra);
+		int L5Count = getTargetCardCount(CookieList.get(5), includeFlip, includeExtra);
+		return new int[] {(L0Count + L1Count + L2Count + L3Count + L4Count + L5Count), L1Count, L2Count, L3Count, L4Count, L5Count};
 	}
 
 	public int[] getExtraSummary() {
@@ -286,7 +290,9 @@ public class Deck {
 		int L1Count = getTargetCardCount(extraList.get(1));
 		int L2Count = getTargetCardCount(extraList.get(2));
 		int L3Count = getTargetCardCount(extraList.get(3));
-		return new int[] {(L0Count + L1Count + L2Count + L3Count), L1Count, L2Count, L3Count};
+		int L4Count = getTargetCardCount(extraList.get(4));
+		int L5Count = getTargetCardCount(extraList.get(5));
+		return new int[] {(L0Count + L1Count + L2Count + L3Count + L4Count + L5Count), L1Count, L2Count, L3Count, L4Count, L5Count};
 	}
 
 	public int[] getFlipTypeSummary() {

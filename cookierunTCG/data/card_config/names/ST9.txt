@@ -1,15 +1,15 @@
-ST9-001,Gold Citrine Cookie,金黃水晶餅乾
-ST9-002,Aquamarine Cookie,海藍寶石餅乾
-ST9-003,Blue Whale Cookie,藍鯨餅乾
-ST9-004,Pond Dino Cookie,勿忘草恐龍餅乾
-ST9-005,Mystic Opal Cookie,幻彩歐珀餅乾
-ST9-006,Sea Fairy Cookie,海妖精餅乾
-ST9-007,Peppermint Cookie,薄荷糖餅乾
-ST9-008,Crimson Coral Cookie,緋紅珊瑚餅乾
-ST9-009,Wave Drop,海浪滴露
-ST9-010,Parfait Cookie,帕菲餅乾
-ST9-011,Frilled Jellyfish Cookie,蕾絲水母餅乾
-ST9-012,White Pearl Cookie,白珍珠餅乾
+ST9-001,Gold Citrine Cookie
+ST9-002,Aquamarine Cookie
+ST9-003,Blue Whale Cookie
+ST9-004,Pond Dino Cookie
+ST9-005,Mystic Opal Cookie
+ST9-006,Sea Fairy Cookie
+ST9-007,Peppermint Cookie
+ST9-008,Crimson Coral Cookie
+ST9-009,Wave Drop
+ST9-010,Parfait Cookie
+ST9-011,Frilled Jellyfish Cookie
+ST9-012,White Pearl Cookie
 ST9-013,Shimmering Moonlit Coral
 ST9-014,Glittering Pearl Shell
 ST9-015,Essence of the Ocean

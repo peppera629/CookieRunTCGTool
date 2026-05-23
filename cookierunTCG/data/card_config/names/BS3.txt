@@ -1,121 +1,121 @@
-BS3-001,Princess Cookie,公主餅乾
-BS3-002,Raspberry Cookie,覆盆莓餅乾
-BS3-003,Royal Margarine Cookie,皇家人造奶油餅乾
-BS3-004,Royal Berry Cookie,皇家莓果餅乾
-BS3-005,Mala Sauce Cookie,麻辣餅乾
-BS3-006,Snapdragon Cookie,花小龍餅乾
-BS3-007,Tea Knight Cookie,錫蘭騎士餅乾
-BS3-008,Devil Cookie,惡魔餅乾
-BS3-009,Wildberry Cookie,野莓餅乾
-BS3-010,Pitaya Dragon Cookie,火龍果龍族餅乾
-BS3-011,Knight Cookie,勇士餅乾
-BS3-012,Jungleberry Cookie,叢林莓果餅乾
-BS3-013,Tiger Lily Cookie,叢林戰士餅乾
-BS3-014,Schwarzwälder,查爾斯
-BS3-015,Capsaicin Cookie,辣椒素餅乾
-BS3-016,Tarte Tatin Cookie,反烤蘋果塔餅乾
-BS3-017,Hollyberry Cookie,聖莓果餅乾
-BS3-018,Mushroom Spore Punch,蘑菇孢子綜合果汁
-BS3-019,Soul Jam: Light of Passion,靈魂果醬: 熱情之光
-BS3-020,Miniature Dragon Boat,龍頭獨木舟模型
-BS3-021,Oath on the Shield,盾之誓
-BS3-022,Banquet of Victory,慶功宴
-BS3-023,Passionate Hollyberry Kingdom,熱情浪漫的聖莓果王國
-BS3-024,Dragon's Valley,龍之峽谷
-BS3-025,Golden Cheese Cookie,黃金起司餅乾
-BS3-026,Linzer Cookie,果醬夾心餅乾
-BS3-027,Marzipan Cookie,扁桃仁膏餅乾
-BS3-028,Mozzarella Cookie,莫札瑞拉起司餅乾
-BS3-029,Burnt Cheese Cookie,巴斯克起司餅乾
-BS3-030,Black Raisin Cookie,黑葡萄乾餅乾
-BS3-031,Pancake Cookie,鬆餅餅乾
-BS3-032,Smoked Cheese Cookie,煙燻起司餅乾
-BS3-033,Stardust Cookie,星塵餅乾
-BS3-034,Sparkling Cookie,氣泡飲餅乾
-BS3-035,High Priest Cheesenbird,神官起司球鳥
-BS3-036,Olive Cookie,橄欖餅乾
-BS3-037,Angel Cookie,天使餅乾
-BS3-038,Cocoa Cookie,可可餅乾
-BS3-039,Crème Brûlée Cookie,焦糖烤布蕾餅乾
-BS3-040,Adventurer Cookie,探險家餅乾
-BS3-041,Fettuccine Cookie,義大利寬麵餅乾
-BS3-042,Golden Cheese Guardian Golem,黃金起司守護者泥人
-BS3-043,Soul Jam: Light of Abundance,靈魂果醬: 富饒之光
-BS3-044,Cheesepad Tablet,起司石碑平板
-BS3-045,Golden Monarch's Counterattack,至尊國君的反擊
-BS3-046,Golden Cheese Colosseum,黃金樂園的競技場
-BS3-047,Kingdom of Eternal Abundance,永遠富饒的黃金起司王國
-BS3-048,Golden City's Control Chamber,黃金城市控制室
-BS3-049,Carrot Cookie,紅蘿蔔餅乾
-BS3-050,Matcha Cookie,抹茶餅乾
-BS3-051,Fig Cookie,無花果餅乾
-BS3-052,Mint Choco Cookie,薄荷巧克力餅乾
-BS3-053,Butter Roll Cookie,奶油捲麵包餅乾
-BS3-054,Beet Cookie,甜菜餅乾
-BS3-055,White Lily Cookie,聖百合餅乾
-BS3-056,Pinecone Cookie,松果餅乾
-BS3-057,Mercurial Knight Cookie,水銀騎士餅乾
-BS3-058,Avocado Cookie,酪梨餅乾
-BS3-059,Onion Cookie,洋蔥餅乾
-BS3-060,Elder Faerie Cookie,妖精王餅乾
-BS3-061,Silverbell Cookie,風鈴草餅乾
-BS3-062,Carol Cookie,吟遊詩人餅乾
-BS3-063,Carameleon Cookie,焦糖變色龍餅乾
-BS3-064,Clover Cookie,幸運草餅乾
-BS3-065,Herb Cookie,藥草餅乾
-BS3-066,Soul Jam: Light of Freedom,靈魂果醬: 自由之光
-BS3-067,Faerie Kingdom's Music,妖精王國樂譜
-BS3-068,Elder Faerie's Sword,妖精王之劍
-BS3-069,The New Guardian's Power,守護者傳承之力
-BS3-070,Puppet Theater of Chaos,混沌的木偶劇
-BS3-071,Ancient Silver Tree,古代的封印樹
-BS3-072,Mystical Faerie Kingdom,銀白色的神祕妖精王國
-BS3-073,Candy Diver Cookie,口香糖球潛水員餅乾
-BS3-074,Grand Madeleine Cookie,大瑪德蓮餅乾
-BS3-075,Strawberry Cookie,草莓餅乾
-BS3-076,Strawberry Crepe Cookie,草莓可麗餅餅乾
-BS3-077,Madeleine Cookie,瑪德蓮餅乾
-BS3-078,Wizard Cookie,魔法師餅乾
-BS3-079,Sugar Gnome,糖糖地精
-BS3-080,Espresso Cookie,濃縮咖啡餅乾
-BS3-081,Oyster Cookie,牡蠣餅乾
-BS3-082,GingerBrave,勇敢餅乾
-BS3-083,Captain Caviar Cookie,艦長魚子醬餅乾
-BS3-084,Custard Cookie III,卡士達三世餅乾
-BS3-085,Custard Cookie,卡士達餅乾
-BS3-086,Kouign-Amann Cookie,法式焦糖奶油酥餅乾
-BS3-087,Clotted Cream Cookie,濃縮奶油餅乾
-BS3-088,Pure Vanilla Cookie,純香草餅乾
-BS3-089,Financier Cookie,費南雪餅乾
-BS3-090,Sword of Radiant Light,光之護佑佩劍
-BS3-091,Soul Jam: Light of Truth,靈魂果醬: 真理之光
-BS3-092,Old Vanilla Orchid Locket,古典香草花墜飾
-BS3-093,Convocation of Elders,元老會議的決議
-BS3-094,Radiant Coronation,榮耀的加冕儀式
-BS3-095,Glorious Crème Republic,榮耀之光·鮮奶油共和國
-BS3-096,Peaceful Vanilla Kingdom,祥和的香草王國
-BS3-097,Licorice Cookie,乾草餅乾
-BS3-098,Kumiho Cookie,妖狐餅乾
-BS3-099,Dark Choco Cookie,黑巧克力餅乾
-BS3-100,Dark Cacao Cookie,黑可可餅乾
-BS3-101,Moon Rabbit Cookie,月兔餅乾
-BS3-102,Poison Mushroom Cookie,毒蘑菇餅乾
-BS3-103,Red Velvet Cookie,紅絲絨蛋糕餅乾
-BS3-104,Pomegranate Cookie,石榴餅乾
-BS3-105,Affogato Cookie,阿芙佳朵餅乾
-BS3-106,Alchemist Cookie,煉金術師餅乾
-BS3-107,Prophet Cookie,預言家餅乾
-BS3-108,Milk Cookie,牛奶餅乾
-BS3-109,Werewolf Cookie,狼人餅乾
-BS3-110,Purple Yam Cookie,紫心薯餅乾
-BS3-111,Crunchy Chip Cookie,巧克力脆片餅乾
-BS3-112,Prune Juice Cookie,黑棗汁餅乾
-BS3-113,Caramel Arrow Cookie,黑糖餅乾
-BS3-114,Bittersweet Incense,苦甜的香爐
-BS3-115,Soul Jam: Light of Resolution,靈魂果醬: 決心之光
-BS3-116,First Watcher's Bow,忠誠戰士的神弓箭
-BS3-117,Chocolate Altar of the Fallen,紀念碑前的默哀
-BS3-118,Founding Resolution,酷寒的決心
-BS3-119,Roiling Licorice Sea,波濤洶湧的甘草海
-BS3-120,Resolute Dark Cacao Kingdom,堅忍的黑可可王國
-BS3-121,Age of Heroes and Kingdoms,英雄與王國的時代
+BS3-001,Princess Cookie
+BS3-002,Raspberry Cookie
+BS3-003,Royal Margarine Cookie
+BS3-004,Royal Berry Cookie
+BS3-005,Mala Sauce Cookie
+BS3-006,Snapdragon Cookie
+BS3-007,Tea Knight Cookie
+BS3-008,Devil Cookie
+BS3-009,Wildberry Cookie
+BS3-010,Pitaya Dragon Cookie
+BS3-011,Knight Cookie
+BS3-012,Jungleberry Cookie
+BS3-013,Tiger Lily Cookie
+BS3-014,Schwarzwälder
+BS3-015,Capsaicin Cookie
+BS3-016,Tarte Tatin Cookie
+BS3-017,Hollyberry Cookie
+BS3-018,Mushroom Spore Punch
+BS3-019,Soul Jam: Light of Passion
+BS3-020,Miniature Dragon Boat
+BS3-021,Oath on the Shield
+BS3-022,Banquet of Victory
+BS3-023,Passionate Hollyberry Kingdom
+BS3-024,Dragon's Valley
+BS3-025,Golden Cheese Cookie
+BS3-026,Linzer Cookie
+BS3-027,Marzipan Cookie
+BS3-028,Mozzarella Cookie
+BS3-029,Burnt Cheese Cookie
+BS3-030,Black Raisin Cookie
+BS3-031,Pancake Cookie
+BS3-032,Smoked Cheese Cookie
+BS3-033,Stardust Cookie
+BS3-034,Sparkling Cookie
+BS3-035,High Priest Cheesenbird
+BS3-036,Olive Cookie
+BS3-037,Angel Cookie
+BS3-038,Cocoa Cookie
+BS3-039,Crème Brûlée Cookie
+BS3-040,Adventurer Cookie
+BS3-041,Fettuccine Cookie
+BS3-042,Golden Cheese Guardian Golem
+BS3-043,Soul Jam: Light of Abundance
+BS3-044,Cheesepad Tablet
+BS3-045,Golden Monarch's Counterattack
+BS3-046,Golden Cheese Colosseum
+BS3-047,Kingdom of Eternal Abundance
+BS3-048,Golden City's Control Chamber
+BS3-049,Carrot Cookie
+BS3-050,Matcha Cookie
+BS3-051,Fig Cookie
+BS3-052,Mint Choco Cookie
+BS3-053,Butter Roll Cookie
+BS3-054,Beet Cookie
+BS3-055,White Lily Cookie
+BS3-056,Pinecone Cookie
+BS3-057,Mercurial Knight Cookie
+BS3-058,Avocado Cookie
+BS3-059,Onion Cookie
+BS3-060,Elder Faerie Cookie
+BS3-061,Silverbell Cookie
+BS3-062,Carol Cookie
+BS3-063,Carameleon Cookie
+BS3-064,Clover Cookie
+BS3-065,Herb Cookie
+BS3-066,Soul Jam: Light of Freedom
+BS3-067,Faerie Kingdom's Music
+BS3-068,Elder Faerie's Sword
+BS3-069,The New Guardian's Power
+BS3-070,Puppet Theater of Chaos
+BS3-071,Ancient Silver Tree
+BS3-072,Mystical Faerie Kingdom
+BS3-073,Candy Diver Cookie
+BS3-074,Grand Madeleine Cookie
+BS3-075,Strawberry Cookie
+BS3-076,Strawberry Crepe Cookie
+BS3-077,Madeleine Cookie
+BS3-078,Wizard Cookie
+BS3-079,Sugar Gnome
+BS3-080,Espresso Cookie
+BS3-081,Oyster Cookie
+BS3-082,GingerBrave
+BS3-083,Captain Caviar Cookie
+BS3-084,Custard Cookie III
+BS3-085,Custard Cookie
+BS3-086,Kouign-Amann Cookie
+BS3-087,Clotted Cream Cookie
+BS3-088,Pure Vanilla Cookie
+BS3-089,Financier Cookie
+BS3-090,Sword of Radiant Light
+BS3-091,Soul Jam: Light of Truth
+BS3-092,Old Vanilla Orchid Locket
+BS3-093,Convocation of Elders
+BS3-094,Radiant Coronation
+BS3-095,Glorious Crème Republic
+BS3-096,Peaceful Vanilla Kingdom
+BS3-097,Licorice Cookie
+BS3-098,Kumiho Cookie
+BS3-099,Dark Choco Cookie
+BS3-100,Dark Cacao Cookie
+BS3-101,Moon Rabbit Cookie
+BS3-102,Poison Mushroom Cookie
+BS3-103,Red Velvet Cookie
+BS3-104,Pomegranate Cookie
+BS3-105,Affogato Cookie
+BS3-106,Alchemist Cookie
+BS3-107,Prophet Cookie
+BS3-108,Milk Cookie
+BS3-109,Werewolf Cookie
+BS3-110,Purple Yam Cookie
+BS3-111,Crunchy Chip Cookie
+BS3-112,Prune Juice Cookie
+BS3-113,Caramel Arrow Cookie
+BS3-114,Bittersweet Incense
+BS3-115,Soul Jam: Light of Resolution
+BS3-116,First Watcher's Bow
+BS3-117,Chocolate Altar of the Fallen
+BS3-118,Founding Resolution
+BS3-119,Roiling Licorice Sea
+BS3-120,Resolute Dark Cacao Kingdom
+BS3-121,Age of Heroes and Kingdoms

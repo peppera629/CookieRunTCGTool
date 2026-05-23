@@ -32,6 +32,7 @@ public class Card {
 	private FlipType _flipType;
 	private boolean _isExtra;
 	private boolean _isAwaken;
+	private boolean _isSpecialPlay;
 	private CardRarity _rarity;
 	private CardRarity[] _variants;
 	private List<boolean[]> _availability; // [][0]: EN, [][1]: TW, [][2]: KR, list size = number of variants (inc. base)
@@ -66,7 +67,7 @@ public class Card {
 	private String _translationFlip = "";
 	
 	public Card(String pack, String id, String name, CardColor color, CardType type,
-			boolean flip, FlipType flipType, boolean extra, boolean awaken, CardRarity rarity, String mark, int lv, int hp, List<SkillType> skillType, Keyword keyword) {
+			boolean flip, FlipType flipType, boolean extra, boolean awaken, boolean specialPlay, CardRarity rarity, String mark, int lv, int hp, List<SkillType> skillType, Keyword keyword) {
 		_PanelList = new ArrayList<ClickableCardPanel>();
 		_serial_number = SERIAL_NUMBER++;
 		_pack = pack;
@@ -78,6 +79,7 @@ public class Card {
 		_flipType = flipType;
 		_isExtra = extra;
 		_isAwaken = awaken;
+		_isSpecialPlay = specialPlay;
 		_rarity = rarity;
 		_mark = mark; // Currently unused
 		_lv = lv;
@@ -267,6 +269,10 @@ public class Card {
 		return _isAwaken;
 	}
 
+	public boolean isSpecialPlay() {
+		return _isSpecialPlay;
+	}
+
 	public ImageIcon getcardIcon() {
 		if (!_isImageLoaded || (_cardLanguage != null && !_cardLanguage.equals(Config.CARD_LANGUAGE))) {
 			CardLoader.loadCardImage(this);
@@ -307,13 +313,13 @@ public class Card {
 	public boolean[] getAvailability(int variantId) {
 		if (_availability == null) {
 			_availability = new ArrayList<boolean[]>();
-			while (_availability.size() < _variants.length + 1) { // Assume all previous variants are available in all languages
-				_availability.add(new boolean[] {true, true, true});
+			while (_availability.size() < _variants.length + 1) { // Assume all previous variants are available in EN and KR (TW has been discontinued since BS8)
+				_availability.add(new boolean[] {true, false, true});
 			}
-			return new boolean[] {true, true, true};
+			return new boolean[] {true, false, true};
 		}
-		while (_availability.size() <= variantId) { // Assume all previous variants are available in all languages
-			_availability.add(new boolean[] {true, true, true});
+		while (_availability.size() <= variantId) { // Assume all previous variants are available in EN and KR (TW has been discontinued since BS8)
+			_availability.add(new boolean[] {true, false, true});
 		}
 		return _availability.get(variantId);
 	}
@@ -322,8 +328,8 @@ public class Card {
 		if (_availability == null) {
 			_availability = new ArrayList<boolean[]>();
 		}
-		while (_availability.size() <= variantId) { // Assume all previous variants are available in all languages
-			_availability.add(new boolean[] {true, true, true});
+		while (_availability.size() <= variantId) { // Assume all previous variants are available in EN and KR (TW has been discontinued since BS8)
+			_availability.add(new boolean[] {true, false, true});
 		}
 		_availability.set(variantId, availability);
 	}

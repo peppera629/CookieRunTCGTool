@@ -1,81 +1,81 @@
-BS2-001,Muscle Cookie,肌肉餅乾
-BS2-002,Macaron Cookie,馬卡龍餅乾
-BS2-003,Rebel Cookie,義賊餅乾
-BS2-004,Cherry Cookie,櫻桃餅乾
-BS2-005,Chili Pepper Cookie,甜辣醬餅乾
-BS2-006,Prickly Cacti Gloves,刺刺仙人掌手套
-BS2-007,Prickly Cactus Bat,刺刺仙人掌球棒
-BS2-008,Princess Cookie,公主餅乾
-BS2-009,Carrot Cookie,紅蘿蔔餅乾
-BS2-010,Vampire Cookie,吸血鬼餅乾
-BS2-011,Blackberry Cookie,黑莓餅乾
-BS2-012,Onion Cookie,洋蔥餅乾
-BS2-013,Wind-Up Pocket Watch,發條懷錶
-BS2-014,Erratic Yakgwa Robot,暴走的藥果機器人
-BS2-015,Lemon Thyme Cookie,檸檬百里香餅乾
-BS2-016,Mustard Cookie,黃芥末餅乾
-BS2-017,Mint Choco Cookie,薄荷巧克力餅乾
-BS2-018,Candlelight Cookie,蜜蠟餅乾
-BS2-019,Cheesecake Cookie,起司蛋糕餅乾
-BS2-020,Carrot Jelly Stew,熱呼呼的紅蘿蔔果凍湯
-BS2-021,Carrot Farm Scarecrow,蘿蔔田稻草人
-BS2-022,Licorice Cookie,甘草餅乾
-BS2-023,DJ Cookie,DJ餅乾
-BS2-024,Strawberry Cookie,草莓餅乾
-BS2-025,Mango Cookie,芒果餅乾
-BS2-026,Mocha Ray Cookie,摩卡魟魚餅乾
-BS2-027,Cotton Cookie,棉花餅乾
-BS2-028,Pond Dino Cookie,勿忘草恐龍餅乾
-BS2-029,Sea Fairy Cookie,海妖精餅乾
-BS2-030,Gumball Cookie,泡泡糖餅乾
-BS2-031,Black Raisin Cookie,黑葡萄乾餅乾
-BS2-032,Blueberry Pie Cookie,藍莓派餅乾
-BS2-033,Sorbet Shark Cookie,雪酪鯊魚餅乾
-BS2-034,Frost Queen Cookie,冰霜女王餅乾
-BS2-035,Salt Cookie,玫瑰鹽餅乾
-BS2-036,Sherbet Cookie,雪酪餅乾
-BS2-037,Chocolate Bonbon Cookie,巧克力球餅乾
-BS2-038,Sparkling Cookie,氣泡飲餅乾
-BS2-039,Avocado Cookie,酪梨餅乾
-BS2-040,Aloe Cookie,蘆薈餅乾
-BS2-041,Eggnog Cookie,甜蛋飲餅乾
-BS2-042,Milk Cookie,牛奶餅乾
-BS2-043,Captain Ice Cookie,冰雪艦長餅乾
-BS2-044,Tiramisu Cookie,提拉米蘇餅乾
-BS2-045,Parfait Cookie,帕菲餅乾
-BS2-046,Caramel Arrow Cookie,黑糖餅乾
-BS2-047,Diving Goggles,潛水鏡
-BS2-048,Jellied Jellyfish Potion,果凍水母藥水
-BS2-049,Salt Crystal Trident,鹽晶體三叉戟
-BS2-050,Hermit Crab's Shell,螺旋麵包寄居蟹的新居
-BS2-051,Whipped Snowcream Village,鮮奶油雪村
-BS2-052,Kumiho Cookie,妖湖餅乾
-BS2-053,Ninja Cookie,忍者餅乾
-BS2-054,Dino-Sour Cookie,恐龍餅乾
-BS2-055,Poison Mushroom Cookie,毒蘑菇餅乾
-BS2-056,Raspberry Mousse Cookie,覆盆莓慕斯餅乾
-BS2-057,Wizard Cookie,魔法師餅乾
-BS2-058,Wind Archer Cookie,風箭手餅乾
-BS2-059,Cherry Blossom Cookie,櫻花餅乾
-BS2-060,Beet Cookie,甜菜餅乾
-BS2-061,Hydrangea Cookie,繡球花餅乾
-BS2-062,Starfruit Cookie,楊桃餅乾
-BS2-063,Space Doughnut,宇宙甜甜圈
-BS2-064,Alchemist Cookie,煉金術師餅乾
-BS2-065,Purple Yam Cookie,紫心薯餅乾
-BS2-066,Rose Cookie,玫瑰餅乾
-BS2-067,Angel Cookie,天使餅乾
-BS2-068,Cream Unicorn Cookie,奶油獨角獸餅乾
-BS2-069,Clotted Cream Cookie,濃縮奶油餅乾
-BS2-070,Kiwi Cookie,奇異果餅乾
-BS2-071,Twizzly Gummy Cookie,扭扭糖餅乾
-BS2-072,Pastry Cookie,千層酥餅乾
-BS2-073,Peperoncino Cookie,乾辣椒餅乾
-BS2-074,Pink Choco Cookie,粉紅巧克力餅乾
-BS2-075,White Choco Cookie,白巧克力餅乾
-BS2-076,Hero Cookie,英雄餅乾
-BS2-077,Forbidden Incantation,禁忌魔咒
-BS2-078,Dragon's Breath,龍之氣息
-BS2-079,Yew Village Scroll,紅豆杉村移動卷軸
-BS2-080,Abandoned Cloud Nest,空蕩的雲朵巢穴
-BS2-081,Blue Dragon's Eye,青龍之眼
+BS2-001,Muscle Cookie
+BS2-002,Macaron Cookie
+BS2-003,Rebel Cookie
+BS2-004,Cherry Cookie
+BS2-005,Chili Pepper Cookie
+BS2-006,Prickly Cacti Gloves
+BS2-007,Prickly Cactus Bat
+BS2-008,Princess Cookie
+BS2-009,Carrot Cookie
+BS2-010,Vampire Cookie
+BS2-011,Blackberry Cookie
+BS2-012,Onion Cookie
+BS2-013,Wind-Up Pocket Watch
+BS2-014,Erratic Yakgwa Robot
+BS2-015,Lemon Thyme Cookie
+BS2-016,Mustard Cookie
+BS2-017,Mint Choco Cookie
+BS2-018,Candlelight Cookie
+BS2-019,Cheesecake Cookie
+BS2-020,Carrot Jelly Stew
+BS2-021,Carrot Farm Scarecrow
+BS2-022,Licorice Cookie
+BS2-023,DJ Cookie
+BS2-024,Strawberry Cookie
+BS2-025,Mango Cookie
+BS2-026,Mocha Ray Cookie
+BS2-027,Cotton Cookie
+BS2-028,Pond Dino Cookie
+BS2-029,Sea Fairy Cookie
+BS2-030,Gumball Cookie
+BS2-031,Black Raisin Cookie
+BS2-032,Blueberry Pie Cookie
+BS2-033,Sorbet Shark Cookie
+BS2-034,Frost Queen Cookie
+BS2-035,Salt Cookie
+BS2-036,Sherbet Cookie
+BS2-037,Chocolate Bonbon Cookie
+BS2-038,Sparkling Cookie
+BS2-039,Avocado Cookie
+BS2-040,Aloe Cookie
+BS2-041,Eggnog Cookie
+BS2-042,Milk Cookie
+BS2-043,Captain Ice Cookie
+BS2-044,Tiramisu Cookie
+BS2-045,Parfait Cookie
+BS2-046,Caramel Arrow Cookie
+BS2-047,Diving Goggles
+BS2-048,Jellied Jellyfish Potion
+BS2-049,Salt Crystal Trident
+BS2-050,Hermit Crab's Shell
+BS2-051,Whipped Snowcream Village
+BS2-052,Kumiho Cookie
+BS2-053,Ninja Cookie
+BS2-054,Dino-Sour Cookie
+BS2-055,Poison Mushroom Cookie
+BS2-056,Raspberry Mousse Cookie
+BS2-057,Wizard Cookie
+BS2-058,Wind Archer Cookie
+BS2-059,Cherry Blossom Cookie
+BS2-060,Beet Cookie
+BS2-061,Hydrangea Cookie
+BS2-062,Starfruit Cookie
+BS2-063,Space Doughnut
+BS2-064,Alchemist Cookie
+BS2-065,Purple Yam Cookie
+BS2-066,Rose Cookie
+BS2-067,Angel Cookie
+BS2-068,Cream Unicorn Cookie
+BS2-069,Clotted Cream Cookie
+BS2-070,Kiwi Cookie
+BS2-071,Twizzly Gummy Cookie
+BS2-072,Pastry Cookie
+BS2-073,Peperoncino Cookie
+BS2-074,Pink Choco Cookie
+BS2-075,White Choco Cookie
+BS2-076,Hero Cookie
+BS2-077,Forbidden Incantation
+BS2-078,Dragon's Breath
+BS2-079,Yew Village Scroll
+BS2-080,Abandoned Cloud Nest
+BS2-081,Blue Dragon's Eye

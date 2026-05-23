@@ -1,22 +1,22 @@
-ST4-001,Candy Diver Cookie,口香糖球潛水員餅乾
-ST4-002,Snow Sugar Cookie,粉雪餅乾
-ST4-003,Dr. Wasabi Cookie,芥末博士餅乾
-ST4-004,Lobster Cookie,龍蝦餅乾
-ST4-005,GingerBright,活潑餅乾
-ST4-006,Peppermint Cookie,薄荷糖餅乾
-ST4-007,Sour Belt Cookie,霓虹軟糖餅乾
-ST4-008,Soda Cookie,汽水餅乾
-ST4-009,Ice Candy Cookie,涼糖餅乾
-ST4-010,Squid Ink Cookie,墨魚餅乾
-ST4-011,GingerBrave,勇敢餅乾
-ST4-012,Werewolf Cookie,狼人餅乾
-ST4-013,Captain Caviar Cookie,艦長魚子醬餅乾
-ST4-014,Skating Queen Cookie,溜冰女王餅乾
-ST4-015,Pirate Cookie,海盜餅乾
-ST4-016,Bear Jelly Ice Cream,熊熊果凍冰淇淋
-ST4-017,Emergency Lifebuoy,救生甜甜圈
-ST4-018,Lucky Pearls,幸運珍珠
-ST4-019,Sugar Crystal Lamp,南瓜糖提燈
-ST4-020,Octo-Ink Spray,墨魚汁噴灌
-ST4-021,Fallen Ice Statue,毀壞的冰雕
-ST4-022,Sugar Glass Dome,糖糖玻璃穹頂
+ST4-001,Candy Diver Cookie
+ST4-002,Snow Sugar Cookie
+ST4-003,Dr. Wasabi Cookie
+ST4-004,Lobster Cookie
+ST4-005,GingerBright
+ST4-006,Peppermint Cookie
+ST4-007,Sour Belt Cookie
+ST4-008,Soda Cookie
+ST4-009,Ice Candy Cookie
+ST4-010,Squid Ink Cookie
+ST4-011,GingerBrave
+ST4-012,Werewolf Cookie
+ST4-013,Captain Caviar Cookie
+ST4-014,Skating Queen Cookie
+ST4-015,Pirate Cookie
+ST4-016,Bear Jelly Ice Cream
+ST4-017,Emergency Lifebuoy
+ST4-018,Lucky Pearls
+ST4-019,Sugar Crystal Lamp
+ST4-020,Octo-Ink Spray
+ST4-021,Fallen Ice Statue
+ST4-022,Sugar Glass Dome

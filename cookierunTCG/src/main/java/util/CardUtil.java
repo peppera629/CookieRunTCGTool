@@ -11,14 +11,15 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class CardUtil {
-	public static int LEVEL_MAX = 3;
-	public static int COLOR_MAX = 6;
+	public static int LEVEL_MAX = 5;
+	public static List<Integer> LEVELS = List.of(1, 2, 3, 5);
+	public static int COLOR_MAX = 7;
 	public static int RARITY_MAX = 6;
 	public static int HP_MAX = 6;
-	public static int SKILL_TYPE_MAX = 9;
+	public static int SKILL_TYPE_MAX = 10;
 	public static int KEYWORD_MAX = 5;
 	public static int TYPE_MAX = 4;
-	public static int ATTACK_MAX = 5;
+	public static int ATTACK_MAX = 7;
 	public static int ATTACK_COST_MAX = 5;
 	public static int PEAK_MAX = 8;
 	public static List<Integer> AWAKEN_HP = List.of(0, 1, 2);
@@ -64,7 +65,7 @@ public class CardUtil {
 	}
 
 	public enum CardColor {
-	    Red(0), Yellow(1), Green(2), Blue(3), Purple(4), Pure(5);
+	    Red(0), Yellow(1), Green(2), Blue(3), Purple(4), Black(5), Pure(6);
 	    public final int value;
 	    private CardColor(int value) {
 	        this.value = value;
@@ -86,6 +87,8 @@ public class CardUtil {
 		        	return "Blue";
 		        case Purple:
 		        	return "Purple";
+				case Black:
+		        	return "Black";
 				case Pure:
 		        	return "Pure";
 	        }
@@ -104,6 +107,8 @@ public class CardUtil {
 		        	return "B";
 		        case Purple:
 		        	return "P";
+				case Black:
+		        	return "K";
 				case Pure:
 		        	return "W";
 	        }
@@ -122,6 +127,8 @@ public class CardUtil {
 					return new Color(0, 134, 207);
 				case Purple:
 					return new Color(89, 32, 133);
+				case Black:
+					return new Color(25, 25, 25);
 				case Pure:
 					return new Color(226, 224, 226);
 			}
@@ -141,6 +148,8 @@ public class CardUtil {
 				case Blue:
 					return Color.WHITE;
 				case Purple:
+					return Color.WHITE;
+				case Black:
 					return Color.WHITE;
 			}
 			return null;
@@ -174,7 +183,7 @@ public class CardUtil {
 	}
 
 	public enum CardRarity {
-		C(0), U(1), R(2), SR(3), UR(4), P(5), SEC(6), SSR(7), SUR(8), EXR(9);
+		C(0), U(1), R(2), SR(3), UR(4), P(5), SEC(6), SSR(7), SUR(8), EXR(9), GXR(10);
 	    private final int value;
 
 	    private CardRarity(int value) {
@@ -283,8 +292,8 @@ public class CardUtil {
 	}
 
 	public enum SkillType {
-		// Represented in the card data as: _, P, PY, O, OY, A, a, B, Y
-		None(0), Passive(1), PassiveOwnTurn(2), OnPlay(3), OnPlayOwnTurn(4), Activate(5), ActivateOncePerTurn(6), Blocker(7), ThenEffect(8);
+		// Represented in the card data as: _, P, PY, O, OY, A, a, B, Y, S
+		None(0), Passive(1), PassiveOwnTurn(2), OnPlay(3), OnPlayOwnTurn(4), Activate(5), ActivateOncePerTurn(6), Blocker(7), ThenEffect(8), SpecialPlay(9);
 		private final int value;
 
 		private SkillType(int value) {

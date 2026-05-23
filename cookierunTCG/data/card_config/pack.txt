@@ -10,7 +10,8 @@ BS7;KAN;Arena of Glory;榮耀競技場
 BS8;KAN;Land of Fire & Ruin, Realm of Apathy;毀滅將至/白色虛無
 BS9;KAN;A Game of Truth and Deceit;真理與謊言的遊戲
 BS10;KA;Paradise of Passion & Sloth / Catacombs of Silence;甜蜜的怠惰歸宿/沒入沉默之下的信念
-// BS11;KA;The Dark Enchantress War;暗黑魔女之戰
+BS11;KA;The Dark Enchantress War;暗黑魔女之戰
+// BS12;KA;Festival Arena;慶典競技場
 ST1;KAN;Starter Deck - Red;起始套組 - 豔陽之吻
 ST2;KAN;Starter Deck - Yellow;起始套組 - 電光石火
 ST3;KAN;Starter Deck - Green;起始套組 - 原初之力

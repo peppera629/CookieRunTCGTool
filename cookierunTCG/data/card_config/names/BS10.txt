@@ -84,9 +84,9 @@ BS10-083,Pirate Cookie
 BS10-084,Plum Cookie
 BS10-085,Chili Pepper Cookie
 BS10-086,Sudden Weather Change
-BS10-087,Strange Sea Soda Islands
+BS10-087,Something Horrifying
 BS10-088,Butterfly Lantern
-BS10-089,Something Horrifying
+BS10-089,Strange Sea Soda Islands
 BS10-090,Clashing Leaders
 BS10-091,HMS Custard III
 BS10-092,Kulfi Red Bean Delight

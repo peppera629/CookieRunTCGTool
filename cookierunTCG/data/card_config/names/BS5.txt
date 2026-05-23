@@ -1,111 +1,111 @@
-BS5-001,Dark Choco Cookie,黑巧克力餅乾
-BS5-002,Strawberry Cookie,草莓餅乾
-BS5-003,Strawberry Cream Cookie,草莓鮮奶油餅乾
-BS5-004,Lollipop Cookie,棒棒糖餅乾
-BS5-005,Mala Sauce Cookie,麻辣餅乾
-BS5-006,Marshmallow Cookie,棉花軟糖餅乾
-BS5-007,Macaron Cookie,馬卡龍餅乾
-BS5-008,Chestnut Cookie,栗子餅乾
-BS5-009,Butterbear Cookie,奶油熊餅乾
-BS5-010,Starch Noodle Cookie,圓粉條餅乾
-BS5-011,Stollen Cookie,史多倫麵包餅乾
-BS5-012,Eggnog Cookie,甜蛋飲餅乾
-BS5-013,Pitaya Dragon Cookie,火龍果龍族餅乾
-BS5-014,Knight Cookie,勇士餅乾
-BS5-015,Carol Cookie,吟遊詩人餅乾
-BS5-016,Tiramisu Cookie,提拉米蘇餅乾
-BS5-017,Peppernut Cookie,胡椒雪球餅乾
-BS5-018,Flat Tofu Cookie,豆皮餅乾
-BS5-019,Pudding Cookie,布丁餅乾
-BS5-020,Crimson Dragon Mask,怒角面具
-BS5-021,Draconic Aura,龍之氣場
-BS5-022,Pitaya Dragon Cookie's Nest,火龍果龍族餅乾的巢穴
-BS5-023,Dino-Sour Cookie,恐龍餅乾
-BS5-024,Dr. Wasabi Cookie,芥末博士餅乾
-BS5-025,Leek Cookie,大蔥餅乾
-BS5-026,DJ Cookie,DJ餅乾
-BS5-027,Mango Tribe Chieftain,芒果族長餅乾
-BS5-028,Mango Cookie,芒果餅乾
-BS5-029,Mustard Cookie,黃芥末醬餅乾
-BS5-030,Buttercream Choco Cookie,奶油巧克力餅乾
-BS5-031,Peach Cookie,桃子餅乾
-BS5-032,Birthday Cake Cookie,生日蛋糕餅乾
-BS5-033,Cotton Candy Cookie,棉花糖餅乾
-BS5-034,Sparkling Cookie,氣泡飲餅乾
-BS5-035,Artichoke Cookie,洋薊餅乾
-BS5-036,Milk Cookie,牛奶餅乾
-BS5-037,Plum Cookie,李子餅乾
-BS5-038,Cherry Cookie,櫻桃餅乾
-BS5-039,Cheesecake Cookie,起司蛋糕餅乾
-BS5-040,Ananas Dragon Cookie,鳳梨龍族餅乾
-BS5-041,Firecracker Cookie,彩花炮餅乾
-BS5-042,Sniffly Cocoa Palm,哭哭椰子樹
-BS5-043,Seasick Canoeing,暈船的獨木舟導覽
-BS5-044,Ananas Dragon Cookie's Nest,鳳梨龍族餅乾的巢穴
-BS5-045,Potato Cookie,馬鈴薯餅乾
-BS5-046,Goblin Cookie,哥布林餅乾
-BS5-047,Carrot Cookie,紅蘿蔔餅乾
-BS5-048,Bellflower Cookie,沙參花餅乾
-BS5-049,Melon Bun Cookie,哈密瓜麵包餅乾
-BS5-050,Fig Cookie,無花果餅乾
-BS5-051,Beet Cookie,甜菜餅乾
-BS5-052,Sandwich Cookie,三明治餅乾
-BS5-053,Shine Muscat Cookie,陽光麝香葡萄餅乾
-BS5-054,Snake Fruit Cookie,蛇皮果餅乾
-BS5-055,Spinach Cookie,菠菜餅乾
-BS5-056,Longan Dragon Cookie,龍眼龍族餅乾
-BS5-057,Werewolf Cookie,狼人餅乾
-BS5-058,Ginseng Cookie,人參餅乾
-BS5-059,Purple Yam Cookie,紫心薯餅乾
-BS5-060,Croissant Cookie,可頌麵包餅乾
-BS5-061,Pancake Cookie,鬆餅餅乾
-BS5-062,Pumpkin Cookie,南瓜餅乾
-BS5-063,Hero Cookie,英雄餅乾
-BS5-064,Dragon Orb,龍眼寶珠
-BS5-065,Petrification,被石化的餅乾們
-BS5-066,Longan Palace,龍眼皇宮
-BS5-067,Snow Sugar Cookie,粉雪餅乾
-BS5-068,GingerBright,活潑餅乾
-BS5-069,Pond Dino Cookie,勿忘草恐龍餅乾
-BS5-070,Peppermint Cookie,薄荷糖餅乾
-BS5-071,Lotus Dragon Cookie,百蓮龍族餅乾
-BS5-072,Gumball Cookie,泡泡糖餅乾
-BS5-073,Cyborg Cookie,賽博格餅乾
-BS5-074,Sorbet Shark Cookie,雪酪鯊魚餅乾
-BS5-075,Hydrangea Cookie,繡球花餅乾
-BS5-076,Cream Puff Cookie,奶油泡芙餅乾
-BS5-077,Ice Candy Cookie,涼糖餅乾
-BS5-078,Aloe Cookie,蘆薈餅乾
-BS5-079,Lotus Root Cookie,蓮藕餅乾
-BS5-080,Alchemist Cookie,煉金術師餅乾
-BS5-081,Squid Ink Cookie,墨魚餅乾
-BS5-082,Ion Cookie Robot,離子餅乾機器人
-BS5-083,Bell Pepper Cookie,甜椒餅乾
-BS5-084,Apple Cookie,青蘋果餅乾
-BS5-085,Pirate Cookie,海盜餅乾
-BS5-086,Tales of the Lotus,水蓮花傳說
-BS5-087,Dino Greetings,恐龍打招呼
-BS5-088,Lotus Palace,百蓮城
-BS5-089,Muscle Cookie,肌肉餅乾
-BS5-090,Strawberry Stick Cookie,草莓巧克力棒餅乾
-BS5-091,Lilac Cookie,紫丁香餅乾
-BS5-092,Rambutan Cookie,紅毛丹餅乾
-BS5-093,Lychee Dragon Cookie,荔枝龍族餅乾
-BS5-094,Mangosteen Cookie,山竹餅乾
-BS5-095,Mint Wafer Cookie,薄荷夾心酥餅乾
-BS5-096,Mint Choco Cookie,薄荷巧克力餅乾
-BS5-097,Peppercorn Cookie,胡椒餅乾
-BS5-098,Centipede Cookie,蜈蚣餅乾
-BS5-099,Avocado Cookie,酪梨餅乾
-BS5-100,Yogurt Cream Cookie,優格鮮奶油餅乾
-BS5-101,GingerBrave,勇敢餅乾
-BS5-102,Purple Yam Cookie,紫心薯餅乾
-BS5-103,Scorpion Cookie,蠍子餅乾
-BS5-104,Chili Pepper Cookie,甜辣醬餅乾
-BS5-105,Cocoa Cookie,可可餅乾
-BS5-106,Plain Yogurt Cookie,原味優格餅乾
-BS5-107,Red Pepper Cookie,紅辣椒餅乾
-BS5-108,Rambirdtan Handler Glove,馴鷹手套
-BS5-109,Charmed Miners,被洗腦的勞動
-BS5-110,Lychee Dragon Cookie's Cave,荔枝龍族餅乾的洞窟
-BS5-111,Wrath of the Dragons,覺醒!龍之怒
+BS5-001,Dark Choco Cookie
+BS5-002,Strawberry Cookie
+BS5-003,Strawberry Cream Cookie
+BS5-004,Lollipop Cookie
+BS5-005,Mala Sauce Cookie
+BS5-006,Marshmallow Cookie
+BS5-007,Macaron Cookie
+BS5-008,Chestnut Cookie
+BS5-009,Butterbear Cookie
+BS5-010,Starch Noodle Cookie
+BS5-011,Stollen Cookie
+BS5-012,Eggnog Cookie
+BS5-013,Pitaya Dragon Cookie
+BS5-014,Knight Cookie
+BS5-015,Carol Cookie
+BS5-016,Tiramisu Cookie
+BS5-017,Peppernut Cookie
+BS5-018,Flat Tofu Cookie
+BS5-019,Pudding Cookie
+BS5-020,Crimson Dragon Mask
+BS5-021,Draconic Aura
+BS5-022,Pitaya Dragon Cookie's Nest
+BS5-023,Dino-Sour Cookie
+BS5-024,Dr. Wasabi Cookie
+BS5-025,Leek Cookie
+BS5-026,DJ Cookie
+BS5-027,Mango Tribe Chieftain
+BS5-028,Mango Cookie
+BS5-029,Mustard Cookie
+BS5-030,Buttercream Choco Cookie
+BS5-031,Peach Cookie
+BS5-032,Birthday Cake Cookie
+BS5-033,Cotton Candy Cookie
+BS5-034,Sparkling Cookie
+BS5-035,Artichoke Cookie
+BS5-036,Milk Cookie
+BS5-037,Plum Cookie
+BS5-038,Cherry Cookie
+BS5-039,Cheesecake Cookie
+BS5-040,Ananas Dragon Cookie
+BS5-041,Firecracker Cookie
+BS5-042,Sniffly Cocoa Palm
+BS5-043,Seasick Canoeing
+BS5-044,Ananas Dragon Cookie's Nest
+BS5-045,Potato Cookie
+BS5-046,Goblin Cookie
+BS5-047,Carrot Cookie
+BS5-048,Bellflower Cookie
+BS5-049,Melon Bun Cookie
+BS5-050,Fig Cookie
+BS5-051,Beet Cookie
+BS5-052,Sandwich Cookie
+BS5-053,Shine Muscat Cookie
+BS5-054,Snake Fruit Cookie
+BS5-055,Spinach Cookie
+BS5-056,Longan Dragon Cookie
+BS5-057,Werewolf Cookie
+BS5-058,Ginseng Cookie
+BS5-059,Purple Yam Cookie
+BS5-060,Croissant Cookie
+BS5-061,Pancake Cookie
+BS5-062,Pumpkin Cookie
+BS5-063,Hero Cookie
+BS5-064,Dragon Orb
+BS5-065,Petrification
+BS5-066,Longan Palace
+BS5-067,Snow Sugar Cookie
+BS5-068,GingerBright
+BS5-069,Pond Dino Cookie
+BS5-070,Peppermint Cookie
+BS5-071,Lotus Dragon Cookie
+BS5-072,Gumball Cookie
+BS5-073,Cyborg Cookie
+BS5-074,Sorbet Shark Cookie
+BS5-075,Hydrangea Cookie
+BS5-076,Cream Puff Cookie
+BS5-077,Ice Candy Cookie
+BS5-078,Aloe Cookie
+BS5-079,Lotus Root Cookie
+BS5-080,Alchemist Cookie
+BS5-081,Squid Ink Cookie
+BS5-082,Ion Cookie Robot
+BS5-083,Bell Pepper Cookie
+BS5-084,Apple Cookie
+BS5-085,Pirate Cookie
+BS5-086,Tales of the Lotus
+BS5-087,Dino Greetings
+BS5-088,Lotus Palace
+BS5-089,Muscle Cookie
+BS5-090,Strawberry Stick Cookie
+BS5-091,Lilac Cookie
+BS5-092,Rambutan Cookie
+BS5-093,Lychee Dragon Cookie
+BS5-094,Mangosteen Cookie
+BS5-095,Mint Wafer Cookie
+BS5-096,Mint Choco Cookie
+BS5-097,Peppercorn Cookie
+BS5-098,Centipede Cookie
+BS5-099,Avocado Cookie
+BS5-100,Yogurt Cream Cookie
+BS5-101,GingerBrave
+BS5-102,Purple Yam Cookie
+BS5-103,Scorpion Cookie
+BS5-104,Chili Pepper Cookie
+BS5-105,Cocoa Cookie
+BS5-106,Plain Yogurt Cookie
+BS5-107,Red Pepper Cookie
+BS5-108,Rambirdtan Handler Glove
+BS5-109,Charmed Miners
+BS5-110,Lychee Dragon Cookie's Cave
+BS5-111,Wrath of the Dragons

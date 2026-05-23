@@ -1,107 +1,107 @@
-BS6-001,Blue Lily Cookie,蘭花餅乾
-BS6-002,Dark Choco Cookie,黑巧克力餅乾
-BS6-003,Strawberry Stick Cookie,草莓巧克力棒餅乾
-BS6-004,Mint Choco Cookie,薄荷巧克力餅乾
-BS6-005,Buttercream Choco Cookie,奶油巧克力餅乾
-BS6-006,Cherry Blossom Cookie,櫻花餅乾
-BS6-007,Blue Slushy Cookie,蘇打冰沙餅乾
-BS6-008,Sugar Swan Cookie,白糖天鵝餅乾
-BS6-009,Cotton Candy Cookie,棉花糖餅乾
-BS6-010,Timekeeper Cookie,超時空餅乾
-BS6-011,Rose Cookie,玫瑰餅乾
-BS6-012,Lilybell Cookie,芝草餅乾
-BS6-013,Chess Choco Cookie,西洋棋巧克力餅乾
-BS6-014,Choco Bar Cookie,巧克力棒餅乾
-BS6-015,Choco Ball Cookie,足球巧克力餅乾
-BS6-016,Crunchy Chip Cookie,巧克力脆片餅乾
-BS6-017,Pink Choco Cookie,粉紅巧克力餅乾
-BS6-018,White Choco Cookie,白巧克力餅乾
-BS6-019,Squishy Jelly Watch,果凍鐘錶
-BS6-020,Tonic Spray,噴灑鎮定藥劑
-BS6-021,TBD Hallway,時間管理局走廊
-BS6-022,Ninja Cookie,忍者餅乾
-BS6-023,Dark Fondue Cookie,黑巧克力醬餅乾
-BS6-024,Roll Cake Cookie,蛋糕捲餅乾
-BS6-025,Baguette Cookie,長棍麵包餅乾
-BS6-026,Skater Cookie,滑板族餅乾
-BS6-027,S'more Cookie,棉花糖脆餅餅乾
-BS6-028,TBD Delivery Cookie,時間管理局快遞員餅乾
-BS6-029,TBD Office Clerk Cookie,時間管理局職員餅乾
-BS6-030,TBD Mender Cookie,時間管理局技師餅乾
-BS6-031,Timekeeper Cookie,超時空餅乾
-BS6-032,Spinach Cookie,菠菜餅乾
-BS6-033,Cinnamon Cookie,肉桂餅乾
-BS6-034,Prophet Cookie,預言家餅乾
-BS6-035,GingerBrave,勇敢餅乾
-BS6-036,Zombie Cookie,殭屍餅乾
-BS6-037,Cannoli Cookie,卡諾里捲餅乾
-BS6-038,Coffee Candy Cookie,咖啡糖餅乾
-BS6-039,Croissant Cookie,可頌麵包餅乾
-BS6-040,Pilot Cookie,飛行員餅乾
-BS6-041,Hourglass of Aeternus Tempora,光陰沙漏
-BS6-042,Clever Advice,巧妙的建議
-BS6-043,Timecraft Garage,時光機維修站
-BS6-044,Roguefort Cookie,怪盜餅乾
-BS6-045,Lime Cookie,萊姆餅乾
-BS6-046,Langue de Chat Cookie,蘭朵夏餅乾
-BS6-047,Lemon Cookie,檸檬餅乾
-BS6-048,Marble Bread Cookie,大理石吐司餅乾
-BS6-049,Banana Cookie,香蕉餅乾
-BS6-050,Butter Pretzel Cookie,奶油麵包餅乾
-BS6-051,Timekeeper Cookie,超時空餅乾
-BS6-052,Almond Cookie,杏仁果餅乾
-BS6-053,Cherry Ball Cookie,山櫻桃餅乾
-BS6-054,Orange Cookie,柳橙餅乾
-BS6-055,Grapefruit Cookie,葡萄柚餅乾
-BS6-056,Cappuccino Cookie,卡布奇諾餅乾
-BS6-057,Coffee Candy Cookie,咖啡糖餅乾
-BS6-058,Kiwi Cookie,奇異果餅乾
-BS6-059,Apple Cookie,青蘋果餅乾
-BS6-060,Pistachio Cookie,開心果餅乾
-BS6-061,Walnut Cookie,核桃餅乾
-BS6-062,Time Rend Scissors,時空混沌裁剪刀
-BS6-063,Into a Time Pocket…,時間的坑洞
-BS6-064,Broken Central Clock,壞掉的大時鐘
-BS6-065,Marble Bread Cookie,大理石吐司餅乾
-BS6-066,Maple Taffy Cookie,楓糖太妃糖餅乾
-BS6-067,Vampire Cookie,吸血鬼餅乾
-BS6-068,Blackberry Cookie,黑莓餅乾
-BS6-069,Sandwich Cookie,三明治餅乾
-BS6-070,Salt Cookie,玫瑰鹽餅乾
-BS6-071,Soda Cookie,汽水餅乾
-BS6-072,Chocolate Bonbon Cookie,巧克力球餅乾
-BS6-073,Schneeball Cookie,糖霜雪球餅乾
-BS6-074,String Gummy Cookie,筆管軟糖餅乾
-BS6-075,Onion Cookie,洋蔥餅乾
-BS6-076,Fairy Cookie,妖精餅乾
-BS6-077,Cheerleader Cookie,啦啦隊餅乾
-BS6-078,Coffee Cookie,咖啡餅乾
-BS6-079,Croissant Cookie,可頌麵包餅乾
-BS6-080,Adventurer Cookie,探險家餅乾
-BS6-081,Truffle Cookie,松露餅乾
-BS6-082,Popcorn Cookie,爆米花餅乾
-BS6-083,Skating Queen Cookie,溜冰女王餅乾
-BS6-084,Time Manipulator,時間控制器
-BS6-085,Destruction of a Pastless Future,棄息未來的毀滅
-BS6-086,Messy TBD Director's Office,凌亂的時間管理局局室
-BS6-087,Peeled Carrot Cookie,去皮胡蘿蔔餅乾
-BS6-088,Dr. Wasabi Cookie,芥末博士餅乾
-BS6-089,Mustard Cookie,黃芥末醬餅乾
-BS6-090,Candlelight Cookie,蜜蠟餅乾
-BS6-091,Schneeball Cookie,糖霜雪球餅乾
-BS6-092,String Gummy Cookie,筆管軟糖餅乾
-BS6-093,Timekeeper Cookie,超時空餅乾
-BS6-094,Half-Avocado Cookie,半顆酪梨餅乾
-BS6-095,Wild Strawberry Cookie,野草莓餅乾
-BS6-096,Cherry Cookie,櫻桃餅乾
-BS6-097,Toothpaste Cookie,巧克力牙膏餅乾
-BS6-098,Currant Cream Cookie,黑醋栗奶油餅乾
-BS6-099,Crowberry Cookie,烏莓餅乾
-BS6-100,Croissant Cookie,可頌麵包餅乾
-BS6-101,Twizzly Gummy Cookie,扭扭糖餅乾
-BS6-102,Pastel Meringue Cookie,粉彩蛋白霜餅乾
-BS6-103,White Ghost Cookie,白帝錦餅乾
-BS6-104,Black Garlic Cookie,黑蒜頭餅乾
-BS6-105,Butterfly Key Relic,蝴蝶發條文物
-BS6-106,Peak Engineer Performance,最厲害的技師
-BS6-107,TBD Machine Room,時間管理局機房
+BS6-001,Blue Lily Cookie
+BS6-002,Dark Choco Cookie
+BS6-003,Strawberry Stick Cookie
+BS6-004,Mint Choco Cookie
+BS6-005,Buttercream Choco Cookie
+BS6-006,Cherry Blossom Cookie
+BS6-007,Blue Slushy Cookie
+BS6-008,Sugar Swan Cookie
+BS6-009,Cotton Candy Cookie
+BS6-010,Timekeeper Cookie
+BS6-011,Rose Cookie
+BS6-012,Lilybell Cookie
+BS6-013,Chess Choco Cookie
+BS6-014,Choco Bar Cookie
+BS6-015,Choco Ball Cookie
+BS6-016,Crunchy Chip Cookie
+BS6-017,Pink Choco Cookie
+BS6-018,White Choco Cookie
+BS6-019,Squishy Jelly Watch
+BS6-020,Tonic Spray
+BS6-021,TBD Hallway
+BS6-022,Ninja Cookie
+BS6-023,Dark Fondue Cookie
+BS6-024,Roll Cake Cookie
+BS6-025,Baguette Cookie
+BS6-026,Skater Cookie
+BS6-027,S'more Cookie
+BS6-028,TBD Delivery Cookie
+BS6-029,TBD Office Clerk Cookie
+BS6-030,TBD Mender Cookie
+BS6-031,Timekeeper Cookie
+BS6-032,Spinach Cookie
+BS6-033,Cinnamon Cookie
+BS6-034,Prophet Cookie
+BS6-035,GingerBrave
+BS6-036,Zombie Cookie
+BS6-037,Cannoli Cookie
+BS6-038,Coffee Candy Cookie
+BS6-039,Croissant Cookie
+BS6-040,Pilot Cookie
+BS6-041,Hourglass of Aeternus Tempora
+BS6-042,Clever Advice
+BS6-043,Timecraft Garage
+BS6-044,Roguefort Cookie
+BS6-045,Lime Cookie
+BS6-046,Langue de Chat Cookie
+BS6-047,Lemon Cookie
+BS6-048,Marble Bread Cookie
+BS6-049,Banana Cookie
+BS6-050,Butter Pretzel Cookie
+BS6-051,Timekeeper Cookie
+BS6-052,Almond Cookie
+BS6-053,Cherry Ball Cookie
+BS6-054,Orange Cookie
+BS6-055,Grapefruit Cookie
+BS6-056,Cappuccino Cookie
+BS6-057,Coffee Candy Cookie
+BS6-058,Kiwi Cookie
+BS6-059,Apple Cookie
+BS6-060,Pistachio Cookie
+BS6-061,Walnut Cookie
+BS6-062,Time Rend Scissors
+BS6-063,Into a Time Pocket…
+BS6-064,Broken Central Clock
+BS6-065,Marble Bread Cookie
+BS6-066,Maple Taffy Cookie
+BS6-067,Vampire Cookie
+BS6-068,Blackberry Cookie
+BS6-069,Sandwich Cookie
+BS6-070,Salt Cookie
+BS6-071,Soda Cookie
+BS6-072,Chocolate Bonbon Cookie
+BS6-073,Schneeball Cookie
+BS6-074,String Gummy Cookie
+BS6-075,Onion Cookie
+BS6-076,Fairy Cookie
+BS6-077,Cheerleader Cookie
+BS6-078,Coffee Cookie
+BS6-079,Croissant Cookie
+BS6-080,Adventurer Cookie
+BS6-081,Truffle Cookie
+BS6-082,Popcorn Cookie
+BS6-083,Skating Queen Cookie
+BS6-084,Time Manipulator
+BS6-085,Destruction of a Pastless Future
+BS6-086,Messy TBD Director's Office
+BS6-087,Peeled Carrot Cookie
+BS6-088,Dr. Wasabi Cookie
+BS6-089,Mustard Cookie
+BS6-090,Candlelight Cookie
+BS6-091,Schneeball Cookie
+BS6-092,String Gummy Cookie
+BS6-093,Timekeeper Cookie
+BS6-094,Half-Avocado Cookie
+BS6-095,Wild Strawberry Cookie
+BS6-096,Cherry Cookie
+BS6-097,Toothpaste Cookie
+BS6-098,Currant Cream Cookie
+BS6-099,Crowberry Cookie
+BS6-100,Croissant Cookie
+BS6-101,Twizzly Gummy Cookie
+BS6-102,Pastel Meringue Cookie
+BS6-103,White Ghost Cookie
+BS6-104,Black Garlic Cookie
+BS6-105,Butterfly Key Relic
+BS6-106,Peak Engineer Performance
+BS6-107,TBD Machine Room

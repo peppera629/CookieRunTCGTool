@@ -1,111 +1,111 @@
-BS4-001,Lilac Cookie,紫丁香餅乾
-BS4-002,Lil Pepper Cookie,小辣椒餅乾
-BS4-003,Madeleine Cookie,瑪德蓮餅乾
-BS4-004,Mala Sauce Cookie,麻辣醬餅乾
-BS4-005,Fire Spirit Cookie,火精靈餅乾
-BS4-006,Flaming Hot Wing,燃燒的麻辣雞
-BS4-007,Black Raisin Cookie,黑葡萄餅乾
-BS4-008,Scovillia Headmaster,史高維爾利亞校長
-BS4-009,Espresso Cookie,濃縮咖啡餅乾
-BS4-010,Scovillia Student Fan,受人尊崇的史高維爾利亞學生
-BS4-011,Chili Pepper Cookie,辣椒餅乾
-BS4-012,Capsaicin Cookie,辣椒素餅乾
-BS4-013,Crushed Pepper Cookie,辣椒碎片餅乾
-BS4-014,Peperoncino Cookie,乾辣椒餅乾
-BS4-015,Habanero Cookie,哈瓦那辣椒餅乾
-BS4-016,Rye Cookie,黑麥餅乾
-BS4-017,Hot Scovillia Student,熱血的史高維爾利亞學生
-BS4-018,Magma Pendulum,熔岩擺飾
-BS4-019,Ring of Eternal Flame,火焰指環
-BS4-020,Essence of Conflagration,火焰結晶
-BS4-021,Battle on the Edge,懸崖對決
-BS4-022,Scovillia Training Grounds,斯科維利亞訓練所
-BS4-023,Cloud Deity Cookie,雲神餅乾
-BS4-024,Kumiho Cookie,九尾狐餅乾
-BS4-025,Gim Cookie,海藻餅乾
-BS4-026,Stormbringer Cookie,雷神武將餅乾
-BS4-027,Moon Rabbit Cookie,月兔餅乾
-BS4-028,Vagabond Cookie,梅雀果餅乾
-BS4-029,Wind Deity Cookie,風神餅乾
-BS4-030,Peach Blossom Cookie,桃花餅乾
-BS4-031,Rain Deity Cookie,雨神餅乾
-BS4-032,Cream Ferret Cookie,鮮奶油貂餅乾
-BS4-033,Caramel Choux Cookie,焦糖泡芙餅乾
-BS4-034,Street Urchin Cookie,海膽餅乾
-BS4-035,Okchun Cookie,玉春糖餅乾
-BS4-036,GingerBrave,勇敢餅乾
-BS4-037,Rebel Cookie,義賊餅乾
-BS4-038,Millennial Tree Cookie,千年古樹餅乾
-BS4-039,Churro Cookie,吉拿棒餅乾
-BS4-040,Essence of Rejuvenation,生命結晶
-BS4-041,Millennial Twig,千年的老樹枝
-BS4-042,Millennial Jade Deer,純正千年玉鹿
-BS4-043,Heaven-Splitting Lightning,開天闢地的轟雷
-BS4-044,Millennial Temple,千年樹神殿
-BS4-045,Tangerine Tanghulu Cookie,橘子糖葫蘆餅乾
-BS4-046,Princess Cookie,公主餅乾
-BS4-047,Blue Lily Cookie,蘭花餅乾
-BS4-048,Mint Choco Cookie,薄荷巧克力
-BS4-049,Wind Archer Cookie,風箭手餅乾
-BS4-050,Biscuit Giraffe,餅乾長頸鹿
-BS4-051,Beet Cookie,甜菜餅乾
-BS4-052,Shine Muscat Cookie,閃耀麝香葡萄餅乾
-BS4-053,Sugar Swan Cookie,白糖天鵝餅乾
-BS4-054,Avocado Cookie,酪梨餅乾
-BS4-055,Alchemist Cookie,煉金術師餅乾
-BS4-056,Tiger Lily Cookie,叢林戰士餅乾
-BS4-057,Jelly Froggy,果凍蛙
-BS4-058,Lilybell Cookie,芝草餅乾
-BS4-059,Cookiemals,動物餅乾
-BS4-060,Adventurer Cookie,探險家餅乾
-BS4-061,Herb Cookie,藥草餅乾
-BS4-062,Wind Gems,風之結晶
-BS4-063,Swan Feather Dreamcatcher,天鵝羽捕夢網
-BS4-064,Night Raven's Arrow,虛空之箭
-BS4-065,Spring Festival,紀念春天的節慶
-BS4-066,Dessert Paradise,甜點天堂
-BS4-067,Gold Citrine Cookie,金黃水晶餅乾
-BS4-068,Aquamarine Cookie,海藍寶石餅乾
-BS4-069,Lobster Cookie,龍蝦餅乾
-BS4-070,Lord Oyster,牡蠣爵士
-BS4-071,Mocha Ray Cookie,摩卡魟魚餅乾
-BS4-072,Mystic Opal Cookie,幻彩歐珀餅乾
-BS4-073,Sea Fairy Cookie,海妖精餅乾
-BS4-074,Peppermint Cookie,薄荷糖餅乾
-BS4-075,Black Pearl Cookie,黑珍珠餅乾
-BS4-076,Star Coral Cookie,星珊瑚餅乾
-BS4-077,Sorbet Shark Cookie,雪酪鯊魚餅乾
-BS4-078,Squid Ink Cookie,墨魚餅乾
-BS4-079,Abalone Cookie,鮑魚餅乾
-BS4-080,Captain Ice Cookie,冰雪艦長餅乾
-BS4-081,Crimson Coral Cookie,緋紅珊瑚餅乾
-BS4-082,Frilled Jellyfish Cookie,蕾絲水母餅乾
-BS4-083,Pirate Cookie,海盜餅乾
-BS4-084,Heart of the Deep Sea,深海的傳說心臟
-BS4-085,Tide Shards,浪之結晶
-BS4-086,Weeping Cries of the Deep,迷霧中的泣聲
-BS4-087,Mermaid's Tale,夢想的人魚海
-BS4-088,Tower of Frozen Waves,冰浪之塔
-BS4-089,Moonlight Cookie,月光魔法師餅乾
-BS4-090,Rockstar Cookie,搖滾餅乾
-BS4-091,Wizard Cookie,魔法師餅乾
-BS4-092,Milky Way Cookie,銀河餅乾
-BS4-093,Black Lemonade Cookie,黑檸檬汽水餅乾
-BS4-094,Blueberry Pie Cookie,藍莓派餅乾
-BS4-095,Shining Glitter Cookie,閃耀之星餅乾
-BS4-096,Sugar Glass Cookie,糖玻璃餅乾
-BS4-097,Cream Puff Cookie,奶油泡芙餅乾
-BS4-098,Stardust Cookie,星塵餅乾
-BS4-099,Amber Sugar Cookie,琥珀糖餅乾
-BS4-100,Space Doughnut,宇宙甜甜圈
-BS4-101,Eclair Cookie,閃電泡芙餅乾
-BS4-102,Wildberry Cookie,野莓餅乾
-BS4-103,Cream Unicorn Cookie,奶油獨角獸
-BS4-104,Parfait Cookie,帕菲餅乾
-BS4-105,Financier Cookie,費雪南餅乾
-BS4-106,Butterfly Brooch,摯友蝴蝶胸針
-BS4-107,Moonlight Shards,月光結晶
-BS4-108,Plasma Crystal Ball,紫光水晶球
-BS4-109,Slumbering Moon's Invitation,沉睡的月神邀請
-BS4-110,City of Wizards,魔法師之城
-BS4-111,Cookies of Legend,傳奇餅乾們
+BS4-001,Lilac Cookie
+BS4-002,Lil Pepper Cookie
+BS4-003,Madeleine Cookie
+BS4-004,Mala Sauce Cookie
+BS4-005,Fire Spirit Cookie
+BS4-006,Flaming Hot Wing
+BS4-007,Black Raisin Cookie
+BS4-008,Scovillia Headmaster
+BS4-009,Espresso Cookie
+BS4-010,Scovillia Student Fan
+BS4-011,Chili Pepper Cookie
+BS4-012,Capsaicin Cookie
+BS4-013,Crushed Pepper Cookie
+BS4-014,Peperoncino Cookie
+BS4-015,Habanero Cookie
+BS4-016,Rye Cookie
+BS4-017,Hot Scovillia Student
+BS4-018,Magma Pendulum
+BS4-019,Ring of Eternal Flame
+BS4-020,Essence of Conflagration
+BS4-021,Battle on the Edge
+BS4-022,Scovillia Training Grounds
+BS4-023,Cloud Deity Cookie
+BS4-024,Kumiho Cookie
+BS4-025,Gim Cookie
+BS4-026,Stormbringer Cookie
+BS4-027,Moon Rabbit Cookie
+BS4-028,Vagabond Cookie
+BS4-029,Wind Deity Cookie
+BS4-030,Peach Blossom Cookie
+BS4-031,Rain Deity Cookie
+BS4-032,Cream Ferret Cookie
+BS4-033,Caramel Choux Cookie
+BS4-034,Street Urchin Cookie
+BS4-035,Okchun Cookie
+BS4-036,GingerBrave
+BS4-037,Rebel Cookie
+BS4-038,Millennial Tree Cookie
+BS4-039,Churro Cookie
+BS4-040,Essence of Rejuvenation
+BS4-041,Millennial Twig
+BS4-042,Millennial Jade Deer
+BS4-043,Heaven-Splitting Lightning
+BS4-044,Millennial Temple
+BS4-045,Tangerine Tanghulu Cookie
+BS4-046,Princess Cookie
+BS4-047,Blue Lily Cookie
+BS4-048,Mint Choco Cookie
+BS4-049,Wind Archer Cookie
+BS4-050,Biscuit Giraffe
+BS4-051,Beet Cookie
+BS4-052,Shine Muscat Cookie
+BS4-053,Sugar Swan Cookie
+BS4-054,Avocado Cookie
+BS4-055,Alchemist Cookie
+BS4-056,Tiger Lily Cookie
+BS4-057,Jelly Froggy
+BS4-058,Lilybell Cookie
+BS4-059,Cookiemals
+BS4-060,Adventurer Cookie
+BS4-061,Herb Cookie
+BS4-062,Wind Gems
+BS4-063,Swan Feather Dreamcatcher
+BS4-064,Night Raven's Arrow
+BS4-065,Spring Festival
+BS4-066,Dessert Paradise
+BS4-067,Gold Citrine Cookie
+BS4-068,Aquamarine Cookie
+BS4-069,Lobster Cookie
+BS4-070,Lord Oyster
+BS4-071,Mocha Ray Cookie
+BS4-072,Mystic Opal Cookie
+BS4-073,Sea Fairy Cookie
+BS4-074,Peppermint Cookie
+BS4-075,Black Pearl Cookie
+BS4-076,Star Coral Cookie
+BS4-077,Sorbet Shark Cookie
+BS4-078,Squid Ink Cookie
+BS4-079,Abalone Cookie
+BS4-080,Captain Ice Cookie
+BS4-081,Crimson Coral Cookie
+BS4-082,Frilled Jellyfish Cookie
+BS4-083,Pirate Cookie
+BS4-084,Heart of the Deep Sea
+BS4-085,Tide Shards
+BS4-086,Weeping Cries of the Deep
+BS4-087,Mermaid's Tale
+BS4-088,Tower of Frozen Waves
+BS4-089,Moonlight Cookie
+BS4-090,Rockstar Cookie
+BS4-091,Wizard Cookie
+BS4-092,Milky Way Cookie
+BS4-093,Black Lemonade Cookie
+BS4-094,Blueberry Pie Cookie
+BS4-095,Shining Glitter Cookie
+BS4-096,Sugar Glass Cookie
+BS4-097,Cream Puff Cookie
+BS4-098,Stardust Cookie
+BS4-099,Amber Sugar Cookie
+BS4-100,Space Doughnut
+BS4-101,Eclair Cookie
+BS4-102,Wildberry Cookie
+BS4-103,Cream Unicorn Cookie
+BS4-104,Parfait Cookie
+BS4-105,Financier Cookie
+BS4-106,Butterfly Brooch
+BS4-107,Moonlight Shards
+BS4-108,Plasma Crystal Ball
+BS4-109,Slumbering Moon's Invitation
+BS4-110,City of Wizards
+BS4-111,Cookies of Legend

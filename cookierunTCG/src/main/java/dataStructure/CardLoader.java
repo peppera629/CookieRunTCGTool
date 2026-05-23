@@ -40,6 +40,7 @@ public class CardLoader {
 	private static String iconPathR, iconPathY, iconPathG, iconPathB, iconPathP, iconPathW;
 	private static String iconPathActivate, iconPathYourTurn, iconPathOncePerTurn, iconPathOnPlay;
 	private static String iconPathBlocker, iconPathEquip, iconPathExtra, iconPathAwaken, iconPathFlip;
+	private static String iconPathSpecialPlay, iconPathSkill;
 
 	private static Map<String, String> nameTranslationMap = loadNameTranslationMap();
 
@@ -173,6 +174,7 @@ public class CardLoader {
 
 	            	CardColor color = CardColor.Green;
 					boolean isAwaken = false;
+					boolean isSpecialPlay = false;
 	            	for (int i=0; i<CardUtil.COLOR_MAX; i++) {
 	            		CardColor c = CardColor.fromValue(i);
 	            		if (cardData[1].equals(c.getName())) {
@@ -241,6 +243,10 @@ public class CardLoader {
 							if (cardData[8].contains("T")) {
 								skillType.add(SkillType.ThenEffect);
 							}
+							if (cardData[8].contains("S")) {
+								skillType.add(SkillType.SpecialPlay);
+								isSpecialPlay = true;
+							}
 						}
 	            	} else {
 	            		skillType.add(SkillType.None);
@@ -250,7 +256,7 @@ public class CardLoader {
 
 					// Name will be loaded later
 					//System.out.println(packName);
-	            	Card c = new Card(packName, cardData[0], "", color, type, isFlip, (isFlip ? FlipType.fromString(cardData[3]) : null), cardData[3].equals("EX"), isAwaken, CardUtil.CardRarity.fromString(cardData[4]), cardData[5], level, hp, skillType, keyword);
+	            	Card c = new Card(packName, cardData[0], "", color, type, isFlip, (isFlip ? FlipType.fromString(cardData[3]) : null), cardData[3].equals("EX"), isAwaken, isSpecialPlay, CardUtil.CardRarity.fromString(cardData[4]), cardData[5], level, hp, skillType, keyword);
 	            	
 					if (cardData.length >10) {
 						int attackDMG = 0;
@@ -430,7 +436,9 @@ public class CardLoader {
 		iconPathExtra = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Extra.png").toString()).getAbsolutePath() + "\">";
 		iconPathAwaken = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Awaken.png").toString()).getAbsolutePath() + "\">";
 		iconPathFlip = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "FLIP.png").toString()).getAbsolutePath() + "\">";
-	    try {
+	    iconPathSpecialPlay = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "SpecialPlay.png").toString()).getAbsolutePath() + "\">";
+		iconPathSkill = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Skill.png").toString()).getAbsolutePath() + "\">";
+		try {
 	        File translationFile = new File(AppPaths.dataDir().resolve("card_config/translations/"+Config.LANGUAGE+"/"+packName+".txt").toString());
 			if (translationFile.exists()) {
 		        BufferedReader input = new BufferedReader(
@@ -441,6 +449,7 @@ public class CardLoader {
 						String[] cardData = data.split(";", -1);
 						for (int i = 1; i < cardData.length; i++) {
 							cardData[i] = cardData[i].replace("&", "&amp;")
+										 .replace(" ", "&nbsp;")
                                          .replace("<", "&lt;")
                                          .replace(">", "&gt;")
 										 .replace("[R]", iconPathR)
@@ -465,6 +474,11 @@ public class CardLoader {
 										 .replace("[Your Turn]", iconPathYourTurn)
 										 .replace("【登場時】", iconPathOnPlay)
 										 .replace("[On Play]", iconPathOnPlay)
+										 .replace("【特殊登場】", iconPathSpecialPlay)
+										 .replace("[Special Play]", iconPathSpecialPlay)
+										 .replace("【技能】", iconPathSkill
+										 .replace("[Skill]", iconPathSkill)
+										 )
 										 .replace("\\,", ",")
 										 .replace("\\n", "<br>");
 						}
@@ -474,7 +488,16 @@ public class CardLoader {
 							if (c.getPack().equals(packName) && c.getId().equals(cardData[0])) {
 								// Set card translations
 								// System.out.println(cardData[1] + ", " + cardData[2] + ", " + cardData[3] + ", " + cardData[4] + ", " + cardData[5] + ", " + cardData[6] + ", " + cardData[7]);
-								c.setCardTranslation(cardData[1], cardData[2], cardData[3], cardData[4], cardData[5], cardData[6], (cardData[7] == "" ? cardData[7] : iconPathFlip + cardData[7]));
+								if (cardData.length < 8) {
+									// Pad with empty strings if some fields are missing
+									cardData = Arrays.copyOf(cardData, 8);
+									for (int i = 0; i < cardData.length; i++) {
+										if (cardData[i] == null) {
+											cardData[i] = "";
+										}
+									}
+								}
+								c.setCardTranslation(cardData[1], cardData[2], cardData[3], cardData[4], cardData[5], cardData[6], (cardData[7] == "" ? cardData[7] : iconPathFlip + "&nbsp;" + cardData[7]));
 								break;
 							}
 						}
@@ -589,51 +612,6 @@ public class CardLoader {
 			e.printStackTrace();
 		}
 	}
-	/* 
-	public static void loadVariantNames(String packName, List<Card> cardList) {
-		try {
-			File rarityDescListFile = new File(AppPaths.dataDir().resolve("card_config/rarity_desc.csv").toString());
-			if (rarityDescListFile.exists()) {
-				BufferedReader inputDesc = new BufferedReader(new InputStreamReader(new FileInputStream(rarityDescListFile), StandardCharsets.UTF_8));
-				String dataDesc;
-				while ((dataDesc = inputDesc.readLine()) != null) {
-					if (!dataDesc.equals("") && !dataDesc.startsWith("//")) {
-						String[] variantNames = Arrays.asList(dataDesc.split(",", -1)).toArray(new String[0]);
-						String[] variantNamesLocalized = new String[variantNames.length];
-						for (int i = 1; i < variantNames.length; i++) {
-							if (variantNames[i].isEmpty()) {
-								continue;
-							}
-						}
-						//String[] variantDescData = dataDesc.split(",", -1);
-						for (Card c : cardList) {
-							if (c.getPack().equals(packName) && c.getId().equals(variantNames[0])) {
-								for (int i = 1; i < variantNames.length; i++) {
-									if (!variantNames[i].isEmpty() && variantNames[i] != null) {
-										variantNamesLocalized[i - 1] = variantNames[i];
-									} else {
-										variantNamesLocalized[i - 1] = "";
-									}
-								}
-								c.setVariantNames(variantNamesLocalized);
-							}
-						}
-					
-					}
-				}
-				inputDesc.close();
-			}
-			
-		} catch (FileNotFoundException e) {
-			System.out.println("An error occurred.");
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	*/
 
 	public static void loadCardAvailability() {
 	    try {

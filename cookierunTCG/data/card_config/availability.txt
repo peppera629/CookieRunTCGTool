@@ -3,15 +3,18 @@
 // 4: EN only, 5: EN and KR only, 6: EN and TW only
 
 // Pack Overrides
-BS8,5
-BS9,5
-BS10,5
-P,5
-ST6,5
-ST7,5
-ST8,5
-ST9,5
-ST10,5
+BS1,0
+BS2,0
+BS3,0
+BS4,0
+BS5,0
+BS6,0
+BS7,0
+ST1,0
+ST2,0
+ST3,0
+ST4,0
+ST5,0
 
 // Promo Tag Overrides
 
@@ -26,13 +29,15 @@ promo.hys,5
 promo.hbf,1
 promo.crwf,0
 promo.gstar25,1
-promo.lottecc,1
+promo.lottecc,5
 promo.dsg,1
 promo.ppg,5
 promo.sb1,1
 promo.sb2,1
-promo.legacy,1
-promo.legacy.champion,1
+promo.legacy,5
+promo.legacy.champion,5
+promo.wcs2526.ancient,5
+promo.wcs2526.beast,5
 
 promo.bs1,0
 promo.bs2,0
@@ -47,6 +52,8 @@ promo.bs8,5
 promo.bs8sp,5
 promo.bs9,5
 promo.bs9sp,5
+promo.bs10,5
+promo.bs10sp,5
 promo.powerarena,5
 promo.serialized.old,0
 promo.serialized.new,5
