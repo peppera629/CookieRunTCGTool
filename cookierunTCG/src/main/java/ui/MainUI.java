@@ -199,7 +199,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mLevelCountTxt, mFlipTypeCountTxt, cardLabel, filterResults, labelSearch;
     private JLabel mDeckItemHintTxt, mDeckTrapHintTxt, mDeckStageHintTxt, mDeckPaneLabel, mCardsPaneLabel;
     private JLabel mCardCountTxt, mFlipCountTxt, mExtraCountTxt, mDeckCookieSummaryTxt;
-    private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardAttackAttr, cardTranslationSkill, cardTranslationAttackCost;
+    private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardAttackAttr, cardAttackAttrValue, cardTranslationSkill, cardTranslationAttackCost;
     private JLabel cardTranslationAttack, cardTranslationAttackIcon, cardTranslationAttackThen, cardTranslationFlip, cardTranslationSkillFlavorText, cardTranslationSkillIcon, cardTranslationAttackFlavorText;
     private JLabel[] langLabels;
     private JLabel[] ownedInfoRarityRows;
@@ -1029,6 +1029,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     if (!isCollectionMode) {
                         attackAttrShown = !attackAttrShown;
                         cardAttackAttr.setVisible(attackAttrShown);
+                        cardAttackAttrValue.setVisible(attackAttrShown);
                     }
                 }
             }
@@ -1040,9 +1041,16 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cardAttackAttr.setFont(CRboldLarge);
         componentFontMap.put(cardAttackAttr, "CRboldLarge"); // Store the font type as a String
 
+        cardAttackAttrValue = new JLabel("", JLabel.CENTER);
+        cardAttackAttrValue.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cardAttackAttrValue.setVisible(attackAttrShown);
+        cardAttackAttrValue.setFont(CRnormalSmall);
+        componentFontMap.put(cardAttackAttrValue, "CRnormalSmall"); // Store the font type as a String
+
         cardInfo.add(cardId);
         cardInfo.add(cardName);
         cardInfo.add(cardAttackAttr);
+        cardInfo.add(cardAttackAttrValue);
 
         // ==== Card Preview
         mCardDetailPane = new JPanel();
@@ -2277,8 +2285,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             cardAttackAttr.setText("<html><img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/24px/ATK.png").toString()).getAbsolutePath() + "\">&nbsp;" + card.getAttackDMG() +
             "&nbsp;<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/24px/avgDMG.png").toString()).getAbsolutePath() + "\">&nbsp;" + card.getAvgDMG() +
             "&nbsp;<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/24px/peakDMG.png").toString()).getAbsolutePath() + "\">&nbsp;" + card.getPeakDMG() + "</html>");
+            cardAttackAttrValue.setText("(" + card.getAttackEfficiency() + " / " + card.getAvgEfficiency() + " / " + card.getPeakEfficiency() + ")");
+        
         } else {
             cardAttackAttr.setText("");
+            cardAttackAttrValue.setText("");
         }
 
         if (card.getNameByLang().get(Config.getLangIndex(Config.LANGUAGE)).endsWith("*")) {
@@ -2474,6 +2485,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cardId.setText(null);
         cardName.setText(null);
         cardAttackAttr.setText(null);
+        cardAttackAttrValue.setText(null);
 
         updateComponents(frame.getContentPane());
         mCardDetailPane.removeAll();
@@ -2821,6 +2833,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mRandomDrawSimBtn.setVisible(false);
             cardAttackAttr.setText("");
             cardAttackAttr.setVisible(false);
+            cardAttackAttrValue.setText("");
+            cardAttackAttrValue.setVisible(false);
             mTextsPane.setVisible(false);
             mDeckDistributionPane.setVisible(false);
             mDeckPaneLabel.setVisible(false);
@@ -2858,6 +2872,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             splitPane.setTopComponent(deckPane);
             mRandomDrawSimBtn.setVisible(true);
             cardAttackAttr.setVisible(true);
+            cardAttackAttrValue.setVisible(true);
             mTextsPane.setVisible(true);
             mDeckDistributionPane.setVisible(true);
             mDeckPaneLabel.setVisible(true);

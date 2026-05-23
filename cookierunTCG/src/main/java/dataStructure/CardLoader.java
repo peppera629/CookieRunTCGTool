@@ -172,6 +172,19 @@ public class CardLoader {
 					// Includes: DMG dealt during the opponent's turn, ATK-increasing skills, HP-trashing skills, HP-stealing skills
 					// Excludes: Self-damage, items, traps, and stages for now
 
+					boolean isEmpty = false;
+					for (String item : cardData) {
+						if (item.isEmpty()) {
+							isEmpty = true;
+							System.out.println("Empty data found in " + cardData[0]);
+							break;
+						}
+					}
+
+					if (cardData.length < 10 || isEmpty) {
+						continue; // Skip placeholder data
+					}
+
 	            	CardColor color = CardColor.Green;
 					boolean isAwaken = false;
 					boolean isSpecialPlay = false;
@@ -588,7 +601,7 @@ public class CardLoader {
 
 								c.setVariantTypes(variantRarity);
 								for (int i = 0; i < variantNames.length; i++) {
-									System.out.println("Processing card " + c.getId() + " variant " + i);
+									//System.out.println("Processing card " + c.getId() + " variant " + i);
 									if (!variantNames[i].isEmpty() && variantNames[i] != null) {
 										variantNamesLocalized[i] = variantNames[i];
 									} else {
