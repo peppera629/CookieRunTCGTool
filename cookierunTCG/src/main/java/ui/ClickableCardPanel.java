@@ -203,7 +203,6 @@ public class ClickableCardPanel extends JPanel {
 				int boxHeight = mCardIcon.getIconWidth()/3;
 				int boxX = getWidth() - boxWidth;
 				int boxY = getHeight() - boxHeight;
-				Color boxColor;
 
 				int changeBoxWidth = boxWidth;
 				int changeBoxHeight = boxHeight/2;

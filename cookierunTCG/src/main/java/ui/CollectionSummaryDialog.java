@@ -180,7 +180,7 @@ public class CollectionSummaryDialog {
                     label.setOpaque(true);
                     label.setBackground(new Color(191, 142, 0));
                 } else {
-                    label.setForeground(Color.BLACK);
+                    label.setForeground(MainUI.foregroundColor);
                 }
             }
             label.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
@@ -206,7 +206,7 @@ public class CollectionSummaryDialog {
                         label.setOpaque(true);
                         label.setBackground(new Color(191, 142, 0));
                     } else {
-                        label.setForeground(Color.BLACK);
+                        label.setForeground(MainUI.foregroundColor);
                     }
                 }
                 label.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
@@ -303,7 +303,7 @@ public class CollectionSummaryDialog {
                         label.setOpaque(true);
                         label.setBackground(new Color(191, 142, 0));
                     } else {
-                        label.setForeground(Color.BLACK);
+                        label.setForeground(MainUI.foregroundColor);
                     }
                 }
                 label.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));

@@ -2,23 +2,16 @@ package ui;
 import util.Config;
 import java.awt.EventQueue;
 import java.awt.BorderLayout;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.Normalizer;
-import java.awt.datatransfer.*;
 
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.UIManager;
@@ -28,7 +21,7 @@ import javax.swing.KeyStroke;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
+import javax.swing.JButton;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
@@ -44,7 +37,6 @@ import java.util.List;
 
 import ui.ClickableCardPanel.CardListCallBack;
 import ui.SortSettingsWindow.ConfigChangedCallback;
-import ui.FilePicker;
 import util.CardUtil.CardColor;
 import util.CardUtil.CardRarity;
 import util.CardUtil.CardType;
@@ -57,7 +49,6 @@ import util.LanguageChangeListener;
 import util.UIUtil;
 import util.ScrollablePanel;
 
-import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -65,7 +56,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.KeyboardFocusManager;
 import java.awt.KeyEventDispatcher;
 import java.awt.event.WindowAdapter;
@@ -86,7 +76,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JButton;
+import com.formdev.flatlaf.FlatLightLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
 
 // FEATURE: Add "Credits" popup
 // FEATURE: Add undo/redo/undo all
@@ -100,19 +91,22 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     // 1. Highlight translation-available cards
     // 2. Tournament mode in normal mode (after searching, if there's only 1 card after filtering, show that card immediately)
     public static boolean[] secretFeatures = {false, false};
+    public static Color foregroundColor;
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
+        FlatDarkLaf.setup();
         System.setProperty("sun.java2d.uiScale", "1.0");
         System.setProperty("sun.java2d.dpiaware", "true");
         System.setProperty("file.encoding", "UTF-8");
         Config.loadConfig();
 
         try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+            UIManager.setLookAndFeel(new FlatDarkLaf());
+            foregroundColor = UIManager.getColor("Label.foreground");
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -2120,7 +2114,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             filterResults.setForeground(Color.RED);
         } else {
             filterResults.setText(String.format(CardUtil.getTranslation("displaycount"), currentList.size()));
-            filterResults.setForeground(Color.BLACK);
+            filterResults.setForeground(foregroundColor);
         }
 
         if (secretFeatures[1] && currentList.size() == 1) {
@@ -2167,7 +2161,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             //System.out.println(mDeck.getOwnershipLegality());
             mCardCountTxt.setToolTipText("<html>" + invalidReasonString + "</html>");
         } else {
-        	mCardCountTxt.setForeground(Color.BLACK);
+        	mCardCountTxt.setForeground(foregroundColor);
             mCardCountTxt.setToolTipText(null);
         }
 
@@ -2176,7 +2170,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         	mFlipCountTxt.setForeground(Color.RED);
             mFlipCountTxt.setToolTipText("<html>" + CardUtil.getTranslation("warning.flipoverlimit") + "</html>");
         } else {
-        	mFlipCountTxt.setForeground(Color.BLACK);
+        	mFlipCountTxt.setForeground(foregroundColor);
             mFlipCountTxt.setToolTipText(null);
         }
 
@@ -2185,7 +2179,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         	mExtraCountTxt.setForeground(Color.RED);
             mExtraCountTxt.setToolTipText("<html>" + CardUtil.getTranslation("warning.extraoverlimit") + "</html>");
         } else {
-        	mExtraCountTxt.setForeground(Color.BLACK);
+        	mExtraCountTxt.setForeground(foregroundColor);
             mExtraCountTxt.setToolTipText(null);
         }
         
@@ -2266,7 +2260,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 cardId.setForeground(new Color(160, 0, 0));
             } else {
                 cardId.setText(card.getId());
-                cardId.setForeground(Color.BLACK);
+                cardId.setForeground(foregroundColor);
             }
         } else {
             if (card.getMaxCount() == 1) {
@@ -2277,7 +2271,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 cardId.setForeground(new Color(160, 0, 0));
             } else {
                 cardId.setText(card.getId());
-                cardId.setForeground(Color.BLACK);
+                cardId.setForeground(foregroundColor);
             }
         }
 
@@ -2302,7 +2296,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         if (card.isExtra()) {
             cardName.setForeground(extraColor);
         } else {
-            cardName.setForeground(Color.BLACK);
+            cardName.setForeground(foregroundColor);
         }
         if (card.getCardTranslation() != null && Config.CARD_TRANSLATION_ENABLED) {
             cardTranslationSkill.setText("<html>" + card.getCardTranslation()[1] + "</html>");
@@ -2555,6 +2549,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistCookie1.setOpaque(true);
             mDeckDistCookie1.setToolTipText(CardUtil.getTranslation("deck.distribution.lv1") + " " + cookieSummary[1]);
             mDeckDistCookie1.setBackground(new Color(135, 223, 255));
+            mDeckDistCookie1.setForeground(Color.BLACK);
             componentFontMap.put(mDeckDistCookie1, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistCookie1, gbc_deckdist);
         }
@@ -2567,6 +2562,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistCookie2.setOpaque(true);
             mDeckDistCookie2.setToolTipText(CardUtil.getTranslation("deck.distribution.lv2") + " " + cookieSummary[2]);
             mDeckDistCookie2.setBackground(new Color(135, 193, 255));
+            mDeckDistCookie2.setForeground(Color.BLACK);
             componentFontMap.put(mDeckDistCookie2, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistCookie2, gbc_deckdist);
         }
@@ -2579,6 +2575,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistCookie3.setOpaque(true);
             mDeckDistCookie3.setToolTipText(CardUtil.getTranslation("deck.distribution.lv3") + " " + cookieSummary[3]);
             mDeckDistCookie3.setBackground(new Color(135, 163, 255));
+            mDeckDistCookie3.setForeground(Color.BLACK);
             componentFontMap.put(mDeckDistCookie3, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistCookie3, gbc_deckdist);
         }
@@ -2591,6 +2588,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistCookie4.setOpaque(true);
             mDeckDistCookie4.setToolTipText(CardUtil.getTranslation("deck.distribution.lv4") + " " + cookieSummary[4]);
             mDeckDistCookie4.setBackground(new Color(135, 133, 255));
+            mDeckDistCookie4.setForeground(Color.BLACK);
             componentFontMap.put(mDeckDistCookie4, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistCookie4, gbc_deckdist);
         }
@@ -2603,6 +2601,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistCookie5.setOpaque(true);
             mDeckDistCookie5.setToolTipText(CardUtil.getTranslation("deck.distribution.lv5") + " " + cookieSummary[5]);
             mDeckDistCookie5.setBackground(new Color(135, 103, 255));
+            mDeckDistCookie5.setForeground(Color.BLACK);
             componentFontMap.put(mDeckDistCookie5, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistCookie5, gbc_deckdist);
         }
@@ -2615,6 +2614,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistFlipHeal.setOpaque(true);
             mDeckDistFlipHeal.setToolTipText(CardUtil.getTranslation("deck.distribution.flipheal") + " " + flipTypeSummary[0]);
             mDeckDistFlipHeal.setBackground(new Color(255, 235, 84));
+            mDeckDistFlipHeal.setForeground(Color.BLACK);
             componentFontMap.put(mDeckDistFlipHeal, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistFlipHeal, gbc_deckdist);
         } 
@@ -2627,6 +2627,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistFlipDraw.setOpaque(true);
             mDeckDistFlipDraw.setToolTipText(CardUtil.getTranslation("deck.distribution.flipdraw") + " " + flipTypeSummary[1]);
             mDeckDistFlipDraw.setBackground(new Color(255, 205, 84));
+            mDeckDistFlipDraw.setForeground(Color.BLACK);
             componentFontMap.put(mDeckDistFlipDraw, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistFlipDraw, gbc_deckdist);
         }
@@ -2639,6 +2640,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistFlipSpecial.setOpaque(true);
             mDeckDistFlipSpecial.setToolTipText(CardUtil.getTranslation("deck.distribution.flipspecial") + " " + flipTypeSummary[2]);
             mDeckDistFlipSpecial.setBackground(new Color(255, 175, 84));
+            mDeckDistFlipSpecial.setForeground(Color.BLACK);
             componentFontMap.put(mDeckDistFlipSpecial, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistFlipSpecial, gbc_deckdist);
         }
@@ -2651,6 +2653,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistItem.setOpaque(true);
             mDeckDistItem.setToolTipText(CardUtil.getTranslation("deck.distribution.item") + " " + otherSummary[0]);
             mDeckDistItem.setBackground(new Color(64, 247, 183));
+            mDeckDistItem.setForeground(Color.BLACK);
             componentFontMap.put(mDeckDistItem, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistItem, gbc_deckdist);
         }
@@ -2663,6 +2666,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistTrap.setOpaque(true);
             mDeckDistTrap.setToolTipText(CardUtil.getTranslation("deck.distribution.trap") + " " + otherSummary[1]);
             mDeckDistTrap.setBackground(new Color(64, 217, 183));
+            mDeckDistTrap.setForeground(Color.BLACK);
             componentFontMap.put(mDeckDistTrap, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistTrap, gbc_deckdist);
         }
@@ -2675,6 +2679,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistStage.setOpaque(true);
             mDeckDistStage.setToolTipText(CardUtil.getTranslation("deck.distribution.stage") + " " + otherSummary[2]);
             mDeckDistStage.setBackground(new Color(64, 187, 183));
+            mDeckDistStage.setForeground(Color.BLACK);
             componentFontMap.put(mDeckDistStage, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistStage, gbc_deckdist);
         }
@@ -2698,6 +2703,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistExtra1.setOpaque(true);
             mDeckDistExtra1.setToolTipText(CardUtil.getTranslation("deck.distribution.exlv1") + " " + extraSummary[1]);
             mDeckDistExtra1.setBackground(new Color(255, 103, 178));
+            mDeckDistExtra1.setForeground(Color.WHITE);
             componentFontMap.put(mDeckDistExtra1, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistExtra1, gbc_deckdist);
         }
@@ -2710,6 +2716,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistExtra2.setOpaque(true);
             mDeckDistExtra2.setToolTipText(CardUtil.getTranslation("deck.distribution.exlv2") + " " + extraSummary[2]);
             mDeckDistExtra2.setBackground(new Color(195, 83, 198));
+            mDeckDistExtra2.setForeground(Color.WHITE);
             componentFontMap.put(mDeckDistExtra2, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistExtra2, gbc_deckdist);
         }
@@ -2722,6 +2729,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistExtra3.setOpaque(true);
             mDeckDistExtra3.setToolTipText(CardUtil.getTranslation("deck.distribution.exlv3") + " " + extraSummary[3]);
             mDeckDistExtra3.setBackground(new Color(155, 63, 218));
+            mDeckDistExtra3.setForeground(Color.WHITE);
             componentFontMap.put(mDeckDistExtra3, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistExtra3, gbc_deckdist);
         }
@@ -2734,6 +2742,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistExtra4.setOpaque(true);
             mDeckDistExtra4.setToolTipText(CardUtil.getTranslation("deck.distribution.exlv4") + " " + extraSummary[4]);
             mDeckDistExtra4.setBackground(new Color(115, 43, 198));
+            mDeckDistExtra4.setForeground(Color.WHITE);
             componentFontMap.put(mDeckDistExtra4, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistExtra4, gbc_deckdist);
         }
@@ -2746,6 +2755,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mDeckDistExtra5.setOpaque(true);
             mDeckDistExtra5.setToolTipText(CardUtil.getTranslation("deck.distribution.exlv5") + " " + extraSummary[5]);
             mDeckDistExtra5.setBackground(new Color(75, 23, 178));
+            mDeckDistExtra5.setForeground(Color.WHITE);
             componentFontMap.put(mDeckDistExtra5, "CRboldSmall"); // Store the font type as a String
             mDeckDistributionPane.add(mDeckDistExtra5, gbc_deckdist);
         }
@@ -2975,7 +2985,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 cardId.setForeground(new Color(160, 0, 0));
             } else {
                 cardId.setText(card.getId());
-                cardId.setForeground(Color.BLACK);
+                cardId.setForeground(foregroundColor);
             }
 
             for (int i = 0; i < langLabels.length; i++) {
@@ -2990,11 +3000,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     cardName.setForeground(highlightColor);
                 } else {
                     cardName.setText(card.getName());
-                    cardName.setForeground(Color.BLACK);
+                    cardName.setForeground(foregroundColor);
                 }
             } else {
                 cardName.setText(card.getName());
-                cardName.setForeground(Color.BLACK);
+                cardName.setForeground(foregroundColor);
             }
             clearTranslations();
 
@@ -3274,7 +3284,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     ownedInfoRarityRows[i].setText(ownedInfo.toString());
                     ownedInfoCountRows[i][j].setText(String.valueOf(ownedCount));
                     if (card.getAvailability(i)[langIdx]) {
-                        ownedInfoCountRows[i][j].setForeground(Color.BLACK);
+                        ownedInfoCountRows[i][j].setForeground(foregroundColor);
                     } else {
                         ownedInfoCountRows[i][j].setForeground(Color.GRAY);
                     }
@@ -3296,7 +3306,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     ownedInfoCountRows[i][currentSelectedCardLanguage].setForeground(highlightColor);
                 } else {
                     if (currentCard.getAvailability(i)[Config.COLLECTION_LANGUAGE_INDICES[j]]) {
-                        ownedInfoCountRows[i][j].setForeground(Color.BLACK);
+                        ownedInfoCountRows[i][j].setForeground(foregroundColor);
                     } else {
                         ownedInfoCountRows[i][j].setForeground(Color.GRAY);
                     }
@@ -3318,7 +3328,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             } else {
                 langLabels[i].setOpaque(false);
                 langLabels[i].setBackground(new Color(0,0,0,0));
-                langLabels[i].setForeground(Color.BLACK);
+                langLabels[i].setForeground(foregroundColor);
             }
         }
     }
@@ -3340,7 +3350,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             if (currentCard.getAltNames().size() > 0) {
                 if (displayVariant == 0) {
                     cardName.setText(currentCard.getName());
-                    cardName.setForeground(Color.BLACK);
+                    cardName.setForeground(foregroundColor);
                 } else {
                     List<String> altNamesForVariant = currentCard.getAltNames().get(displayVariant-1);
                     if (altNamesForVariant != null && altNamesForVariant.size() > Config.getLangIndex(Config.LANGUAGE)) {
@@ -3348,12 +3358,12 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                         cardName.setForeground(highlightColor);
                     } else {
                         cardName.setText(currentCard.getName());
-                        cardName.setForeground(Color.BLACK);
+                        cardName.setForeground(foregroundColor);
                     }
                 }
             } else {
                 cardName.setText(currentCard.getName());
-                cardName.setForeground(Color.BLACK);
+                cardName.setForeground(foregroundColor);
             }
             mCardDetailPane.revalidate();
             mCardDetailPane.repaint();

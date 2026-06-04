@@ -3,6 +3,7 @@ package dataStructure;
 import java.io.BufferedReader;
 import java.io.File;  // Import the File class
 import java.io.FileInputStream;
+//import org.apache.commons.io.input.BOMInputStream;
 import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.io.FileWriter;
 import java.io.IOException;
@@ -29,7 +30,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -37,7 +37,7 @@ import javax.swing.ImageIcon;
 public class CardLoader {	
 	public static ExecutorService cardImageLoadExecutor = Executors.newFixedThreadPool(10);
 
-	private static String iconPathR, iconPathY, iconPathG, iconPathB, iconPathP, iconPathW;
+	private static String iconPathR, iconPathY, iconPathG, iconPathB, iconPathP, iconPathK, iconPathW;
 	private static String iconPathActivate, iconPathYourTurn, iconPathOncePerTurn, iconPathOnPlay;
 	private static String iconPathBlocker, iconPathEquip, iconPathExtra, iconPathAwaken, iconPathFlip;
 	private static String iconPathSpecialPlay, iconPathSkill;
@@ -439,6 +439,7 @@ public class CardLoader {
 		iconPathG = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "G.png").toString()).getAbsolutePath() + "\">";
 		iconPathB = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "B.png").toString()).getAbsolutePath() + "\">";
 		iconPathP = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "P.png").toString()).getAbsolutePath() + "\">";
+		iconPathK = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "K.png").toString()).getAbsolutePath() + "\">";
 		iconPathW = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "W.png").toString()).getAbsolutePath() + "\">";
 		iconPathActivate = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Activate.png").toString()).getAbsolutePath() + "\">";
 		iconPathYourTurn = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "YourTurn.png").toString()).getAbsolutePath() + "\">";
@@ -452,78 +453,92 @@ public class CardLoader {
 	    iconPathSpecialPlay = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "SpecialPlay.png").toString()).getAbsolutePath() + "\">";
 		iconPathSkill = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Skill.png").toString()).getAbsolutePath() + "\">";
 		try {
-	        File translationFile = new File(AppPaths.dataDir().resolve("card_config/translations/"+Config.LANGUAGE+"/"+packName+".txt").toString());
-			if (translationFile.exists()) {
-		        BufferedReader input = new BufferedReader(
-		                new InputStreamReader(new FileInputStream(translationFile), StandardCharsets.UTF_8));
-				String data;
-				while((data= input.readLine())!=null) {
-					if (!data.equals("") && !data.startsWith("//")) {
-						String[] cardData = data.split(";", -1);
-						for (int i = 1; i < cardData.length; i++) {
-							cardData[i] = cardData[i].replace("&", "&amp;")
-										 .replace(" ", "&nbsp;")
-                                         .replace("<", "&lt;")
-                                         .replace(">", "&gt;")
-										 .replace("[R]", iconPathR)
-										 .replace("[Y]", iconPathY)
-										 .replace("[G]", iconPathG)
-										 .replace("[B]", iconPathB)
-										 .replace("[P]", iconPathP)
-										 .replace("[W]", iconPathW)
-										 .replace("【啟動】", iconPathActivate)
-										 .replace("[Activate]", iconPathActivate)
-										 .replace("【1回合1次】", iconPathOncePerTurn)
-										 .replace("[Once Per Turn]", iconPathOncePerTurn)
-										 .replace("【阻擋】", iconPathBlocker)
-										 .replace("[Blocker]", iconPathBlocker)
-										 .replace("【裝載】", iconPathEquip)
-										 .replace("[Equip]", iconPathEquip)
-										 .replace("【額外】", iconPathExtra)
-										 .replace("[EXTRA]", iconPathExtra)
-										 .replace("【覺醒】", iconPathAwaken)
-										 .replace("[Awaken]", iconPathAwaken)
-										 .replace("【在自己的回合中】", iconPathYourTurn)
-										 .replace("[Your Turn]", iconPathYourTurn)
-										 .replace("【登場時】", iconPathOnPlay)
-										 .replace("[On Play]", iconPathOnPlay)
-										 .replace("【特殊登場】", iconPathSpecialPlay)
-										 .replace("[Special Play]", iconPathSpecialPlay)
-										 .replace("【技能】", iconPathSkill
-										 .replace("[Skill]", iconPathSkill)
-										 )
-										 .replace("\\,", ",")
-										 .replace("\\n", "<br>");
-						}
-						//                0   1            2      3            4            5           6                   7
-						// For each row: [ID, Skill Name, Skill, Attack Cost, Attack Name, Attack DMG, Attack Then Effect, FLIP]
-						for (Card c : cardList) {
-							if (c.getPack().equals(packName) && c.getId().equals(cardData[0])) {
-								// Set card translations
-								// System.out.println(cardData[1] + ", " + cardData[2] + ", " + cardData[3] + ", " + cardData[4] + ", " + cardData[5] + ", " + cardData[6] + ", " + cardData[7]);
-								if (cardData.length < 8) {
-									// Pad with empty strings if some fields are missing
-									cardData = Arrays.copyOf(cardData, 8);
-									for (int i = 0; i < cardData.length; i++) {
-										if (cardData[i] == null) {
-											cardData[i] = "";
-										}
-									}
-								}
-								c.setCardTranslation(cardData[1], cardData[2], cardData[3], cardData[4], cardData[5], cardData[6], (cardData[7] == "" ? cardData[7] : iconPathFlip + "&nbsp;" + cardData[7]));
-								break;
-							}
+	        File translationFile = new File(AppPaths.dataDir().resolve("card_config/translations/"+Config.LANGUAGE+"/"+packName+".txt").toString()); // For EN files to avoid conflicts with actual commas
+			String sep = ";";
+			if (!translationFile.exists()) {
+				translationFile = new File(AppPaths.dataDir().resolve("card_config/translations/"+Config.LANGUAGE+"/"+packName+".csv").toString()); // For TW files for ease of editing
+				sep = ",";
+			 	if (!translationFile.exists()) {
+					for (Card c : cardList) {
+						if (c.getPack().equals(packName)) {
+							c.clearCardTranslation();
 						}
 					}
+					return;
 				}
-				input.close();
-			} else {
-				for (Card c : cardList) {
-					if (c.getPack().equals(packName)) {
-						c.clearCardTranslation();
+			}
+
+			BufferedReader input = new BufferedReader(new InputStreamReader(new FileInputStream(translationFile), StandardCharsets.UTF_8));
+			//BOMInputStream bomInput = new BOMInputStream(new FileInputStream(translationFile));
+			//InputStreamReader isr = new InputStreamReader(bomInput, StandardCharsets.UTF_8);
+			//BufferedReader input = new BufferedReader(isr);
+			String data;
+			while((data = input.readLine())!=null) {
+				// Skip over UTF-8 byte order mark if present (always applied by Excel)
+				if (data.startsWith("\uFEFF")) {
+					data = data.substring(1);
+				}
+
+				if (!data.equals("") && !data.startsWith("//")) {
+					String[] cardData = data.split(sep, -1);
+					for (int i = 1; i < cardData.length; i++) {
+						cardData[i] = cardData[i].replace("&", "&amp;")
+										.replace(" ", "&nbsp;")
+										.replace("<", "&lt;")
+										.replace(">", "&gt;")
+										.replace("[R]", iconPathR)
+										.replace("[Y]", iconPathY)
+										.replace("[G]", iconPathG)
+										.replace("[B]", iconPathB)
+										.replace("[P]", iconPathP)
+										.replace("[K]", iconPathK)
+										.replace("[W]", iconPathW)
+										.replace("【啟動】", iconPathActivate)
+										.replace("[Activate]", iconPathActivate)
+										.replace("【1回合1次】", iconPathOncePerTurn)
+										.replace("[Once Per Turn]", iconPathOncePerTurn)
+										.replace("【阻擋】", iconPathBlocker)
+										.replace("[Blocker]", iconPathBlocker)
+										.replace("【裝載】", iconPathEquip)
+										.replace("[Equip]", iconPathEquip)
+										.replace("【額外】", iconPathExtra)
+										.replace("[EXTRA]", iconPathExtra)
+										.replace("【覺醒】", iconPathAwaken)
+										.replace("[Awaken]", iconPathAwaken)
+										.replace("【在自己的回合中】", iconPathYourTurn)
+										.replace("[Your Turn]", iconPathYourTurn)
+										.replace("【登場時】", iconPathOnPlay)
+										.replace("[On Play]", iconPathOnPlay)
+										.replace("【特殊登場】", iconPathSpecialPlay)
+										.replace("[Special Play]", iconPathSpecialPlay)
+										.replace("【技能】", iconPathSkill)
+										.replace("[Skill]", iconPathSkill)
+										.replace("\\,", ",")
+										.replace("\\n", "<br>");
+					}
+					//                0   1            2      3            4            5           6                   7
+					// For each row: [ID, Skill Name, Skill, Attack Cost, Attack Name, Attack DMG, Attack Then Effect, FLIP]
+					for (Card c : cardList) {
+						if (c.getPack().equals(packName) && c.getId().equals(cardData[0])) {
+							// Set card translations
+							// System.out.println(cardData[1] + ", " + cardData[2] + ", " + cardData[3] + ", " + cardData[4] + ", " + cardData[5] + ", " + cardData[6] + ", " + cardData[7]);
+							if (cardData.length < 8) {
+								// Pad with empty strings if some fields are missing
+								cardData = Arrays.copyOf(cardData, 8);
+								for (int i = 0; i < cardData.length; i++) {
+									if (cardData[i] == null) {
+										cardData[i] = "";
+									}
+								}
+							}
+							c.setCardTranslation(cardData[1], cardData[2], cardData[3], cardData[4], cardData[5], cardData[6], (cardData[7] == "" ? cardData[7] : iconPathFlip + "&nbsp;" + cardData[7]));
+							break;
+						}
 					}
 				}
 			}
+			input.close();
+
 		} catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();

@@ -1,5 +1,5 @@
-Red - Fire Spirit + SMC.txt
-Red - Fire Spirit + SMC
+Purple - Moonlight.txt
+Purple - Moonlight
 _,_,_,_,_,_,_
 _,_,_,_
 _

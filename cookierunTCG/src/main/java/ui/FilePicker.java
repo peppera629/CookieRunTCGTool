@@ -25,24 +25,19 @@ import java.awt.Desktop;
 import java.util.HashMap;
 import java.util.Map;
 
-import dataStructure.Deck;
-import dataStructure.CardLoader;
 import dataStructure.Card;
 import dataStructure.CardList;
 import util.CardUtil;
 import util.AppPaths;
-import util.Config;
 import util.CardUtil.CardColor;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.Comparator;
 

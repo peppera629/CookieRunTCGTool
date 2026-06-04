@@ -29,7 +29,7 @@ public class SettingsWindow implements LanguageChangeListener{
     private JLabel languageLabel, cardLanguageLabel, regionLabel;
     private JComboBox<String> languageDropdown, cardLanguageDropdown, regionDropdown;
     private JButton btnConfirm;
-    private JSlider cardPreviewScaleSlider, cardListScaleSlider;
+    private JSlider cardPreviewScaleSlider;
     private JToggleButton cardTranslationToggle, largeTranslationTextToggle, buildModeToggle, showCollectionChangeToggle, showOwnedOnlyToggle, advFilteringToggle, showOnlyLegalInCollectionToggle;
 
 	public static void addLanguageChangeListener(LanguageChangeListener listener) {

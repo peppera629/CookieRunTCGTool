@@ -5,7 +5,7 @@
 
   <groupId>local</groupId>
   <artifactId>cookierunTCG</artifactId>
-  <version>0.21.0</version>
+  <version>0.22.0</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -19,7 +19,6 @@
     <finalName>deckBuilder</finalName>
 
     <plugins>
-
       <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
@@ -29,12 +28,12 @@
         </configuration>
     </plugin>
 
-      <!-- Build a thin JAR (exclude big assets) -->
+      <!-- Build a thin JAR (exclude big assets) >
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.4.2</version>
         <configuration>
-          <outputDirectory>${project.basedir}/bin</outputDirectory>
+          <outputDirectory>${project.basedir}</outputDirectory>
           
           <archive>
             <manifest>
@@ -42,6 +41,30 @@
             </manifest>
           </archive>
         </configuration>
+      </plugin-->
+
+      <!-- Build a Fat JAR with dependencies included -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.5.2</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <outputFile>${project.basedir}/deckBuilder.jar</outputFile>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>ui.MainUI</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
 
       <!-- Copy the excluded assets next to the jar for distribution -->
@@ -59,8 +82,13 @@
               <outputDirectory>${project.build.directory}/dist/data</outputDirectory>
               <resources>
                 <resource>
-                  <directory>src/main/resources</directory>
+                 <directory>src/main/resources</directory>
+                 <!-- filtering>true</filtering -->
                 </resource>
+                <!-- nonFilteredFileExtensions>
+                 <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+                 <nonFilteredFileExtension>otf</nonFilteredFileExtension>
+                </nonFilteredFileExtensions -->
               </resources>
             </configuration>
           </execution>
@@ -90,23 +118,15 @@
 
 
   <dependencies>
-  
     <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx</artifactId>
-      <version>${javafx.version}</version>
-      <type>pom</type>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.22.0</version>
     </dependency>
     <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-controls</artifactId>
-      <version>${javafx.version}</version>
+      <groupId>com.formdev</groupId>
+      <artifactId>flatlaf</artifactId>
+      <version>3.7.1</version>
     </dependency>
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-fxml</artifactId>
-      <version>${javafx.version}</version>
-    </dependency>
-
   </dependencies>
 </project>

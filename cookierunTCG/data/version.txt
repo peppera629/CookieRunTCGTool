@@ -1,1 +1,7 @@
-1.0.0.1
+2.0.2
+
+// 2.0.2 - 6/3, fixed translation errors
+// 2.0.1 - 6/2, fixed translation errors
+// 2.0.0 - 5/29, BS11 base versions and translations complete, promo pack 11 complete
+// 1.0.3 - 5/27, BS9 skill & attack name translations
+// 1.0.2 - 5/27, BS11 (black flips) and P (candy apple and black sapphire flips)

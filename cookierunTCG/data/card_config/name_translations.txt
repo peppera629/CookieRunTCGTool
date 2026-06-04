@@ -67,6 +67,7 @@ Buttercup Cookie,毛毛餅乾
 Cake Hound,蛋糕犬
 Cake Monster Army,蛋糕怪物軍團
 Cake Warrior,蛋糕士兵
+Cake Witch,三層蛋糕魔女
 Cake Wolf,蛋糕灰狼
 Camellia Cookie,山茶花餅乾
 Candlelight Cookie,蜜蠟餅乾
@@ -157,6 +158,7 @@ Dark Cacao Cookie,黑可可餅乾
 Dark Choco Cookie,黑巧克力餅乾
 Dark Enchantress Cookie,暗黑魔女餅乾
 Dark Fondue Cookie,黑巧克力醬餅乾
+Dark Spirit Helmet,靈魂頭盔
 Devil Cookie,惡魔餅乾
 Dino-Sour Cookie,恐龍餅乾
 Director Q,開麥拉導演
@@ -233,6 +235,7 @@ Ice Juggler Cookie,彩球冰淇淋餅乾
 Ice Mint Cookie,冰薄荷餅乾
 Icicle Yeti Cookie,冰錐雪怪餅乾
 Ion Cookie Robot,離子餅乾機器人
+Iris Cookie,鳶尾花餅乾
 Jagae Cookie,彩貝餅乾
 Jalapeño Cookie,哈拉帕辣椒餅乾
 Jam Skelecake Grunt,草莓醬骷髏蛋糕衛兵
@@ -305,6 +308,7 @@ Muscle Cookie,肌肉餅乾
 Mustard Cookie,黃芥末餅乾
 Mystic Flour Cookie,幻彩麵粉餅乾
 Mystic Opal Cookie,幻彩歐珀餅乾
+Net Cookie,絲網餅乾
 Ninja Cookie,忍者餅乾
 Nosy Wizard,插進來的魔法師餅乾
 Nougat Cookie,牛軋糖餅乾
@@ -353,6 +357,7 @@ Pomegranate Cookie,石榴餅乾
 Pond Dino Cookie,勿忘草恐龍餅乾
 Popcorn Cookie,爆米花餅乾
 Popping Candy Cookie,跳跳糖餅乾
+Potato Salad Cookie,馬鈴薯沙拉餅乾
 Potato Cookie,馬鈴薯餅乾
 Princess Cookie,公主餅乾
 Prophet Cookie,預言家餅乾
@@ -375,6 +380,7 @@ Red Osmanthus Cookie,丹桂餅乾
 Red Panna Cotta Cookie,赤紅奶凍餅乾
 Red Pepper Cookie,紅辣椒餅乾
 Red Velvet Cookie,紅絲絨蛋糕餅乾
+Red Velvet Dragon,紅絲絨蛋糕龍
 Ring Candy Cookie,鑽石糖餅乾
 Rockstar Cookie,搖滾巨星餅乾
 Roguefort Cookie,怪盜餅乾
@@ -753,6 +759,7 @@ Seal Tree of the Fallen Emissaries,陣亡使者之封印樹
 Soul Jam: Light of Silence,靈魂果醬: 沉默之光
 
 // BS11
+Orb of Eternal Flame,不滅的紅焰寶石
 Flame's Protection,火焰力量的守護
 Canyon of Destruction,破壞之地的峽谷
 Avatar of Ruin Turmeric Statue,「吞噬恐懼破壞神」薑黃雕像
@@ -771,12 +778,18 @@ Top of the Spire of Deceit,謊言之塔的頂端
 Sea's Protection,海洋力量的守護
 The Breath of the Depths,湧現海之氣息的劍
 Mirror of Destiny,映照命運的鏡子
+Milk Lake of Truth,真理的牛奶河
 Banner of the Solitary Oath,孤獨誓言旗幟
 Dream Traveler's Hourglass,夢之旅者沙漏
 Moonlight's Protection,月光魔法的守護
 Catacombs of Lost Solidarity,團結消逝的地下墓穴
 Freedom that Broke the Silence,破除沉默的自由
+World-reflecting Mirrors,映照世界的鏡子
+Oven of Burning Fate,燃燒宿命的烤箱
 Dark Enchantress's Castle,暗黑魔女的城堡
+Emblem of Darkness,黑暗象徵
+Draining Magic Circle,吸取能量的魔法陣
+
 
 // P
 Macaron Hammer,馬卡龍槌子
