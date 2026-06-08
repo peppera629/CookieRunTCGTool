@@ -25,7 +25,8 @@ public class DefaultState {
 	public boolean[] hp;
 	public boolean[] hp_awaken;
 	public boolean[] rarity;
-	public boolean flip, extra;
+	public int flip;
+	public boolean extra;
 	private static DefaultState instance;
 	private List<String> _search_pack_list;
 
@@ -99,10 +100,14 @@ public class DefaultState {
 				}
 			}
 
-			// Flip checkbox status
+			// Flip radio button status
 			if ((data = input.readLine()) != null) {
 				if (data.equals("v")) {
-					flip = true;
+					flip = 1;
+				} else if (data.equals("x")) {
+					flip = 2;
+				} else {
+					flip = 0;
 				}
 			}
 
@@ -198,7 +203,7 @@ public class DefaultState {
 			for (int i = 0; i < type.length; i++) {
 				type[i] = false;
 			}
-			flip = false;
+			flip = 0;
 			extra = false;
 			for (int i = 0; i < rarity.length; i++) {
 				rarity[i] = false;
@@ -233,7 +238,7 @@ public class DefaultState {
 		for (int i = 0; i < type.length; i++) {
 			type[i] = false;
 		}
-		flip = false;
+		flip = 0;
 		extra = false;
 		for (int i = 0; i < rarity.length; i++) {
 			rarity[i] = false;
@@ -284,8 +289,10 @@ public class DefaultState {
 			}
 			fw.write("\n");
 
-			if (flip) {
+			if (flip == 1) {
 				fw.write("v\n");
+			} else if (flip == 2) {
+				fw.write("x\n");
 			} else {
 				fw.write("_\n");
 			}
@@ -382,7 +389,7 @@ public class DefaultState {
 		return type[i];
 	}
 
-	public boolean getDefaultFlipFlag() {
+	public int getDefaultFlipFlag() {
 		return flip;
 	}
 
@@ -446,7 +453,7 @@ public class DefaultState {
 		hp_awaken[i] = selected;
 	}
 
-	public void setDefaultFlipFlag(boolean selected) {
+	public void setDefaultFlipFlag(int selected) {
 		flip = selected;
 	}
 

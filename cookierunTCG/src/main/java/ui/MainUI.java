@@ -3,11 +3,13 @@ import util.Config;
 import java.awt.EventQueue;
 import java.awt.BorderLayout;
 import java.nio.file.Paths;
+import java.awt.Frame;
 
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import java.awt.Dimension;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JCheckBox;
@@ -18,9 +20,11 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
@@ -92,22 +96,38 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     // 2. Tournament mode in normal mode (after searching, if there's only 1 card after filtering, show that card immediately)
     public static boolean[] secretFeatures = {false, false};
     public static Color foregroundColor;
+    public static Color highlightColor = new Color(60, 60, 255,255);
+    public static Color extraColor = new Color(110, 36, 133, 255);
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
-        FlatDarkLaf.setup();
+        
         System.setProperty("sun.java2d.uiScale", "1.0");
         System.setProperty("sun.java2d.dpiaware", "true");
         System.setProperty("file.encoding", "UTF-8");
         Config.loadConfig();
-
-        try {
-            UIManager.setLookAndFeel(new FlatDarkLaf());
-            foregroundColor = UIManager.getColor("Label.foreground");
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (Config.THEME.equals("dark")) {
+            FlatDarkLaf.setup();
+            try {
+                UIManager.setLookAndFeel(new FlatDarkLaf());
+                foregroundColor = UIManager.getColor("Label.foreground");
+                extraColor = new Color(191, 134, 209, 255);
+                highlightColor = new Color(150, 150, 255,255);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            FlatLightLaf.setup();
+            try {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+                foregroundColor = UIManager.getColor("Label.foreground");
+                extraColor = new Color(110, 36, 133, 255);
+                highlightColor = new Color(60, 60, 255,255);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         EventQueue.invokeLater(new Runnable() {
@@ -177,13 +197,14 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JCheckBox[] cb_peakDMG;
     private JCheckBox[] cb_status;
     private JCheckBox cb_type_cookie, cb_type_item, cb_type_trap, cb_type_stage;
-    private JCheckBox cb_flip, cb_extra, cb_variant_sec, cb_variant_promo;
+    private JCheckBox cb_extra, cb_variant_sec, cb_variant_promo;
+    private JRadioButton[] rb_flip_condition;
     private final Filter filter = new Filter(); 
-    private JLabel labelColor, labelType, labelSeries, labelRarity, labelLV, labelHP, labelHPAwaken, labelSkillType, labelKeyword, labelAttackAttr, labelAttackDMG, labelAttackCost, labelAvgDMG, labelPeakDMG, labelStatus;
+    private JLabel labelColor, labelType, labelSeries, labelRarity, labelLV, labelHP, labelHPAwaken, labelFlip, labelSkillType, labelKeyword, labelAttackAttr, labelAttackDMG, labelAttackCost, labelAvgDMG, labelPeakDMG, labelStatus;
 
     private Deck mDeck;
     private JPanel mCardDetailPane, mCardTranslationPane, deckPane, cardListPane, ownedInfoPanel, keywordLabelPanel, keywordOuterPanel, skillTypeLabelPanel, skillTypeOuterPanel, attackAttrLabelPanel, attackAttrOuterPanel, attackAttrBasePanel, statusLabelPanel, statusOuterPanel;
-    private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup, deckDetailPane, centerPanel;
+    private JPanel mFileOpPane, cardTranslationAttackGroup, cardTranslationFlavorTextGroup, deckDetailPane, centerPanel, skillTypeBtnPanel;
     private JLabel mDeckText, mCollectionChange;
     private JTextField searchBox;
     private JButton saveBtn, saveAsBtn, selectBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST, quickSelectBtnSkillType;
@@ -216,8 +237,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private static boolean isCollectionMode = false, deckChanged = false;
     private Collection collection = Collection.getInstance();
     private Card currentCard;
-    private Color highlightColor = new Color(60,60,255,255);
-    private Color extraColor = new Color(110, 36, 133, 255);
     private String currentDeckDirectory;
 
     private void initialize() {
@@ -1423,8 +1442,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         gbc_type.gridx = 0;
 
         // Rows: Cookie + Levels, Cookie HP, Flip + Flip Types, [Extra, Item, Trap, Stage]
-        JPanel[] typeCheckboxGroupRows = new JPanel[4];
-        for (int i=0; i<4; i++) {
+        JPanel[] typeCheckboxGroupRows = new JPanel[5];
+        for (int i=0; i<5; i++) {
             gbc_type.gridy = i;
         	typeCheckboxGroupRows[i] = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         	typeCheckboxGroup.add(typeCheckboxGroupRows[i], gbc_type);
@@ -1538,6 +1557,40 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             cb_HPAwaken[i].setEnabled(cb_type_cookie.isSelected());
         }
         
+        labelFlip = new JLabel(CardUtil.getTranslation("filter.flip") + ":");
+        labelFlip.setFont(CRnormal);
+        componentFontMap.put(labelFlip, "CRnormal"); // Store the font type as a String
+        typeCheckboxGroupRows[2].add(labelFlip);
+
+        ButtonGroup flipConditionGroup = new ButtonGroup();
+        rb_flip_condition = new JRadioButton[3];
+        String[] flipConditions = {"include", "only", "exclude"};
+
+        for (int i=0; i<3; i++) {
+            final int id = i;
+            rb_flip_condition[i] = new JRadioButton(CardUtil.getTranslation("filter.flip." + flipConditions[id]));
+            flipConditionGroup.add(rb_flip_condition[i]);
+            rb_flip_condition[i].setSelected(mDefaultState.getDefaultFlipFlag() == i);
+            rb_flip_condition[i].setFont(CRnormal);
+            componentFontMap.put(rb_flip_condition[i], "CRnormal"); // Store the font type as a String
+            typeCheckboxGroupRows[2].add(rb_flip_condition[i]);
+            rb_flip_condition[i].addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    mDefaultState.setDefaultFlipFlag(id);
+                    if (id == 1) {
+                        for (JCheckBox cb : cb_flipType) {
+                            cb.setEnabled(true);
+                        }
+                    } else {
+                        for (JCheckBox cb : cb_flipType) {
+                            cb.setEnabled(false);
+                        }
+                    }
+                }
+            });
+        }
+
+        /*
         cb_flip = new JCheckBox(CardUtil.getTranslation("filter.flip"));
         cb_flip.setSelected(mDefaultState.getDefaultFlipFlag());
         cb_flip.setFont(CRnormal);
@@ -1550,7 +1603,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             		cb.setEnabled(cb_flip.isSelected());
             	}
             }
-        });
+        }); */
 
         cb_flipType = new JCheckBox[3];
         cb_flipType[0] = new JCheckBox(CardUtil.getTranslation("flip.heal"));
@@ -1561,8 +1614,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         	cb_flipType[i].setSelected(mDefaultState.getDefaultFlipTypeFlag(i));
             cb_flipType[i].setFont(CRnormal);
             componentFontMap.put(cb_flipType[i], "CRnormal"); // Store the font type as a String
-            typeCheckboxGroupRows[2].add(cb_flipType[i]);
-            cb_flipType[i].setEnabled(cb_flip.isSelected());
+            typeCheckboxGroupRows[3].add(cb_flipType[i]);
+            cb_flipType[i].setEnabled(rb_flip_condition[1].isSelected());
             cb_flipType[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                 	mDefaultState.setDefaultFlipTypeFlag(id, cb_flipType[id].isSelected());
@@ -1574,7 +1627,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_extra.setSelected(mDefaultState.getDefaultExtraFlag());
         cb_extra.setFont(CRnormal);
         componentFontMap.put(cb_extra, "CRnormal"); // Store the font type as a String
-        typeCheckboxGroupRows[3].add(cb_extra);
+        typeCheckboxGroupRows[4].add(cb_extra);
         cb_extra.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultExtraFlag(cb_extra.isSelected());
@@ -1585,7 +1638,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_type_item.setSelected(mDefaultState.getDefaultTypeFlag(1));
         cb_type_item.setFont(CRnormal);
         componentFontMap.put(cb_type_item, "CRnormal"); // Store the font type as a String
-        typeCheckboxGroupRows[3].add(cb_type_item);
+        typeCheckboxGroupRows[4].add(cb_type_item);
         cb_type_item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(1, cb_type_item.isSelected());
@@ -1597,7 +1650,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_type_trap.setSelected(mDefaultState.getDefaultTypeFlag(2));
         cb_type_trap.setFont(CRnormal);
         componentFontMap.put(cb_type_trap, "CRnormal"); // Store the font type as a String
-        typeCheckboxGroupRows[3].add(cb_type_trap);
+        typeCheckboxGroupRows[4].add(cb_type_trap);
         cb_type_trap.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(2, cb_type_trap.isSelected());
@@ -1609,7 +1662,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_type_stage.setSelected(mDefaultState.getDefaultTypeFlag(3));
         cb_type_stage.setFont(CRnormal);
         componentFontMap.put(cb_type_stage, "CRnormal"); // Store the font type as a String
-        typeCheckboxGroupRows[3].add(cb_type_stage);
+        typeCheckboxGroupRows[4].add(cb_type_stage);
         cb_type_stage.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	mDefaultState.setDefaultTypeFlag(3, cb_type_stage.isSelected());
@@ -1923,7 +1976,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         skillTypeLabelPanel.add(labelSkillType);
         mSearchPane.add(skillTypeLabelPanel);
 
-        JPanel skillTypeBtnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        skillTypeBtnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         mSearchPane.add(skillTypeBtnPanel);
 
         skillTypeOuterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Wrap the grid
@@ -1936,6 +1989,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         quickSelectBtnSkillType.setFont(CRnormal);
         componentFontMap.put(quickSelectBtnSkillType, "CRnormal");
         skillTypeBtnPanel.add(quickSelectBtnSkillType);
+        skillTypeBtnPanel.setVisible(Config.ADVANCED_FILTERING);
 
         cb_skillType = new JCheckBox[CardUtil.SKILL_TYPE_MAX];
         
@@ -2036,8 +2090,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     	cb_type_cookie.setSelected(false);
     	cb_type_item.setSelected(false);
     	cb_type_trap.setSelected(false);
+        rb_flip_condition[0].setSelected(true);
+        rb_flip_condition[1].setSelected(false);
+        rb_flip_condition[2].setSelected(false);
         cb_extra.setSelected(false);
-        cb_flip.setSelected(false);
         cb_variant_sec.setSelected(false);
         cb_variant_promo.setSelected(false);
     	cb_type_stage.setSelected(false);
@@ -2053,8 +2109,6 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         for (JCheckBox cb : cb_HPAwaken) {
             cb.setSelected(false);
         }
-
-    	cb_flip.setSelected(false);
 
         for (JCheckBox cb : cb_pack) {
         	cb.setSelected(false);
@@ -2074,7 +2128,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             cb.setEnabled(cb_type_cookie.isSelected());
         }
         for (JCheckBox cb : cb_flipType) {
-            cb.setEnabled(cb_flip.isSelected());
+            cb.setEnabled(rb_flip_condition[1].isSelected());
         }
         for (JCheckBox cb : cb_keyword) {
             cb.setSelected(false);
@@ -2414,7 +2468,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         }
         labelType.setText(CardUtil.getTranslation("type"));
         cb_type_cookie.setText(CardUtil.getTranslation("filter.cookie"));
-        cb_flip.setText(CardUtil.getTranslation("filter.flip"));
+        labelFlip.setText(CardUtil.getTranslation("filter.flip") + ":");
+        String[] flipConditions = {"include", "only", "exclude"};
+        for (int i = 0; i < 3; i++) {
+            rb_flip_condition[i].setText(CardUtil.getTranslation("filter.flip." + flipConditions[i]));
+        }
         cb_flipType[0].setText(CardUtil.getTranslation("flip.heal"));
         cb_flipType[1].setText(CardUtil.getTranslation("flip.draw"));
         cb_flipType[2].setText(CardUtil.getTranslation("flip.special"));
@@ -2442,6 +2500,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_variant_promo.setVisible(Config.ADVANCED_FILTERING);
         keywordLabelPanel.setVisible(Config.ADVANCED_FILTERING);
         keywordOuterPanel.setVisible(Config.ADVANCED_FILTERING);
+        skillTypeBtnPanel.setVisible(Config.ADVANCED_FILTERING);
         skillTypeLabelPanel.setVisible(Config.ADVANCED_FILTERING);
         skillTypeOuterPanel.setVisible(Config.ADVANCED_FILTERING);
         attackAttrLabelPanel.setVisible(Config.ADVANCED_FILTERING);
@@ -3037,7 +3096,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         public boolean[] color = new boolean[CardUtil.COLOR_MAX];
         public boolean[] type = new boolean[CardUtil.TYPE_MAX];
         public boolean[] level = new boolean[CardUtil.LEVEL_MAX + 1];
-        public boolean flip = false;
+        public int flip = 0; // 0: all, 1: flip only, 2: non-flip only
         public boolean[] flipType = new boolean[3];
         public boolean extra = false;
         public boolean[] rarity = new boolean[CardUtil.RARITY_MAX];
@@ -3065,7 +3124,12 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             for (int i=0; i< cb_level.length; i++) {
                 this.level[i] = cb_level[i].isSelected();
             }
-            this.flip = cb_flip.isSelected();
+            this.flip = 0;
+            if (rb_flip_condition[1].isSelected()) {
+                this.flip = 1;
+            } else if (rb_flip_condition[2].isSelected()) {
+                this.flip = 2;
+            }
             for (int i=0; i< cb_flipType.length; i++) {
                 this.flipType[i] = cb_flipType[i].isSelected();
             }
@@ -3121,7 +3185,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             for (int i=0; i<this.level.length; i++) {
                 this.level[i] = false;
             }
-            this.flip = false;
+            this.flip = 0;
             for (int i=0; i<this.flipType.length; i++) {
                 this.flipType[i] = false;
             }
@@ -3372,5 +3436,37 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
     public static boolean isCollectionMode() {
         return isCollectionMode;
+    }
+
+    public static void updateTheme() {
+        Config.loadConfig();
+        if (Config.THEME.equals("dark")) {
+            FlatDarkLaf.setup();
+            try {
+                UIManager.setLookAndFeel(new FlatDarkLaf());
+                foregroundColor = UIManager.getColor("Label.foreground");
+                extraColor = new Color(191, 134, 209, 255);
+                highlightColor = new Color(150, 150, 255,255);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            FlatLightLaf.setup();
+            try {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+                foregroundColor = UIManager.getColor("Label.foreground");
+                extraColor = new Color(110, 36, 133, 255);
+                highlightColor = new Color(60, 60, 255,255);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            for (Frame frame : Frame.getFrames()) {
+                SwingUtilities.updateComponentTreeUI(frame);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

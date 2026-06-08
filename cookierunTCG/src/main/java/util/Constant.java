@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class Constant {
-	public static String VERSION = "0.22.0";
+	public static String VERSION = "0.22.1";
 	public static String DATA_VERSION = "Unknown";
 
 	static {

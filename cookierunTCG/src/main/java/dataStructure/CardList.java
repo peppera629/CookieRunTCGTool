@@ -21,7 +21,7 @@ public class CardList {
 	private boolean _search_color[];
 	private boolean _search_type[];
 	private boolean _search_lv[];
-	private boolean _search_flip;
+	private int _search_flip;
 	private boolean _search_flip_type[];
 	private boolean _search_extra;
 	private boolean _search_rarity[];
@@ -53,7 +53,7 @@ public class CardList {
 		_search_color = new boolean[CardUtil.COLOR_MAX];
 		_search_type = new boolean[CardUtil.TYPE_MAX];
 		_search_lv = new boolean[CardUtil.LEVEL_MAX + 1];
-		_search_flip = false;
+		_search_flip = 0;
 		_search_flip_type = new boolean[3];
 		_search_extra = false;
 		_search_rarity = new boolean[CardUtil.RARITY_MAX];
@@ -115,7 +115,7 @@ public class CardList {
 		boolean selectPeakDMG = isSelectedPeakDMG();
 		boolean selectStatus = isSelectedStatus();
 		
-		if (!selectColor && !selectType && !_search_flip && !_search_extra && !selectRarity && !selectHP && !selectAwakenHP && !selectSkillType && !selectKeyword && !selectAttackDMG && !selectAttackCost && !selectAvgDMG && !selectPeakDMG && !selectStatus && !_search_variants_sec && !_search_variants_promo && _search_name.equals("") && _search_pack_list.size() == 0) {
+		if (!selectColor && !selectType && _search_flip == 0 && !_search_extra && !selectRarity && !selectHP && !selectAwakenHP && !selectSkillType && !selectKeyword && !selectAttackDMG && !selectAttackCost && !selectAvgDMG && !selectPeakDMG && !selectStatus && !_search_variants_sec && !_search_variants_promo && _search_name.equals("") && _search_pack_list.size() == 0) {
 			if (Config.SHOW_OWNED_ONLY && !forceShowAll) {
 				return getOwnedCards();
 			} else {
@@ -161,8 +161,8 @@ public class CardList {
 					|| c.getType() != CardType.Cookie || _search_awaken_hp[awakenHPIndex];
 
 			}
-			flipCorrect = !_search_flip || c.isFlip();
-			flipTypeCorrect = !selectFlipType || !_search_flip || !c.isFlip() || _search_flip_type[c.getFlipType().getValue()];
+			flipCorrect = _search_flip == 0 || ( _search_flip == 1 && c.isFlip() ) || ( _search_flip == 2 && !c.isFlip() );
+			flipTypeCorrect = !selectFlipType || _search_flip == 0 || !c.isFlip() || _search_flip_type[c.getFlipType().getValue()];
 			extraCorrect = !_search_extra || c.isExtra();
 			rarityCorrect = (c.getPack().equals("P") ? (_search_rarity[_search_rarity.length-1] || !isSelectedRarity() ? true : false) : (!selectRarity || _search_rarity[c.getRarity().getValue()]));
 			boolean skillTypeCorrectCheck = false;
@@ -340,8 +340,8 @@ public class CardList {
 		_search_lv[lv] = enabled;
 	}
 
-	public void setFlip(boolean enabled) {
-		_search_flip = enabled;
+	public void setFlip(int condition) {
+		_search_flip = condition;
 	}
 
 	public void setFlipType(int id, boolean enabled) {

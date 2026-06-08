@@ -13,6 +13,7 @@ public class Config {
 	private static final String CONFIG_FILE = AppPaths.configDir().resolve("config.txt").toString();
 	public static double CARD_PREVIEW_SCALE;
 	public static double CARD_ICON_SCALE;
+	public static String THEME = "light"; // "light" or "dark"
 	// UI scale is relative to 1080p (1920x1080 is 1x scale, but 0.1x minimum)
 	public static double UI_SCALE = Math.max(0.5f + 0.5f * Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 1080.0, Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 1080.0); 
 
@@ -30,6 +31,7 @@ public class Config {
 		LANGUAGE = properties.getProperty("language", "en"); // Default to "en" if not found
 		CARD_LANGUAGE = properties.getProperty("card_language", "en"); // Default to "en" if not found
 		REGION = properties.getProperty("region", "NA"); // Default to "NA" if not found
+		THEME = properties.getProperty("theme", "light"); // Default to "light" if not found
 		System.out.println("Current region: " + REGION);
 		switch (CARD_LANGUAGE) {
 			case "en":
@@ -85,6 +87,7 @@ public class Config {
         properties.setProperty("language", LANGUAGE);
         properties.setProperty("card_language", CARD_LANGUAGE);
 		properties.setProperty("region", REGION);
+		properties.setProperty("theme", THEME);
 		switch (CARD_LANGUAGE) {
 			case "en":
 				FALLBACK_ORDER = new String[] {"en", "kr", "zh_TW"};
