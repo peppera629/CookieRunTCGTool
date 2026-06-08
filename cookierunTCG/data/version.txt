@@ -1,5 +1,6 @@
-2.1.0
+2.1.1
 
+// 2.1.1 - 6/8, fixed BS5-011 (cost 2 > 3), P-037 (is flip)
 // 2.1.0 - 6/8, alt arts for BS11 added
 // 2.0.2 - 6/3, fixed translation errors
 // 2.0.1 - 6/2, fixed translation errors

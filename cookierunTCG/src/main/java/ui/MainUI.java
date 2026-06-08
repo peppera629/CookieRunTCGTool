@@ -214,7 +214,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         mLevelCountTxt, mFlipTypeCountTxt, cardLabel, filterResults, labelSearch;
     private JLabel mDeckItemHintTxt, mDeckTrapHintTxt, mDeckStageHintTxt, mDeckPaneLabel, mCardsPaneLabel;
     private JLabel mCardCountTxt, mFlipCountTxt, mExtraCountTxt, mDeckCookieSummaryTxt;
-    private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardAttackAttr, cardAttackAttrValue, cardTranslationSkill, cardTranslationAttackCost;
+    private JLabel mDeckItemTxt, mDeckTrapTxt, mDeckStageTxt, cardId, cardName, cardAttackAttr, cardAttackCost, cardAttackAttrValue, cardTranslationSkill, cardTranslationAttackCost;
     private JLabel cardTranslationAttack, cardTranslationAttackIcon, cardTranslationAttackThen, cardTranslationFlip, cardTranslationSkillFlavorText, cardTranslationSkillIcon, cardTranslationAttackFlavorText;
     private JLabel[] langLabels;
     private JLabel[] ownedInfoRarityRows;
@@ -1042,17 +1042,25 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                     if (!isCollectionMode) {
                         attackAttrShown = !attackAttrShown;
                         cardAttackAttr.setVisible(attackAttrShown);
+                        cardAttackCost.setVisible(attackAttrShown);
                         cardAttackAttrValue.setVisible(attackAttrShown);
                     }
                 }
             }
         });
         componentFontMap.put(cardName, "CRboldLarge"); // Store the font type as a String
+
         cardAttackAttr = new JLabel("", JLabel.CENTER);
         cardAttackAttr.setAlignmentX(Component.CENTER_ALIGNMENT);
         cardAttackAttr.setVisible(attackAttrShown);
         cardAttackAttr.setFont(CRboldLarge);
         componentFontMap.put(cardAttackAttr, "CRboldLarge"); // Store the font type as a String
+
+        cardAttackCost = new JLabel("", JLabel.CENTER);
+        cardAttackCost.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cardAttackCost.setVisible(attackAttrShown);
+        cardAttackCost.setFont(CRboldLarge);
+        componentFontMap.put(cardAttackCost, "CRboldLarge"); // Store the font type as a String
 
         cardAttackAttrValue = new JLabel("", JLabel.CENTER);
         cardAttackAttrValue.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -1062,6 +1070,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
         cardInfo.add(cardId);
         cardInfo.add(cardName);
+        cardInfo.add(cardAttackCost);
         cardInfo.add(cardAttackAttr);
         cardInfo.add(cardAttackAttrValue);
 
@@ -2305,38 +2314,29 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         
         //System.out.println("cards/"+Config.CARD_LANGUAGE+"/"+card.getPack()+"/"+card.getId()+".png");
         //System.out.println(card.getHP());
-        if (Config.ADVANCED_FILTERING) {
-            if (card.getMaxCount() == 1) {
-                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("restricted") + "]");
-                cardId.setForeground(new Color(160, 128, 0));
-            } else if (card.getMaxCount() == 0) {
-                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("banned") + "]");
-                cardId.setForeground(new Color(160, 0, 0));
-            } else {
-                cardId.setText(card.getId());
-                cardId.setForeground(foregroundColor);
-            }
+        if (card.getMaxCount() == 1) {
+            cardId.setText("<html>" + card.getId() + "&nbsp;<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/12px/restricted.png").toString()).getAbsolutePath() + "\"></html>");
+            cardId.setForeground(new Color(160, 128, 0));
+        } else if (card.getMaxCount() == 0) {
+            cardId.setText("<html>" + card.getId() + "&nbsp;<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/12px/banned.png").toString()).getAbsolutePath() + "\"></html>");
+            cardId.setForeground(new Color(160, 0, 0));
         } else {
-            if (card.getMaxCount() == 1) {
-                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("restricted") + "]");
-                cardId.setForeground(new Color(160, 128, 0));
-            } else if (card.getMaxCount() == 0) {
-                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("banned") + "]");
-                cardId.setForeground(new Color(160, 0, 0));
-            } else {
-                cardId.setText(card.getId());
-                cardId.setForeground(foregroundColor);
-            }
+            cardId.setText(card.getId());
+            cardId.setForeground(foregroundColor);
         }
 
         if (card.getAttackDMG() > 0) {
-            cardAttackAttr.setText("<html><img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/24px/ATK.png").toString()).getAbsolutePath() + "\">&nbsp;" + card.getAttackDMG() +
-            "&nbsp;<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/24px/avgDMG.png").toString()).getAbsolutePath() + "\">&nbsp;" + card.getAvgDMG() +
-            "&nbsp;<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/24px/peakDMG.png").toString()).getAbsolutePath() + "\">&nbsp;" + card.getPeakDMG() + "</html>");
+            cardAttackAttr.setText("<html><img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/24px/dmgATK.png").toString()).getAbsolutePath() + "\">&nbsp;" + card.getAttackDMG() +
+            "&nbsp;<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/24px/dmgAVG.png").toString()).getAbsolutePath() + "\">&nbsp;" + card.getAvgDMG() +
+            "&nbsp;<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/24px/dmgMAX.png").toString()).getAbsolutePath() + "\">&nbsp;" + card.getPeakDMG() + "</html>");
+            cardAttackCost.setText("<html><img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/24px/costATK.png").toString()).getAbsolutePath() + "\">&nbsp;" + card.getAttackCost() +
+            "&nbsp;<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/24px/costAVG.png").toString()).getAbsolutePath() + "\">&nbsp;" + card.getAvgCost() +
+            "&nbsp;<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/24px/costMAX.png").toString()).getAbsolutePath() + "\">&nbsp;" + card.getPeakCost() + "</html>");
             cardAttackAttrValue.setText("(" + card.getAttackEfficiency() + " / " + card.getAvgEfficiency() + " / " + card.getPeakEfficiency() + ")");
         
         } else {
             cardAttackAttr.setText("");
+            cardAttackCost.setText("");
             cardAttackAttrValue.setText("");
         }
 
@@ -2538,6 +2538,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cardId.setText(null);
         cardName.setText(null);
         cardAttackAttr.setText(null);
+        cardAttackCost.setText(null);
         cardAttackAttrValue.setText(null);
 
         updateComponents(frame.getContentPane());
@@ -2902,6 +2903,8 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             mRandomDrawSimBtn.setVisible(false);
             cardAttackAttr.setText("");
             cardAttackAttr.setVisible(false);
+            cardAttackCost.setText("");
+            cardAttackCost.setVisible(false);
             cardAttackAttrValue.setText("");
             cardAttackAttrValue.setVisible(false);
             mTextsPane.setVisible(false);
@@ -2941,6 +2944,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             splitPane.setTopComponent(deckPane);
             mRandomDrawSimBtn.setVisible(true);
             cardAttackAttr.setVisible(true);
+            cardAttackCost.setVisible(true);
             cardAttackAttrValue.setVisible(true);
             mTextsPane.setVisible(true);
             mDeckDistributionPane.setVisible(true);
@@ -3037,10 +3041,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             }
             
             if (card.getMaxCount() == 1) {
-                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("restricted") + "]");
+                cardId.setText("<html>" + card.getId() + "&nbsp;<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/12px/restricted.png").toString()).getAbsolutePath() + "\"></html>");
                 cardId.setForeground(new Color(160, 128, 0));
             } else if (card.getMaxCount() == 0) {
-                cardId.setText(card.getId() + " [" + CardUtil.getTranslation("banned") + "]");
+                cardId.setText("<html>" + card.getId() + "&nbsp;<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/12px/banned.png").toString()).getAbsolutePath() + "\"></html>");
                 cardId.setForeground(new Color(160, 0, 0));
             } else {
                 cardId.setText(card.getId());
