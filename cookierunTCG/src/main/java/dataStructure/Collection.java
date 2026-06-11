@@ -12,7 +12,7 @@ import util.Config;
 import util.AppPaths;
 
 public class Collection {
-    private List<Map<String, List<Integer>>> collection; // Map of card ID to count
+    private List<Map<String, List<Integer>>> collection; // Map of card ID to count, in the order of en, zh_TW, kr
     private Map<String, Integer> change; // Current collection change compared to last save
     private Map<String, Boolean> countedCards = new HashMap<>();
     private int currentPackCompletionStatus;
@@ -162,10 +162,24 @@ public class Collection {
         int total = 0;
         if (langIndex == -1) { // Aggregate across all languages
             countedCards.clear(); 
-            for (int i = 0; i < collection.size(); i++) {
-                getCardOwnedCount(i, packId, rarity, color, type, countMode);
+            if (countMode) {
+                int totalAcrossLanguages = 0;
+                for (int i = 0; i < collection.size(); i++) {
+                    if (Config.SHOW_ONLY_LEGAL_IN_COLLECTION && !Arrays.asList(Config.LEGAL_LANGUAGES).contains(Config.ALL_CARD_LANGUAGES[i])) {
+                        continue; // Skip languages that are not legal if the setting is enabled
+                    }
+                    totalAcrossLanguages += getCardOwnedCount(i, packId, rarity, color, type, countMode);
+                }
+                return totalAcrossLanguages;
+            } else {
+                for (int i = 0; i < collection.size(); i++) {
+                    if (Config.SHOW_ONLY_LEGAL_IN_COLLECTION && !Arrays.asList(Config.LEGAL_LANGUAGES).contains(Config.ALL_CARD_LANGUAGES[i])) {
+                        continue; // Skip languages that are not legal if the setting is enabled
+                    }
+                    getCardOwnedCount(i, packId, rarity, color, type, countMode);
+                }
+                return countedCards.size();
             }
-            return countedCards.size();
         }
         for (Map.Entry<String, List<Integer>> entry : collection.get(langIndex).entrySet()) {
             String cardId = entry.getKey();
@@ -248,6 +262,9 @@ public class Collection {
         if (langIndex == -1) {
             List<Integer> completionStatusList = new ArrayList<>();
             for (int i = 0; i < collection.size(); i++) {
+                if (Config.SHOW_ONLY_LEGAL_IN_COLLECTION && !Arrays.asList(Config.LEGAL_LANGUAGES).contains(Config.ALL_CARD_LANGUAGES[i])) {
+                    continue; // Skip languages that are not legal if the setting is enabled
+                }
                 int status = getPackCompletion(i, packId);
                 completionStatusList.add(status);
             }

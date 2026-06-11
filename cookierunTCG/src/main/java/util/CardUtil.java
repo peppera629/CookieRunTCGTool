@@ -15,6 +15,7 @@ public class CardUtil {
 	public static List<Integer> LEVELS = List.of(1, 2, 3, 5);
 	public static int COLOR_MAX = 7;
 	public static int RARITY_MAX = 6;
+	public static int RARITY_MAX_ALL = 11;
 	public static int HP_MAX = 6;
 	public static int SKILL_TYPE_MAX = 10;
 	public static int KEYWORD_MAX = 5;

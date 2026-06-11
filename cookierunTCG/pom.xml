@@ -5,7 +5,7 @@
 
   <groupId>local</groupId>
   <artifactId>cookierunTCG</artifactId>
-  <version>0.22.1</version>
+  <version>0.23.0</version>
   <packaging>jar</packaging>
 
   <properties>
