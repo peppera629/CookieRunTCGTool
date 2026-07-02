@@ -75,13 +75,14 @@ public class CardList {
 		return cardList;
 	}
 
-	public int getCardCountByCondition(String packId, CardRarity rarity, CardColor color, CardType type) {
+	public int getCardCountByCondition(String packId, CardRarity rarity, CardColor color, CardType type, boolean legalityConstraint) {
 		int total = 0;
 		for (Card c : cardList) {
 			if (((packId == null && !c.getPack().equals("P")) || c.getPack().equals(packId)) &&
 				(rarity == null || (rarity.getValue() >= 6 ? Arrays.asList(c.getVariants()).contains(rarity) : c.getRarity() == rarity)) && // If requested rarity is a Secret Rare, check if it has that rarity
 				(color == null || c.getColor() == color) &&
-				(type == null || c.getType() == type)) {
+				(type == null || c.getType() == type) &&
+				(!legalityConstraint || c.isLegal())) {
 				total++;
 			}
 		}
@@ -166,10 +167,12 @@ public class CardList {
 			extraCorrect = !_search_extra || c.isExtra();
 			rarityCorrect = (c.getPack().equals("P") ? (_search_rarity[_search_rarity.length-1] || !isSelectedRarity() ? true : false) : (!selectRarity || _search_rarity[c.getRarity().getValue()]));
 			boolean skillTypeCorrectCheck = false;
-			for (SkillType st : c.getSkillType()) {
-				if (_search_skill_type[st.getValue()]) {
-					skillTypeCorrectCheck = true;
-					break;
+			if (c.getType() == CardType.Cookie) {
+				for (SkillType st : c.getSkillType()) {
+					if (_search_skill_type[st.getValue()]) {
+						skillTypeCorrectCheck = true;
+						break;
+					}
 				}
 			}
 			skillTypeCorrect = !selectSkillType || skillTypeCorrectCheck;

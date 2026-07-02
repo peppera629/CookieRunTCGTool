@@ -63,7 +63,8 @@ public class FilePicker {
 	private String iconPathG = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/16px/G.png").toString()).getAbsolutePath() + "\">";
 	private String iconPathB = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/16px/B.png").toString()).getAbsolutePath() + "\">";
 	private String iconPathP = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/16px/P.png").toString()).getAbsolutePath() + "\">";
-	private String iconPathW = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/16px/W.png").toString()).getAbsolutePath() + "\">";
+	private String iconPathK = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/16px/K.png").toString()).getAbsolutePath() + "\">";
+    private String iconPathW = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/16px/W.png").toString()).getAbsolutePath() + "\">";
 
     public String show(String mode) { // Mode can be "save", "load"
         this.mode = mode;
@@ -339,6 +340,9 @@ public class FilePicker {
                             break;
                         case Purple:
                             formattedFileName = "<html>" + iconPathP + "&nbsp;" + actualFileName + "</html>";
+                            break;
+                        case Black:
+                            formattedFileName = "<html>" + iconPathK + "&nbsp;" + actualFileName + "</html>";
                             break;
                         case Pure:
                             formattedFileName = "<html>" + iconPathW + "&nbsp;" + actualFileName + "</html>";

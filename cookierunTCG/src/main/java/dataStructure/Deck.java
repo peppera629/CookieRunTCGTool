@@ -16,6 +16,7 @@ public class Deck {
 	private List<Card> ItemList;
 	private List<Card> TrapList;
 	private List<Card> StageList;
+	private List<Card> SpecialPlayList;
 	private List<Card> startingHand;
 	private List<Card> tempDeck;
 	private boolean validHand = false;
@@ -39,6 +40,7 @@ public class Deck {
 		ItemList = new ArrayList<Card>();
 		TrapList = new ArrayList<Card>();
 		StageList = new ArrayList<Card>();
+		SpecialPlayList = new ArrayList<Card>();
 	}
 
 	public List<Card> getAllCards() {
@@ -125,6 +127,9 @@ public class Deck {
 				if(card.isExtra()) {
 					extraList.get(card.getLv()).add(card);
 				}
+				if(card.isSpecialPlay()) {
+					SpecialPlayList.add(card);
+				}
 				CookieList.get(card.getLv()).add(card);
 				break;
 			case Item:
@@ -166,6 +171,9 @@ public class Deck {
 				if(card.isExtra()) {
 					extraList.get(card.getLv()).remove(card);
 				}
+				if(card.isSpecialPlay()) {
+					SpecialPlayList.remove(card);
+				}
 				CookieList.get(card.getLv()).remove(card);
 				break;
 			case Item:
@@ -196,6 +204,7 @@ public class Deck {
 		ItemList.clear();
 		TrapList.clear();
 		StageList.clear();
+		SpecialPlayList.clear();
 		tempDeck = null;
 	}
 
@@ -308,6 +317,14 @@ public class Deck {
     	int StageCount = getTargetCardCount(StageList);
     	return new int[] {ItemCount, TrapCount, StageCount};
     }
+
+	public int getSpecialPlayCount() {
+		int count = 0;
+		for (Card card : SpecialPlayList) {
+			count += card.getCount();
+		}
+		return count;
+	}
 
 	public boolean getLegality() {
 		for (Card card : cardList) {

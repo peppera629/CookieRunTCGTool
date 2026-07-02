@@ -1,5 +1,7 @@
-2.1.1
+2.2.0
 
+// 2.2.0 - 7/2, P-087 among other fixes
+// 2.1.2 - 6/11, minor translation fix
 // 2.1.1 - 6/8, fixed BS5-011 (cost 2 > 3), P-037 (is flip)
 // 2.1.0 - 6/8, alt arts for BS11 added
 // 2.0.2 - 6/3, fixed translation errors

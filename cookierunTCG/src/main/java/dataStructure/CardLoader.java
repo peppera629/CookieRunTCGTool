@@ -344,7 +344,7 @@ public class CardLoader {
 					}
 
 					String enName = (cardData.length > 1 && !cardData[1].isEmpty()) ? cardData[1] : "?"; // Get name or default to "?"
-                    String zhName = nameTranslationMap.getOrDefault(enName, enName); // Gets translation from EN name or default to EN name itself
+                    String zhName = (cardData.length > 2 && !cardData[2].isEmpty()) ? cardData[2] : nameTranslationMap.getOrDefault(enName, enName); // Gets translation from EN name or default to EN name itself
 
 					// Is an alt. name
 					if (cardData[0].contains("@")) {

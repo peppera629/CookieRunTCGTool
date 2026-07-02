@@ -850,7 +850,7 @@ Windswept Valley,風之溪谷
 
 // ST6
 Hot Jellyco Missile,炙熱的果凍飛彈
-Essence of Conflagration,火焰精華
+// Essence of Conflagration,火焰精華 (overridden in names.txt)
 Fire Spirit Cookie's Staff,火精靈餅乾的權杖
 Dragon's Breath,龍之吐息
 Restored Power of Fire,重拾的火之力量
@@ -860,7 +860,7 @@ Into the Depths,未知的地底礦山
 
 // ST7
 Miraculous Nutrient Ampoule,奇蹟綠樹營養液
-Essence of Rejuvenation,生命精華
+// Essence of Rejuvenation,生命精華 (overridden in names.txt)
 Budding Future,綠色未來種子
 Tightly Tied Vine,緊纏在一起的荊棘
 Vined Cavern,充滿荊棘的洞穴

@@ -86,6 +86,7 @@ P-083,Dumpling Cake Hound
 P-084,Magic Lettering Pens
 P-085,Tropical Pop Cake Hound
 P-086,Black & White Cake Hound
+P-087,Cream Puff Cookie
 P-088,Wind Archer Cookie of the Palace
 P-089,GingerBrave
 P-091,DJ Miya

@@ -5,6 +5,8 @@ D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\ja
 D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\java\dataStructure\Collection.java
 D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\java\dataStructure\Deck.java
 D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\java\module-info.java
+D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\java\ui\CardDetailView.java
+D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\java\ui\CardDetailWindow.java
 D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\java\ui\ChoiceDialog.java
 D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\java\ui\ClickableCardPanel.java
 D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\java\ui\CollectionSummaryDialog.java
@@ -13,6 +15,7 @@ D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\ja
 D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\java\ui\DeckWindowDifferential.java
 D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\java\ui\Dialog.java
 D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\java\ui\FilePicker.java
+D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\java\ui\ImportDialog.java
 D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\java\ui\MainUI.java
 D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\java\ui\RandomDrawSim.java
 D:\CR\Cookie Run Braverse Deck Builder\CookieRunTCGTool\cookierunTCG\src\main\java\ui\SettingsWindow.java

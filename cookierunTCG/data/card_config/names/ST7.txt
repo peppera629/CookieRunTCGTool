@@ -11,7 +11,7 @@ ST7-010,Millennial Tree Cookie
 ST7-011,Millennial Jade Deer
 ST7-012,Churro Cookie
 ST7-013,Miraculous Nutrient Ampoule
-ST7-014,Essence of Rejuvenation
+ST7-014,Essence of Rejuvenation,生命精華
 ST7-015,Budding Future
 ST7-016,Tightly Tied Vine
 ST7-017,Vined Cavern

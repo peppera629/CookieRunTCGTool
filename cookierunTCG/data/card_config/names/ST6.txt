@@ -11,7 +11,7 @@ ST6-010,Peperoncino Cookie
 ST6-011,Habanero Cookie
 ST6-012,Picky Pyro-tiger
 ST6-013,Hot Jellyco Missile
-ST6-014,Essence of Conflagration
+ST6-014,Essence of Conflagration,火焰精華
 ST6-015,Fire Spirit Cookie's Staff
 ST6-016,Dragon's Breath
 ST6-017,Restored Power of Fire

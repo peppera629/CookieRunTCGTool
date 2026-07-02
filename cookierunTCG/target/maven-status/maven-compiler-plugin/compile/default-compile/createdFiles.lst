@@ -5,15 +5,18 @@ ui\SettingsWindow$1.class
 ui\FilePicker$5.class
 util\DefaultState.class
 ui\ClickableCardPanel$CardListCallBack.class
+ui\CardDetailView$2.class
 ui\ChoiceDialog$1.class
 ui\ClickableCardPanel.class
 ui\Dialog$2.class
+ui\CardDetailWindow.class
 ui\MainUI$27.class
 ui\MainUI$7.class
 util\CardUtil$CardColor.class
 ui\MainUI$12.class
 ui\MainUI$32.class
 ui\ControlHintDialog$2.class
+ui\ImportDialog$1.class
 ui\MainUI$35.class
 ui\SortSettingsWindow$ConfigChangedCallback.class
 ui\MainUI$Filter.class
@@ -37,9 +40,11 @@ module-info.class
 ui\MainUI$24.class
 ui\SortSettingsWindow$5.class
 ui\MainUI$14.class
+ui\ImportDialog.class
 ui\MainUI$19.class
 ui\MainUI$37.class
 util\AppPaths.class
+ui\ImportDialog$2.class
 ui\MainUI$42.class
 ui\DeckWindow.class
 dataStructure\CardLoader$cardImageLoadTask.class
@@ -59,6 +64,7 @@ dataStructure\Card.class
 ui\RandomDrawSim.class
 ui\MainUI$6.class
 ui\CollectionSummaryDialog$1.class
+ui\CardDetailView$1.class
 ui\Dialog$1.class
 ui\MainUI$33.class
 ui\MainUI$23.class
@@ -116,3 +122,4 @@ util\CardUtil$SkillType.class
 app\AppAnchor.class
 ui\MainUI$2.class
 ui\FilePicker$6.class
+ui\CardDetailView.class

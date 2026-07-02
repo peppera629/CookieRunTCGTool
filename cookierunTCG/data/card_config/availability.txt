@@ -10,16 +10,26 @@ BS4,0
 BS5,0
 BS6,0
 BS7,0
+BS8,5
+BS9,5
+BS10,5
+BS11,5
 ST1,0
 ST2,0
 ST3,0
 ST4,0
 ST5,0
+ST6,5
+ST7,5
+ST8,5
+ST9,5
+ST10,5
 
 // Promo Tag Overrides
 
 promo.reprint,5
 promo.starter,0
+promo.starter.new,5
 promo.twlantern,2
 promo.gs25,1
 promo.wcg2023,3
@@ -32,6 +42,7 @@ promo.gstar25,1
 promo.lottecc,5
 promo.dsg,1
 promo.ppg,5
+promo.kccf2026,1
 promo.sb1,1
 promo.sb2,1
 promo.legacy,5
@@ -54,6 +65,8 @@ promo.bs9,5
 promo.bs9sp,5
 promo.bs10,5
 promo.bs10sp,5
+promo.bs11,5
+promo.bs11sp,5
 promo.powerarena,5
 promo.serialized.old,0
 promo.serialized.new,5
@@ -89,6 +102,10 @@ tournament.bl2026s3,5
 tournament.bl2026s3f.champion,5
 tournament.bl2026s3f.runnerup,5
 tournament.bl2026s3f.finalist,5
+tournament.1stanniv,5
+tournament.1stanniv.champion,5
+tournament.1stanniv.runnerup,5
+tournament.1stanniv.finalist,5
 tournament.bl2026s2,5
 tournament.bl2026s2f.champion,5
 tournament.bl2026s2f.runnerup,5

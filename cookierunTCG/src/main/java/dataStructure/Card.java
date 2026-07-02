@@ -36,6 +36,8 @@ public class Card {
 	private CardRarity _rarity;
 	private CardRarity[] _variants;
 	private List<boolean[]> _availability; // [][0]: EN, [][1]: TW, [][2]: KR, list size = number of variants (inc. base)
+	private boolean[] _legality = {false, false, false}; // en, zh_TW, kr
+	private boolean _isLegal = false; // Legal for current region setting
 	private String[] _variantNames;
 	private String _mark;
 	private int _lv;
@@ -88,7 +90,8 @@ public class Card {
 		_keyword = keyword;
 		_maxCount = 4; // 4: Normal, 1: Restricted, 0: Banned
 		_cardCount = 0;
-		int lv_weight = CardUtil.LEVEL_MAX  - _lv + 1; // Lv.1: 3, Lv2: 2, Lv.3: 1 (for ascending order)
+		int lv_weight = CardUtil.LEVEL_MAX  - _lv + 1; // Lv.1: 5, Lv2: 4, Lv.3: 3, Lv.5: 1 (for ascending order)
+
 		_position = _serial_number
 				+ (CardUtil.TYPE_MAX - _type.getValue()) * Config.CARD_SORT_VALUE_TYPE // Type descending
 				+ (_isFlip ? 0 : Config.CARD_SORT_VALUE_FLIP) // Flip first
@@ -314,12 +317,12 @@ public class Card {
 		if (_availability == null) {
 			_availability = new ArrayList<boolean[]>();
 			while (_availability.size() < _variants.length + 1) { // Assume all previous variants are available in EN and KR (TW has been discontinued since BS8)
-				_availability.add(new boolean[] {true, false, true});
+				_availability.add(new boolean[] {false, false, false});
 			}
-			return new boolean[] {true, false, true};
+			return new boolean[] {false, false, false};
 		}
 		while (_availability.size() <= variantId) { // Assume all previous variants are available in EN and KR (TW has been discontinued since BS8)
-			_availability.add(new boolean[] {true, false, true});
+			_availability.add(new boolean[] {false, false, false});
 		}
 		return _availability.get(variantId);
 	}
@@ -328,10 +331,23 @@ public class Card {
 		if (_availability == null) {
 			_availability = new ArrayList<boolean[]>();
 		}
-		while (_availability.size() <= variantId) { // Assume all previous variants are available in EN and KR (TW has been discontinued since BS8)
-			_availability.add(new boolean[] {true, false, true});
+		while (_availability.size() <= variantId) {
+			_availability.add(new boolean[] {false, false, false});
 		}
 		_availability.set(variantId, availability);
+
+		_legality[0] = _legality[0] || availability[0];
+		_legality[1] = _legality[1] || availability[1];
+		_legality[2] = _legality[2] || availability[2];
+		_isLegal = (_legality[0] && Config.LEGAL_LANGUAGES_BOOL[0]) || (_legality[1] && Config.LEGAL_LANGUAGES_BOOL[1]) || (_legality[2] && Config.LEGAL_LANGUAGES_BOOL[2]);
+
+		if (!_isLegal && !_pack.equals("P")) {
+			System.out.println("Card " + _id + " is not legal in current region setting. (EN: " + _legality[0] + ", TW: " + _legality[1] + ", KR: " + _legality[2] + ")");
+		}
+	}
+
+	public boolean isLegal() {
+		return _isLegal;
 	}
 
 	public void setCount(int count) {

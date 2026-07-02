@@ -1,5 +1,5 @@
 #Application Configuration
-#Thu Jun 11 17:07:42 CST 2026
+#Thu Jul 02 13:31:23 CST 2026
 advanced_filtering=true
 card_icon_scale=1.0
 card_language=en
@@ -12,4 +12,4 @@ region=TW
 show_collection_change=true
 show_only_legal_in_collection=true
 show_owned_only=false
-theme=dark
+theme=light

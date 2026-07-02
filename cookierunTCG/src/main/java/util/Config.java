@@ -47,21 +47,25 @@ public class Config {
 		switch (REGION) {
 			case "KR":
 				LEGAL_LANGUAGES = new String[] {"kr"};
+				LEGAL_LANGUAGES_BOOL = new boolean[] {false, false, true}; // en, zh_TW, kr
 				COLLECTION_LANGUAGE_ORDER = new String[] {"kr", "en", "zh_TW"};
 				COLLECTION_LANGUAGE_INDICES = new int[] {2, 0, 1};
 				break;
 			case "TW":
 				LEGAL_LANGUAGES = new String[] {"zh_TW", "en"};
+				LEGAL_LANGUAGES_BOOL = new boolean[] {true, true, false}; // en, zh_TW, kr
 				COLLECTION_LANGUAGE_ORDER = new String[] {"zh_TW", "en", "kr"};
 				COLLECTION_LANGUAGE_INDICES = new int[] {1, 0, 2};
 				break;
 			case "SEA":
 				LEGAL_LANGUAGES = new String[] {"en"};
+				LEGAL_LANGUAGES_BOOL = new boolean[] {true, false, false}; // en, zh_TW, kr
 				COLLECTION_LANGUAGE_ORDER = new String[] {"en", "kr", "zh_TW"};
 				COLLECTION_LANGUAGE_INDICES = new int[] {0, 2, 1};
 				break;
 			case "NA":
 				LEGAL_LANGUAGES = new String[] {"en"};
+				LEGAL_LANGUAGES_BOOL = new boolean[] {true, false, false}; // en, zh_TW, kr
 				COLLECTION_LANGUAGE_ORDER = new String[] {"en", "kr", "zh_TW"};
 				COLLECTION_LANGUAGE_INDICES = new int[] {0, 2, 1};
 				break;
@@ -102,21 +106,25 @@ public class Config {
 		switch (REGION) {
 			case "KR":
 				LEGAL_LANGUAGES = new String[] {"kr"};
+				LEGAL_LANGUAGES_BOOL = new boolean[] {false, false, true}; // en, zh_TW, kr
 				COLLECTION_LANGUAGE_ORDER = new String[] {"kr", "en", "zh_TW"};
 				COLLECTION_LANGUAGE_INDICES = new int[] {2, 0, 1};
 				break;
 			case "TW":
 				LEGAL_LANGUAGES = new String[] {"zh_TW", "en"};
+				LEGAL_LANGUAGES_BOOL = new boolean[] {true, true, false}; // en, zh_TW, kr
 				COLLECTION_LANGUAGE_ORDER = new String[] {"zh_TW", "en", "kr"};
 				COLLECTION_LANGUAGE_INDICES = new int[] {1, 0, 2};
 				break;
 			case "SEA":
 				LEGAL_LANGUAGES = new String[] {"en"};
+				LEGAL_LANGUAGES_BOOL = new boolean[] {true, false, false}; // en, zh_TW, kr	
 				COLLECTION_LANGUAGE_ORDER = new String[] {"en", "kr", "zh_TW"};
 				COLLECTION_LANGUAGE_INDICES = new int[] {0, 2, 1};
 				break;
 			case "NA":
 				LEGAL_LANGUAGES = new String[] {"en"};
+				LEGAL_LANGUAGES_BOOL = new boolean[] {true, false, false}; // en, zh_TW, kr
 				COLLECTION_LANGUAGE_ORDER = new String[] {"en", "kr", "zh_TW"};
 				COLLECTION_LANGUAGE_INDICES = new int[] {0, 2, 1};
 				break;
@@ -157,6 +165,7 @@ public class Config {
 	public static String[] ALL_CARD_LANGUAGES = {"en", "zh_TW", "kr"};
 	public static String[] REGIONS = {"NA", "SEA", "KR", "TW"};
 	public static String[] LEGAL_LANGUAGES;
+	public static boolean[] LEGAL_LANGUAGES_BOOL;
 	public static String[] COLLECTION_LANGUAGE_ORDER;
 	public static int[] COLLECTION_LANGUAGE_INDICES;
 	public static String[] FALLBACK_ORDER;
