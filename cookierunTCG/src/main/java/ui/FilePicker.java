@@ -37,7 +37,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -68,7 +69,7 @@ public class FilePicker {
 
     public String show(String mode) { // Mode can be "save", "load"
         this.mode = mode;
-        window = new JDialog((JFrame) null, CardUtil.getTranslation("dialog.title.filepicker"), true);
+        window = new JDialog((JFrame) null, CardUtil.getTranslation("dialog.title." + mode), true);
         window.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         window.setSize(800, 600);
         window.setLayout(new BorderLayout());
@@ -157,7 +158,7 @@ public class FilePicker {
 
     public String[] showForCompare() {
         this.mode = "compare";
-        window = new JDialog((JFrame) null, CardUtil.getTranslation("dialog.title.filepicker"), true);
+        window = new JDialog((JFrame) null, CardUtil.getTranslation("dialog.title.compare"), true);
         window.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         window.setSize(800, 600);
         window.setLayout(new BorderLayout());
@@ -377,13 +378,27 @@ public class FilePicker {
                 reloadFileList(currentDirectory);
             } else {
                 if (mode.equals("load") || mode.equals("compare")) {
-                    if (selectedFileWithExt.isFile()) {
-                        finalSelectedFile = selectedFileWithExt.getAbsolutePath();
-                        window.dispose();
+                    try {
+                        if (!selectedFileWithExt.exists()) {
+                            throw new FileNotFoundException("File not found: " + selectedFileWithExt.getAbsolutePath());
+                        }
+                        if (selectedFileWithExt.isFile()) {
+                            finalSelectedFile = selectedFileWithExt.getAbsolutePath();
+                            window.dispose();
+                        }
+                    } catch (FileNotFoundException e) {
+                        Dialog dialog = new Dialog();
+                        dialog.show(CardUtil.getTranslation("filenotfound"));
                     }
                 } else if (mode.equals("save")) {
-                    finalSelectedFile = new File(currentDirectory, this.fileName.getText() + ".txt").getAbsolutePath();
-                    window.dispose();
+                    try {
+                        Paths.get(currentDirectory, fileName + ".txt");
+                        finalSelectedFile = new File(currentDirectory, this.fileName.getText() + ".txt").getAbsolutePath();
+                        window.dispose();
+                    } catch (InvalidPathException e) {
+                        Dialog dialog = new Dialog();
+                        dialog.show(CardUtil.getTranslation("invalidfilename"));
+                    }
                 }
             }
         }

@@ -41,6 +41,7 @@ public class CardLoader {
 	private static String iconPathActivate, iconPathYourTurn, iconPathOncePerTurn, iconPathOnPlay;
 	private static String iconPathBlocker, iconPathEquip, iconPathExtra, iconPathAwaken, iconPathFlip;
 	private static String iconPathSpecialPlay, iconPathSkill;
+	private static String iconPathKeywordAncient, iconPathKeywordDragon, iconPathKeywordBeast, iconPathKeywordArena;
 
 	private static Map<String, String> nameTranslationMap = loadNameTranslationMap();
 
@@ -452,6 +453,11 @@ public class CardLoader {
 		iconPathFlip = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "FLIP.png").toString()).getAbsolutePath() + "\">";
 	    iconPathSpecialPlay = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "SpecialPlay.png").toString()).getAbsolutePath() + "\">";
 		iconPathSkill = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Skill.png").toString()).getAbsolutePath() + "\">";
+		iconPathKeywordAncient = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Ancient.png").toString()).getAbsolutePath() + "\">";
+		iconPathKeywordDragon = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Dragon.png").toString()).getAbsolutePath() + "\">";
+		iconPathKeywordBeast = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Beast.png").toString()).getAbsolutePath() + "\">";
+		iconPathKeywordArena = "<img src=\"file:" + new File(AppPaths.dataDir().resolve("icons/" + Config.LANGUAGE + "/" + (Config.LARGE_TRANSLATION_TEXT ? "24px/" : "16px/") + "Arena.png").toString()).getAbsolutePath() + "\">";
+
 		try {
 	        File translationFile = new File(AppPaths.dataDir().resolve("card_config/translations/"+Config.LANGUAGE+"/"+packName+".txt").toString()); // For EN files to avoid conflicts with actual commas
 			String sep = ";";
@@ -501,6 +507,14 @@ public class CardLoader {
 										.replace("[Blocker]", iconPathBlocker)
 										.replace("【裝載】", iconPathEquip)
 										.replace("[Equip]", iconPathEquip)
+										.replace("[上古]", iconPathKeywordAncient)
+										.replace("[Ancient]", iconPathKeywordAncient)
+										.replace("[龍族]", iconPathKeywordDragon)
+										.replace("[Dragon]", iconPathKeywordDragon)
+										.replace("[野獸]", iconPathKeywordBeast)
+										.replace("[Beast]", iconPathKeywordBeast)
+										.replace("[競技場]", iconPathKeywordArena)
+										.replace("[Arena]", iconPathKeywordArena)
 										.replace("【額外】", iconPathExtra)
 										.replace("[EXTRA]", iconPathExtra)
 										.replace("【覺醒】", iconPathAwaken)

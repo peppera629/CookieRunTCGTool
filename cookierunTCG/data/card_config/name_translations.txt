@@ -15,6 +15,7 @@ Amber Sugar Cookie,琥珀糖餅乾
 Ananas Dragon Cookie,鳳梨龍族餅乾
 Angel Chiffon Cookie,天使戚風蛋糕餅乾
 Angel Cookie,天使餅乾
+Angel Lightstick,天使應援棒
 Animatronic of Deceit,殘酷謊言的自動布偶
 Apple Cookie,青蘋果餅乾
 Apple Faerie Cookie,青蘋果妖精餅乾
@@ -27,10 +28,12 @@ Avatar of Destiny,命運大天使
 Avatar of Ruin,吞噬恐懼破壞神
 Avocado Cookie,酪梨餅乾
 Baby Cream Sheep,小鮮奶油羊
+Bacon Roll Cookie,培根捲餅乾
 Baguette Cookie,長棍麵包餅乾
 Bamboo Blade Cookie,竹林靈劍餅乾
 Banana Cookie,香蕉餅乾
-Basil Pesto Cookie,羅勒香蒜餅乾
+Banana Roti Cookie,香蕉煎餅餅乾
+Basil Pesto Cookie,羅勒青醬餅乾
 Beet Cookie,甜菜餅乾
 Bell Pepper Cookie,甜椒餅乾
 Bellflower Cookie,沙參花餅乾
@@ -42,6 +45,7 @@ Black Forest Cookie,黑森林蛋糕餅乾
 Black Garlic Cookie,黑蒜頭餅乾
 Black Lemonade Cookie,黑檸檬汽水餅乾
 Black Pearl Cookie,黑珍珠餅乾
+Black Pudding Cookie,黑布丁餅乾
 Black Raisin Cookie,黑葡萄乾餅乾
 Black Sapphire Cookie,黑藍寶石餅乾
 Black Sugar Swan Cookie,黑糖天鵝餅乾
@@ -50,6 +54,7 @@ Blossom Cookie,花花餅乾
 Blue Lily Cookie,蘭花餅乾
 Blue Slushy Cookie,蘇打冰沙餅乾
 Blue Whale Cookie,藍鯨餅乾
+Blueberry Cake Hound,藍莓蛋糕犬
 Blueberry Cookie,藍莓餅乾
 Blueberry Pie Cookie,藍莓派餅乾
 Book of Wizdom,魔法字典
@@ -83,6 +88,7 @@ Captain Caviar Cookie,艦長魚子醬餅乾
 Captain Ice Cookie,冰雪艦長餅乾
 Caramel Arrow Cookie,黑糖餅乾
 Caramel Choux Cookie,聖多諾黑餅乾
+Caramel Pudding Cake Hound,焦糖布丁蛋糕犬
 Carameleon Cookie,焦糖變色龍餅乾
 Carol Cookie,吟遊詩人餅乾
 Carrot Cookie,紅蘿蔔餅乾
@@ -139,6 +145,7 @@ Cream Skelecake Archer,鮮奶油骷髏蛋糕弓箭兵
 Cream Soda Cookie,奶油蘇打餅乾
 Cream Unicorn Cookie,奶油獨角獸餅乾
 Crimson Coral Cookie,緋紅珊瑚餅乾
+Crimson Danger Cake Hound,鮮紅危險蛋糕犬
 Croissant Cookie,可頌麵包餅乾
 Crowberry Cookie,烏莓餅乾
 Crunchy Chip Cookie,巧克力脆片餅乾
@@ -200,6 +207,7 @@ Fortune Teller Cookie,占卜師餅乾
 Frilled Jellyfish Cookie,蕾絲水母餅乾
 Frost Queen Cookie,冰霜女王餅乾
 Frostrock Cookie,冰岩餅乾
+Fruit Punch Cookie,綜合果汁餅乾
 Gelato Trio Cookie,三色冰淇淋餅乾
 General Jujube Cookie,紅棗餅乾
 Gim Cookie,海苔餅乾
@@ -207,13 +215,14 @@ GingerBrave & Mumu,勇敢餅乾&MOOMOOSSI
 GingerBrave,勇敢餅乾
 GingerBright,活潑餅乾
 Ginseng Cookie,人參餅乾
+Gnome Band,糖糖地精樂團
 Goblin Cookie,哥布林餅乾
 Gold Citrine Cookie,金黃水晶餅乾
 Golden Cheese Cookie,黃金起司餅乾
 Golden Osmanthus Cookie,金桂餅乾
 Grand Champion Cup,Grand Champion Cup
 Grand Madeleine Cookie,大瑪德蓮餅乾
-Grandberry Merchant,莓果貿易市場商人
+Grandberry Merchant,莓果貿易市場的商人餅乾
 Grapefruit Cookie,葡萄柚餅乾
 Green Tea Mousse Cookie,綠茶慕斯餅乾
 Greenbell Cookie,白玉草餅乾
@@ -224,6 +233,7 @@ Halite Gauntlet Cookie,岩鹽拳套餅乾
 Healer Cookie 1,治癒師餅乾1
 Healer Cookie 2,治癒師餅乾2
 Herb Cookie,藥草餅乾
+Herb Teapot,藥草茶壺
 Hero Cookie,英雄餅乾
 High Priest Cheesenbird,神官起司球鳥
 Hollyberry Cookie,聖莓果餅乾
@@ -233,6 +243,7 @@ Hydrangea Cookie,繡球花餅乾
 Ice Candy Cookie,涼糖餅乾
 Ice Juggler Cookie,彩球冰淇淋餅乾
 Ice Mint Cookie,冰薄荷餅乾
+Ice Pop Cookie,冰棒餅乾
 Icicle Yeti Cookie,冰錐雪怪餅乾
 Ion Cookie Robot,離子餅乾機器人
 Iris Cookie,鳶尾花餅乾
@@ -241,6 +252,7 @@ Jalapeño Cookie,哈拉帕辣椒餅乾
 Jam Skelecake Grunt,草莓醬骷髏蛋糕衛兵
 Jelly Cup Cookie,蒟蒻凍餅乾
 Jelly Froggy,果凍蛙
+Jerky Cookie,肉乾餅乾
 Jungleberry Cookie,叢林莓果餅乾
 Kiwi Cookie,奇異果餅乾
 Knight Cookie,勇士餅乾
@@ -287,8 +299,10 @@ Marzipan Cookie 3,扁桃仁膏餅乾3
 Marzipan Cookie 4,扁桃仁膏餅乾4
 Marzipan Cookie,扁桃仁膏餅乾
 Matcha Cookie,抹茶餅乾
+Mayor Cuckoobeans,小小布穀鳥市長
 Meat Dumpling King,小籠包天王
 Melon Bun Cookie,哈密瓜麵包餅乾
+Melon Soda Cookie,哈密瓜蘇打餅乾
 Melted Choco Cookie,熔岩巧克力餅乾
 Menthol Cookie,薄荷醇餅乾
 Mercurial Knight Cookie,水銀騎士餅乾
@@ -360,6 +374,7 @@ Popping Candy Cookie,跳跳糖餅乾
 Potato Salad Cookie,馬鈴薯沙拉餅乾
 Potato Cookie,馬鈴薯餅乾
 Princess Cookie,公主餅乾
+Producer Mic,麥克PD
 Prophet Cookie,預言家餅乾
 Prune Juice Cookie,黑棗汁餅乾
 Pudding Cookie,布丁餅乾
@@ -411,6 +426,7 @@ Shelly,起司漢堡龜
 Sherbet Cookie,雪酪餅乾
 Shine Muscat Cookie,陽光麝香葡萄餅乾
 Shining Glitter Cookie,閃耀之星餅乾
+Shiningberry Cookie,閃耀草莓餅乾
 Shrimp Dumpling King,蝦燒賣天王
 Silent Salt Cookie,寧靜鹽餅乾
 Silver Tree Knight Cookie,銀樹騎士餅乾
@@ -426,6 +442,7 @@ Snow Sugar Cookie,粉雪餅乾
 Snowflake Cookie,雪花餅乾
 Soda Cookie,汽水餅乾
 Soda Dollop,泡泡滴露
+Sonic Water Cookie,音速能量飲餅乾
 Sorbet Shark Cookie,雪酪鯊魚餅乾
 Sour Belt Cookie,霓虹軟糖餅乾
 Space Doughnut,宇宙甜甜圈
@@ -434,6 +451,7 @@ Spectral Warmaster,怨靈指揮官
 Spicy Dumpling King,辣籠包天王
 Spicy Scovillia Student,辣呼呼的史高維爾利亞學生
 Spinach Cookie,菠菜餅乾
+Spotlight Fan,聚光燈
 Squid Ink Cookie,墨魚餅乾
 Star Coral Cookie,星珊瑚餅乾
 Starch Noodle Cookie,圓粉條餅乾
@@ -444,13 +462,16 @@ Stevia Nova Cookie,甜菊新星糖餅乾
 Sting Durian Cookie,尖刺榴槤餅乾
 Stollen Cookie,史多倫麵包餅乾
 Stormbringer Cookie,雷神武將餅乾
+Strategist Cake Hound,黑白戰略王蛋糕犬
 Strawberry Cookie,草莓餅乾
 Strawberry Cream Cookie,草莓鮮奶油餅乾
 Strawberry Crepe Cookie,草莓可麗餅餅乾
+Strawberry Mochi Cookie,草莓麻糬餅乾
 Strawberry Shortcake Cookie,草莓奶油蛋糕餅乾
 Strawberry Stick Cookie,草莓巧克力棒餅乾
 Street Urchin Cookie,海膽餅乾
 String Gummy Cookie,筆管軟糖餅乾
+Subtle Jasmine Cake Hound,淡淡茉莉花香的蛋糕犬
 Sugar Glass Cookie,糖玻璃餅乾
 Sugar Globe Cookie,雪花糖球餅乾
 Sugar Gnome,糖糖地精
@@ -468,7 +489,7 @@ Timekeeper Cookie,超時空餅乾
 Tiny Cake Hound,小小蛋糕犬
 Tiramisu Cookie,提拉米蘇餅乾
 Toothpaste Cookie,巧克力牙膏餅乾
-Towerkeeper Cookie,守塔員餅
+Towerkeeper Cookie,守塔員餅乾
 Tropical Pop Cake Hound,熱帶蛋糕犬
 Truffle Cookie,松露餅乾
 Truthless Recluse,真理隱遁者
@@ -642,8 +663,8 @@ Time Rend Scissors,時空混沌裁剪刀
 Into a Time Pocket…,時間的坑洞
 Broken Central Clock,壞掉的大時鐘
 Time Manipulator,時間控制器
-Destruction of a Pastless Future,棄息未來的毀滅
-Messy TBD Director's Office,凌亂的時間管理局局室
+Destruction of a Pastless Future,棄昔未來的毀滅
+Messy TBD Director's Office,凌亂的時間管理局局長室
 Butterfly Key Relic,蝴蝶發條文物
 Peak Engineer Performance,最厲害的技師
 TBD Machine Room,時間管理局機房
@@ -657,7 +678,7 @@ Valiant Victor's Salvation,英勇勝者的救援
 Crème Knights' Quarters,鮮奶油騎士宿舍
 Grand Cookie Games Trophy,餅乾大戰水晶布丁獎盃
 Cookie Windmill,餅乾大風車
-Cookie Games Stadium,餅乾大站競技場
+Cookie Games Stadium,餅乾大戰競技場
 The Sunblade,太陽之劍
 A Victory For You,為你奪得勝利
 Temple of the Sun Central Arena,太陽神殿中央競技場
@@ -695,101 +716,132 @@ The Days of Resolution and Dignity,決心和風範兼具的時代
 
 // BS9
 Juicy Stamina Jellies,厚實體力果凍
-Fateful Cookie Cutter,命運餅乾模具
-Stolen Light of Truth,被竊取的真理之光*
-Paper Puppet Troupe,紙偶劇團*
-Atelier of Lies,謊言畫坊*
-Heart Stained With Lies,沾染謊言之心*
+Fateful Cookie Cutter,宿命餅乾模具
+Stolen Light of Truth,被搶走的真理之光
+Paper Puppet Troupe,紙娃娃劇團
+Atelier of Lies,謊言著色師的房間
+Heart Stained With Lies,被謊言玷污的心
 Shadow Milk Cookie Doll,黑影牛奶餅乾玩偶
-Overtaken Other-Realm,被占據的異度空間*
-Fragmented Soul,破碎的靈魂*
+Overtaken Other-Realm,顛倒的異空間
+Fragmented Soul,破碎的靈魂
 Yogurt River of Rebirth,復活的優格河
-Meat Jelly,體力果凍
+Meat Jelly,肉肉果凍
 Concealer of Truth,隱瞞真相的兔子
-Radiant Light of Protection,守護的聖光*
-Broken Seal,破碎的封印*
-Puppet Theater Stage,木偶劇場舞台*
+Radiant Light of Protection,燦爛的守護之光
+Broken Seal,解除封印
+Puppet Theater Stage,木偶劇舞台
 Storybook of Lies,謊言童話書
-Light of Deceit,謊言之光
-Soul Jam: Light of Deceit,靈魂果醬: 謊言之光
-Reversed Prophecy,反轉的預言*
-Shadow Milk Cookie's Tarot Card,黑影牛奶餅乾的塔羅牌*
+Light of Deceit,欺瞞的謊言之光
+Soul Jam: Light of Deceit,靈魂果醬：謊言之光
+Reversed Prophecy,反轉的預言
+Shadow Milk Cookie's Tarot Card,黑影牛奶餅乾的塔羅牌
 Spire of Deceit,謊言之塔
-Flipped Coin,雙面金幣*
+Flipped Coin,拋出的銅板
 Wolf in Sheep's Clothing,披著羊毛的狼
-Light of False Truths,虛假的真理之光*
-Truth Tainted with Lies,染上謊言的真相*
-Endless Game of Chess,永無止盡的棋局*
+Light of False Truths,變成謊言的真理之光
+Truth Tainted with Lies,被謊言玷污的真理
+Endless Game of Chess,無盡問答的西洋棋盤
 
 // BS10
-Towards the Heart of Paradise,朝向樂園之心*
-Facing the Past,面對過去*
+Towards the Heart of Paradise,前往樂園心臟
+Facing the Past,面對過往
 Shattered Shield,碎裂的盾牌
-Luscious Garden Heart Berry,甜美花園心型莓*
-Jam Jar Lid Shield,果醬罐蓋盾牌*
+Luscious Garden Heart Berry,生長在心臟最深處的莓果
+Jam Jar Lid Shield,果醬蓋子臨時盾牌
 Light of True Passion,激昂的熱情之光
-Vibrant Hollyberry Palace,富饒的聖莓果宮殿
+Vibrant Hollyberry Palace,熱鬧非凡的聖莓果城堡
 Sugar Bowl Flower,巨大糖花蕾
-Passion Meets Sloth,熱情遇上怠惰*
-Inescapable Sweetness,無法逃離的甜蜜*
+Passion Meets Sloth,面對怠惰的熱情
+Inescapable Sweetness,揮之不去的甜甜香味
 Sugar Paradise,砂糖樂園
 Mysterious Jewelry Box,有點詭異的珠寶盒
-Cookie Stuck in Jam,困在果醬裡的餅乾*
-Soul Jam: Light of Sloth,靈魂果醬: 怠惰之光
-Freedom Blooms Again,再次綻放的自由
-Collapsing Floor,崩塌的地面
+Cookie Stuck in Jam,困在果醬裡的餅乾
+Soul Jam: Light of Sloth,靈魂果醬：怠惰之光
+Freedom Blooms Again,再度綻放的自由
+Collapsing Floor,塌陷的地面
 Burning Dough,燃燒的麵團
 Faerie Glass Coffin,妖精棺木
 Silverbell Stump,風鈴草樹樁
 Mossy Silver Bridge,青苔之橋
-A Single Lily,一隻百合
-Sudden Weather Change,天氣驟變*
-Strange Sea Soda Islands,奇異海洋中的蘇打群島
+A Single Lily,一枝百合
+Sudden Weather Change,突如其來的天候異變
+Something Horrifying,龐大又可怕的存在
 Butterfly Lantern,蝴蝶燈籠
-Something Horrifying,某種可怕的東西
-Clashing Leaders,衝突的領袖*
+Strange Sea Soda Islands,陌生海域中的蘇打群島
+Clashing Leaders,相遇的兩個商團
 HMS Custard III,卡士達三世號
-Kulfi Red Bean Delight,庫爾菲掌羊羹
+Kulfi Red Bean Delight,庫爾菲猴手掌型羊羹
 Banner of the Forsaken Oath,靜止誓言旗幟
 Knight's Somber Lantern,黯淡無光騎士之燈
-Spirit-cutting Sword,劃破靈魂的一刀
+Spirit-cutting Sword,劃破靈魂的劍
 Silver Fork Judgment,銀叉審判
 Catacombs of Silence,沉默的地下墓穴
-Seal Tree of the Fallen Emissaries,陣亡使者之封印樹
-Soul Jam: Light of Silence,靈魂果醬: 沉默之光
+Seal Tree of the Fallen Emissaries,封印墮落代理的封印樹
+Soul Jam: Light of Silence,靈魂果醬：沉默之光
 
 // BS11
 Orb of Eternal Flame,不滅的紅焰寶石
-Flame's Protection,火焰力量的守護
-Canyon of Destruction,破壞之地的峽谷
-Avatar of Ruin Turmeric Statue,「吞噬恐懼破壞神」薑黃雕像
-Roaring Destruction,破壞的怒吼
+Flame's Protection,火焰護佑
+Canyon of Destruction,被摧毀的火焰懸崖
+Avatar of Ruin Turmeric Statue,破壞神薑黃雕像
+Roaring Destruction,咆哮的破壞
 Passion Escaping Paradise,逃離樂園的熱情
 Berry Paradise,莓果樂園
-Life's Protection,生命魔法的守護
-Life-Sprouting Jar,生命萌芽的盆栽
+Life's Protection,生命護佑
+Life-Sprouting Jar,孕育生命的甕
 Winged Tree,翅膀之樹
 Grand Dust Hotel,特級灰塵大飯店
 Awakened Apathy,覺醒的虛無
 Dumpling Censer,包子香爐
-Wind's Protection,風之力量的守護
+Wind's Protection,風之護佑
 Emerald of the Wind,充滿風之氣息的綠寶石
-Top of the Spire of Deceit,謊言之塔的頂端
-Sea's Protection,海洋力量的守護
+Top of the Spire of Deceit,謊言之塔最上層
+Sea's Protection,海洋護佑
 The Breath of the Depths,湧現海之氣息的劍
 Mirror of Destiny,映照命運的鏡子
-Milk Lake of Truth,真理的牛奶河
+Milk Lake of Truth,真相牛奶湖
 Banner of the Solitary Oath,孤獨誓言旗幟
 Dream Traveler's Hourglass,夢之旅者沙漏
-Moonlight's Protection,月光魔法的守護
-Catacombs of Lost Solidarity,團結消逝的地下墓穴
-Freedom that Broke the Silence,破除沉默的自由
-World-reflecting Mirrors,映照世界的鏡子
-Oven of Burning Fate,燃燒宿命的烤箱
-Dark Enchantress's Castle,暗黑魔女的城堡
+Moonlight's Protection,月光護佑
+Catacombs of Lost Solidarity,失去團結的地下墓穴
+Freedom that Broke the Silence,打破沉默的自由
+World-reflecting Mirrors,照耀大陸的鏡子
+Oven of Burning Fate,焚燒法則的烤箱
+Dark Enchantress's Castle,暗黑魔女堡壘
 Emblem of Darkness,黑暗象徵
-Draining Magic Circle,吸取能量的魔法陣
+Draining Magic Circle,吸收力量的魔法陣
 
+// BS12
+Clumsy Day,錯誤百出的一天
+A Moment of Misunderstanding,誤會的瞬間
+Crown Stage,王冠舞台
+Sweet Jams Guitar,最佳美聲吉他
+Limited Edition Record,限量版黑膠唱片
+Designers' Yapping,設計師的閒聊
+Luxury Red Carpet,豪華紅毯
+Shining Entrance,閃耀登場
+Well-Lit Workshop,採光良好的工作室
+Fashionista Spotlight,時尚聚光燈
+E-Z Camera,萬能相機
+Beautiful Harmony,美妙和聲
+Orchestra Hall,管弦樂廳
+Immersed Audience,專注的觀眾
+Wonderful Melody,詩人的燦爛旋律
+Misdelivered Fan Letter,寄錯的粉絲信
+Perfect Ending Pose,最棒的結尾姿勢
+Comeback Stage,回歸舞台
+Bone-afide Multivitamin Jelly,養生綜合營養果凍
+Pop Pop Photocard,相片小卡
+Rock Spirit Guitar String,搖滾精神吉他弦
+Summer Soda Festival,夏日汽水節
+Rainbow Headphones,繽紛彩虹耳機
+True Rock Spirit,真正的搖滾精神
+Coming To An Understanding,逐漸化解的誤會
+Manager Scarlet's Coffee Truck,經紀人S準備的火熱咖啡車
+Veteran Director's Sunglasses,資深導演的太陽眼鏡
+Recipe For Acting Success,打造明星的秘笈
+Perfect Stage,最棒的舞台
+Bad and Dark,Bad and Dark
 
 // P
 Macaron Hammer,馬卡龍槌子
@@ -835,7 +887,7 @@ Bear Jelly Ice Cream,熊熊果凍冰淇淋
 Emergency Lifebuoy,救生甜甜圈
 Lucky Pearls,幸運珍珠
 Sugar Crystal Lamp,南瓜糖提燈
-Octo-Ink Spray,墨魚汁噴灌
+Octo-Ink Spray,墨魚汁噴罐
 Fallen Ice Statue,毀壞的冰雕
 Sugar Glass Dome,糖糖玻璃穹頂
 
@@ -848,7 +900,7 @@ Forbidden Grimoire,魔法禁書
 Hidden Warpgate,隱藏的瞬間移動裝置
 Windswept Valley,風之溪谷
 
-// ST6
+// ST6 [No official translations]
 Hot Jellyco Missile,炙熱的果凍飛彈
 // Essence of Conflagration,火焰精華 (overridden in names.txt)
 Fire Spirit Cookie's Staff,火精靈餅乾的權杖
@@ -858,7 +910,7 @@ Frozen Flame,被冰凍之火
 Power Unleashed,爆發的力量
 Into the Depths,未知的地底礦山
 
-// ST7
+// ST7 [No official translations]
 Miraculous Nutrient Ampoule,奇蹟綠樹營養液
 // Essence of Rejuvenation,生命精華 (overridden in names.txt)
 Budding Future,綠色未來種子
@@ -868,7 +920,7 @@ Millennial Tree Cookie's Gift,千年古樹餅乾的禮物
 Millennial Jade Deer's Wrath,翠玉千年鹿之怒
 Forest of Life,生命森林
 
-// ST8
+// ST8 [No official translations]
 Windgrass,風之葉
 Cape of the Vanquisher,追風者驅逐黑暗的斗篷
 Essence of the Tempest,暴風精華
@@ -878,17 +930,17 @@ Piercing Arrow of Purity,穿透的潔淨之箭
 Bad Omen,惡兆
 Dark Enchantress Laboratory,暗黑魔女的實驗室
 
-// ST9
+// ST9 [No official translations]
 Shimmering Moonlit Coral,蘊含月光的珍珠珊瑚
 Glittering Pearl Shell,璀璨的珍珠貝殼
 Essence of the Ocean,海洋精華
 Bubble Wave Shell,浪珠海螺殼
-Revelation of the Seas,海洋的啟示*
+Revelation of the Seas,來自海洋的啟示
 Tower of Frozen Waves,冰浪之塔
-Curse of the Seas,海洋的詛咒*
+Curse of the Seas,海洋的詛咒
 Tearcrown,淚冠城
 
-// ST10
+// ST10 [No official translations]
 Little Star,蘊含月光的小星星
 Lunar Compendium,月亮的魔法書
 Essence of Moonlight,月光精華

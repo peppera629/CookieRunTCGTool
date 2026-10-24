@@ -189,11 +189,11 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     // Deck and Card List Panels
     private Deck currentDeck;
     private JPanel deckPanel, cardListPanel, keywordLabelPanel, keywordOuterPanel, skillTypeLabelPanel, skillTypeOuterPanel, attackAttrLabelPanel, attackAttrOuterPanel, attackAttrBasePanel, statusLabelPanel, statusOuterPanel;
-    private JPanel fileOperationsPanel, fileOperationsButtonsPanel, deckDetailPanel, centerPanel, skillTypeBtnPanel;
+    private JPanel fileOperationsPanel, fileOperationsButtonsPanel, deckDetailPanelOuter, deckDetailPanel, centerPanel, skillTypeBtnPanel;
     private JLabel currentDeckName, collectionChangeLabel;
     private JTextField searchBox;
     private JButton saveBtn, saveAsBtn, selectBtn, importBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST, quickSelectBtnSkillType;
-    private JButton clearDeckBtn, randomDrawSimBtn, searchBtn, clearFilterBtn, sortSettingsBtn, settingsBtn;
+    private JButton clearDeckBtn, randomDrawSimBtn, searchBtn, clearFilterBtn, sortSettingsBtn, settingsBtn, hideDeckDetailSummaryBtn;
     private JToggleButton button_collection;
     private JLabel cardCountHintTxt, flipCountHintTxt, extraCountHintTxt, deckCookieSummaryHintTxt, levelCountTxt, flipTypeCountTxt, filterResults, labelSearch;
     private JLabel deckItemHintTxt, deckTrapHintTxt, deckStageHintTxt, deckPanelLabel, cardListPanelLabel;
@@ -737,9 +737,38 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         centerPanel.add(splitPane, BorderLayout.CENTER);
 
         // ==== Deck Details (bottom)
+        deckDetailPanelOuter = new JPanel();
+        deckDetailPanelOuter.setLayout(new BorderLayout());
+        centerPanel.add(deckDetailPanelOuter, BorderLayout.SOUTH);
+
         deckDetailPanel = new JPanel();
         deckDetailPanel.setLayout(new BorderLayout());
-        centerPanel.add(deckDetailPanel, BorderLayout.SOUTH);
+        deckDetailPanelOuter.add(deckDetailPanel, BorderLayout.CENTER);
+
+        hideDeckDetailSummaryBtn = new JButton();
+        hideDeckDetailSummaryBtn.setRequestFocusEnabled(false);
+        hideDeckDetailSummaryBtn.setFont(CRnormalSmall.deriveFont((float) (8f * Config.UI_SCALE)));
+        if (deckDetailPanel == null || deckDetailPanel.isVisible()) {
+            hideDeckDetailSummaryBtn.setText("▼ ▼ ▼");
+        } else {
+            hideDeckDetailSummaryBtn.setText("▲ ▲ ▲");
+        }
+        hideDeckDetailSummaryBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (deckDetailPanel.isVisible()) {
+                    deckDetailPanel.setVisible(false);
+                    hideDeckDetailSummaryBtn.setText("▲ ▲ ▲");
+                } else {
+                    deckDetailPanel.setVisible(true);
+                    hideDeckDetailSummaryBtn.setText("▼ ▼ ▼");
+                }
+                frame.revalidate();
+                frame.repaint();
+                frame.getComponentListeners()[0].componentResized(null);
+            }
+        });
+        componentFontMap.put(hideDeckDetailSummaryBtn, "CRnormalSmall"); // Store the font type as a String
+        deckDetailPanelOuter.add(hideDeckDetailSummaryBtn, BorderLayout.NORTH);
 
         deckDetailButtonsPanel = new JPanel();
         deckDetailButtonsPanel.setLayout(new GridBagLayout());
@@ -752,7 +781,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         gbc_deckbuttons.gridwidth = 4;
         collectionChangeLabel = new JLabel("", JLabel.CENTER);
         collectionChangeValue = collection.getTotalCollectionChange();
-        collectionChangeLabel.setText(CardUtil.getTranslation("collection.change") + " +" + collectionChangeValue[0] + " -" + collectionChangeValue[1]);
+        collectionChangeLabel.setText(CardUtil.getTranslation("collection.change") + " +" + collectionChangeValue[0] + " -" + Math.abs(collectionChangeValue[1]));
         collectionChangeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         collectionChangeLabel.setFont(CRnormal);
         collectionChangeLabel.setVisible(false);
@@ -766,9 +795,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         hideSearchPaneBtn = new JButton();
         hideSearchPaneBtn.setRequestFocusEnabled(false);
         if (filterPanelOuter.isVisible()) {
-            hideSearchPaneBtn.setText("<< " + CardUtil.getTranslation("filter"));
+            hideSearchPaneBtn.setText("◀ " + CardUtil.getTranslation("filter"));
         } else {
-            hideSearchPaneBtn.setText(">> " + CardUtil.getTranslation("filter"));
+            hideSearchPaneBtn.setText("▶ " + CardUtil.getTranslation("filter"));
         }
         hideSearchPaneBtn.setFont(CRnormalSmall);
         componentFontMap.put(hideSearchPaneBtn, "CRnormalSmall"); // Store the font type as a String
@@ -777,10 +806,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             public void actionPerformed(ActionEvent e) {
                 if (filterPanelOuter.isVisible()) {
                     filterPanelOuter.setVisible(false);
-                    hideSearchPaneBtn.setText(">> " + CardUtil.getTranslation("filter"));
+                    hideSearchPaneBtn.setText("▶ " + CardUtil.getTranslation("filter"));
                 } else {
                     filterPanelOuter.setVisible(true);
-                    hideSearchPaneBtn.setText("<< " + CardUtil.getTranslation("filter"));
+                    hideSearchPaneBtn.setText("◀ " + CardUtil.getTranslation("filter"));
                 }
                 frame.revalidate();
                 frame.repaint();
@@ -829,9 +858,9 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         hidePreviewPaneBtn = new JButton();
         hidePreviewPaneBtn.setRequestFocusEnabled(false);
         if (cardPreviewPanel == null || cardPreviewPanel.isVisible()) {
-            hidePreviewPaneBtn.setText(">> " + CardUtil.getTranslation("preview.popout"));
+            hidePreviewPaneBtn.setText("▶ " + CardUtil.getTranslation("preview.popout"));
         } else {
-            hidePreviewPaneBtn.setText("<< " + CardUtil.getTranslation("preview.sidebar"));
+            hidePreviewPaneBtn.setText("◀ " + CardUtil.getTranslation("preview.sidebar"));
         }
         hidePreviewPaneBtn.setFont(CRnormalSmall);
         componentFontMap.put(hidePreviewPaneBtn, "CRnormalSmall"); // Store the font type as a String
@@ -841,10 +870,10 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 togglePreviewHost();
                 if (cardPreviewPanel.isVisible()) {
                     cardPreviewPanel.setVisible(false);
-                    hidePreviewPaneBtn.setText("<< " + CardUtil.getTranslation("preview.sidebar"));
+                    hidePreviewPaneBtn.setText("◀ " + CardUtil.getTranslation("preview.sidebar"));
                 } else {
                     cardPreviewPanel.setVisible(true);
-                    hidePreviewPaneBtn.setText(">> " + CardUtil.getTranslation("preview.popout"));
+                    hidePreviewPaneBtn.setText("▶ " + CardUtil.getTranslation("preview.popout"));
                 }
                 frame.revalidate();
                 frame.repaint();
@@ -866,7 +895,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         gbc.fill = GridBagConstraints.BOTH;
         
         gbc.gridx = 0;
-        gbc.gridy = 0;
+        gbc.gridy = 1;
         gbc.weightx = 2;
         gbc.weighty = 0.3;
         gbc.gridheight = 1;
@@ -937,7 +966,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
 
 
 
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.gridx = 0;
         gbc.weightx = 2;
         gbc.weighty = 0.7;
@@ -1968,6 +1997,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         rb_flip_condition[1].setSelected(false);
         rb_flip_condition[2].setSelected(false);
         cb_extra.setSelected(false);
+        cb_specialplay.setSelected(false);
         cb_variant_sec.setSelected(false);
         cb_variant_promo.setSelected(false);
     	cb_type_stage.setSelected(false);
@@ -2232,14 +2262,16 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         showDeckBtn.setToolTipText(CardUtil.getTranslation("deck.show"));
         showDeckDifferentialBtn.setToolTipText(CardUtil.getTranslation("deck.compare"));
 
-        ImageIcon saveIcon = cardIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/save_" + Config.THEME + ".png").toString());
-        ImageIcon saveAsIcon = cardIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/saveas_" + Config.THEME + ".png").toString());
-        ImageIcon selectIcon = cardIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/load_" + Config.THEME + ".png").toString());
-        ImageIcon showDeckIcon = cardIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/show_" + Config.THEME + ".png").toString());
-        ImageIcon showDeckDifferentialIcon = cardIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/compare_" + Config.THEME + ".png").toString());
+        ImageIcon saveIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/save_" + Config.THEME + ".png").toString());
+        ImageIcon saveAsIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/saveas_" + Config.THEME + ".png").toString());
+        ImageIcon selectIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/load_" + Config.THEME + ".png").toString());
+        ImageIcon importIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/import_" + Config.THEME + ".png").toString());
+        ImageIcon showDeckIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/show_" + Config.THEME + ".png").toString());
+        ImageIcon showDeckDifferentialIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/compare_" + Config.THEME + ".png").toString());
         saveBtn.setIcon(saveIcon);
         saveAsBtn.setIcon(saveAsIcon);
         selectBtn.setIcon(selectIcon);
+        importBtn.setIcon(importIcon);
         showDeckBtn.setIcon(showDeckIcon);
         showDeckDifferentialBtn.setIcon(showDeckDifferentialIcon);
 
@@ -2278,7 +2310,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         cb_status[0].setText(CardUtil.getTranslation("filter.status.normal"));
         cb_status[1].setText(CardUtil.getTranslation("filter.status.restricted"));
         cb_status[2].setText(CardUtil.getTranslation("filter.status.banned"));
-        collectionChangeLabel.setText(CardUtil.getTranslation("collection.change") + " +" + collectionChangeValue[0] + " -" + collectionChangeValue[1]);
+        collectionChangeLabel.setText(CardUtil.getTranslation("collection.change") + " +" + collectionChangeValue[0] + " -" + Math.abs(collectionChangeValue[1]));
 
         // Set visibility depending on advanced filtering option
         cb_variant_sec.setVisible(Config.ADVANCED_FILTERING);
@@ -2309,14 +2341,14 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         sortSettingsBtn.setText(CardUtil.getTranslation("sort.settings"));
         settingsBtn.setText(CardUtil.getTranslation("settings"));
         if (filterPanelOuter.isVisible()) {
-            hideSearchPaneBtn.setText("<< " + CardUtil.getTranslation("filter"));
+            hideSearchPaneBtn.setText("◀ " + CardUtil.getTranslation("filter"));
         } else {
-            hideSearchPaneBtn.setText(">> " + CardUtil.getTranslation("filter"));
+            hideSearchPaneBtn.setText("▶ " + CardUtil.getTranslation("filter"));
         }
         if (cardPreviewPanel.isVisible()) {
-            hidePreviewPaneBtn.setText(">> " + CardUtil.getTranslation("preview.popout"));
+            hidePreviewPaneBtn.setText("▶ " + CardUtil.getTranslation("preview.popout"));
         } else {
-            hidePreviewPaneBtn.setText("<< " + CardUtil.getTranslation("preview.sidebar"));
+            hidePreviewPaneBtn.setText("◀ " + CardUtil.getTranslation("preview.sidebar"));
         }
 
         cardDetailView.clearCard();
@@ -2699,7 +2731,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         } else {
             collectionChangeLabel.setVisible(false);
             collectionChangeValue = new int[]{0, 0};
-            collectionChangeLabel.setText(CardUtil.getTranslation("collection.change") + " +" + collectionChangeValue[0] + " -" + collectionChangeValue[1]);
+            collectionChangeLabel.setText(CardUtil.getTranslation("collection.change") + " +" + collectionChangeValue[0] + " -" + Math.abs(collectionChangeValue[1]));
             splitPane.setTopComponent(deckPanel);
             randomDrawSimBtn.setVisible(true);
             cardDetailView.toggleCollectionMode(false);
@@ -2751,7 +2783,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             cardDetailView.updateCardOwnedInfoLabel(card, displayVariant);
             cardDetailView.updateCardOwnedInfoHighlight(displayVariant);
             collectionChangeValue = collection.getTotalCollectionChange();
-            collectionChangeLabel.setText(CardUtil.getTranslation("collection.change") + " +" + collectionChangeValue[0] + " -" + collectionChangeValue[1]);
+            collectionChangeLabel.setText(CardUtil.getTranslation("collection.change") + " +" + collectionChangeValue[0] + " -" + Math.abs(collectionChangeValue[1]));
         }
 
         @Override
@@ -2768,7 +2800,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
             cardDetailView.updateCardOwnedInfoLabel(card, displayVariant);
             cardDetailView.updateCardOwnedInfoHighlight(displayVariant);
             collectionChangeValue = collection.getTotalCollectionChange();
-            collectionChangeLabel.setText(CardUtil.getTranslation("collection.change") + " +" + collectionChangeValue[0] + " -" + collectionChangeValue[1]);
+            collectionChangeLabel.setText(CardUtil.getTranslation("collection.change") + " +" + collectionChangeValue[0] + " -" + Math.abs(collectionChangeValue[1]));
         }
 
         @Override
@@ -2999,7 +3031,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 if (displayVariant == 0) {
                     cardIcon = new ImageIcon(AppPaths.dataDir().resolve("cards/" + lang + "/" + currentCard.getPack() + "/" + currentCard.getId() + ".png").toString());
                 } else {
-                    cardIcon = new ImageIcon(AppPaths.dataDir().resolve("cards_variant/" + lang + "/" + currentCard.getPack() + "/" + currentCard.getId() + "@" + displayVariant + ".png").toString());
+                    cardIcon = new ImageIcon(AppPaths.dataDir().resolve("cards/" + lang + "/" + currentCard.getPack() + "/" + currentCard.getId() + "@" + displayVariant + ".png").toString());
                 }
                 if (cardIcon.getIconWidth() > 0) {
                     break;

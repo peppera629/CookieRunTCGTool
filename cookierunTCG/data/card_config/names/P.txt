@@ -151,6 +151,7 @@ P-144,Elderberry Cookie
 P-145,Hydrangea Cookie
 P-146,Wizard Cookie
 P-147,Licorice Cookie
+P-149,Eternal Sugar Cookie
 P-151,Black Sapphire Cookie
 P-152,Black Sapphire Cookie
 P-153,Black Sapphire Cookie
@@ -163,3 +164,20 @@ P-159,Candy Apple Cookie
 P-160,Candy Apple Cookie
 P-161,Candy Apple Cookie
 P-162,Candy Apple Cookie
+P-163,Bacon Roll Cookie
+P-164,Cherry Cookie
+P-165,Fruit Punch Cookie
+P-166,Rye Cookie
+P-167,Melon Soda Cookie
+P-168,GingerBrave
+P-169,Ice Pop Cookie
+P-170,Blue Slushy Cookie
+P-171,Black Pudding Cookie
+P-172,Blueberry Pie Cookie
+P-173,Jerky Cookie
+P-175,Caramel Choux Cookie
+P-176,Sugarfly Cookie
+P-177,Okchun Cookie
+P-178,Mozzarella Cookie
+P-179,Caramel Arrow Cookie
+P-180,B!TES

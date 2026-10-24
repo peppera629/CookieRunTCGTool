@@ -1,5 +1,13 @@
-2.2.0
+2.6.0
 
+// 2.6.0 - 10/24, completed all promo translations, minor fixes
+// 2.5.0 - 10/19, card promo version updates
+// 2.4.1 - 9/20, card data fixes
+// 2.4.0 - 8/31, BS12 card images and translations complete
+// 2.3.2 - 8/29, BS12 and B!TES promo data complete, translation and images pending
+// 2.3.1 - 8/22, migrated to official translations for BS9~11
+// 2.3.0 - 8/13, new cards and BS12 data
+// 2.2.1 - 8/3, fixed BS10-087 and BS10-089 type swap
 // 2.2.0 - 7/2, P-087 among other fixes
 // 2.1.2 - 6/11, minor translation fix
 // 2.1.1 - 6/8, fixed BS5-011 (cost 2 > 3), P-037 (is flip)

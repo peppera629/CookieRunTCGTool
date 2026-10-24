@@ -14,6 +14,7 @@ BS8,5
 BS9,5
 BS10,5
 BS11,5
+BS12,5
 ST1,0
 ST2,0
 ST3,0
@@ -35,20 +36,22 @@ promo.gs25,1
 promo.wcg2023,3
 promo.lotteria,1
 promo.ediya,1
-promo.hys,5
+promo.hys.legendary,5
+promo.hys.ancient,5
 promo.hbf,1
 promo.crwf,0
 promo.gstar25,1
 promo.lottecc,5
 promo.dsg,1
 promo.ppg,5
-promo.kccf2026,1
+promo.kccf2026,5
 promo.sb1,1
 promo.sb2,1
 promo.legacy,5
 promo.legacy.champion,5
 promo.wcs2526.ancient,5
 promo.wcs2526.beast,5
+promo.reprint1,5
 
 promo.bs1,0
 promo.bs2,0
@@ -63,10 +66,18 @@ promo.bs8,5
 promo.bs8sp,5
 promo.bs9,5
 promo.bs9sp,5
+promo.bs9.prerelease,5
 promo.bs10,5
 promo.bs10sp,5
+promo.bs10.prerelease,5
 promo.bs11,5
 promo.bs11sp,5
+promo.bs11.prerelease,5
+promo.bs12,5
+promo.bs12sp,5
+promo.bites,5
+promo.bites.hidden,5
+promo.bites.reprint,5
 promo.powerarena,5
 promo.serialized.old,0
 promo.serialized.new,5
@@ -94,10 +105,15 @@ tournament.stage.new.runnerup,5
 tournament.stage.finalist,0
 tournament.stage.new.finalist,5
 
+tournament.kb.champion,4
+tournament.kb.runnerup,4
+tournament.kb.finalist,4
+
 tournament.bl2026s4,5
 tournament.bl2026s4f.champion,5
 tournament.bl2026s4f.runnerup,5
 tournament.bl2026s4f.finalist,5
+tournament.bl2026s4f.top32,5
 tournament.bl2026s3,5
 tournament.bl2026s3f.champion,5
 tournament.bl2026s3f.runnerup,5
@@ -122,7 +138,7 @@ tournament.bl2025s3,0
 tournament.bl2025s3f.champion,0
 tournament.bl2025s3f.runnerup,0
 tournament.bl2025s3f.finalist,0
-tournament.wcs2526,1
+tournament.wcs2526,5
 tournament.wcs2526.champion,1
 tournament.wcs2526.runnerup,1
 tournament.wcs2526.finalist,1
@@ -138,11 +154,15 @@ tournament.bl2025s1sea,4
 tournament.bl2025s1fsea.champion,4
 tournament.bl2025s1fsea.runnerup,4
 tournament.bl2025s1fsea.finalist,4
-tournament.bl2024s3,1
-tournament.bl2024s3f.champion,1
-tournament.bl2024s3f.runnerup,1
-tournament.bl2024s3f.finalist,1
+tournament.bl2024s3,5
+tournament.bl2024s3f.champion,5
+tournament.bl2024s3f.runnerup,5
+tournament.bl2024s3f.finalist,5
 
+tournament.cc2026s,5
+tournament.cc2026s.champion,5
+tournament.cc2026s.runnerup,5
+tournament.cc2026s.finalist,5
 tournament.cc2025s,0
 tournament.cc2025s.champion,0
 tournament.cc2025s.runnerup,0

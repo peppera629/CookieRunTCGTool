@@ -354,7 +354,7 @@ public class CardDetailView extends JPanel {
         for (String lang : Config.FALLBACK_ORDER) {
             if (MainUI.isCollectionMode() && displayVariant > 0) {
                 path = AppPaths.dataDir().resolve(
-                    "cards_variant/" + lang + "/" + card.getPack() + "/" + card.getId() + "@" + displayVariant + ".png"
+                    "cards/" + lang + "/" + card.getPack() + "/" + card.getId() + "@" + displayVariant + ".png"
                 ).toString();
             } else {
                 path = AppPaths.dataDir().resolve(

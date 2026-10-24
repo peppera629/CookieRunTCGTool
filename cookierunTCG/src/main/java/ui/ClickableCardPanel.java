@@ -290,7 +290,7 @@ public class ClickableCardPanel extends JPanel {
 							text = "+" + text;
 							g2d.setColor(new Color(128, 255, 128));
 						} else if (text.equals("0")) {
-							g2d.setColor(new Color(192, 192, 192));
+							g2d.setColor(new Color(255, 255, 255));
 						} else {
 							g2d.setColor(new Color(255, 128, 128));
 						}

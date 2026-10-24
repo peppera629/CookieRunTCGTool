@@ -35,7 +35,7 @@ public class UIUtil {
 		if (showCountMode == 5 && counts2 != null) {
 			Map<String, Integer> counts1 = new HashMap<>();
 			CardList globalCardList = CardList.getInstance();
-			int differentCardCount = 0;
+			int cardCount = 0;
 			
 			for (Card card : cardList) {
 				counts1.merge(card.getId(), card.getCount(), Integer::sum);
@@ -46,6 +46,7 @@ public class UIUtil {
             for (String id : counts2.keySet()) allIds.add(id);
 
 			List<ClickableCardPanel> positiveChange = new ArrayList<>();
+			List<ClickableCardPanel> noChange = new ArrayList<>();
 			List<ClickableCardPanel> negativeChange = new ArrayList<>();
 
 			for (String id : allIds) {
@@ -59,12 +60,9 @@ public class UIUtil {
 				int differential = (compareMode ? count2 - count1 : count1 - count2);
 
 				System.out.println(id + " Differential: " + differential);
-                if (differential == 0) {
-                    continue;
-                }
+                cardCount += 1;
 
 				Card cardInstance = null;
-				differentCardCount += 1;
 
                 // Find any card instance to render, current deck (deck 1) takes priority
                 for (Card c : cardList) {
@@ -94,19 +92,24 @@ public class UIUtil {
                 
 				if (differential > 0) {
 					positiveChange.add(cardPanel);
-				} else {
+				} else if (differential < 0) {
 					negativeChange.add(cardPanel);
+				} else {
+					noChange.add(cardPanel);
 				}
 			}
 
 			for (ClickableCardPanel panelPos : positiveChange) {
 				panel.add(panelPos);
 			}
+			for (ClickableCardPanel panelNo : noChange) {
+				panel.add(panelNo);
+			}
 			for (ClickableCardPanel panelNeg : negativeChange) {
 				panel.add(panelNeg);
 			}
 
-			DeckWindowDifferential.setDifferentCardCountStatic(differentCardCount);
+			DeckWindowDifferential.setCardCountStatic(cardCount);
 			
 		} else {
 			for (Card card : cardList) {

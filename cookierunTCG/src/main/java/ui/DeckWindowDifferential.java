@@ -76,7 +76,7 @@ public class DeckWindowDifferential {
 	private JPanel mOutputPane;
 	private JButton btnNewButton;
 	private JScrollPane scrollDeckPane;
-	private static int differentCardCount;
+	private static int cardCount;
 	private int w = 670;
 	private int h = 550;
 
@@ -102,13 +102,13 @@ public class DeckWindowDifferential {
 		mDeckPane.removeAll();
 
         UIUtil.showDeck(null, mDeckPane, mDeck1.getAllCards(), mDeck2, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_DECK, 1.0f, 5, mCompareMode);
-		System.out.println(differentCardCount);
+		System.out.println(cardCount);
 		int anotherLine = 0;
-		if ((differentCardCount % Config.DW_ROW_SIZE) > 0) {
+		if ((cardCount % Config.DW_ROW_SIZE) > 0) {
 			anotherLine++;
 		}
 		w = (Config.DW_CARD_WIDTH + 5) * Config.DW_ROW_SIZE + 20;
-		h = (Config.DW_CARD_HEIGHT + 5) * ((differentCardCount / Config.DW_ROW_SIZE) + anotherLine) + 30;
+		h = (Config.DW_CARD_HEIGHT + 5) * ((cardCount / Config.DW_ROW_SIZE) + anotherLine) + 30;
 		frame.setSize(w + 16, Math.min(h, 900) + 48);
 
 		visibleComponents = new JPanel();
@@ -169,16 +169,16 @@ public class DeckWindowDifferential {
 
 		int anotherLine = 0;
 		
-		if ((differentCardCount % Config.DW_ROW_SIZE) > 0) {
+		if ((cardCount % Config.DW_ROW_SIZE) > 0) {
 			anotherLine++;
 		}
 		int output_w = (Config.DW_OUTPUT_WIDTH + 5) * Config.DW_ROW_SIZE + 20;
-		int output_h = (Config.DW_OUTPUT_HEIGHT + 5) * ((differentCardCount / Config.DW_ROW_SIZE) + anotherLine) + 20;
-		System.out.println("Output height: (" + Config.DW_OUTPUT_HEIGHT + " + 5) * (" + differentCardCount + "/" + Config.DW_ROW_SIZE + ") + " + anotherLine + ") + 20 = " + output_h);
+		int output_h = (Config.DW_OUTPUT_HEIGHT + 5) * ((cardCount / Config.DW_ROW_SIZE) + anotherLine) + 20;
+		System.out.println("Output height: (" + Config.DW_OUTPUT_HEIGHT + " + 5) * (" + cardCount + "/" + Config.DW_ROW_SIZE + ") + " + anotherLine + ") + 20 = " + output_h);
 		mOutputPane.setBounds(w + 100, h + 100, output_w + 10, output_h + 80);
 		
         UIUtil.showDeck(null, mOutputPane, mDeck1.getAllCards(), mDeck2, 6, Config.DW_ROW_SIZE, UIUtil.CARD_SIZE_OUTPUT, 1.0f, 5, mCompareMode);
-		System.out.println(differentCardCount);
+		System.out.println(cardCount);
 		mOutputPane.revalidate();
 		mOutputPane.repaint();
 
@@ -195,8 +195,8 @@ public class DeckWindowDifferential {
 		frame.getContentPane().add(mOutputPane);
 	}
 
-	public static void setDifferentCardCountStatic(int count) {
-		differentCardCount = count;
-		System.out.println("Different card count set to: " + differentCardCount);
+	public static void setCardCountStatic(int count) {
+		cardCount = count;
+		System.out.println("Different card count set to: " + cardCount);
 	}
 }

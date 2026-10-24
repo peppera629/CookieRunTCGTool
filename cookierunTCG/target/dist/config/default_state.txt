@@ -1,10 +1,10 @@
-Red - Fire Spirit + SMC.txt
-Red - Fire Spirit + SMC
+Yellow - Arena.txt
+Yellow - Arena
 _,_,_,_,_,_,_
 _,_,_,_
 _
 _,_,_,_,_
 _,_,_,_,_,_
 _,_,__,_,_
-_,_,_,_,_,_
+_,_,v,v,v,_
 2,3,1,4,5,6
