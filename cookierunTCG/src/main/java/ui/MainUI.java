@@ -192,7 +192,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
     private JPanel fileOperationsPanel, fileOperationsButtonsPanel, deckDetailPanelOuter, deckDetailPanel, centerPanel, skillTypeBtnPanel;
     private JLabel currentDeckName, collectionChangeLabel;
     private JTextField searchBox;
-    private JButton saveBtn, saveAsBtn, selectBtn, importBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST, quickSelectBtnSkillType;
+    private JButton saveBtn, saveAsBtn, selectBtn, exportBtn, importBtn, hideSearchPaneBtn, hidePreviewPaneBtn, quickSelectBtnBS, quickSelectBtnST, quickSelectBtnSkillType;
     private JButton clearDeckBtn, randomDrawSimBtn, searchBtn, clearFilterBtn, sortSettingsBtn, settingsBtn, hideDeckDetailSummaryBtn;
     private JToggleButton button_collection;
     private JLabel cardCountHintTxt, flipCountHintTxt, extraCountHintTxt, deckCookieSummaryHintTxt, levelCountTxt, flipTypeCountTxt, filterResults, labelSearch;
@@ -1225,8 +1225,22 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
                 }
         	}
         });
-        
+
         gbc_panel.gridx = 4;
+        ImageIcon exportIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/exportlist_" + Config.THEME + ".png").toString());
+        exportBtn = new JButton(exportIcon);
+        exportBtn.setToolTipText(CardUtil.getTranslation("deck.exportlist"));
+        exportBtn.setRequestFocusEnabled(false);
+        componentFontMap.put(exportBtn, "CRnormalSmall"); // Store the font type as a String
+        fileOperationsButtonsPanel.add(exportBtn, gbc_panel);
+        exportBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                ExportDialog exportDialog = new ExportDialog();
+                exportDialog.show(currentDeck);
+        	}
+        });
+        
+        gbc_panel.gridx = 5;
         ImageIcon showDeckIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/show_" + Config.THEME + ".png").toString());
         showDeckBtn = new JButton(showDeckIcon);
         showDeckBtn.setToolTipText(CardUtil.getTranslation("deck.show"));
@@ -1239,7 +1253,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         	}
         });
 
-        gbc_panel.gridx = 5;
+        gbc_panel.gridx = 6;
         ImageIcon showDeckDifferentialIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/compare_" + Config.THEME + ".png").toString());
         showDeckDifferentialBtn = new JButton(showDeckDifferentialIcon);
         showDeckDifferentialBtn.setToolTipText(CardUtil.getTranslation("deck.compare"));
@@ -2266,6 +2280,7 @@ public class MainUI implements CardListCallBack, ConfigChangedCallback, Language
         ImageIcon saveAsIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/saveas_" + Config.THEME + ".png").toString());
         ImageIcon selectIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/load_" + Config.THEME + ".png").toString());
         ImageIcon importIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/import_" + Config.THEME + ".png").toString());
+        ImageIcon exportIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/exportlist_" + Config.THEME + ".png").toString());
         ImageIcon showDeckIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/show_" + Config.THEME + ".png").toString());
         ImageIcon showDeckDifferentialIcon = new ImageIcon(AppPaths.dataDir().resolve("icons_ui/compare_" + Config.THEME + ".png").toString());
         saveBtn.setIcon(saveIcon);

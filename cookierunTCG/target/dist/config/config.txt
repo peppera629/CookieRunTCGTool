@@ -1,12 +1,12 @@
 #Application Configuration
-#Fri Oct 16 21:23:48 CST 2026
+#Sun Oct 25 21:35:30 CST 2026
 advanced_filtering=true
 card_icon_scale=1.0
-card_language=en
+card_language=zh_TW
 card_preview_scale=1.15
 card_translation=true
 deck_build_from_collection=true
-language=en
+language=zh_TW
 large_translation_text=false
 region=TW
 show_collection_change=true

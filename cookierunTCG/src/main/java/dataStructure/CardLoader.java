@@ -702,13 +702,18 @@ public class CardLoader {
 								};
 							}
 							for (Card c : CardList.getInstance().getAllCards()) {
-								for (int i = 0 ; i < c.getVariants().length; i++) {
-									if (c.getVariantNames()[i].equals(cardData[0])) {
-										c.setAvailability(i, availability);
-										//System.out.println("set " + c.getId() + " variant " + i + ": " + cardData[0] + " " + Arrays.toString(availability));
+								try {
+									for (int i = 0 ; i < c.getVariants().length; i++) {
+										if (c.getVariantNames()[i].equals(cardData[0])) {
+											c.setAvailability(i, availability);
+											//System.out.println("set " + c.getId() + " variant " + i + ": " + cardData[0] + " " + Arrays.toString(availability));
+										}
 									}
+								} catch (NullPointerException e) {
+									System.err.println("Error setting availability for promo tag " + cardData[0] + ", or empty variant list for card " + c.getId());
 								}
 							}
+							
 						} else if (cardData[0].contains("-")) { // Base card only
 							boolean[] availability;
 							if (cardData[1].equals("0")) {

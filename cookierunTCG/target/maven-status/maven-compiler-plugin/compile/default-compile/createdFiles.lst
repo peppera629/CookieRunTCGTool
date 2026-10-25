@@ -10,6 +10,7 @@ ui\ChoiceDialog$1.class
 ui\ClickableCardPanel.class
 ui\Dialog$2.class
 ui\CardDetailWindow.class
+ui\ExportDialog.class
 ui\MainUI$27.class
 ui\MainUI$7.class
 util\CardUtil$CardColor.class
@@ -19,6 +20,7 @@ ui\ControlHintDialog$2.class
 ui\ImportDialog$1.class
 ui\MainUI$35.class
 ui\SortSettingsWindow$ConfigChangedCallback.class
+ui\StringSelection.class
 ui\MainUI$Filter.class
 ui\DeckWindow$3.class
 ui\MainUI$15.class
@@ -69,6 +71,7 @@ ui\Dialog$1.class
 ui\MainUI$33.class
 ui\MainUI$23.class
 ui\MainUI$43.class
+ui\MainUI$46.class
 util\Constant.class
 ui\MainUI$36.class
 ui\DeckWindow$1.class
@@ -105,6 +108,7 @@ ui\Dialog.class
 ui\MainUI$11.class
 ui\MainUI$34.class
 ui\ClickableCardPanel$ImageTransferable.class
+ui\ExportDialog$1.class
 ui\MainUI$44.class
 ui\DeckWindowDifferential$1.class
 ui\MainUI$1.class
@@ -119,6 +123,7 @@ util\CardUtil$CardType.class
 ui\MainUI$22.class
 ui\MainUI$10.class
 ui\MainUI$45.class
+ui\ExportDialog$2.class
 util\CardUtil$SkillType.class
 app\AppAnchor.class
 ui\MainUI$2.class
